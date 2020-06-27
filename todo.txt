@@ -1,0 +1,8 @@
+
+Performance testing
+    - many objects by translation
+    - all in the same vbuffer
+    - all in separate vbuffers
+    - with merged / unmerged preamble
+    - movement by reloading buffer / translation
+

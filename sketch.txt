@@ -1,0 +1,46 @@
+
+Hierarchy with entities as a linear group of node.
+Signals for joining and un-joining the master tree?
+No such thing as an entity? inspector knows how to group nodes in a sequence?
+
+Serialization of entities and images, sprite sheets
+    - How to get the set of class names?
+
+Subtree features:
+    - Can register a controller as member of several subtrees.
+    - Can access parent/children in a particular sub-tree.
+    - What should happen at top level of a subtree?
+        - Listen to window events.
+
+Other things:
+    - You need examples of these things before you can even think about
+        whether you support them:
+        - Caching? Probably will be doable, since subtrees can store whatever they want.
+        - Quadtree feature for drawing only stuff on screen or colliding only nearby things.
+            Not in a position yet to decide if this is doable. Look at quadtrees later.
+    - The true test of this system is the inspector.
+
+Todo:
+    - Serialization system with text editor.
+            - To what extent is this not Kivy?
+            - Kivy has a lot lot lot more than this.
+    - Image serialization
+    - Demo: Spritesheet editor (to show focus system)
+    - Demo: Simple platformer (with rotation?) (to build collision system)
+    - Turn both of these into tutorial.md and executables
+    - Build your own game.
+    - Have a repl. DONE
+
+Trees: 
+    - Layout Engine
+    - Collision system.
+    - Drawing
+    - Focus system
+
+
+No subclassing entity. That's done via prefabs.
+
+
+
+
+
