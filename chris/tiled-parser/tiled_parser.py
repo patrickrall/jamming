@@ -68,14 +68,17 @@ def create_terrains(tilemap_fn, terrain_fn, terrain_wrapper):
 
 
 def organize_chunks(chunk_tag):
-    chunk_start = (chunk_tag.get(x), chunk_tag.get('y'))
-    chunk_size = (chunk_tag.get(width), chunk_tag.get(height))
+    chunk_start = (chunk_tag.get('x'), chunk_tag.get('y'))
+    chunk_size = (chunk_tag.get('width'), chunk_tag.get('height'))
 
     chunk_ids = chunk_tag.text
     
-    for line in chunk_ids:
-        for ter_id in line.split(',')[:-1]:
-           pass 
+    tiles = []
+
+    for x, line in enumerate(chunk_ids):
+        for y, ter_id in enumerate(line.split(',')[:-1]):
+            tile_loc_x = chunk_start[0] + x
+            tiles.append((ter_id, (tile_loc_x, tile_loc_y) 
 
     
 
