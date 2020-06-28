@@ -95,6 +95,11 @@ class ListenerNode(AbstractNode):
                 self._listener = None
                 self._listening_for = []
 
+        # tell your children
+        if event_name not in ["on_draw", "on_layout"]:
+            for child in self.children_with_attr("dispatch"):
+                child.dispatch(event_name,*args)
+
     def draw(self):
         self.dispatch("on_draw")
         default_draw(self)

@@ -5,6 +5,8 @@ from pyglet.gl import *
 from .node import *
 from .layout import *
 
+import os
+
 # TODO: image animation is using pyglet.clock.schedule
 # instead use listener here
 
@@ -12,8 +14,8 @@ def load_spritesheet(sheet_fname):
     data_file = pyglet.resource.file(sheet_fname)
     data = json.loads(data_file.read())
 
-    # TODO: need to pre-process path?
-    image = pyglet.resource.image(data["meta"]["image"])
+    image_path = os.path.join(os.path.dirname(sheet_fname), data["meta"]["image"])
+    image = pyglet.resource.image(image_path)
     h = image.height
 
     frames = []

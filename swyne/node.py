@@ -112,6 +112,13 @@ class NodeWindow(pyglet.window.Window):
             else:
                 self.listeners.insert(i,(event,gen))
 
+
+        # also tell all the ListenerNodes
+        if event_name is not "on_draw":
+            for child in self._basenode.children_with_attr("dispatch"):
+                child.dispatch(event_name,*args)
+
+
     @property
     def fps(self):
         return self._fps
@@ -250,7 +257,9 @@ def deserialize_node(text, **kwargs):
     classes["AbstractNode"] = AbstractNode
 
     def parse_line(line):
+        if "#" in line: line = line.split("#")[0]
         line = line.strip()
+
         line = line.split(" ")
 
         keyname = None
@@ -300,6 +309,7 @@ def deserialize_node(text, **kwargs):
         return node, keyname, keyvalue
 
     lines = text.split("\n")
+
 
     # trim start
     while len(lines[0]) == 0:
