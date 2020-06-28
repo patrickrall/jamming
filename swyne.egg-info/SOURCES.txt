@@ -1,0 +1,6 @@
+README.md
+setup.py
+swyne.egg-info/PKG-INFO
+swyne.egg-info/SOURCES.txt
+swyne.egg-info/dependency_links.txt
+swyne.egg-info/top_level.txt
