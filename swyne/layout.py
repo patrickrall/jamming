@@ -6,6 +6,7 @@ from pyglet.gl import *
 ######### Contains various useful nodes for layout
 
 # BackgroundNode
+# ListenerNode
 # HintedLayoutNode
 # PaddingLayoutNode
 # ForceMinLayoutNode
@@ -47,6 +48,66 @@ class BackgroundNode(AbstractNode):
     def layout_hints(self):
         return default_layout_hints(self)
 
+
+
+#################################################
+
+# a node that can keep a listener up to date
+class ListenerNode(AbstractNode):
+    def __init__(self):
+        super().__init__()
+        self.pos = Vector2(0,0)
+        self.dims = Vector2(0,0)
+        self._listener = None
+        self._listening_for = []
+
+    @property
+    def listener(self): return self._listener
+
+    @listener.setter
+    def listener(self, func, *args, **kwargs):
+        self._listener = None
+
+        gen = func(*args,**kwargs)
+        if isinstance(gen, types.GeneratorType):
+            try:
+                event = next(gen)
+                self._listener = gen
+                self._listening_for = event
+
+                # send an on_layout event on init so the listener can know
+                self.dispatch("on_layout",self.pos.x,self.pos.y,self.dims.x,self.dims.y)
+            except StopIteration:
+                pass
+
+    def dispatch(self, event_name,*args):
+        event = self._listening_for
+
+        good = isinstance(event,str) and event_name == event
+        good = good or isinstance(event,list) and event_name in event
+        good = good or (event is None)
+
+        if good:
+            try:
+                next_event = self._listener.send((event_name,*args))
+                self._listening_for = next_event
+            except StopIteration:
+                self._listener = None
+                self._listening_for = []
+
+    def draw(self):
+        self.dispatch("on_draw")
+        default_draw(self)
+
+    def set_layout(self,pos,dims):
+        default_set_layout(self,pos,dims)
+        self.pos = pos
+        self.dims = dims
+
+        self.dispatch("on_layout",pos.x,pos.y,dims.x,dims.y)
+
+    def layout_hints(self):
+        return default_layout_hints(self)
 
 ###################################################
 

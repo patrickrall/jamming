@@ -31,25 +31,17 @@ def run_game():
     global asteroids
     asteroids = [{"x":50, "y":150, "vx":100, "vy":100}]
 
-
     # node graph for menu system
-    w.node, keys = deserialize_node("""
-    hint HintedLayoutNode
+    global node_keys
+    w.node, node_keys = deserialize_node("""
+    hint HintedLayoutNode [800,600]
+    -listen ListenerNode
     -PaddingLayoutNode [5,"*","*","*"]
-    --label LabelNode "{color (255,255,255,255)} placeholder"
+    --lives LabelNode "{color (255,255,255,255)} placeholder"
     """)
 
-    # global variables for menu system
-    global window_dims
-    window_dims = {"width": 800, "height":600}
-    keys["hint"].mindims.x = window_dims["width"]
-    keys["hint"].maxdims.x = window_dims["width"]
-    keys["hint"].mindims.y = window_dims["height"]
-    keys["hint"].maxdims.y = window_dims["height"]
-
-    global lives_node
-    lives_node = keys["label"]
-    lives_node.document.text = "Remaining lives: "+str(player["lives"])
+    # initialize label
+    node_keys["lives"].document.text = "Remaining lives: "+str(player["lives"])
 
     # load the spritesheet
     global sprites
@@ -59,7 +51,9 @@ def run_game():
     w.launch_listener(frame)
     w.launch_listener(keystate)
     w.launch_listener(player_animation)
-    w.launch_listener(draw)
+
+    # attach draw listener to listener node
+    node_keys["listen"].listener = draw
 
     pyglet.app.run()
 
@@ -201,10 +195,12 @@ def keystate():
 def frame():
 
     global asteroids
-    global window_dims
+    global node_keys
     global lives
-    global lives_node
     global wasd_keys
+
+    window_width = node_keys["hint"].dims.x
+    window_height = node_keys["hint"].dims.y
 
     while True:
         event, dt = yield "on_frame"
@@ -219,9 +215,9 @@ def frame():
             # check if this asteroid is offscreen and needs to be deleted
             offset = 100
             if asteroid["x"] < -offset\
-                    or asteroid["x"] > window_dims["width"]+offset\
+                    or asteroid["x"] > window_width+offset\
                     or asteroid["y"] < -offset\
-                    or asteroid["y"] > window_dims["height"]+offset:
+                    or asteroid["y"] > window_height+offset:
                 to_delete.append(asteroid)
 
         for deleted_asteroid in to_delete:
@@ -231,8 +227,8 @@ def frame():
         while len(asteroids) < 20:
 
             new_asteroid = {
-                    "x": random.random()*window_dims["width"],
-                    "y": window_dims["height"], # start at the top
+                    "x": random.random()*window_width,
+                    "y": window_height, # start at the top
                     "vx": 40*(random.random() - 0.5),
                     "vy": - (80 + 100*random.random())
                 }
@@ -263,10 +259,10 @@ def frame():
                     player["respawn_timer"] = 3
                     player["lives"] -= 1
 
-                    lives_node.document.text = "Remaining lives: "+str(player["lives"])
-                    if player["lives"] > 0: lives_node.document.text += ". Respawning..."
+                    node_keys["lives"].document.text = "Remaining lives: "+str(player["lives"])
+                    if player["lives"] > 0: node_keys["lives"].document.text += ". Respawning..."
                     else:
-                        lives_node.document.text = "Game Over!"
+                        node_keys["lives"].document.text = "Game Over!"
 
                     break
 
@@ -276,7 +272,7 @@ def frame():
 
             if player["respawn_timer"] < 0:
                 # try to respawn player at this location:
-                x,y = window_dims["width"]/2,  100
+                x,y = window_width/2,  100
 
                 no_asteroids_nearby = True
                 for asteroid in asteroids:
@@ -294,7 +290,7 @@ def frame():
                     player["x"] = x
                     player["y"] = y
 
-                    lives_node.document.text = "Remaining lives: "+str(player["lives"])
+                    node_keys["lives"].document.text = "Remaining lives: "+str(player["lives"])
 
 
 

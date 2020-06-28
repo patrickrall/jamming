@@ -91,10 +91,12 @@ class NodeWindow(pyglet.window.Window):
         if event_name in super().event_types:
             super().dispatch_event(event_name, *args, **kwargs)
 
+
         # done in such a manner that a generator can't
         # invoke dispatch_event and call .send() to itself
         for i in range(len(self.listeners)):
             event,gen = self.listeners[i]
+
             del self.listeners[i]
 
             good = isinstance(event,str) and event_name == event
