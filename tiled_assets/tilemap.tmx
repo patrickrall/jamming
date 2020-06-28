@@ -79,7 +79,7 @@
   </data>
  </layer>
  <objectgroup id="2" name="Object Layer 1">
-  <object id="1" gid="65" x="31.5" y="-0.5" width="16" height="16"/>
-  <object id="2" gid="68" x="121.25" y="-33.5" width="16" height="16"/>
+  <object id="1" gid="65" x="26.5" y="-6.75" width="16" height="16"/>
+  <object id="2" gid="68" x="120.25" y="-45.5" width="16" height="16"/>
  </objectgroup>
 </map>

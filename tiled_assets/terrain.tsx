@@ -18,6 +18,11 @@
  <tile id="18" terrain="0,,,"/>
  <tile id="19" terrain="0,0,,0"/>
  <tile id="24" terrain="0,,,0"/>
- <tile id="25" terrain=",0,0,0"/>
+ <tile id="25" terrain=",0,0,0">
+  <animation>
+   <frame tileid="25" duration="100"/>
+   <frame tileid="57" duration="100"/>
+  </animation>
+ </tile>
  <tile id="26" terrain="0,0,0,"/>
 </tileset>
