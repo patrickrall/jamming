@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: swyne
+Version: 0.0.1
+Summary: A thin layer on top of pyglet.
+Home-page: UNKNOWN
+Author: Patrick Rall
+Author-email: patrickjrall@gmail.com
+License: UNKNOWN
+Description: A thin layer on top of pyglet.
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown

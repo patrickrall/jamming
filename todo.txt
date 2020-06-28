@@ -1,4 +1,15 @@
 
+Tiled Integration:
+    - associate image clip with Tiled id number
+    - draw tile layer
+    - draw objects
+    - parse object properties, populate classes
+
+    - understand Tiled collision detection on tile layer
+    - understand Tiled propensity for movements
+	
+
+
 Performance testing
     - many objects by translation
     - all in the same vbuffer
