@@ -40,6 +40,9 @@ def run_game():
     --lives LabelNode "{color (255,255,255,255)} placeholder"
     """)
 
+    node_keys["hint"] == w.node
+    w.node.children[1].children[0] == node_keys["lives"]
+
     # initialize label
     node_keys["lives"].document.text = "Remaining lives: "+str(player["lives"])
 
