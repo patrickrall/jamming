@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as XP
+import pyglet
 
 
 
@@ -221,12 +222,18 @@ def parse_tileset(fname):
         [
             {
                 "gid" = i                                               # try not to use
-                "sprite" = images                                       # precut for convenience 
-                "sprites" = [[images], [durations]]                     # alternative
-                            [[image],[]]                                # if no animation is found
+                "sprite" = pyglet image                                       # precut for convenience 
+                        # cut image using pyglet.image.get_region
+                
+                "animation" = [pyglet frames]                           # must contain sprite image
+                        # animation = pyglet.image.Animation(frames = [frame_a, frame_b, etc])
+                        # frame_a = pyglet.image.AnimationFrame(pyglet.image(), duration= #ms * 1000)
+                        # pyglet.image.Animation asserts non-empty list, so if no animation is found,
+                        # this key's value list must contain one AnimationFrame of the base sprite
+                
                 "properties" = {"property name": "property value"}      # can be empty dict
+                
                 "objects" = [{object dictionary, see parse_object}]     # can be empty list
-                "animation" = [(tileid, duration)]                      # list of tuples?
 
             }
         ]
