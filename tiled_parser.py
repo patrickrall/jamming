@@ -60,6 +60,7 @@ def parse_object(xml):
           - point
           - polygon
           - path
+          - ellipse
 
         This is what they look like:
         <object gid="?" width="?" height="?"/></object>    # tile
@@ -67,6 +68,7 @@ def parse_object(xml):
         <object><point/></object>                          # point
         <object><polygon points="0,0 ?,? ?,?"/></object>   # polygon
         <object><polyline points="0,0 ?,? ?,?"/></object>  # polyline
+        <object width="?" height="?"><ellipse/></object>   # ellpise
 
         Tiled has a feature that lets you flip a sprite horizontally or vertically or both.
         It encodes this by garbling the gid field that is used to identify which TileEntity it has.
@@ -89,12 +91,12 @@ def parse_object(xml):
           "type": ?,      # always present, None if not specified
           "rotation": ?,  # always present
           "visible": ?,   # always present, change from "0"/"1" to False/True
-          "width", ?,     # only present for rect and tile
-          "height": ?,    # only present for rect and tile
-          "gid": ?,       # only present for tile
-          "point": ?,     # only present for point, True/False
-          "polygon": ?,   # only present for polygon, list of [(x,y)] tuples. First is always (0,0)
-          "path": ?,      # only present for path, format same as polygon property
+          "rectangle": {"width": ?, "height": ?},           # only present for rectangle
+          "tile": {"gid": ?, "width": ?, "height": ?},      # only present for tile
+          "point": ?,                                       # only present for point, True/False
+          "polygon": ?,                                     # only present for polygon, list of [(x,y)] tuples. First is always (0,0)
+          "path": ?,                                        # only present for path, format same as polygon property
+          "ellipse": {"width": ?, "height": ?},             # only present for ellpse
           "properties", { # always present, maybe empty
             "custom_prop": "custom value",
           }
