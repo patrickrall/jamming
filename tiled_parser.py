@@ -224,6 +224,7 @@ def parse_tileset(fname):
                 "gid" = i                                               # try not to use
                 "sprite" = pyglet image                                       # precut for convenience 
                         # cut image using pyglet.image.get_region
+                        # use tileoffset property to define this
                 
                 "animation" = [pyglet frames]                           # must contain sprite image
                         # animation = pyglet.image.Animation(frames = [frame_a, frame_b, etc])
