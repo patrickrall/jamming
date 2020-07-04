@@ -170,7 +170,9 @@ def parse_tileset(fname):
         Parses a .tsx file.
 
         <tileset version="1.2" tiledversion="1.3.3" name="big_entities.tsk" tilewidth="48" tileheight="48" tilecount="4" columns="2">
-            <tileoffset x="6" y="5"/>
+            
+            <tileoffset x="6" y="5"/> - use this to change the anchor of the sprite
+            note - cut sprite in this function.
 
             a <properties> tag for the tile set
 
@@ -182,11 +184,12 @@ def parse_tileset(fname):
             <tile id="0" type="MyType" probability="0.2">
                 a <properties> tag
 
-                Question: do we care about drawing order?
+                Question: do we care about drawing order? (Answer: no)
                 <objectgroup draworder="index" id="2">
                     some <object> tags
                 </objectgroup>
 
+                Note: I can't find a way to associate more than one animation per tile entity
                 <animation>
                     <frame tileid="0" duration="300"/>
                     <frame tileid="3" duration="300"/>
@@ -205,6 +208,7 @@ def parse_tileset(fname):
             even though the .tmx file totally uses it.
             This is because tile id=2 doesn't have any properties attached to it.
             Tiled has no notion of if a tile contains no image data.
+            Thus, this function parses every possible location in the image.
 
             <tile id="3" terrain=",0,,0"/>
 
@@ -212,8 +216,22 @@ def parse_tileset(fname):
             <wangsets>...</wangsets>
         </tileset>
 
+        Proposed output format: list of all tiles in given tileset, gid = list index,
+        each tile is represented by a dictionary of its properties
+        [
+            {
+                "gid" = i                                               # try not to use
+                "sprite" = images                                       # precut for convenience 
+                "sprites" = [[images], [durations]]                     # alternative
+                            [[image],[]]                                # if no animation is found
+                "properties" = {"property name": "property value"}      # can be empty dict
+                "objects" = [{object dictionary, see parse_object}]     # can be empty list
+                "animation" = [(tileid, duration)]                      # list of tuples?
 
-        Question: what output format???
+            }
+        ]
+
+
 
 
     """
@@ -223,7 +241,7 @@ def parse_tileset(fname):
 
     # check that fname is a tsx
     if ".tsx" not in fname:
-        print("tileset must be Tiled style xml file (~.tsx?")
+        print("tileset must be Tiled style xml file (~.tsx?)")
         return []
 
     tile_types = []
@@ -278,7 +296,7 @@ def parse_tileset(fname):
                 }
 
             for i,collision in enumerate(collisions):
-                tile_data['collision_%d' % i]=collision
+                tile_data['objects']=collision
             for custom_prop in custom_props:
                 tile_data[custom_prop[0]] = custom_prop[1]
 
