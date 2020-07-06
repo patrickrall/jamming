@@ -1,15 +1,11 @@
 import xml.etree.ElementTree as XP
 import pyglet
+from pyglet.gl import *
 
+from swyne.node import Vector2
+import os
 
-
-############### tile parser helpers ####################
-def clip_sprite(src_img, tile_num, tile_size, columns):
-    # returns the section of image that tile occupies
-    #TODO can we use swyne for this???
-    return src_img
-
-def parse_properties(xml):
+def parse_properties(properties_tag):
     """
         Parses a properties section.
 
@@ -50,10 +46,44 @@ def parse_properties(xml):
 
     """
 
-    raise NotImplementedError
+    assert properties_tag.tag == "properties"
+
+    out = {}
+
+    for child in properties_tag:
+        assert child.tag == "property"
+        assert "name" in child.attrib
+        assert "value" in child.attrib
+
+        name = child.attrib["name"]
+        value = child.attrib["value"]
+
+        assert name not in out
+
+        if "type" not in child.attrib or child.attrib["type"] == "file": # string or file
+            out[name] = value
+        elif child.attrib["type"] == "bool":
+            out[name] = (value == "1")
+        elif child.attrib["type"] == "float":
+            out[name] = float(value)
+        elif child.attrib["type"] == "int":
+            out[name] = int(value)
+        elif child.attrib["type"] == "color":
+
+            if value == "":
+                out[name] = (0.0,0.0,0.0,0.0)
+            else:
+                value = value.lstrip("#")
+                out[name] = tuple(int(value[i:i+2],16)/255 for i in [0,2,4,6])
+
+        else:
+            assert False, "Invalid type "+child.attrib["type"]
+
+    return out
 
 
-def parse_object(xml):
+
+def parse_object(object_tag):
     """
         Parses an objects that is either:
           - tile
@@ -69,7 +99,7 @@ def parse_object(xml):
         <object><point/></object>                          # point
         <object><polygon points="0,0 ?,? ?,?"/></object>   # polygon
         <object><polyline points="0,0 ?,? ?,?"/></object>  # polyline
-        <object width="?" height="?"><ellipse/></object>   # ellpise
+        <object width="?" height="?"><ellipse/></object>   # ellipse
 
         Tiled has a feature that lets you flip a sprite horizontally or vertically or both.
         It encodes this by garbling the gid field that is used to identify which TileEntity it has.
@@ -85,19 +115,17 @@ def parse_object(xml):
 
         This gets decoded into a dictionary like this:
         {
-          "id": ?,        # always present
-          "x": ?,         # always present
-          "y": ?,         # always present
+          "pos": Vector2, # always present
           "name": ?,      # always present
           "type": ?,      # always present, None if not specified
-          "rotation": ?,  # always present
+          "rotation": ?,  # always present, in radians
           "visible": ?,   # always present, change from "0"/"1" to False/True
-          "rectangle": {"width": ?, "height": ?},           # only present for rectangle
-          "tile": {"gid": ?, "width": ?, "height": ?},      # only present for tile
-          "point": ?,                                       # only present for point, True/False
-          "polygon": ?,                                     # only present for polygon, list of [(x,y)] tuples. First is always (0,0)
+          "rectangle": Vector2,                             # only present for rectangle
+          "tile": ?, # parse_object makes this the gid, but parse_tilemap swaps it out for the tile object
+          "point": ?,                                       # only present for point, True or unset
+          "polygon": ?,                                     # only present for polygon, list of [Vector2]. First is always Vector2(0,0)
           "path": ?,                                        # only present for path, format same as polygon property
-          "ellipse": {"width": ?, "height": ?},             # only present for ellpse
+          "ellipse": Vector2,                               # only present for ellipse
           "properties", { # always present, maybe empty
             "custom_prop": "custom value",
           }
@@ -109,61 +137,81 @@ def parse_object(xml):
         should be handled by the calling function.
     """
 
+    assert object_tag.tag == "object"
 
-    collision_shapes = []
-    for coll_shape in xml.findall('object'):
+    # a quick tool for getting object attributes with default values
+    def get(key,default):
+        if key in object_tag.attrib: return object_tag.attrib[key]
+        return default
 
-        #this is a rectangle
-        if len(coll_shape) < 1:
-            collision_shapes.append({
-                'shape': 'rectangle',
-                'anchor':(coll_shape.get('x'),\
-                          coll_shape.get('y')),
-                'size':(coll_shape.get('width'),\
-                        coll_shape.get('height'))
-                })
+    import math
 
-        #this is how we handle any other shape
-        # could maybe use elif coll_shape[0].tag == polygon
-        elif len(coll_shape.findall('polygon')) > 0:
-            anchor = (coll_shape.get('x'),\
-                      coll_shape.get('y'))
-            vertices = []
-            for poly_point in coll_shape.find('polygon').get('points').split(" "):
-                vertices.append((poly_point.split(',')[0],
-                                 poly_point.split(',')[1]))
-            collision_shapes.append({
-                'shape': 'polygon',
-                'anchor': anchor,
-                'vertices':vertices
-                })
-        # there's something there, but we don't see it
+    out = {
+        "pos": Vector2(float(get("x","0")),float(get("y","0"))),
+        "name": get("name",None),
+        "type": get("type",None),
+        "type": math.pi * float(get("rotation",0))/180, # convert to radians
+    }
+
+
+    # first try to determine object type via child nodes
+    object_type = None
+
+    for child in object_tag:
+
+        if child.tag == "properties":
+            assert "properties" not in out, "Duplicate properties tag"
+            out["properties"] = parse_properties(child)
+            continue
+
+        assert object_type is None, "Multiple child tags defining object type."
+
+        if child.tag == "point":
+            object_type = "point"
+            out["point"] = True
+
+        if child.tag in "polygon":
+            object_type = "polygon"
+            assert "points" in child.attrib
+
+            points = []
+            for point in child.attrib["points"].split(" "):
+                points.append( Vector2(float(point.split(",")[0]),float(point.split(",")[1])) )
+
+            out["polygon"] = points
+
+        if child.tag in "polyline":
+            object_type = "path"
+            assert "points" in child.attrib
+
+            points = []
+            for point in child.attrib["points"].split(" "):
+                points.append( Vector2(float(point.split(",")[0]),float(point.split(",")[1])) )
+
+            out["path"] = points
+
+        if child.tag == "ellipse":
+            object_type = "ellipse"
+            out["ellipse"] = Vector2(get("width",0),get("height",0))
+
+    if "properties" not in out: out["properties"] = {}
+
+    # types with no child node
+    if object_type is None:
+
+        if "gid" in object_tag.attrib:
+            # must be tile
+            out["tile"] = int(object_tag.attrib["gid"])
         else:
-            print("we don't support %s shapes at this time\n" \
-                    % coll_shape[0].tag)
+            # must be rectangle
+            out["rectangle"] = Vector2(get("width",0),get("height",0))
 
-    return collision_shapes
+    return out
+
+
 
 
 ################# tileset parser ######################
-
-class TileEntity():
-
-    this.sprite = ""
-    def draw(self):
-        pass
-
-    def collides_with(self, triangle):
-        pass
-
-    def __setitem__(self,key,value):
-        if key == "sprite":
-            this.sprite = value
-        pass
-
-
-    def __getitem__(self,key):
-        if key == "sprite": return "goomba"
 
 
 def parse_tileset(fname):
@@ -171,10 +219,11 @@ def parse_tileset(fname):
         Parses a .tsx file.
 
         <tileset version="1.2" tiledversion="1.3.3" name="big_entities.tsk" tilewidth="48" tileheight="48" tilecount="4" columns="2">
-            
+
             <tileoffset x="6" y="5"/> - use this to change the anchor of the sprite
             note - cut sprite in this function.
 
+            Ignored:
             a <properties> tag for the tile set
 
             <image source="entities.png" width="128" height="128"/>
@@ -221,20 +270,20 @@ def parse_tileset(fname):
         each tile is represented by a dictionary of its properties
         [
             {
-                "gid" = i                                               # try not to use
-                "sprite" = pyglet image                                       # precut for convenience 
+                "image" = pyglet image                                 # precut for convenience
                         # cut image using pyglet.image.get_region
-                        # use tileoffset property to define this
-                
+                        # global tileoffset property is put in the images anchor property
+
                 "animation" = [pyglet frames]                           # must contain sprite image
                         # animation = pyglet.image.Animation(frames = [frame_a, frame_b, etc])
                         # frame_a = pyglet.image.AnimationFrame(pyglet.image(), duration= #ms * 1000)
                         # pyglet.image.Animation asserts non-empty list, so if no animation is found,
                         # this key's value list must contain one AnimationFrame of the base sprite
-                
+
                 "properties" = {"property name": "property value"}      # can be empty dict
-                
+
                 "objects" = [{object dictionary, see parse_object}]     # can be empty list
+                                                                        # these objects are shifted by the tileoffset
 
             }
         ]
@@ -244,77 +293,89 @@ def parse_tileset(fname):
 
     """
 
-    # i'd actually rather just have this return a list
-    # firstgid is found in .tmx file.
-
     # check that fname is a tsx
-    if ".tsx" not in fname:
-        print("tileset must be Tiled style xml file (~.tsx?)")
-        return []
-
-    tile_types = []
+    assert ".tsx" in fname, "Tileset must be Tiled style xml file (~.tsx)"
 
     tileset_root = XP.parse(fname).getroot()
 
-    # this will find every tileset tag regardless of depth
-    # from the root. there should only be 1 anyway.
-    for tileset in tileset_root.iter("tileset"):
+    tile_dims = Vector2(0,0)
+    tile_dims.x = int(tileset_root.attrib["tilewidth"])
+    tile_dims.y = int(tileset_root.attrib["tileheight"])
 
-        # first grab the source image, should only be 1
-        tile_images = tileset_root.findall('image')
-        if len(tile_images) > 1:
-            print("%s has %d image source files? only using the first one STBY\n" % fname, len(tile_images))
+    tilecount = int(tileset_root.attrib["tilecount"]) # for verification
 
-        # gather the data of the overall source image
-        src_img = tile_images[0].get('source')
-        img_bounds = (tile_images[0].get('width'), \
-                      tile_images[0].get('height'))
-        tile_size = (tileset.get('width'), \
-                     tileset.get('height'))
-        columns = tileset.get('columns')
+    images = tileset_root.findall('image')
+    assert len(images) == 1, "Incorrect number of <image> tags in <tileset>."
+    image_path = os.path.join(os.path.dirname(fname),images[0].attrib["source"])
+
+    image = pyglet.image.load(image_path)
+
+    tile_offset_tags = tileset_root.findall('tileoffset')
+    if len(tile_offset_tags) == 0:
+        tile_offset = Vector2(0,0)
+    else:
+        tile_offset = Vector2(int(tile_offset_tags[0].attrib["x"]),
+                              int(tile_offset_tags[0].attrib["y"]))
+
+    tiles = []
+    x,y = 0,tile_dims.y
+    while True:
+        if x + tile_dims.x > image.width:
+            x = 0
+            y += tile_dims.y
+            if y > image.height:
+                break
+
+        tile_image = image.get_region(x=x,y=y,width=tile_dims.x,height=tile_dims.y)
+
+        tile_image.anchor_x -= tile_offset.x
+        tile_image.anchor_y -= tile_offset.y
+
+        tile_animation = pyglet.image.Animation.from_image_sequence([tile_image],duration=1,loop=True)
+
+        tile = {
+            "image": tile_image,
+            "animation": tile_animation,
+            "properties": {},
+            "objects": [],
+        }
+
+        tiles.append(tile)
+
+        x += tile_dims.x
+
+    for tile_tag in tileset_root.iter("tile"):
+        i = int(tile_tag.attrib["id"])
+
+        for properties_tag in tile_tag.findall('properties'):
+            tiles[i]["properties"] = parse_properties(properties_tag)
+            break
+
+        for objectgroup_tag in tile_tag.findall('objectgroup'):
+
+            for object_tag in objectgroup_tag:
+                obj = parse_object(object_tag)
+                obj["pos"].x += tile_offset.x
+                obj["pos"].y += tile_offset.y
+                tiles[i]["objects"].append(obj)
+
+            break
+
+        for animation_tag in tile_tag.findall('animation'):
+            frames = []
+
+            for frame in animation_tag:
+                frames.append(pyglet.image.AnimationFrame(tiles[int(frame.attrib["tileid"])]["image"],
+                                                          duration=float(frame.attrib["duration"])/1000))
 
 
-        # add every available space in source image grid
-        for tile_num in range(tileset.get('tilecount')):
+            tiles[i]["animation"] = pyglet.image.Animation(frames=frames)
 
-            sprite_img = clip_sprite(fname, tile_num, \
-                              tile_size, columns)
+            break
 
-            #get other data needed for tile mapping
-            gid = tile_num + firstgid
 
-            collisions = [] # should these be a dictionary?
-            custom_props = []
 
-            for tile_tag in tileset.findall("tile"):
-                if tile_tag.get("id") == tile_num:
-
-                    for xml in tile_tag.findall('objectgroup'):
-                        collisions += read_coll(coll_ob)
-
-                    for prop_list in tile_tag.findall('properties'):
-                        for prop in prop_list.findall('property'):
-                            custom_props.append((prop.get('name'),\
-                                                prop.get('value')))
-
-            # put tile dictionary into tiles list
-            tile_data = {
-                'image': sprite_img,
-                'gid': gid,
-                }
-
-            for i,collision in enumerate(collisions):
-                tile_data['objects']=collision
-            for custom_prop in custom_props:
-                tile_data[custom_prop[0]] = custom_prop[1]
-
-            tile_types.append(tile_data)
-
-    # note - tileset tsx does not always include data for a tile
-    # that could be used. Thus, parse_tileset provides sprite and
-    # property data for each tileset sprite location, then leaves
-    # object generation for the tilemap function?
-    return tile_types
+    return tiles
 
 
 ##########################
@@ -322,22 +383,47 @@ def parse_tileset(fname):
 
 class TileLayer():
 
-    def draw(region):
+    def __init__(self):
+        self._attrs = {}
+        self._offset = Vector2(0,0)
+        self._chunks = []
+        self._tiles = {}
 
-        for x in range(32):
-            for y in range(32):
-                tile_entity_id = chunk[x,y]
+    # pos,dims specifies rectangle on screen in pyglet coords: increasing y is up
+    # the grid cell specified by shift is at the point pos
+    # shift is in the grid coordinate system, increasing y is down
+    def draw(pos,dims,shift):
 
-                glPushMatrix()
-                glTranslatef(x*16,y*16)
-                tile_entities[tile_entity_id].draw()
-                glPopMatrix()
+        def draw_chunk(chunk):
+            pass
 
 
         pass
 
-    def check_collision(self,collider):
-        pass
+    # this is a generator that loops over all tiles such that any of their objects intersect
+    def colliding_tiles(self,colliding_object):
+        raise NotImplementedError
+
+    # this is a generator that loops over all (tile,object) pairs
+    def colliding_objects(self,colliding_object):
+        raise NotImplementedError
+
+    """
+        Attributes to get:
+            "name":  "",
+            "visible": True,
+            "dims": Vector2(0,0),
+            "locked": False,
+            "opacity": 1.0,
+            "properties": {}
+    """
+
+    def __getitem__(self, attr):
+        return getattr(self._attrs,attr)
+
+    def __setitem__(self,attr,newvalue):
+        return setattr(self._attrs,attr,newvalue)
+
 
 
 
@@ -345,12 +431,14 @@ def parse_tilemap(fname):
     """
         Parses a .tmx file.
 
-        Question: do I care about the attributes on <map>
         <map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="1" nextlayerid="3" nextobjectid="16">
+
+            Ignored:
             a <properties> tag for the whole map
 
             <tileset firstgid="1" source="terrain.tsx"/>
 
+            Here, id, width and height are ignored - it uses the global width and height.
             <layer id="1" name="Tile Layer 1" width="100" height="100" visible="?" locked="?" opacity="0.5" offsetx="5" offsety="3">
                 a <properties> tag
 
@@ -374,50 +462,159 @@ def parse_tilemap(fname):
 
         </map>
 
-        Question: what output format???
+        returns each layer as an individual return value.
+
+        A tile layer is a TileLayer object as above.
+
+        An object layer is like this:
+        {
+            "name":  ?,
+            "visible": ?,
+            "color": ?,
+            "locked": ?,
+            "opacity": ?,
+            "properties": {}     # possibly empty
+            "objects": []        # have been translated by the offsetx, offsety properties, tile gids replaced with tile dicts
+        }
 
     """
 
+    assert ".tmx" in fname, "Tilemap must be Tiled style xml file (~.tmx)"
+    tilemap_root = XP.parse(fname).getroot()
+
+    assert tilemap_root.attrib["orientation"] == "orthogonal"
+
+    tile_dims = Vector2(0,0)
+    tile_dims.x = int(tilemap_root.attrib["tilewidth"])
+    tile_dims.y = int(tilemap_root.attrib["tileheight"])
+
+    map_dims = Vector2(0,0)
+    map_dims.x = int(tilemap_root.attrib["width"])
+    map_dims.y = int(tilemap_root.attrib["height"])
+
+    tiles = []
+
+    for tileset_tag in tilemap_root.findall('tileset'):
+        firstgid = int(tileset_tag.attrib["firstgid"])
+
+        # maybe preprocess path?
+        path = os.path.join(os.path.dirname(fname),tileset_tag.attrib["source"])
+        tileset_tiles = parse_tileset(path)
+
+        # TODO: indexing. prepend with None
+        tiles += tileset_tiles
+
     layers = []
 
-    layers.append(TileLayer())
+    for tag in tilemap_root:
 
-    for obj in object_layer:
+        if tag.tag == "layer":
+            layer = TileLayer()
 
-        # <object id="1" gid="65" x="31.5" y="-0.5" width="16" height="16"/>
-        obj = {
-            "tileEntity": entities[65],
-            "x": 31.5,
-            "y": -0.5,
-            "layer": "layer_name", layer properties
-        }
+            layer._offset.x = int(tag.get("offsetx",default="0"))
+            layer._offset.y = int(tag.get("offsety",default="0"))
+
+            layer._attrs["name"] = tag.get("name",default="")
+            layer._attrs["visible"] = tag.get("visible",default="1") == "1"
+            layer._attrs["locked"] = tag.get("locked",default="0") == "1"
+            layer._attrs["opacity"] = float(tag.get("opacity",default="1.0"))
+
+            layer._attrs["dims"] = Vector2(0,0)
+            layer._attrs["dims"].x = int(tag.get("width",default="0"))
+            layer._attrs["dims"].y = int(tag.get("height",default="0"))
+
+            layer._chunks = []
+
+            layer._tiles = {}
+
+            data = tag.findall("data")[0]
+            assert data.attrib["encoding"] == "csv"
+
+            for chunk_tag in data:
+                chunk = {
+                    "pos": Vector2(int(chunk_tag.get("x",default="0")),int(chunk_tag.get("y",default="0"))),
+                    "dims": Vector2(int(chunk_tag.get("width",default="0")),int(chunk_tag.get("height",default="0"))),
+                    "tiles": {}
+                }
+
+                idxs = chunk_tag.text.replace("\n","").split(",")
+                x = chunk["pos"].x * tile_dims.x
+                y = (chunk["pos"].y-1) * tile_dims.y
+
+                for idx in idxs:
+                    idx = int(idx)
+
+                    if idx != "0":
+
+                        if idx not in layer._tiles:
+                            layer._tiles[idx] = {
+                                    "tile": tiles[idx],
+                                    "sprite": pyglet.sprite.Sprite(img=tiles[idx]["animation"])
+                                }
+
+                        if idx not in chunk["tiles"]:
+                            chunk["tiles"][idx] = []
+
+                        chunk["tiles"][idx].append(Vector2(x,y))
 
 
-        function_name = obj.custom_properties["function"]
+                    x += tile_dims.x
+                    if x >= (chunk["pos"].x + chunk["dims"].x) * tile_dims.x:
+                        x = chunk["pos"].x * tile_dims.x
+                        y -= tile_dims.y
 
-        if function_name not in globals():
-            print("Could not init obejct... error")
+            layers.append(layer)
 
-        if not isinstance(globals()[function_name], types.functiontype):
-            print("Could not init obejct... error")
 
-        globals()[function_name](obj)
+        if tag.tag == "objectgroup":
+            offset = Vector2(0,0)
+            offset.x = int(tag.get("offsetx",default="0"))
+            offset.y = int(tag.get("offsety",default="0"))
+
+            layer = {
+                "name": tag.get("name",default=""),
+                "visible": tag.get("visible",default="1") == "1",
+                "locked": tag.get("locked",default="0") == "1",
+                "opacity": float(tag.get("opacity",default="1")),
+                "color": None,
+                "objects": []
+            }
+
+            if "color" in tag.attrib:
+                value = tag.attrib["color"].lstrip("#")
+                layer["color"] = tuple(int(value[i:i+2],16)/255 for i in [0,2,4]) + (1.0,)
+
+            for child in tag:
+                if child.tag == "properties":
+                    assert "properties" not in layer
+                    layer["properties"] = parse_properties(child)
+
+                if child.tag == "object":
+                    obj = parse_object(child)
+
+                    obj["pos"].x += offset.x
+                    obj["pos"].y += offset.y
+
+                    if "tile" in obj:
+                        obj["tile"] = tiles[obj["tile"]]
+
+                    layer["objects"].append(obj)
+
+            if "properties" not in layer:
+                layer["properties"] = {}
+
+            layers.append(layer)
 
     return layers
-
 
 ########################
 
 
 def main():
-
-    platform_layer, enemies = parse_tilemap("level.tmx")
-
-    w = NodeWindow()
-    w.fps = 30
+    layers = parse_tilemap("chris/tiled-parser/tilemap.tmx")
+    print(layers)
 
 
-def goomba(obj):
 
-    # whatever needs to happen next
-
+if __name__ == "__main__":
+    main()
