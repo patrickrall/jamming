@@ -344,6 +344,8 @@ def parse_tileset(fname):
 
         x += tile_dims.x
 
+    assert len(tiles) == tilecount
+
     for tile_tag in tileset_root.iter("tile"):
         i = int(tile_tag.attrib["id"])
 
@@ -438,7 +440,6 @@ def parse_tilemap(fname):
 
             <tileset firstgid="1" source="terrain.tsx"/>
 
-            Here, id, width and height are ignored - it uses the global width and height.
             <layer id="1" name="Tile Layer 1" width="100" height="100" visible="?" locked="?" opacity="0.5" offsetx="5" offsety="3">
                 a <properties> tag
 
@@ -497,11 +498,13 @@ def parse_tilemap(fname):
     for tileset_tag in tilemap_root.findall('tileset'):
         firstgid = int(tileset_tag.attrib["firstgid"])
 
-        # maybe preprocess path?
         path = os.path.join(os.path.dirname(fname),tileset_tag.attrib["source"])
         tileset_tiles = parse_tileset(path)
 
-        # TODO: indexing. prepend with None
+        # pad tiles with None until we get the right index
+        while len(tiles) < firstgid:
+            tiles.append(None)
+
         tiles += tileset_tiles
 
     layers = []
@@ -544,7 +547,7 @@ def parse_tilemap(fname):
                 for idx in idxs:
                     idx = int(idx)
 
-                    if idx != "0":
+                    if idx != 0:
 
                         if idx not in layer._tiles:
                             layer._tiles[idx] = {
@@ -557,11 +560,12 @@ def parse_tilemap(fname):
 
                         chunk["tiles"][idx].append(Vector2(x,y))
 
-
                     x += tile_dims.x
                     if x >= (chunk["pos"].x + chunk["dims"].x) * tile_dims.x:
                         x = chunk["pos"].x * tile_dims.x
                         y -= tile_dims.y
+
+                layer._chunks.append(chunk)
 
             layers.append(layer)
 
@@ -613,6 +617,9 @@ def parse_tilemap(fname):
 def main():
     layers = parse_tilemap("chris/tiled-parser/tilemap.tmx")
     print(layers)
+    print(layers[0]._attrs)
+    print(layers[0]._chunks)
+    print(layers[0]._tiles)
 
 
 
