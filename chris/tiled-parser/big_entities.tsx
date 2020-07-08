@@ -42,7 +42,13 @@
    <frame tileid="1" duration="200"/>
   </animation>
  </tile>
- <tile id="3" terrain=",0,,0"/>
+ <tile id="3" terrain=",0,,0">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="22.2195" y="7.3012" rotation="74.2579">
+    <polyline points="-1.09091,4.94719 21.8182,-1.97888 27.4545,12.2973 10.9091,19.6474"/>
+   </object>
+  </objectgroup>
+ </tile>
  <wangsets>
   <wangset name="New Wang Set" tile="-1">
    <wangedgecolor name="" color="#ff0000" tile="-1" probability="1"/>

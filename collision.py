@@ -45,10 +45,17 @@ Types:
  - polygon
  - ellipse
 
+----- available shape definition keys in object dictionaries
+"rectangle": Vector2,                             # only present for rectangle
+"point": True,                                    # only present for point, True or unset
+"polygon": [Vector2],                             # only present for polygon, list of [Vector2]. First is always Vector2(0,0)
+"path": [Vector2],                                # only present for path, format same as polygon property
+"ellipse": Vector2,                               # only present for ellipse
+
 Rectangle is a type of polygon. I don't care that it's less efficient.
 So really it's just four types. Need to implement:
 
-Point vs Point # ok, dont bother.
+Point vs Point # ok don't bother ## supported! returns pos1 == pos2
 Point vs Line
 Point vs Polygon
 Point vs Ellipse
@@ -62,69 +69,68 @@ Ellipse vs Ellipse
 """
 
 def is_colliding(object1, object2):
-	if object1['shape'] == 'point':
-		if object2['shape'] == 'point':
-			return point_on_point(object1, object2)
-		elif object2['shape'] == 'line':
-			return point_on_line(object1, object2)
-		elif object2['shape'] == 'polygon':
+		 
+	# decide how to process each shape based on if it has a shape tag
+	# checks in the order point-path-polygon-ellipse x object1-object2
+	if "point" in object1:
+		if "point" in object2:
+			return object1["pos"] == object2["pos"] # pos is a Vector2
+		elif "path" in object2:
+			return point_on_path(object1, object2)
+		elif "polygon" in object2:
 			return point_on_polygon(object1, object2)
-		elif object2['shape'] == 'ellipse':
+		elif "ellipse" in object2:
 			return point_on_ellipse(object1, object2)
 		else:
 			raise NotImplementedError
 			return False
-	elif object1['shape'] == 'line':
-		if object2['shape'] == 'point':
-			return point_on_line(object2, object1)
-		elif object2['shape'] == 'line':
-			return point_on_line(object1, object2)
-		elif object2['shape'] == 'polygon':
-			return line_on_polygon(object1, object2)
-		elif object2['shape'] == 'ellipse':
-			return line_on_ellipse(object1, object2)
+
+	elif "path" in object1:
+		if "point" in object2:
+			return point_on_path(object2, object1)
+		elif "path" in object2:
+			return point_on_path(object1, object2)
+		elif "polygon" in object2:
+			return path_on_polygon(object1, object2)
+		elif "ellipse" in object2:
+			return path_on_ellipse(object1, object2)
 		else:
 			raise NotImplementedError
 			return False
-	elif object1['shape'] == 'polygon':
-		if object2['shape'] == 'point':
+
+	elif "polygon" in object1:
+		if "point" in object2:
 			return point_on_polygon(object2, object1)
-		elif object2['shape'] == 'line':
-			return line_on_polygon(object2, object1)
-		elif object2['shape'] == 'polygon':
+		elif "path" in object2:
+			return path_on_polygon(object2, object1)
+		elif "polygon" in object2:
 			return polygon_on_polygon(object1, object2)
-		elif object2['shape'] == 'ellipse':
+		elif "ellipse" in object2:
 			return polygon_on_ellipse(object1, object2)
 		else:
 			raise NotImplementedError
 			return False
-	elif object1['shape'] == 'ellipse':
-		if object2['shape'] == 'point':
+
+	elif "ellipse" in object1:
+		if "point" in object2:
 			return point_on_ellipse(object2, object1)
-		elif object2['shape'] == 'line':
-			return line_on_ellipse(object2, object1)
-		elif object2['shape'] == 'polygon':
+		elif "path" in object2:
+			return path_on_ellipse(object2, object1)
+		elif "polygon" in object2:
 			return polygon_on_ellipse(object2, object1)
-		elif object2['shape'] == 'ellipse':
+		elif "ellipse" in object2:
 			return ellipse_on_ellipse(object1, object2)
 		else:
 			raise NotImplementedError
 			return False
+
 	else:
 		raise NotImplementedError
 		return False
 
 
-
-def point_on_point(point1, point2):
-    if point1['x'] == point2['x'] and point1['y'] == point2['y']:
-    	return True
-    else: 
-    	return False
-
-
-#Point vs Line
-def point_on_line(point, line):
+#Point vs path
+def point_on_path(point, path):
     	return False
 
 
@@ -138,18 +144,18 @@ def point_on_ellipse(point, ellipse):
     	return False
 
 
-#Line vs Line
-def line_on_line(line1, line2):
+#path vs path
+def path_on_path(path1, path2):
     	return False
 
 
-#Line vs Polygon
-def line_on_polygon(line, polygon):
+#path vs Polygon
+def path_on_polygon(path, polygon):
     	return False
 
 
-#Line vs Ellipse
-def line_on_ellipse(line, ellipse):
+#path vs Ellipse
+def path_on_ellipse(path, ellipse):
     	return False
 
 
