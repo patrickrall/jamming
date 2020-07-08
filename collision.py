@@ -20,12 +20,27 @@ Bounding Box:
 """
 
 
-def preprocess_line_or_polygon(x,y,points, theta):
+def preprocess_path_or_polygon(x,y,points, theta, p_or_p):
     assert points[0] == (0,0)
-    pass
+    abs_points = [Vector2(x,y)]
+
+    def rel_to_abs(ref_x, ref_y, in_x, in_y, theta):
+    	out_x = ref_x + (in_x*math.cos(theta)) + (in_y*math.sin(theta))
+    	out_y = ref_y + (in_x*math.sin(theta)) + (in_y*math.cos(theta))
+    	return Vector2(out_x, out_y)
+
+    for rel_p in points[1:]:
+    	abs_points.append(rel_to_abs(x,y, rel_p.x, rel_p.y, theta))
+
+    if p_or_p != "polygon": 
+    	return abs_points
+
+
+    
 
 
 def preprocess_ellipse(x,y,width,height,theta):
+	center = (x)
     pass
 
 (x,y)
@@ -69,7 +84,25 @@ Ellipse vs Ellipse
 """
 
 def is_colliding(object1, object2):
-		 
+	#preprocess polygons and ellipses
+	for shape in [object1, object2]:
+		# puts starting point and all vertices in "path" as abs coords
+		if "path" in shape:
+			shape["path"] = preprocess_path_or_polygon( \
+					shape["pos"].x, shape["pos"].y, shape["path"], \
+					shape["rotation"], "path")
+		# puts starting point and all vertices in "polygon" as abs
+		elif "polygon" in shape:
+			shape["polygon"] = preprocess_path_or_polygon( \
+					shape["pos"].x, shape["pos"].y, shape["polygon"], \
+					shape["rotation"] , "polygon")
+		# puts center, minor radius, major radus in "ellipse" in abs
+		elif "ellipse" in shape:
+			shape["ellipse"] = preprocess_ellipse( \
+					shape["pos"].x, shape["pos"].y, \
+					shape["ellipse"].x, shape["ellipse"].y, \
+					shape["rotation"])	 
+	
 	# decide how to process each shape based on if it has a shape tag
 	# checks in the order point-path-polygon-ellipse x object1-object2
 	if "point" in object1:
@@ -162,6 +195,9 @@ def point_on_path_alt(point, path):
 
 #Point vs Polygon
 def point_on_polygon(point, polygon):
+
+
+
     	return False
 
 
