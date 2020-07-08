@@ -129,9 +129,35 @@ def is_colliding(object1, object2):
 		return False
 
 
-#Point vs path
+#####################Point vs path
 def point_on_path(point, path):
-    	return False
+	# checks each pair of points + target for triangle leg lengths
+	tolerance = 0.1
+	
+	def dist(p1, p2): # p1, p2 must be Vector2
+		return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
+
+	for i in range(len(path["path"]) - 1):
+		p1, p2 = path["path"][i], path["path"][i + 1]
+		
+		p1p2 = dist(p1, p2) # line segment length
+		p1p3, p2p3 = dist(p1, point), dist(p2, point) # triangle legs
+		
+		if p1p3 + p2p3 < p1p2 + tolerance:
+			return True
+    return False
+
+def point_on_path_alt(point, path):
+	#checks each line segment if target
+	tolerance = 0.1
+	for i in range(len(path["path"]) - 1):
+		p1, p2 = path["path"][i], path["path"][i + 1]
+		slope = (p2.y-p1.y)/(p2.x-p1.x)
+
+		# using point slope form, find abs(f(x3) - y3)
+		if math.abs((slope) * (point.x - p1.x) + p1.y - point.y) < tolerance:
+			return True
+	return False
 
 
 #Point vs Polygon
