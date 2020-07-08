@@ -20,23 +20,15 @@ Bounding Box:
 """
 
 
-def preprocess_path_or_polygon(x,y,points, theta, p_or_p):
-    assert points[0] == (0,0)
+def preprocess_path_or_polygon(x,y, ps, th):
+    assert ps[0] == (0,0)
     abs_points = [Vector2(x,y)]
 
-    def rel_to_abs(ref_x, ref_y, in_x, in_y, theta):
-    	out_x = ref_x + (in_x*math.cos(theta)) + (in_y*math.sin(theta))
-    	out_y = ref_y + (in_x*math.sin(theta)) + (in_y*math.cos(theta))
-    	return Vector2(out_x, out_y)
-
     for rel_p in points[1:]:
-    	abs_points.append(rel_to_abs(x,y, rel_p.x, rel_p.y, theta))
-
-    if p_or_p != "polygon": 
-    	return abs_points
-
-
-    
+    	abs_points.append(Vector2( \
+    		x + (ps.x * math.cos(th)) + (ps.y * math.sin(th)),
+    		y + (ps.y * math.cos(th)) + (ps.x * math.sin(th))))
+    return abs_points
 
 
 def preprocess_ellipse(x,y,width,height,theta):
@@ -90,12 +82,12 @@ def is_colliding(object1, object2):
 		if "path" in shape:
 			shape["path"] = preprocess_path_or_polygon( \
 					shape["pos"].x, shape["pos"].y, shape["path"], \
-					shape["rotation"], "path")
+					shape["rotation"])
 		# puts starting point and all vertices in "polygon" as abs
 		elif "polygon" in shape:
 			shape["polygon"] = preprocess_path_or_polygon( \
 					shape["pos"].x, shape["pos"].y, shape["polygon"], \
-					shape["rotation"] , "polygon")
+					shape["rotation"])
 		# puts center, minor radius, major radus in "ellipse" in abs
 		elif "ellipse" in shape:
 			shape["ellipse"] = preprocess_ellipse( \
