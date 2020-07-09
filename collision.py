@@ -21,7 +21,10 @@ Bounding Box:
 
 """
 def dist(p1, p2): # p1, p2 must be Vector2s
-		return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
+	return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
+
+def dist2(p1, p2): # p1, p2 must be Vector2s
+	return (p1.x - p2.x)**2 + (p1.y - p2.y)**2
 
 def preprocess_path_or_polygon(x,y, points, th):
     assert points[0] == (0,0)
@@ -42,10 +45,10 @@ def preprocess_path_or_polygon(x,y, points, th):
     avg_point.y /= len(abs_points)
     max_radius = 0
     for pnt in abs_points:
-    	this_radius = dist(pnt, avg_point)
+    	this_radius = dist2(pnt, avg_point)
     	if this_radius > max_radius: max_radius = this_radius
 
-    return abs_points, [avg_point, max_radius]
+    return abs_points, [avg_point, math.sqrt(max_radius)]
 
 
 # returns the real ellipse center and major/minor axes wrt rotation
@@ -199,9 +202,9 @@ def triangle_area_alt(p1, p2, p3):
 # can definitely cover small cavities, but should be ok sometimes?
 def find_best_triangle(v1, v2, pts_list):
 	closest = 0
-	min_dist = dist(v1, pts_list[0]) + dist(v2, pts_list[0])
+	min_dist = dist2(v1, pts_list[0]) + dist2(v2, pts_list[0])
 	for i, point in enumerate(pts_list[1:]):
-		if dist(v1, point) + dist(v2, point) < min_dist:
+		if dist2(v1, point) + dist2(v2, point) < min_dist:
 			closest = i+1
 	return closest
 
@@ -241,8 +244,8 @@ def point_on_path(point, path, tolerance=0.1):
 	for i in range(len(path["path"]) - 1):
 		p1, p2 = path["path"][i], path["path"][i + 1]
 		
-		p1p2 = dist(p1, p2) # line segment length
-		p1p3, p2p3 = dist(p1, point), dist(p2, point) # triangle legs
+		p1p2 = dist2(p1, p2) # line segment length
+		p1p3, p2p3 = dist2(p1, point), dist2(p2, point) # triangle legs
 		
 		if p1p3 + p2p3 < p1p2 + tolerance:
 			return True
@@ -262,7 +265,7 @@ def point_on_path_alt(point, path):
 
 
 #Point vs Polygon
-def point_on_polygon(point, polygon, tolerance=0.1):
+def point_on_polygon(point, polygon, tolerance=0.1, efficient=False):
 	# compatibility for triangulated polygon vs polygon object
 	if "polygon" in polygon:
 		poly_pts = polygon["polygon"]
@@ -278,10 +281,17 @@ def point_on_polygon(point, polygon, tolerance=0.1):
 
 	# check if point is in each triangle - polytri is [v1, v2, v3]
 	for poly_tri in poly_triangles:
-		ref_tri_area = triangle_area(poly_tri[0], poly_tri[1], poly_tri[2])
+		if not efficient:
+			ref_tri_area = triangle_area(poly_tri[0], poly_tri[1], poly_tri[2])
+		else:
+			ref_tri_area = triangle_area_alt(poly_tri[0], poly_tri[1], poly_tri[2])
 		point_tri_areas = []
 		for i in range(len(poly_tri)):
-			point_tri_areas += triangle_area(point, poly_tri[i], \
+			if not efficient:
+				point_tri_areas += triangle_area(point, poly_tri[i], \
+							poly_tri[(i+1) % len(poly_tri)]) 
+			else:
+				point_tri_areas += triangle_area_alt(point, poly_tri[i], \
 							poly_tri[(i+1) % len(poly_tri)]) 
 		if ref_tri_areas[0] < sum(point_tri_areas) + tolerance:
 			return True
