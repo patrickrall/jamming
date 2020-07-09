@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="109" height="111" tilewidth="16" tileheight="16" infinite="1" nextlayerid="3" nextobjectid="17">
+<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="109" height="111" tilewidth="16" tileheight="16" infinite="1" nextlayerid="3" nextobjectid="20">
  <properties>
   <property name="tilemap_property" type="bool" value="false"/>
  </properties>
  <tileset firstgid="1" source="terrain.tsx"/>
  <tileset firstgid="65" source="entities.tsx"/>
  <tileset firstgid="129" source="big_entities.tsx"/>
- <layer id="1" name="Tile Layer 1" width="109" height="111" visible="0" opacity="0.5" offsetx="7" offsety="6">
+ <layer id="1" name="Tile Layer 1" width="109" height="111" opacity="0.5">
   <properties>
    <property name="tilelayerprop" value="my_tile_layer"/>
   </properties>
@@ -58,9 +58,9 @@
    <property name="my_int" type="int" value="0"/>
    <property name="my_object_layer" value="asdf"/>
   </properties>
-  <object id="6" gid="129" x="175" y="95" width="48" height="48"/>
-  <object id="7" gid="131" x="321" y="127" width="48" height="48"/>
-  <object id="8" gid="130" x="50" y="128" width="48" height="48"/>
+  <object id="6" gid="129" x="154.93" y="42.6768" width="48" height="48"/>
+  <object id="7" gid="131" x="362.5" y="122.75" width="48" height="48"/>
+  <object id="8" gid="130" x="94" y="122.833" width="48" height="48"/>
   <object id="9" x="214" y="10">
    <polygon points="0,0 56,20 4,48"/>
   </object>
@@ -73,16 +73,22 @@
     <property name="asdf" value="asdfsfs"/>
    </properties>
   </object>
-  <object id="13" gid="129" x="255" y="141" width="48" height="48"/>
-  <object id="14" gid="129" x="468" y="199" width="48" height="48"/>
+  <object id="13" gid="129" x="252.75" y="91.25" width="48" height="48"/>
   <object id="15" name="TheName" type="TheType" x="112.673" y="-8.5728" rotation="420">
    <properties>
     <property name="customprop" value="customval"/>
    </properties>
    <polyline points="0,0 79.5864,-34.2899 30.0566,74.9298 -91.0164,59.2665 -100.753,3.38666"/>
   </object>
-  <object id="16" x="-74.5065" y="-190.499" width="66.8865" height="59.2665">
+  <object id="16" x="-108.373" y="-234.526" width="46.6447" height="141.583" rotation="6">
    <ellipse/>
   </object>
+  <object id="17" x="70.6965" y="-183.303" rotation="33">
+   <polyline points="0,0 38.9466,12.7"/>
+  </object>
+  <object id="18" x="129.54" y="-214.206" rotation="20">
+   <polyline points="0,0 43.1799,26.2466 23.2833,86.7831 -29.6332,24.1299 -158.326,15.6633"/>
+  </object>
+  <object id="19" x="-140.123" y="-255.693" width="44.8732" height="39.7932" rotation="-48"/>
  </objectgroup>
 </map>

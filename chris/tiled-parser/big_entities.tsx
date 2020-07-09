@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.1" name="big_entities.tsk" tilewidth="48" tileheight="48" tilecount="4" columns="2">
- <tileoffset x="6" y="5"/>
+<tileset version="1.2" tiledversion="1.3.3" name="big_entities.tsk" tilewidth="48" tileheight="48" tilecount="4" columns="2">
+ <tileoffset x="6" y="53"/>
  <properties>
   <property name="tileset_property" type="bool" value="false"/>
  </properties>
@@ -36,11 +36,6 @@
     <polygon points="0,0 5,-2.17391 10.2174,-0.26087 12.6087,-4.86957 10.5217,-7.69565 9.17391,-17.3478 2.65217,-15.7826 -0.130435,-5.13043"/>
    </object>
   </objectgroup>
-  <animation>
-   <frame tileid="1" duration="200"/>
-   <frame tileid="2" duration="200"/>
-   <frame tileid="1" duration="200"/>
-  </animation>
  </tile>
  <tile id="3" terrain=",0,,0"/>
  <wangsets>

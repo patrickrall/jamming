@@ -318,18 +318,14 @@ def parse_tileset(fname):
                               int(tile_offset_tags[0].attrib["y"]))
 
     tiles = []
-    x,y = 0,tile_dims.y
-    while True:
-        if x + tile_dims.x > image.width:
-            x = 0
-            y += tile_dims.y
-            if y > image.height:
-                break
 
+    x,y = 0, image.height - tile_dims.y
+
+    while True:
         tile_image = image.get_region(x=x,y=y,width=tile_dims.x,height=tile_dims.y)
 
         tile_image.anchor_x -= tile_offset.x
-        tile_image.anchor_y -= tile_offset.y
+        tile_image.anchor_y += tile_offset.y
 
         tile_animation = pyglet.image.Animation.from_image_sequence([tile_image],duration=1,loop=True)
 
@@ -343,6 +339,10 @@ def parse_tileset(fname):
         tiles.append(tile)
 
         x += tile_dims.x
+        if x + tile_dims.x > image.width:
+            x = 0
+            y -= tile_dims.y
+            if y < 0: break
 
     assert len(tiles) == tilecount
 
@@ -383,6 +383,8 @@ def parse_tileset(fname):
 ##########################
 
 
+
+
 class TileLayer():
 
     def __init__(self):
@@ -391,22 +393,57 @@ class TileLayer():
         self._chunks = []
         self._tiles = {}
 
+
     # pos,dims specifies rectangle on screen in pyglet coords: increasing y is up
-    # the grid cell specified by shift is at the point pos
     # shift is in the grid coordinate system, increasing y is down
-    def draw(pos,dims,shift):
-
-        def draw_chunk(chunk):
-            pass
+    # draw such that the point specified by shift is in the top-left corner of the rectangle
+    def draw(self,pos,dims,shift):
 
 
-        pass
+        glPushMatrix()
+        glTranslatef(pos.x,pos.y+dims.y,0) # top left corner is origin
+        #glTranslatef(-shift.x,-shift.y,0) # top left corner is shift vector
+
+        tx = self["tiledims"].x
+        ty = self["tiledims"].y
+
+        for chunk in self._chunks:
+
+            if False:
+                if chunk["pos"].x*tx + chunk["dims"].x*tx < shift.x: continue
+                if chunk["pos"].y*ty + chunk["dims"].y*ty < shift.y: continue
+                if shift.x + dims.x < chunk["pos"].x*tx: continue
+                if shift.y + dims.y < chunk["pos"].y*tx: continue
+
+
+            glColor4f(1,1,1,1)
+            if False:
+                glRectf(chunk["pos"].x*tx, -chunk["pos"].y*ty,
+                        (chunk["pos"].x+chunk["dims"].x)*tx,
+                        -(chunk["pos"].y+chunk["dims"].y)*ty)
+
+            for key in chunk["tiles"].keys():
+                sprite = self._tiles[key]["sprite"]
+
+                for pos in chunk["tiles"][key]:
+                    glPushMatrix()
+                    glTranslatef(pos.x,pos.y,0)
+                    #glRectf(0,0,tx,ty)
+                    sprite.draw()
+                    glPopMatrix()
+
+        glPopMatrix()
+
+
 
     # this is a generator that loops over all tiles such that any of their objects intersect
+    # give delta pos and delta theta
+    # maybe filter function?
     def colliding_tiles(self,colliding_object):
         raise NotImplementedError
 
     # this is a generator that loops over all (tile,object) pairs
+    # give delta pos and delta theta
     def colliding_objects(self,colliding_object):
         raise NotImplementedError
 
@@ -415,16 +452,17 @@ class TileLayer():
             "name":  "",
             "visible": True,
             "dims": Vector2(0,0),
+            "tiledims": Vector2(0,0),
             "locked": False,
             "opacity": 1.0,
             "properties": {}
     """
 
     def __getitem__(self, attr):
-        return getattr(self._attrs,attr)
+        return self._attrs[attr]
 
     def __setitem__(self,attr,newvalue):
-        return setattr(self._attrs,attr,newvalue)
+        self._attrs[attr] = newvalue
 
 
 
@@ -522,6 +560,8 @@ def parse_tilemap(fname):
             layer._attrs["locked"] = tag.get("locked",default="0") == "1"
             layer._attrs["opacity"] = float(tag.get("opacity",default="1.0"))
 
+            layer._attrs["tiledims"] = tile_dims
+
             layer._attrs["dims"] = Vector2(0,0)
             layer._attrs["dims"].x = int(tag.get("width",default="0"))
             layer._attrs["dims"].y = int(tag.get("height",default="0"))
@@ -613,13 +653,36 @@ def parse_tilemap(fname):
 
 ########################
 
+from swyne.node import *
+from swyne.layout import *
 
 def main():
-    layers = parse_tilemap("chris/tiled-parser/tilemap.tmx")
-    print(layers)
-    print(layers[0]._attrs)
-    print(layers[0]._chunks)
-    print(layers[0]._tiles)
+    tilelayer, objlayer = parse_tilemap("chris/tiled-parser/tilemap.tmx")
+
+    w = NodeWindow()
+    w.node, keys = deserialize_node("""
+    HintedLayoutNode [800,600]
+    -listener ListenerNode
+    """)
+
+    def draw_listener():
+
+        while True:
+            yield "on_draw"
+
+            tilelayer.draw(Vector2(0,0),Vector2(800,600),Vector2(10,30))
+
+            for obj in objlayer["objects"]:
+                if "tile" in obj:
+                    obj["tile"]["image"].blit(obj["pos"].x,600-obj["pos"].y)
+
+
+
+    keys["listener"].listener = draw_listener
+
+    pyglet.app.run()
+
+
 
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.1" name="terrain.tsk" tilewidth="16" tileheight="16" tilecount="64" columns="8">
+<tileset version="1.2" tiledversion="1.3.3" name="terrain.tsk" tilewidth="16" tileheight="16" tilecount="64" columns="8">
  <tileoffset x="8" y="8"/>
  <image source="terrain.png" width="128" height="128"/>
  <terraintypes>
