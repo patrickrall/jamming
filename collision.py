@@ -20,9 +20,10 @@ Bounding Box:
 """
 
 
-def preprocess_path_or_polygon(x,y, ps, th):
+def preprocess_path_or_polygon(x,y, ps, theta):
     assert ps[0] == (0,0)
     abs_points = [Vector2(x,y)]
+    th = math.radians(theta)
 
     for rel_p in points[1:]:
     	abs_points.append(Vector2( \
@@ -31,9 +32,12 @@ def preprocess_path_or_polygon(x,y, ps, th):
     return abs_points
 
 
-def preprocess_ellipse(x,y,width,height,theta):
-	center = (x)
-    pass
+def preprocess_ellipse(x, y, w, h, theta):
+	th = math.radians(theta)
+	center = Vector2(
+		x + ((w / 2) * math.cos(th)) + ((h / 2) * math.sin(th)),
+		y + ((w / 2) * math.sin(th)) + ((h / 2) * math.cos(th)))
+    
 
 (x,y)
 
@@ -154,13 +158,52 @@ def is_colliding(object1, object2):
 		return False
 
 
+#################### Math Helper Functions ######################
+def dist(p1, p2): # p1, p2 must be Vector2
+		return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
+
+def triangle_area(p1, p2, p3):
+	# using law of cosines and side lengths to find (bh/2)
+	a,b,c = dist(p1, p2), dist(p2,p3), dist(p3,p1)
+	cos_B = (a**2 + b**2 - c**2) / (2 * a * b)
+	return 0.5 * a * (c * math.sin(math.acos(cos_B)))
+
+def triangle_area_alt(p1, p2, p3):
+	det_1 = (p1.x - p3.x) * (p2.y - p3.y)
+	det_2 = (p2.x - p3.x) * (p1.y - p3.y)
+	return (det1 - det2) / 2.0 
+
+# picks a vertex that it likes for a triangle, probably not great
+# can definitely cover small cavities, but should be ok sometimes?
+def find_best_triangle(v1, v2, pts_list):
+	closest = 0
+	min_dist = dist(v1, pts_list[0]) + dist(v2, pts_list[0])
+	for i, point in enumerate(pts_list[1:]):
+		if dist(v1, point) + dist(v2, point) < min_dist:
+			closest = i+1
+	return closest
+
+# cuts a list of polygon points into
+def triangulate(v1, v2, pts_list):
+	# base cases
+	if len(pts_list) <= 0: return []
+	elif len(pts_list) == 1: return [[v1, v2, pts_list[0]]]
+
+	# intelligently pick a triangle, should help with concavity
+	# find_best_triangle just returns an index within pts_list
+	vb = find_best_triangle(v1, v2, pts_list)
+	triangles = [[v1, v2, pts_list[vb]]]
+
+	# recurse on slices on either side of the chosen vertex~
+	triangles += triangulate(v1, pts_list[vb], pts_list[vb+1:])
+	triangles += triangulate(pts_list[vb], v2, pts_list[:vb])
+
+	return triangles
+
 #####################Point vs path
 def point_on_path(point, path):
 	# checks each pair of points + target for triangle leg lengths
 	tolerance = 0.1
-	
-	def dist(p1, p2): # p1, p2 must be Vector2
-		return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
 
 	for i in range(len(path["path"]) - 1):
 		p1, p2 = path["path"][i], path["path"][i + 1]
@@ -187,10 +230,22 @@ def point_on_path_alt(point, path):
 
 #Point vs Polygon
 def point_on_polygon(point, polygon):
+	# break polygon down into triangles
+	poly_pts = polygon["polygon"]
 
+	poly_triangles = triangulate(poly_pts[0], poly_pts[1], poly_pts[2:])
 
-
-    	return False
+	# check if point is in each triangle - polytri is [v1, v2, v3]
+	tolerance = 0.1
+	for polytri in poly_triangles:
+		ref_tri_area = triangle_area(polytri[0], polytri[1], polytri[2])
+		point_tri_areas = []
+		for i in range(len(polytri)):
+			point_tri_areas += triangle_area(point, polytri[i], \
+							polytri[(i+1) % len(polytri)]) 
+		if ref_tri_areas[0] < sum(point_tri_areas) + tolerance:
+			return True
+    return False
 
 
 #Point vs Ellipse
