@@ -20,6 +20,9 @@
    <object id="1" x="0.130435" y="47.8696">
     <polygon points="0,0 16.2174,-0.173913 15.1304,-11.6522 9.86957,-15.6957 5.47826,-15.6522 0.304348,-10.913"/>
    </object>
+   <object id="2" x="0.205002" y="0.192704" width="19.2727" height="8.90909" rotation="24.7525">
+    <ellipse/>
+   </object>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="300"/>
@@ -32,12 +35,18 @@
    <property name="type" value="asdf"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0.608696" y="47.7826">
+   <object id="1" x="-0.877051" y="46.4904" rotation="10.5739">
     <polygon points="0,0 5,-2.17391 10.2174,-0.26087 12.6087,-4.86957 10.5217,-7.69565 9.17391,-17.3478 2.65217,-15.7826 -0.130435,-5.13043"/>
    </object>
   </objectgroup>
  </tile>
- <tile id="3" terrain=",0,,0"/>
+ <tile id="3" terrain=",0,,0">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="22.2195" y="7.3012" rotation="74.2579">
+    <polyline points="-1.09091,4.94719 21.8182,-1.97888 27.4545,12.2973 10.9091,19.6474"/>
+   </object>
+  </objectgroup>
+ </tile>
  <wangsets>
   <wangset name="New Wang Set" tile="-1">
    <wangedgecolor name="" color="#ff0000" tile="-1" probability="1"/>
