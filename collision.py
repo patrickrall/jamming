@@ -263,18 +263,26 @@ def point_on_path_alt(point, path):
 
 #Point vs Polygon
 def point_on_polygon(point, polygon, tolerance=0.1):
-	# break polygon down into triangles
-	poly_pts = polygon["polygon"]
+	# compatibility for triangulated polygon vs polygon object
+	if "polygon" in polygon:
+		poly_pts = polygon["polygon"]
+	else:
+		poly_pts = polygon
 
-	poly_triangles = triangulate(poly_pts[0], poly_pts[1], poly_pts[2:])
+	# break polygon down into triangles if necessary
+	if len(poly_pts) > 3:
+		poly_triangles = triangulate(poly_pts[0], poly_pts[1], poly_pts[2:])
+	else:
+		poly_triangles = poly_pts
+
 
 	# check if point is in each triangle - polytri is [v1, v2, v3]
-	for polytri in poly_triangles:
-		ref_tri_area = triangle_area(polytri[0], polytri[1], polytri[2])
+	for poly_tri in poly_triangles:
+		ref_tri_area = triangle_area(poly_tri[0], poly_tri[1], poly_tri[2])
 		point_tri_areas = []
-		for i in range(len(polytri)):
-			point_tri_areas += triangle_area(point, polytri[i], \
-							polytri[(i+1) % len(polytri)]) 
+		for i in range(len(poly_tri)):
+			point_tri_areas += triangle_area(point, poly_tri[i], \
+							poly_tri[(i+1) % len(poly_tri)]) 
 		if ref_tri_areas[0] < sum(point_tri_areas) + tolerance:
 			return True
     return False
@@ -309,10 +317,15 @@ def path_on_polygon(path, polygon, tolerance=0.1):
    	# checks each vertex on the path for intrusion
    	# and checks each vertex on the polygon for closeness
    	# will be wrong if the polygon can fit through a path section quick
+   	poly_pts = polygon["polygon"]
+   	poly_tri = triangulate(poly_pts[0], poly_pts[1], poly_pts[2:])
+
    	for vertex in path["path"]:
-   		if point_on_polygon(vertex, polygon, tolerance):
-   			return True
-   	for vertex in polygon["polygon"]:
+   		# triangulate polygon
+   		for triangle in poly_tri:
+	   		if point_on_polygon(vertex, triangle, tolerance):
+   				return True
+   	for vertex in poly_pts:
    		if point_on_path(vertex, path, tolerance):
    			return True
     return False
@@ -334,11 +347,19 @@ def path_on_ellipse(path, ellipse, resolution=4, tolerance=1):
 #Polygon vs Polygon
 def polygon_on_polygon(polygon1, polygon2, tolerance=0.1):
 	# checks all of the polygon vertices for intrusion
+	poly_pts1 = polygon1["polygon"]
+	poly_tri1 = triangulate(poly_pts1[0], poly_pts1[1], poly_pts1[2:])
+
+	poly_pts2 = polygon2["polygon"]
+	poly_tri2 = triangulate(poly_pts2[0], poly_pts2[1], poly_pts2[2:])
+
 	for vertex in polygon1["polygon"]:
-   		if point_on_polygon(vertex, polygon2, tolerance):
-   			return True
+		for triangle in poly_tri2:
+	   		if point_on_polygon(vertex, triangle, tolerance):
+   				return True
    	for vertex in polygon2["polygon"]:
-   		if point_on_polygon(vertex, polygon1, tolerance):
+   		for triangle in poly_tri1:
+	   		if point_on_polygon(vertex, polygon1, tolerance):
    			return True
    	return False
 
@@ -346,12 +367,16 @@ def polygon_on_polygon(polygon1, polygon2, tolerance=0.1):
 def polygon_on_ellipse(polygon, ellipse, resolution=4, tolerance=0.1):
 	# checks each vertex on the polygon for intrusion
    	# and checks the axis points on the ellipse for intrusion
+   	poly_pts = polygon["polygon"]
+   	poly_tri = triangulate(poly_pts[0], poly_pts[1], poly_pts[2:])
+   	
    	for vertex in polygon["polygon"]:
    		if point_on_ellipse(vertex, ellipse):
    			return True
    	for ellipse_point in roughen_ellipse(ellipse, resolution):
-   		if point_on_polygon(ellipse_point, path, tolerance):
-   			return True
+   		for triangle in polytri:
+	   		if point_on_polygon(ellipse_point, triangle, tolerance):
+   				return True
    	return False
 
 
