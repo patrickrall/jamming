@@ -359,7 +359,7 @@ def polygon_on_polygon(polygon1, polygon2, tolerance=0.1):
    				return True
    	for vertex in polygon2["polygon"]:
    		for triangle in poly_tri1:
-	   		if point_on_polygon(vertex, polygon1, tolerance):
+	   		if point_on_polygon(vertex, triangle, tolerance):
    			return True
    	return False
 
