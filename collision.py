@@ -20,31 +20,41 @@ Bounding Box:
 
 
 """
+def dist(p1, p2): # p1, p2 must be Vector2s
+		return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
 
-
-def preprocess_path_or_polygon(x,y, ps, th):
-    assert ps[0] == (0,0)
+def preprocess_path_or_polygon(x,y, points, th):
+    assert points[0] == (0,0)
     abs_points = [Vector2(x,y)]
 
-    for rel_p in points[1:]:
+    # exchange relative points for absolute points
+    for pnt in points[1:]:
     	abs_points.append(Vector2( \
-    		x + (ps.x * math.cos(th)) + (ps.y * math.sin(th)),
-    		y + (ps.y * math.cos(th)) + (ps.x * math.sin(th))))
-    return abs_points
+    		x + (pnt.x * math.cos(th)) + (pnt.y * math.sin(th)),
+    		y + (pnt.y * math.cos(th)) + (pnt.x * math.sin(th))))
+
+    # determine a decent middley point of the cloud and its bubble
+    avg_point = Vector2(0.0,0.0)
+    for pnt in abs_points:
+    	avg_point.x += pnt.x
+    	avg_point.y += pnt.y
+    avg_point.x /= len(abs_points)
+    avg_point.y /= len(abs_points)
+    max_radius = 0
+    for pnt in abs_points:
+    	this_radius = dist(pnt, avg_point)
+    	if this_radius > max_radius: max_radius = this_radius
+
+    return abs_points, [avg_point, max_radius]
 
 
+# returns the real ellipse center and major/minor axes wrt rotation
 def preprocess_ellipse(x, y, w, h, th):
 	center = Vector2(
 		x + ((w / 2) * math.cos(th)) + ((h / 2) * math.sin(th)),
 		y + ((w / 2) * math.sin(th)) + ((h / 2) * math.cos(th)))
-	return [center, Vector2(w/2, h/2), th)}
-    
 
-(x,y)
-
-linear transformation: 4 numbers
-w,h, angle: 3 numbers
-
+	return [center, Vector2(w/2, h/2), th)], [center, max(w/2, h/2)]
 
 
 """
@@ -82,30 +92,37 @@ Ellipse vs Ellipse
 
 """
 
-def is_colliding(object1, object2):
-	#preprocess polygons and ellipses
+def is_colliding(object1, object2, bubble_margin=2):
+	#preprocess polygons and ellipses and rectangles
 	for shape in [object1, object2]:
+		#makes rectangles into polygons, to be picked up later
+		if "rectangle" in shape:
+			shape["polygon"] = [Vector2(0.0, 0.0), \
+					Vector2(w, 0.0)), Vector2(0.0, h)), Vector2(w, h)]
+
 		# puts starting point and all vertices in "path" as abs coords
 		if "path" in shape:
-			shape["path"] = preprocess_path_or_polygon( \
+			shape["path"], shape["bubble"] = preprocess_path_or_polygon( \
 					shape["pos"].x, shape["pos"].y, shape["path"], \
-					shape["rotation"])
-			shape["size"] = radius_of_influence(shape, "path")
+					shape["rotation"])=
+		
 		# puts starting point and all vertices in "polygon" as abs
 		elif "polygon" in shape:
-			shape["polygon"] = preprocess_path_or_polygon( \
+			shape["polygon"], shape["bubble"] = preprocess_path_or_polygon( \
 					shape["pos"].x, shape["pos"].y, shape["polygon"], \
 					shape["rotation"])
-			shape["size"] = radius_of_influence(shape, "polygon")
+		
 		# puts center, minor radius, major radus in "ellipse" in abs
 		elif "ellipse" in shape:
-			shape["ellipse"] = preprocess_ellipse( \
+			shape["ellipse"], shape["bubble"] = preprocess_ellipse( \
 					shape["pos"].x, shape["pos"].y, \
 					shape["ellipse"].x, shape["ellipse"].y, \
-					shape["rotation"])	 
-			shape["size"] = radius_of_influence(shape, "ellipse")
+					shape["rotation"])
 	
-	if object1["pos"]
+	# skip closer checks if objects are far away from each other
+	if dist(object1["bubble"][0], object2["bubble"][0]) > \
+		(object1["bubble"][1] + object2["bubble"][1]) * bubble_margin:
+		return False
 
 
 	# decide how to process each shape based on if it has a shape tag
@@ -167,14 +184,6 @@ def is_colliding(object1, object2):
 
 
 #################### Math Helper Functions ######################
-def dist(p1, p2): # p1, p2 must be Vector2
-		return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
-
-def radius_of_influence(object, shape):
-	if shape == "ellipse":
-		return max(shape["ellipse"][1].x, shape["ellipse"][1].y)
-	else: return 0
-
 def triangle_area(p1, p2, p3):
 	# using law of cosines and side lengths to find (bh/2)
 	a,b,c = dist(p1, p2), dist(p2,p3), dist(p3,p1)
@@ -312,7 +321,7 @@ def path_on_polygon(path, polygon, tolerance=0.1):
 #path vs Ellipse
 def path_on_ellipse(path, ellipse, resolution=4, tolerance=1):
    	# checks each vertex on the path for intrusion
-   	# and checks the axis points on the polygon for closeness
+   	# and checks the axis points on the ellipse for closeness
    	for vertex in path["path"]:
    		if point_on_ellipse(vertex, ellipse):
    			return True
@@ -323,7 +332,8 @@ def path_on_ellipse(path, ellipse, resolution=4, tolerance=1):
 
 
 #Polygon vs Polygon
-def polygon_on_polygon(polygon1, polygon2):
+def polygon_on_polygon(polygon1, polygon2, tolerance=0.1):
+	# checks all of the polygon vertices for intrusion
 	for vertex in polygon1["polygon"]:
    		if point_on_polygon(vertex, polygon2, tolerance):
    			return True
@@ -333,11 +343,26 @@ def polygon_on_polygon(polygon1, polygon2):
    	return False
 
 #Polygon vs Ellipse
-def polygon_on_ellipse(polygon, ellipse):
-	return False
+def polygon_on_ellipse(polygon, ellipse, resolution=4, tolerance=0.1):
+	# checks each vertex on the polygon for intrusion
+   	# and checks the axis points on the ellipse for intrusion
+   	for vertex in polygon["polygon"]:
+   		if point_on_ellipse(vertex, ellipse):
+   			return True
+   	for ellipse_point in roughen_ellipse(ellipse, resolution):
+   		if point_on_polygon(ellipse_point, path, tolerance):
+   			return True
+   	return False
 
 
 #Ellipse vs Ellipse
-def ellipse_on_ellipse(ellipse1, ellipse2):
+def ellipse_on_ellipse(ellipse1, ellipse2, resolution=4):
+	#checks axis points on ellipses. sorry I couldn't do better :(
+   	for ellipse_point in roughen_ellipse(ellipse1, resolution):
+   		if point_on_ellipse(ellipse_point, ellipse2, tolerance):
+   			return True
+   	for ellipse_point in roughen_ellipse(ellipse2, resolution):
+   		if point_on_path(ellipse_point, ellipse1, tolerance):
+   			return True
     return False
 
