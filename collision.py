@@ -2,6 +2,14 @@ from swyne.node import Vector2
 import math
 
 """
+TO DO:
+- add flags in is_colliding() for various tolerance control parameters
+- find and fix the bug that I thought of in the shower but now can't remember
+- improve ellipse collision with more approximation points
+
+"""
+
+"""
 Preprocessing: Need to get rid of anchor and rotation.
 
 can also have rotation on any of these, so implement:
