@@ -40,7 +40,7 @@ def draw():
     kinds = {
         "none": ["assets/keys_noletters_unpressed.png", None],
         "wall": ["assets/keys_noletters_pressed.png", None],
-        "goal": ["assets/keys_noletters_unpressed.png", "assets/ball_sprite.gif"],
+        "goal": ["assets/keys_noletters_unpressed.png", "assets/moth_idle.gif"],
     }
 
     for kind in kinds.keys():
@@ -68,6 +68,7 @@ def draw():
     # used as override if we don't have assets for it yet
     tmp_colors = {
         "hazard": [1.,0.,0.,1.],
+        "gravity": [0.,0.,1.,1.],
     }
 
     ##################################################################################

@@ -118,6 +118,7 @@ def frame():
 
                     if kind != "wall": continue
 
+
                     rect = key_rects[key]
                     rpos = Vector2(rect["x"],rect["y"])
                     rdims = Vector2(rect["w"],rect["h"])
@@ -192,7 +193,7 @@ def frame():
                         break
 
 
-                if False:
+                if True:
                     # check against rectangles
                     anyCollide = False
                     for key in keys:
@@ -203,18 +204,21 @@ def frame():
                         if keys_pressed[key] and len(kind) > 1: kind = kind[1]
                         else: kind = kind[0]
 
-                        if kind != "wall": continue
-
                         rect = key_rects[key]
                         rpos = Vector2(rect["x"],rect["y"])
                         rdims = Vector2(rect["w"],rect["h"])
 
                         if circle_intersect_rect(pos+nudge, 10, rpos, rdims):
-                            if (nudge.x == 0): ball["vel"].y *= -1
-                            if (nudge.y == 0): ball["vel"].x *= -1
 
-                            ball["vel"].x = int(ball["vel"].x)
-                            ball["vel"].y = int(ball["vel"].y)
+                            if kind in ["wall", "goal"]:
+                                if (nudge.x == 0): ball["vel"].y *= -1
+                                if (nudge.y == 0): ball["vel"].x *= -1
+
+                                ball["vel"].x = int(ball["vel"].x)
+                                ball["vel"].y = int(ball["vel"].y)
+
+                            if kind == "goal":
+                                pass
 
                             anyCollide = True
                             break
