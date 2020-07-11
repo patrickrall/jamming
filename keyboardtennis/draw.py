@@ -4,8 +4,6 @@ import globs
 import pyglet
 import os
 
-from swyne.images import load_spritesheet
-
 def init_draw(w):
 
     w.launch_listener(draw)
@@ -30,7 +28,7 @@ def draw():
         letters_image[key] = img.get_region(x=rect["x"]-border,
                 y=rect["y"]-border, width=rect["w"]+2*border, height=rect["h"]+2*border)
 
-    anim = load_spritesheet("assets/ball_sprite.json")["rollin"]
+    anim = pyglet.image.load_animation("assets/ball_sprite.gif")
     w,h = anim.get_max_width(), anim.get_max_height()
     beachball_sprite = pyglet.sprite.Sprite(anim,x=-w/2,y=-h/2) # centered at origin
 
@@ -42,7 +40,7 @@ def draw():
     kinds = {
         "none": ["assets/keys_noletters_unpressed.png", None],
         "wall": ["assets/keys_noletters_pressed.png", None],
-        #"goal": ["assets/keys_noletters_unpressed.png", "assets/moth.gif"],
+        "goal": ["assets/keys_noletters_unpressed.png", "assets/ball_sprite.gif"],
     }
 
     for kind in kinds.keys():
@@ -70,7 +68,6 @@ def draw():
     # used as override if we don't have assets for it yet
     tmp_colors = {
         "hazard": [1.,0.,0.,1.],
-        "goal": [1.,1.,0.,1.],
     }
 
     ##################################################################################
@@ -114,7 +111,7 @@ def draw():
                     if active_sprites[key] == None:
                         # create sprite if there should be one
                         w,h = sprite_animations[kind].get_max_width(), sprite_animations[kind].get_max_height()
-                        x,y = rect["x"] + rect["w"]/2 - w/2, rect["x"]+rect["h"]/2 - h/2
+                        x,y = rect["x"] + rect["w"]/2 - w/2, rect["y"]+rect["h"]/2 - h/2
                         active_sprites[key] = pyglet.sprite.Sprite(sprite_animations[kind], x, y)
 
                     active_sprites[key].draw()
