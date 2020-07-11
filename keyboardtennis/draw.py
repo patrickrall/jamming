@@ -124,9 +124,15 @@ def draw():
 
 
         for ball in balls:
-            glPushMatrix()
-            glTranslatef(ball["pos"].x,ball["pos"].y,0)
-            beachball_sprite.draw()
-            glPopMatrix()
+
+            if False:
+                glPushMatrix()
+                glTranslatef(ball["pos"].x,ball["pos"].y,0)
+                beachball_sprite.draw()
+                glPopMatrix()
+
+            glColor4f(1.,0,1.,1)
+            x,y = ball["pos"].x,ball["pos"].y
+            glRectf(x-10, y-10, x+10, y+10)
 
 
