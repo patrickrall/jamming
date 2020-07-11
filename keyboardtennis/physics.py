@@ -107,32 +107,6 @@ def frame():
 
         dimsx,dimsy,boty = 960,320,60
 
-        dead_ball_indices = []
-        for n, ball in enumerate(balls):
-
-            ignore_key = None
-            if True:
-
-                for key in keys:
-                    if key in level: kind = level[key]
-                    else: kind = level["default"]
-                    if keys_pressed[key] and len(kind) > 1: kind = kind[1]
-                    else: kind = kind[0]
-
-                    if kind != "wall": continue
-
-
-                    rect = key_rects[key]
-                    rpos = Vector2(rect["x"],rect["y"])
-                    rdims = Vector2(rect["w"],rect["h"])
-                    radius = ball["dia"]/2
-
-                    if circle_intersect_rect(ball["pos"], radius, rpos, rdims):
-
-                        ignore_key = key
-
-                        dright = (rpos.x + rdims.x - ball["pos"].x)
-                        dleft = (ball["pos"].x - rpos.x)
 
         for ball in trapped_balls:
 
@@ -164,7 +138,8 @@ def frame():
 
         dimsx,dimsy,boty = 960,320,60
 
-        for ball in balls:
+        dead_ball_indices = []
+        for n, ball in enumerate(balls):
 
             if ball["vel"].x < 20:
                 pass
@@ -224,19 +199,15 @@ def frame():
 
                                 ball["vel"].x = int(ball["vel"].x)
                                 ball["vel"].y = int(ball["vel"].y)
-
                             anyCollide = True
                             break
-
                     if anyCollide:
                         break
-
                 ball["pos"] += nudge
 
 
         for dead_ball_index in dead_ball_indices:
-            level["dead-balls"] += 1
-            balls.pop(dead_ball_index)
+            level["dead-balls"].append(balls.pop(dead_ball_index))
         dead_ball_indices = []
 
 
@@ -273,7 +244,7 @@ def ball_spawning():
                 # control was already held a little bit
                 elif ball_spawner["ctrl_frames"] <= 10 or \
                         len(balls) >= level["simultaneous-balls"] or \
-                        len(balls) + level["dead-balls"] > level["max-balls"]:
+                        len(balls) + len(level["dead-balls"]) > level["max-balls"]:
                     launch_sounds[1].play()
                 else:
                     # call all params now for concise equations later
@@ -290,7 +261,7 @@ def ball_spawning():
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
                         "vel": Vector2(sp*cos(th), sp*sin(th)),\
                         "caught": "none", "dia":vp[1], "extratime":0})
-                    print(balls[-1]["vel"])
+                    #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
                     ball_spawner["ctrl_held"] = False

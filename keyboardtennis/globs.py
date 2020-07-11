@@ -90,11 +90,11 @@ levels = []
 
 levels.append({
         "default": ["none", "wall"],
-        "S": ["gravity-off", "gravity-on"],
+        "S": ["hazard", "none"],
         "MINUS": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
 
     })
 
@@ -112,7 +112,7 @@ levels.append({
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
 
 levels.append({
@@ -122,7 +122,7 @@ levels.append({
         "I": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
 
 levels.append({
@@ -135,7 +135,7 @@ levels.append({
         "I": ["wall"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
 
 levels.append({
@@ -144,5 +144,5 @@ levels.append({
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
