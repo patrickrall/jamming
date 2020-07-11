@@ -86,7 +86,7 @@ levels = []
 
 levels.append({
         "default": ["none", "wall"],
-        "S": ["hazard", "none"],
+        "S": ["gravity-off", "gravity-on"],
         "MINUS": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
@@ -100,7 +100,7 @@ levels.append({
         "G": ["wall"],
         "_5": ["wall"],
         "T": ["wall", "none"],
-        "H": ["none","gravity"],
+        "H": ["none","gravity-off"],
         "MINUS": ["goal"],
         "_0": ["wall"],
         "P": ["wall"],
