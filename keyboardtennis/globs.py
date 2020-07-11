@@ -53,7 +53,8 @@ def init_globals():
     global background_music_player
     background_music_player = pyglet.media.Player()
     background_music_player.volume = 0.01
-    background_music = [media("audio/Eva_soundtrack.mp3"), media("audio/DzGrimX_soundtrack.mp3")]
+    background_music = [media("audio/Eva_soundtrack.mp3", streaming=False),
+                        media("audio/DzGrimX_soundtrack.mp3", streaming=False)]
     background_music_player.queue(background_music)
 
 def next_level():
