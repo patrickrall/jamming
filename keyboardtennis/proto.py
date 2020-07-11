@@ -23,7 +23,7 @@ def main():
         key_rects[key]["y"] = 244 - key_rects[key]["y"] - key_rects[key]["h"]
 
     global balls
-    balls = [{"pos":Vector2(100,100), "vel": Vector2(10,10), "caught": "none", "dia":5}]
+    balls = [{"pos":Vector2(100,100), "vel": Vector2(60,60), "caught": "none", "dia":5, "extratime":0}]
 
     global level
     level = {
@@ -35,6 +35,7 @@ def main():
         "LSHIFT": ["hazard"],
     }
 
+
     w = NodeWindow()
     w.fps = 60
 
@@ -43,6 +44,8 @@ def main():
     """)
 
     # Stella's numbers are: [960,230]
+
+
 
     w.launch_listener(draw)
     w.launch_listener(find_keys_pressed)
@@ -80,15 +83,78 @@ def find_keys_pressed():
 
 
 
+# splits an integer translation into lots of little translations
+# that add up to the provided translation.
+def split_delta(delta):
+    assert delta.x == int(delta.x)
+    assert delta.y == int(delta.y)
+
+    import math
+
+    sx = math.copysign(1,delta.x)
+    sy = math.copysign(1,delta.y)
+    magx = abs(delta.x)
+    magy = abs(delta.y)
+
+    # deal with case where things are zero
+    if delta.x == 0 and delta.y == 0: return
+    if delta.x == 0:
+        for i in range(magx):
+            yield Vector2(0,sy)
+        return
+    if delta.y == 0:
+        for i in range(magy):
+            yield Vector2(sx,0)
+        return
+
+
+    y = 0
+    m = magx/magy
+    for x in range(1,magx+1):
+        yield Vector2(sx,0)
+        for i in range(int(x*m)-y):
+            yield Vector2(0,sy)
+        y = int(x*m)
+
+
 def simpleframe():
 
     global balls
+
 
     while True:
         _, dt = yield "on_frame"
 
         for ball in balls:
-            ball["pos"] += ball["vel"]*dt
+            dimsx,dimsy,boty = 724,244,48
+
+            delta = ball["vel"]*(dt + ball["extratime"])
+            ball["extratime"] = (delta.x - int(delta.x))/ball["vel"].x
+            delta.x = int(delta.x)
+            delta.y = int(delta.y)
+
+            pos = ball["pos"]
+
+
+            for nudge in split_delta(delta):
+
+                if True:
+                    if pos.x + nudge.x > dimsx:
+                        ball["vel"].x *= -1
+                        break
+                    if pos.x + nudge.x < 0:
+                        ball["vel"].x *= -1
+                        break
+                    if pos.y + nudge.y > dimsy:
+                        ball["vel"].y *= -1
+                        break
+                    if pos.y + nudge.y < boty:
+                        ball["vel"].y *= -1
+                        break
+
+                pos += nudge
+            ball["pos"] = pos
+
 
 
 
@@ -108,8 +174,6 @@ def draw():
 
     while True:
         yield "on_draw"
-
-
 
 
         for key in keys:
