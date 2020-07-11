@@ -25,8 +25,8 @@ def main():
     global key_rects
     key_rects = {keys[i]:data["frames"][str(i)]["frame"] for i in range(len(keys))}
 
-    #global balls
-    #balls = [{"pos":Vector2, "vel": Vector2}]
+    global balls
+    balls = [{"pos":Vector2(0,0), "vel": Vector2(0,0), "caught": "none", "dia":5}]
 
     global level
     level = {
