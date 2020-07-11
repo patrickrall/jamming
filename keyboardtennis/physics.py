@@ -122,41 +122,6 @@ def ball_touching_rect(center, radius, rect_pos, rect_size):
         return False
 
 
-def ball_rect_can_collide(ball_center, ball_radius, rect_upperleft, rect_size):
-    """Determine whether the rectangle and circle inputted are in collision"""
-    buffer = 500  # area around ball that will also rebound
-    # center value in range
-    if (ball_center.x > rect_upperleft.x and ball_center.x < rect_upperleft.x + rect_size.x):
-        if (ball_center.y > rect_upperleft.y and ball_center.y < rect_upperleft.y + rect_size.y):
-            return True
-
-    # square with an extra buffer padding represents the ball
-    ball_rep_x = [ball_center.x - ball_radius - buffer, ball_center.x, ball_center.x + ball_radius + buffer]
-    ball_rep_y = [ball_center.x - ball_radius - buffer, ball_center.x, ball_center.x + ball_radius + buffer]
-
-    rect_rep_x = [rect_upperleft.x, rect_upperleft.x + rect_size.x]
-    rect_rep_y = [rect_upperleft.y - rect_size.y, rect_upperleft.y]
-
-    for X in ball_rep_x:
-        for Y in ball_rep_y:
-            if (X > rect_upperleft.x and X < rect_upperleft.x + rect_size.x):
-                if (Y > rect_upperleft.y  and Y < rect_upperleft.y + rect_size.y ):
-                    return True
-
-    return False
-
-def collision_sign(vec0, vec1, max_dist=16):
-    """Detect which direction objects should move after a collision - this prevents collision direction errors when the player is commanding a velocity"""
-    dx = vec0.x - vec1.x
-    dy = vec0.y - vec1.y
-    sign_x, sign_y = 0, 0
-    if (abs(dx) < max_dist):  # collision in x
-        sign_x = 1 if dx > 0 else -1
-    if (abs(dy) < max_dist):  # collision in y
-        sign_y = 1 if dy > 0 else -1
-    return [sign_x, sign_y, dx, dy]
-
-
 def frame():
     balls = globs.balls
     key_rects = globs.key_rects
@@ -168,9 +133,6 @@ def frame():
 
     while True:
         _, dt = yield "on_frame"
-
-
-
 
         for ball in balls:
             dimsx,dimsy,boty = 960,320,60
@@ -200,39 +162,6 @@ def frame():
                         break
 
                 pos += nudge
-
-                # check for collision between ball, a wall
-                for key in keys:  # check each key to see if the key is currently at a wall
-                    hitWall = False
-                    # specific key wall check
-                    if key in level and key in keys_pressed:
-                        # non-default wall check
-                        if (level[key][len(level[key]) - 1] if keys_pressed[key] else level[key][0]) == "wall":  # check for wall
-                            hitWall = True
-                    # default-key wall check
-                    elif (level["default"][1] if keys_pressed[key] else level["default"][0] == "wall"):
-                        hitWall = True
-
-                    if hitWall:
-                        # change velocity in response to the wall hit
-                        # print(key + " is a wall")
-                        rect = key_rects[key]
-                        key_pos = Vector2(rect["x"], rect["y"])
-                        key_size = Vector2(rect["w"], rect["h"])
-                        if ball_rect_can_collide(ball["pos"], ball["dia"] / 2, key_pos, key_size):
-                            #print("Hit " + key)
-                            rect_center = Vector2(key_pos.x + key_size.x/2, key_pos.y + key_size.y/2)
-                            [sign_x, sign_y, dx, dy] = collision_sign(ball["pos"], rect_center, ball[
-                                "dia"] / 2 + key_size.x / 2 )  # todo account for key_size.y separately
-                            #print(f"[sign_x, sign_y, dx, dy] = [{sign_x}, {sign_y}, {dx}, {dy}]")
-
-                            if (sign_x != 0):
-                                ball["vel"].x = sign_x * abs(ball["vel"].x)
-                                #print("x vel adjust")
-                            elif (sign_y != 0):
-                                ball["vel"].y = sign_y * abs(ball["vel"].y)
-                                #print("y vel adjust")
-                            break
             ball["pos"] = pos
 
 

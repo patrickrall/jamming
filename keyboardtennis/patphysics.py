@@ -45,7 +45,7 @@ def circle_intersect_rect(cpos,cr,rpos,rdims):
         if (b**2 - 4*a*c < 0): return False
 
         t1 = ( -b + sqrt(b**2 - 4*a*c) ) / 2*a
-        t2 = ( -b + sqrt(b**2 - 4*a*c) ) / 2*a
+        t2 = ( -b - sqrt(b**2 - 4*a*c) ) / 2*a
 
         if 0 <= t1 <= 1: return True
         if 0 <= t2 <= 1: return True
