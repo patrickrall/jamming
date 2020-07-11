@@ -4,6 +4,7 @@ from swyne.layout import HintedLayoutNode
 import pyglet
 
 import globs
+import random
 from draw import init_draw
 from physics import init_physics
 
@@ -31,6 +32,7 @@ def record_key_presses():
 
     keys_pressed = globs.keys_pressed
     keys = globs.keys
+    key_sounds = globs.key_sounds
 
     waiting_keys = []
     num_pressed = 0
@@ -46,6 +48,9 @@ def record_key_presses():
                     else:
                         keys_pressed[key] = True
                         num_pressed += 1
+
+                        r = random.randint(0, 6)
+                        key_sounds[r].play()
 
                 if event == "on_key_release":
                     if keys_pressed[key]:  # only decrement when the key was actually pressed

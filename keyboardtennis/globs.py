@@ -2,6 +2,7 @@
 
 import json
 from swyne.node import Vector2
+from pyglet.resource import media
 
 def init_globals():
 
@@ -39,4 +40,8 @@ def init_globals():
 
     global images
     images = {}
+
+    global key_sounds
+    key_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1, 8)]
+
 
