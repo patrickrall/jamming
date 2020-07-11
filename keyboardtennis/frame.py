@@ -2,9 +2,20 @@ from swyne.node import *
 
 
 
+def ball_rect_side(center, radius, rect_pos, rect_size):
+	# center, rect_pos, and rect_size are Vector2, radius is float
+	if center.x + radius < rect_pos.x:
+		if center.y + radius < rect_pos.y: return "tl"
+		elif center.y - radius > rect_pos.y + rect_size.y: return "bl"
+		else: ball_rect_touch(center, radius, rect_pos, rect_size)
+
+
 
 def will_collide(pos, target, wall):
 	return True
+
+def finish_game():
+	pass
 
 
 def frame():
@@ -21,8 +32,8 @@ def frame():
         for ball in balls:
         	#check if the ball was caught last frame
         	if ball["caught"] != "none":
-        		if ball["caught"] not in keys_pressed:
-        			ball["caught"] = None
+        		if keys_pressed[ball["caught"]]:
+        			ball["caught"] = "none"
         		else:
         			continue
 
@@ -33,6 +44,22 @@ def frame():
         	ball_radius = ball["dia"]/2.0
 
 
+
         	for key in key_rects:
-        		
-        		if dest.x < key["x"]
+        		# check if the key is not empty
+        		can_collide = False
+        		if not keys_pressed[key]:
+        			if level[key][0] != "none":
+        				can_collide = True
+        		else:
+        			if len(level[key]) < 2:
+        				if level[key][0] != "none":
+        					can_collide = True
+        			else:
+        				if level[key][1] != "none":
+        					can_collide = True
+
+        		if can_collide:
+        			
+
+        		if dest.x < key["x"]:
