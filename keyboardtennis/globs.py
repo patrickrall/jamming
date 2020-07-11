@@ -43,7 +43,7 @@ def init_globals():
 
     global key_sounds
     key_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1, 8)]
-    
+
     global bounce_sounds
     bounce_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1,3)]
 
