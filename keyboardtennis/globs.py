@@ -86,6 +86,16 @@ levels.append({
     })
 
 levels.append({
+        "default": ["wall", "none"],
+        "RSHIFT": ["hazard"],
+        "_6": ["wall", "goal"],
+        "T": ["wall"],
+        "R": ["wall"],
+        "U": ["wall"],
+        "I": ["wall"],
+    })
+
+levels.append({
         "default": ["hazard"],
         "H": ["none","gravity"],
         "ENTER": ["hazard"],
