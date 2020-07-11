@@ -13,6 +13,7 @@ def draw():
 
     balls = globs.balls
     trapped_balls = globs.trapped_balls
+    dead_balls = globs.level["dead-balls"]
     keys = globs.keys
     keys_pressed = globs.keys_pressed
     key_rects = globs.key_rects
@@ -36,6 +37,8 @@ def draw():
     anim = pyglet.image.load_animation("assets/ball_sprite.gif")
     w,h = anim.get_max_width(), anim.get_max_height()
     beachball_sprite = pyglet.sprite.Sprite(anim,x=-w/2,y=-h/2) # centered at origin
+    death = pyglet.image.load_animation("assets/ball_sprite_death.gif")
+    beachball_death = pyglet.sprite.Sprite(anim,x=-w/2,y=-h/2)
 
     # initialized below
     keyboard_images = {}
@@ -144,6 +147,9 @@ def draw():
                 x,y = ball["pos"].x,ball["pos"].y
                 glRectf(x-10, y-10, x+10, y+10)
 
+        for ball in dead_balls:
+            kill_ball(dead_balls.pop())
+
 
         for ball in trapped_balls:
             glPushMatrix()
@@ -154,3 +160,8 @@ def draw():
         ctrlkey.blit(0,0)
 
 
+
+
+def kill_ball(ball):
+
+    pass

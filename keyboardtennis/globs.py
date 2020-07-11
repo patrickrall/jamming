@@ -88,21 +88,15 @@ def next_level():
 global levels
 levels = []
 
-
 levels.append({
-        "default": ["wall"],
-        "LSHIFT":["none"],
-        "Q":["none"],
-        "A":["none"],
-        "Z":["none"],
-        "E":["none"],
-        "D":["none"],
-        "C":["none"],
+        "default": ["none", "wall"],
+        "S": ["hazard", "none"],
+        "MINUS": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
-    })
+        "dead-balls": [],
 
+    })
 
 levels.append({
         "default": ["none","wall"],
@@ -118,19 +112,8 @@ levels.append({
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
-
-levels.append({
-        "default": ["none", "wall"],
-        "s": ["gravity-off", "gravity-on"],
-        "minus": ["goal"],
-        "max-balls" : 3,
-        "simultaneous-balls" : 1,
-        "dead-balls": 0,
-
-    })
-
 
 levels.append({
         "default": ["none","wall"],
@@ -139,7 +122,7 @@ levels.append({
         "I": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
 
 levels.append({
@@ -152,7 +135,7 @@ levels.append({
         "I": ["wall"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
 
 levels.append({
@@ -161,5 +144,5 @@ levels.append({
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": 0,
+        "dead-balls": [],
     })
