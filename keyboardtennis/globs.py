@@ -12,7 +12,7 @@ def init_globals():
             "LSHIFT", "Z", "X", "C", "V", "B", "N", "M", "COMMA", "PERIOD", "SLASH", "RSHIFT"]
 
 
-    with open("keyboard.json") as f:
+    with open("assets/keyboard.json") as f:
         data = json.loads(f.read())
 
     global key_rects
@@ -36,4 +36,7 @@ def init_globals():
 
     global keys_pressed
     keys_pressed = {key: False for key in keys}
+
+    global images
+    images = {}
 

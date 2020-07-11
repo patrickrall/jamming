@@ -1,10 +1,32 @@
 
 from pyglet.gl import *
 import globs
+import pyglet
+import os
 
 def init_draw(w):
 
-    # TODO grab images
+    files = {
+        "none": "assets/keys_unpressed.png",
+        "wall": "assets/keys_pressed.png",
+    }
+
+
+    images = globs.images
+
+    for key in files.keys():
+        ext = os.path.splitext(files[key])[1]
+        if ext == ".png":
+            img = pyglet.image.load(files[key])
+            anim = pyglet.image.Animation.from_image_sequence([img],duration=1)
+        elif ext == ".gif":
+            anim = pyglet.image.load_animation(files[key])
+        else:
+            raise InputError("Bad extension "+ext)
+        print(anim)
+
+
+
 
     w.launch_listener(draw)
 

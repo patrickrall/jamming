@@ -261,7 +261,11 @@ def add_file(window,path):
         tags_to_add = []
         raw_tags = data["meta"]["frameTags"]
 
-        idx = min([tag["from"] for tag in raw_tags])
+        if len(raw_tags) > 0:
+            idx = min([tag["from"] for tag in raw_tags])
+        else:
+            idx = numframes
+
         if idx != 0:
             tags_to_add.append({"name":window.untagged, "length":idx})
 
