@@ -109,7 +109,6 @@ def frame():
             ignore_key = None
             if True:
 
-
                 for key in keys:
                     if key in level: kind = level[key]
                     else: kind = level["default"]
@@ -151,8 +150,25 @@ def frame():
                         ball["vel"].x = int(ball["vel"].x)
                         ball["vel"].y = int(ball["vel"].y)
 
+                        print(ball["vel"])
                         break
 
+            v2 = ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y
+            if v2 > 20000:
+                ball["vel"].x *= 0.8
+                ball["vel"].y *= 0.8
+
+                ball["vel"].x = int(ball["vel"].x)
+                ball["vel"].y = int(ball["vel"].y)
+                print(ball["vel"])
+
+            if v2 < 10000:
+                ball["vel"].x *= 1.1
+                ball["vel"].y *= 1.1
+
+                ball["vel"].x = int(ball["vel"].x)
+                ball["vel"].y = int(ball["vel"].y)
+                print(ball["vel"])
 
 
             delta = ball["vel"]*dt
@@ -179,7 +195,7 @@ def frame():
                         break
 
 
-                if True:
+                if False:
                     # check against rectangles
                     anyCollide = False
                     for key in keys:
@@ -197,8 +213,8 @@ def frame():
                         rdims = Vector2(rect["w"],rect["h"])
 
                         if circle_intersect_rect(pos+nudge, 10, rpos, rdims):
-                            if (nudge.x == 0): ball["vel"].y *= -0.8
-                            if (nudge.y == 0): ball["vel"].x *= -0.8
+                            if (nudge.x == 0): ball["vel"].y *= -1
+                            if (nudge.y == 0): ball["vel"].x *= -1
 
                             ball["vel"].x = int(ball["vel"].x)
                             ball["vel"].y = int(ball["vel"].y)
