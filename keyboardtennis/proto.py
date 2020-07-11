@@ -60,22 +60,31 @@ def find_keys_pressed():
     global keys_pressed
     keys_pressed = {key: False for key in keys}
 
+    waiting_keys = []
+    num_pressed = 0
+
     while True:
         event, symbol, modifiers = yield ["on_key_press", "on_key_release"]
 
         for key in keys:
             if getattr(pyglet.window.key, key) == symbol:
-                if event == "on_key_press": keys_pressed[key] = True
-                if event == "on_key_release": keys_pressed[key] = False
+                if event == "on_key_press":
+                    if num_pressed >= 2:
+                        waiting_keys.append(key)
+                    else:
+                        keys_pressed[key] = True
+                        num_pressed += 1
 
-        # filter down to 2 keys
-        n = 0
-        for key in keys:
-            if n >= 2:
-                keys_pressed[key] = False
-                continue
-            if keys_pressed[key]:
-                n += 1
+                if event == "on_key_release":
+                    keys_pressed[key] = False
+                    num_pressed -= 1
+                    if num_pressed < 2 and waiting_keys:  # waiting_keys evaluates to True when non-empty
+                        keys_pressed[waiting_keys[0]] = True
+                        waiting_keys = waiting_keys[1:]
+                        num_pressed += 1
+
+
+
 
 
 
