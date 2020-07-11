@@ -1,5 +1,5 @@
 
-from math import sqrt, copysign
+from math import sqrt, copysign, sin, cos, pi
 from swyne.node import Vector2
 import globs
 import pyglet
@@ -18,7 +18,7 @@ def ball_spawning():
         "speed_min": 20, "speed_scale": 10, "speed_reset": 30,
         "angle_min": 20, "angle_limit": 240, "angle_reset": 200,
         "dia": 10, "bot_left": [key_rects["LSHIFT"]["x"], \
-                key_rects["LSHIFT"]["y"] + key_rects["LSHIFT"]["h"]]}
+                key_rects["LSHIFT"]["y"]]}
 
     while True:
         event, *args = yield ["on_key_press", "on_key_release", "on_frame"]
@@ -48,7 +48,7 @@ def ball_spawning():
                     pos = [bl_corner[0] + vp[1], bl_corner[1] + vp[1]]
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
-                        "vel": Vector2(sp*math.cos(th), -sp*math.sin(th)),\
+                        "vel": Vector2(sp*math.cos(th), sp*math.sin(th)),\
                         "caught": "none", "dia":vp[1], "extratime":0})
                     # reset control key counter
                     ball_spawner["ctrl_held"] = False
