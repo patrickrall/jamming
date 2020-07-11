@@ -4,17 +4,15 @@ from swyne.node import Vector2
 import globs
 import pyglet
 
+from pyglet.gl import *
+
 def init_physics(w):
     w.launch_listener(ball_spawning)
     w.launch_listener(frame)
-    w.launch_listener(test)
 
+    global mpos
+    mpos = (0,0)
 
-def test():
-
-    while True:
-        _,x,y,_,_ = yield "on_mouse_motion"
-        print(x,y)
 
 
 def circle_intersect_rect(cpos,cr,rpos,rdims):
@@ -24,47 +22,45 @@ def circle_intersect_rect(cpos,cr,rpos,rdims):
         rpos.y < cpos.y and cpos.y < rpos.y + rdims.y: return True
 
     # center is too far from rectangle (quick escapes to avoid complex math)
-    if cpos.x + cr*1.5 < rpos.x: return False
-    if cpos.y + cr*1.5 < rpos.y: return False
-    if rpos.x < rpos.x - cr*1.5 : return False
-    if rpos.y < rpos.y - cr*1.5 : return False
+    if True:
+        if cpos.x + cr*1.5 < rpos.x: return False
+        if cpos.y + cr*1.5 < rpos.y: return False
+        if rpos.x < rpos.x - cr*1.5 : return False
+        if rpos.y < rpos.y - cr*1.5 : return False
 
-    def intersect_line_segment(p1,p2):
-        # look for solutions for t of the following system
-        # x = (1-t) * p1.x + t * p2.x
-        # y = (1-t) * p1.x + t * p2.y
-        # (x - cpos.x)**2 + (y - cpos.y)**2 = cr**2
+    def intersect_line_segment_x(x1,x2,y0):
+        # x = (1-t) * x1 + t * x2
+        # (x - cpos.x)**2 + (y0 - cpos.y)**2 = cr**2
 
-        # expand out
-        # ((1-t) * p1.x + t* p2.x - cpos.x)**2 + ((1-t) * p1.x + t * p2.y - cpos.y)**2 = cr**2
+        if cr**2 - (y0 - cpos.y)**2 < 0: return False
 
-        # quadratic equation: a * t**2 + b * t + c = 0
-        ax = p1.x**2  - 2*p1.x*p2.x + p2.x**2
-        ay = p1.y**2  - 2*p1.y*p2.y + p2.y**2
-        a = ax+ay
-
-        bx = -2*p1.x**2 + 2*p1.x*p2.x + 2*p1.x*cpos.x - 2*p2.x*cpos.x
-        by = -2*p1.y**2 + 2*p1.y*p2.y + 2*p1.y*cpos.y - 2*p2.y*cpos.y
-        b = bx+by
-
-        cx = p1.x**2 + cpos.x**2
-        cy = p1.y**2 + cpos.y**2
-        c = cx + cy - cr**2
-
-        # no real solutions
-        if (b**2 - 4*a*c < 0): return False
-
-        t1 = ( -b + sqrt(b**2 - 4*a*c) ) / 2*a
-        t2 = ( -b - sqrt(b**2 - 4*a*c) ) / 2*a
+        t1 = (sqrt(cr**2 - (y0 - cpos.y)**2) + cpos.x - x1)/ (x2 - x1)
+        t2 = (-sqrt(cr**2 - (y0 - cpos.y)**2) + cpos.x - x1)/ (x2 - x1)
 
         if 0 <= t1 <= 1: return True
         if 0 <= t2 <= 1: return True
         return False
 
-    if intersect_line_segment(rpos, rpos+Vector2(rdims.x,0)): return True
-    if intersect_line_segment(rpos, rpos+Vector2(0,rdims.y)): return True
-    if intersect_line_segment(rpos+rdims, rpos+Vector2(rdims.x,0)): return True
-    if intersect_line_segment(rpos+rdims, rpos+Vector2(0,rdims.y)): return True
+
+    def intersect_line_segment_y(y1,y2,x0):
+        # y = (1-t) * y1 + t * y2
+        # (y - cpos.y)**2 + (x0 - cpos.x)**2 = cr**2
+
+        if cr**2 - (x0 - cpos.x)**2 < 0: return False
+
+        t1 = (sqrt(cr**2 - (x0 - cpos.x)**2) + cpos.y - y1)/ (y2 - y1)
+        t2 = (-sqrt(cr**2 - (x0 - cpos.x)**2) + cpos.y - y1)/ (y2 - y1)
+
+        if 0 <= t1 <= 1: return True
+        if 0 <= t2 <= 1: return True
+        return False
+
+
+    if intersect_line_segment_x(rpos.x, rpos.x+rdims.x, rpos.y): return True
+    if intersect_line_segment_x(rpos.x, rpos.x+rdims.x, rpos.y+rdims.y): return True
+
+    if intersect_line_segment_y(rpos.y, rpos.y+rdims.y, rpos.x): return True
+    if intersect_line_segment_y(rpos.y, rpos.y+rdims.y, rpos.x+rdims.x): return True
 
     return False
 
@@ -190,9 +186,9 @@ def frame():
                     rpos = Vector2(rect["x"],rect["y"])
                     rdims = Vector2(rect["w"],rect["h"])
 
-                    radius = 16
+                    r = ball["dia"]/2
 
-                    if circle_intersect_rect(pos+nudge, radius, rpos, rdims):
+                    if circle_intersect_rect(pos+nudge, r, rpos, rdims):
 
                         if kind == "hazard": dead_balls.append(ball)
 

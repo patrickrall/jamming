@@ -20,8 +20,8 @@ def main():
 
     globs.next_level()
 
-    init_physics(w)
     init_draw(w)
+    init_physics(w)
     w.launch_listener(record_key_presses)
     pyglet.app.run()
 
