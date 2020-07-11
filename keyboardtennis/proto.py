@@ -32,6 +32,16 @@ def main():
         "default": ["none","wall"],
         "GRAVE": ["wall", "none"],
         "TAB": ["none", "goal"],
+        "J": ["wall", "none"],
+        "U": ["wall", "none"],
+        "B": ["wall", "none"],
+        "M": ["wall", "none"],
+        "H": ["wall", "none"],
+        "F": ["wall", "none"],
+        "SEMICOLON": ["wall", "none"],
+        "ENTER": ["wall", "none"],
+        "P": ["wall", "none"],
+        "L';": ["wall", "none"],
         "K": ["goal"],
         "C": ["hazard"],
         "LSHIFT": ["hazard"],
@@ -265,32 +275,39 @@ def simpleframe():
                             key_pos = Vector2(rect["x"], rect["y"])
                             key_size = Vector2(rect["w"], rect["h"])
                             if ball_rect_can_collide(ball["pos"], ball["dia"] / 2, key_pos, key_size):
-                                print("Hit " + key)
-                                [sign_x, sign_y, dx, dy] = collision_sign(ball["pos"], key_pos, ball[
-                                    "dia"] / 2 + key_size.x / 2)  # todo account for key_size.y separately
-                                print(f"[sign_x, sign_y, dx, dy] = [{sign_x}, {sign_y}, {dx}, {dy}]")
+                                #print("Hit " + key)
+                                rect_center = Vector2(key_pos.x + key_size.x/2, key_pos.y + key_size.y/2)
+                                [sign_x, sign_y, dx, dy] = collision_sign(ball["pos"], rect_center, ball[
+                                    "dia"] / 2 + key_size.x / 2 )  # todo account for key_size.y separately
+                                #print(f"[sign_x, sign_y, dx, dy] = [{sign_x}, {sign_y}, {dx}, {dy}]")
                                 if (sign_x is not 0):
                                     ball["vel"].x = sign_x * abs(ball["vel"].x)
+                                    #print("x vel adjust")
                                 elif (sign_y is not 0):
                                     ball["vel"].y = sign_y * abs(ball["vel"].y)
+                                    #print("y vel adjust")
                                 break
             ball["pos"] = pos
 
 def ball_rect_can_collide(ball_center, ball_radius, rect_upperleft, rect_size):
     """Determine whether the rectangle and circle inputted are in collision"""
-    buffer = 10  # area around ball that will also rebound
-    # x value in range
+    buffer = 500  # area around ball that will also rebound
+    # center value in range
     if (ball_center.x > rect_upperleft.x and ball_center.x < rect_upperleft.x + rect_size.x):
         if (ball_center.y > rect_upperleft.y and ball_center.y < rect_upperleft.y + rect_size.y):
             return True
 
-    x = [ball_center.x - ball_radius - buffer, ball_center.x, ball_center.x + ball_radius + buffer]
-    y = [ball_center.x - ball_radius - buffer, ball_center.x, ball_center.x + ball_radius + buffer]
+    # square with an extra buffer padding represents the ball
+    ball_rep_x = [ball_center.x - ball_radius - buffer, ball_center.x, ball_center.x + ball_radius + buffer]
+    ball_rep_y = [ball_center.x - ball_radius - buffer, ball_center.x, ball_center.x + ball_radius + buffer]
 
-    for X in x:
-        for Y in y:
+    rect_rep_x = [rect_upperleft.x, rect_upperleft.x + rect_size.x]
+    rect_rep_y = [rect_upperleft.y - rect_size.y, rect_upperleft.y]
+
+    for X in ball_rep_x:
+        for Y in ball_rep_y:
             if (X > rect_upperleft.x and X < rect_upperleft.x + rect_size.x):
-                if (Y > rect_upperleft.y and Y < rect_upperleft.y + rect_size.y):
+                if (Y > rect_upperleft.y  and Y < rect_upperleft.y + rect_size.y ):
                     return True
 
     return False
