@@ -4,6 +4,7 @@ from swyne.node import NodeWindow,Vector2,deserialize_node
 from swyne.layout import HintedLayoutNode
 import pyglet
 from pyglet.gl import *
+import math
 
 def main():
 
@@ -36,6 +37,14 @@ def main():
         "LSHIFT": ["hazard"],
     }
 
+    global ball_spawner
+    ball_spawner = {
+        "ctrl_held": False, "ctrl_frames": 0, 
+        "speed_min": 20, "speed_scale": 10, "speed_reset": 30, 
+        "angle_min": 20, "angle_limit": 240, "angle_reset": 200, 
+        "dia": 10, "bot_left": [key_rects["LSHIFT"]["x"], \
+                key_rects["LSHIFT"]["y"] + key_rects["LSHIFT"]["h"]]}
+
 
     w = NodeWindow()
     w.fps = 60
@@ -61,9 +70,12 @@ def find_keys_pressed():
     # TODO: make capslock work
 
     global keys
+    global ctrl_held
+    global balls
 
     global keys_pressed
     keys_pressed = {key: False for key in keys}
+
 
     waiting_keys = []
     num_pressed = 0
@@ -71,8 +83,30 @@ def find_keys_pressed():
     while True:
         event, symbol, modifiers = yield ["on_key_press", "on_key_release"]
 
-        if symbol == "LCTRL":
-            balls
+        # handle ball spawning
+        if getattr(pyglet.window.key, "LCTRL") == symbol:
+            if event == "on_key_press":
+                ball_spawner["ctrl_held"] = True
+            # control was already held a little bit
+            elif ball_spawner["ctrl_frames"] >= 10 :
+                # call all params now for concise equations later
+                vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"], 
+                ball_spawner["speed_min"], ball_spawner["speed_scale"],
+                ball_spawner["speed_reset"], ball_spawner["angle_min"],
+                ball_spawner["angle_limit"], ball_spawner["angle_reset"]]
+                bl_corner = ball_spawner["bot_left"]
+                # calculate speed and angle of velocity, and position
+                sp = vp[3] * (vp[0] % vp[4]) + vp[2]
+                th = ((vp[0] % vp[7]) + vp[5]) * (math.pi / (2*vp[6]))
+                pos = [bl_corner[0] + vp[1], bl_corner[1] + vp[1]]
+                # add new ball!
+                balls.append({"pos":Vector2(pos[0], pos[1]), \
+                    "vel": Vector2(sp*math.cos(th), -sp*math.sin(th)),\
+                    "caught": "none", "dia":vp[1], "extratime":0})
+                # reset control key counter
+                ball_spawner["ctrl_held"] = False
+                ball_spawner["ctrl_frames"] = 0
+
 
         for key in keys:
             if getattr(pyglet.window.key, key) == symbol:
@@ -131,7 +165,7 @@ def split_delta(delta):
         for i in range(magy):
             yield Vector2(sx,0)
         return
-    
+
     y = 0
     m = magx/magy
     for x in range(1,magx+1):
@@ -173,10 +207,13 @@ def ball_touching_rect(center, radius, rect_pos, rect_size):
 def simpleframe():
 
     global balls
-
+    global ctrl_held
 
     while True:
         _, dt = yield "on_frame"
+
+        if ball_spawner["ctrl_held"]:
+            ball_spawner["ctrl_frames"] += 1
 
         for ball in balls:
             dimsx,dimsy,boty = 724,244,48
