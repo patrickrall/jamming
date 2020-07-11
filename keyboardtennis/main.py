@@ -6,7 +6,8 @@ import pyglet
 import globs
 import random
 from draw import init_draw
-from physics import init_physics
+#from physics import init_physics
+from patphysics import init_patphysics
 
 def main():
     globs.init_globals()
@@ -18,7 +19,7 @@ def main():
     HintedLayoutNode [960,320]
     """)
 
-    init_physics(w)
+    init_patphysics(w)
     init_draw(w)
 
     w.launch_listener(record_key_presses)
