@@ -69,6 +69,17 @@ def find_keys_pressed():
                 if event == "on_key_press": keys_pressed[key] = True
                 if event == "on_key_release": keys_pressed[key] = False
 
+        # filter down to 2 keys
+        n = 0
+        for key in keys:
+            if n >= 2:
+                keys_pressed[key] = False
+                continue
+            if keys_pressed[key]:
+                n += 1
+
+
+
 def simpleframe():
 
     global balls
@@ -79,7 +90,6 @@ def simpleframe():
         for ball in balls:
             pass
             # ball["pos"] += ball["vel"]*dt
-
 
 
 

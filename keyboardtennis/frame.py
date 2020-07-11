@@ -47,20 +47,19 @@ def frame():
         	for key in key_rects:
         		# check if the key is not empty
         		can_collide = False
-        		if not keys_pressed[key]:
+        		if (not keys_pressed[key]) or len(level[key]) < 2:
         			if level[key][0] != "none":
         				can_collide = True
         		else:
-        			if len(level[key]) < 2:
-        				if level[key][0] != "none":
-        					can_collide = True
-        			else:
-        				if level[key][1] != "none":
+        			if level[key][1] != "none":
         					can_collide = True
 
         		if can_collide:
+        			# check if it is getting caught
         			key_pos = Vector2(key["x"], key["y"])
         			key_size = Vector2(key["w"], key["h"])
 
+        			
+        			
         			side = ball_rect_side(ball["pos"], ball_radius\
         								key_pos, key_size)
