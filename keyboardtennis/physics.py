@@ -7,6 +7,15 @@ import pyglet
 def init_physics(w):
     w.launch_listener(ball_spawning)
     w.launch_listener(frame)
+    w.launch_listener(test)
+
+
+def test():
+
+    while True:
+        _,x,y,_,_ = yield "on_mouse_motion"
+        print(x,y)
+
 
 def circle_intersect_rect(cpos,cr,rpos,rdims):
 
@@ -105,34 +114,7 @@ def frame():
         _, dt = yield "on_frame"
         level = globs.level
 
-        dimsx,dimsy,boty = 960,320,60
-
-        dead_ball_indices = []
-        for n, ball in enumerate(balls):
-
-            ignore_key = None
-            if True:
-
-                for key in keys:
-                    if key in level: kind = level[key]
-                    else: kind = level["default"]
-                    if keys_pressed[key] and len(kind) > 1: kind = kind[1]
-                    else: kind = kind[0]
-
-                    if kind != "wall": continue
-
-
-                    rect = key_rects[key]
-                    rpos = Vector2(rect["x"],rect["y"])
-                    rdims = Vector2(rect["w"],rect["h"])
-                    radius = ball["dia"]/2
-
-                    if circle_intersect_rect(ball["pos"], radius, rpos, rdims):
-
-                        ignore_key = key
-
-                        dright = (rpos.x + rdims.x - ball["pos"].x)
-                        dleft = (ball["pos"].x - rpos.x)
+        ######################################################## trapped balls
 
         for ball in trapped_balls:
 
@@ -161,9 +143,11 @@ def frame():
 
                 ball["pos"] += nudge
 
+        ######################################################## balls in play
 
         dimsx,dimsy,boty = 960,320,60
 
+        dead_balls = []
         for ball in balls:
 
             if ball["vel"].x < 20:
@@ -177,67 +161,64 @@ def frame():
             for nudge in split_delta(delta):
                 pos = ball["pos"]
 
-                if True:
-                    # check against walls of level
-                    if pos.x + nudge.x > dimsx:
-                        ball["vel"].x *= -1
+                # check against walls of level
+                if pos.x + nudge.x > dimsx:
+                    ball["vel"].x *= -1
+                    break
+                if pos.x + nudge.x < 0:
+                    ball["vel"].x *= -1
+                    break
+                if pos.y + nudge.y > dimsy:
+                    ball["vel"].y *= -1
+                    break
+                if pos.y + nudge.y < boty:
+                    ball["vel"].y *= -1
+                    break
+
+                # check against rectangles
+                anyCollide = False
+                for key in keys:
+
+                    if key in level: kind = level[key]
+                    else: kind = level["default"]
+                    if keys_pressed[key] and len(kind) > 1: kind = kind[1]
+                    else: kind = kind[0]
+
+                    if kind == "none": continue
+
+                    rect = key_rects[key]
+                    rpos = Vector2(rect["x"],rect["y"])
+                    rdims = Vector2(rect["w"],rect["h"])
+
+                    radius = 16
+
+                    if circle_intersect_rect(pos+nudge, radius, rpos, rdims):
+
+                        if kind == "hazard": dead_balls.append(ball)
+
+                        if kind == "goal":
+                            globs.next_level()
+
+                        if kind in ["wall", "goal"]:
+                            if (nudge.x == 0): ball["vel"].y *= -1
+                            if (nudge.y == 0): ball["vel"].x *= -1
+
+                            ball["vel"].x = int(ball["vel"].x)
+                            ball["vel"].y = int(ball["vel"].y)
+                            pass
+
+                        anyCollide = True
                         break
-                    if pos.x + nudge.x < 0:
-                        ball["vel"].x *= -1
-                        break
-                    if pos.y + nudge.y > dimsy:
-                        ball["vel"].y *= -1
-                        break
-                    if pos.y + nudge.y < boty:
-                        ball["vel"].y *= -1
-                        break
 
-
-                if True:
-                    # check against rectangles
-                    anyCollide = False
-                    for key in keys:
-
-                        if key in level: kind = level[key]
-                        else: kind = level["default"]
-                        if keys_pressed[key] and len(kind) > 1: kind = kind[1]
-                        else: kind = kind[0]
-
-                        rect = key_rects[key]
-                        rpos = Vector2(rect["x"],rect["y"])
-                        rdims = Vector2(rect["w"],rect["h"])
-
-                        if circle_intersect_rect(pos+nudge, radius, rpos, rdims):
-
-                            if kind == "none": continue
-                            if kind == "hazard":
-                                if n not in dead_ball_indices:
-                                    dead_ball_indices.append(n)
-                                continue
-
-                            if kind == "goal":
-                                globs.next_level()
-
-                            if kind in ["wall", "goal"]:
-                                if (nudge.x == 0): ball["vel"].y *= -1
-                                if (nudge.y == 0): ball["vel"].x *= -1
-
-                                ball["vel"].x = int(ball["vel"].x)
-                                ball["vel"].y = int(ball["vel"].y)
-
-                            anyCollide = True
-                            break
-
-                    if anyCollide:
-                        break
+                if anyCollide:
+                    break
 
                 ball["pos"] += nudge
 
 
-        for dead_ball_index in dead_ball_indices:
+        for dead_ball in dead_balls:
+            balls.remove(dead_ball)
             level["dead-balls"] += 1
-            balls.pop(dead_ball_index)
-        dead_ball_indices = []
 
 
 def ball_spawning():
@@ -290,7 +271,6 @@ def ball_spawning():
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
                         "vel": Vector2(sp*cos(th), sp*sin(th)),\
                         "caught": "none", "dia":vp[1], "extratime":0})
-                    print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
                     ball_spawner["ctrl_held"] = False

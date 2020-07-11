@@ -88,15 +88,21 @@ def next_level():
 global levels
 levels = []
 
+
 levels.append({
-        "default": ["none", "wall"],
-        "S": ["gravity-off", "gravity-on"],
-        "MINUS": ["goal"],
+        "default": ["wall"],
+        "LSHIFT":["none"],
+        "Q":["none"],
+        "A":["none"],
+        "Z":["none"],
+        "E":["none"],
+        "D":["none"],
+        "C":["none"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
-
     })
+
 
 levels.append({
         "default": ["none","wall"],
@@ -114,6 +120,17 @@ levels.append({
         "simultaneous-balls" : 1,
         "dead-balls": 0,
     })
+
+levels.append({
+        "default": ["none", "wall"],
+        "s": ["gravity-off", "gravity-on"],
+        "minus": ["goal"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+
+    })
+
 
 levels.append({
         "default": ["none","wall"],
