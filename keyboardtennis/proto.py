@@ -23,7 +23,7 @@ def main():
         key_rects[key]["y"] = 244 - key_rects[key]["y"] - key_rects[key]["h"]
 
     global balls
-    balls = [{"pos":Vector2(0,0), "vel": Vector2(0,0), "caught": "none", "dia":5}]
+    balls = [{"pos":Vector2(1,1), "vel": Vector2(1,1), "caught": "none", "dia":5}]
 
     global level
     level = {
@@ -46,6 +46,7 @@ def main():
 
     w.launch_listener(draw)
     w.launch_listener(find_keys_pressed)
+    w.launch_listener(simpleframe)
     pyglet.app.run()
 
 
@@ -68,6 +69,18 @@ def find_keys_pressed():
                 if event == "on_key_press": keys_pressed[key] = True
                 if event == "on_key_release": keys_pressed[key] = False
 
+def simpleframe():
+
+    global balls
+
+    while True:
+        _, dt = yield "on_frame"
+
+        for ball in balls:
+            pass
+            # ball["pos"] += ball["vel"]*dt
+
+
 
 
 def draw():
@@ -87,7 +100,12 @@ def draw():
     while True:
         yield "on_draw"
 
-        # draw balls
+        for ball in balls:
+            glColor4f(0,0,0,1)
+            x,y = ball["pos"].x, ball["pos"].y
+            r = ball["dia"]/2
+            glRectf(x-r, y-r, x+r,y+r)
+
 
         for key in keys:
 
