@@ -1,6 +1,11 @@
 
 def main():
 
+    keys = ["`", "1", "2","3","4","5","6","7","8","9", "0", "-", "=", "del",
+            "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
+            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
+            "lshift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "rshift"]
+
     # make window
 
     global keys_pressed
