@@ -40,6 +40,8 @@ def record_key_presses():
 
     while True:
         event, symbol, modifiers = yield ["on_key_press", "on_key_release"]
+        level_idx = globs.level_idx
+        level = globs.levels[level_idx]
 
         for key in keys:
             if getattr(pyglet.window.key, key) == symbol:
@@ -50,8 +52,9 @@ def record_key_presses():
                         keys_pressed[key] = True
                         num_pressed += 1
 
-                        r = random.randint(0, 6)
-                        key_sounds[r].play()
+                        if key in level.keys():
+                            r = random.randint(0, 6)
+                            key_sounds[r].play()
 
                 if event == "on_key_release":
                     if keys_pressed[key]:  # only decrement when the key was actually pressed
