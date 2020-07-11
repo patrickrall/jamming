@@ -1,5 +1,5 @@
 
-
+import pyglet
 import json
 from swyne.node import Vector2
 from pyglet.resource import media
@@ -50,6 +50,11 @@ def init_globals():
     launch_sounds = [media("audio/launch.wav", streaming=False),
                      media("audio/launch_empty.wav", streaming=False)]
 
+    global background_music_player
+    background_music_player = pyglet.media.Player()
+    background_music_player.volume = 0.01
+    background_music = [media("audio/Eva_soundtrack.mp3"), media("audio/DzGrimX_soundtrack.mp3")]
+    background_music_player.queue(background_music)
 
 def next_level():
 
