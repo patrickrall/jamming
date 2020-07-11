@@ -24,7 +24,7 @@ def main():
     }
 
     global balls
-    balls = [{"pos":Vector2, "vel": Vector2}]
+    balls = [{"pos":Vector2, "vel": Vector2, "caught": "none", "dia":5}]
 
     global level
     level = {
