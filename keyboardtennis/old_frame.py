@@ -31,6 +31,8 @@ def ball_touching_rect(center, radius, rect_pos, rect_size):
         return False
 
 def ball_touching_ball(center1, radius1, center2, radius2):
+    # center1 and center2 are vector2, radius1 and radius2 are float
+    
 
 
 def is_nearby(pos, range, radius, rect, outside=True):
@@ -108,7 +110,7 @@ def frame():
             ball_obstacles = []
 
             if is_nearby(ball["pos"], travel_dist, radius, play_area, False):
-                ball_obstacles.append((play_area, False])
+                ball_obstacles.append((play_area, "bounds"])
 
             for key in key_rects:
                 # check if the key is not permeable
@@ -126,13 +128,13 @@ def frame():
 
                     # check if the ball is close enough to hit it this frame
                     if is_nearby(ball["pos"], travel_dist, radius, key):
-                        ball_obstacles.append((key, True))
+                        ball_obstacles.append((key, "key"))
 
             for m, other_ball in enumerate(balls):
-                if m == n: continue
-
-                other_ball
-                if is_nearby(ball["pos"], travel_dist, radius, other_ball):
+                if m != n:
+                    other_ball
+                    if is_nearby(ball["pos"], travel_dist, radius, other_ball):
+                        ball_obstacles.append(ball, "ball")
 
             if len(ball_obstacles) >= 1:
                 # move carefully
@@ -141,23 +143,30 @@ def frame():
                 delta.x = int(delta.x)
                 delta.y = int(delta.y)
 
+                pos = ball["pos"]
+
                 for nudge in split_delta(delta):
-                    
-                    for xbound in find_walls(ball_obstacles, "r"):
-            
-                            if pos.x + nudge.x > bounds:
-                                ball["vel"].x *= -1
-                                break
-                    for 
-                            if pos.x + nudge.x < sbound:
-                                ball["vel"].x *= -1
-                                break
-                            if pos.y + nudge.y > d:
-                                ball["vel"].y *= -1
-                                break
-                            if pos.y + nudge.y < boty:
-                                ball["vel"].y *= -1
-                                break
+                    hits = False
+                    for lbound in find_walls(ball_obstacles, "l"):
+                        if pos.x + nudge.x > bound: hits = True
+                            ball["vel"].x *= -1
+                            break
+                    if hits: break
+                    for rbound in find_walls(ball_obstacles, "r"):
+                        if pos.x + nudge.x < bound: hits = True
+                            ball["vel"].x *= -1
+                            break
+                    if hits: break
+                    for bbound in find_walls(ball_obstacles, "b"):
+                        if pos.y + nudge.y > d: hits = True
+                            ball["vel"].y *= -1
+                            break
+                    if hits: break
+                    for tbound in find_walls(ball_obstacles, "t"):
+                        if pos.y + nudge.y < boty: hits = True
+                            ball["vel"].y *= -1
+                            break
+                    if hits: break
                     pos += nudge
                 ball["pos"] = pos
             

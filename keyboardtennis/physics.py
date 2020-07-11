@@ -11,6 +11,8 @@ def init_physics(w):
 def ball_spawning():
     balls = globs.balls
     key_rects = globs.key_rects
+    level = globs.level
+    key_sounds = globs.key_sounds
 
     # I dont think this needs to be global, right?
     ball_spawner = {
@@ -35,7 +37,11 @@ def ball_spawning():
                 if event == "on_key_press":
                     ball_spawner["ctrl_held"] = True
                 # control was already held a little bit
-                elif ball_spawner["ctrl_frames"] >= 10 :
+                elif ball_spawner["ctrl_frames"] <= 10 or \
+                        len(balls) > level["simultaneous-balls"] or \
+                        len(balls) + level["dead-balls"] > level["max-balls"]:
+                    key_sounds[2].play()
+                else:
                     # call all params now for concise equations later
                     vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
                     ball_spawner["speed_min"], ball_spawner["speed_scale"],
@@ -50,6 +56,7 @@ def ball_spawning():
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
                         "vel": Vector2(sp*cos(th), sp*sin(th)),\
                         "caught": "none", "dia":vp[1], "extratime":0})
+                    key_sounds[4].play()
                     # reset control key counter
                     ball_spawner["ctrl_held"] = False
                     ball_spawner["ctrl_frames"] = 0

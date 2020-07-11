@@ -33,6 +33,9 @@ def init_globals():
         "K": ["goal"],
         "C": ["hazard"],
         "LSHIFT": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 2,
+        "dead-balls": 0,
     }
 
     global keys_pressed
@@ -40,5 +43,7 @@ def init_globals():
 
     global key_sounds
     key_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1, 8)]
-
+    
+    global bounce_sounds
+    bounce_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1,3)]
 
