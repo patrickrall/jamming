@@ -8,15 +8,10 @@ from pyglet.gl import *
 def main():
 
     global keys
-    keys = ["`", "1", "2","3","4","5","6","7","8","9", "0", "-", "=", "del",
-            "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
-            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
-            "lshift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "rshift"]
-
-    # make window
-
-    global keys_pressed
-    keys_pressed = {key:False for key in keys}
+    keys = ["GRAVE", "_1", "_2","_3","_4","_5","_6","_7","_8","_9", "_0", "MINUS", "EQUAL", "DELETE",
+            "TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BRACKETLEFT", "BRACKETRIGHT", "BACKSLASH",
+            "CAPSLOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "SEMICOLON", "APOSTROPHE", "ENTER",
+            "LSHIFT", "Z", "X", "C", "V", "B", "N", "M", "COMMA", "PERIOD", "SLASH", "RSHIFT"]
 
 
     with open("keyboard.json") as f:
@@ -24,6 +19,8 @@ def main():
 
     global key_rects
     key_rects = {keys[i]:data["frames"][str(i)]["frame"] for i in range(len(keys))}
+    for key in keys:
+        key_rects[key]["y"] = 244 - key_rects[key]["y"] - key_rects[key]["h"]
 
     global balls
     balls = [{"pos":Vector2(0,0), "vel": Vector2(0,0), "caught": "none", "dia":5}]
@@ -31,24 +28,45 @@ def main():
     global level
     level = {
         "default": ["none","wall"],
-        "`": ["wall", "none"],
-        "y": ["none", "goal"],
-        "k": ["goal"],
-        "c": ["hazard"],
-        "lshift": ["hazard"],
+        "GRAVE": ["wall", "none"],
+        "TAB": ["none", "goal"],
+        "K": ["goal"],
+        "C": ["hazard"],
+        "LSHIFT": ["hazard"],
     }
 
     w = NodeWindow()
     w.fps = 30
 
     w.node, _ = deserialize_node("""
-    HintedLayoutNode [960,230]
+    HintedLayoutNode [724,244]
     """)
 
     # Stella's numbers are: [960,230]
 
     w.launch_listener(draw)
+    w.launch_listener(find_keys_pressed)
     pyglet.app.run()
+
+
+
+
+def find_keys_pressed():
+
+    # TODO: make capslock work
+
+    global keys
+
+    global keys_pressed
+    keys_pressed = {key: False for key in keys}
+
+    while True:
+        event, symbol, modifiers = yield ["on_key_press", "on_key_release"]
+
+        for key in keys:
+            if getattr(pyglet.window.key, key) == symbol:
+                if event == "on_key_press": keys_pressed[key] = True
+                if event == "on_key_release": keys_pressed[key] = False
 
 
 
@@ -61,16 +79,23 @@ def draw():
         "goal": [1.,1.,0.,1.],
     }
 
+    global keys_pressed
+    global level
+    global keys
+    global balls
+
     while True:
         yield "on_draw"
 
         # draw balls
 
         for key in keys:
-            idx = 1 if keys_pressed[key] else 0
 
-            if key in level: value = level[key][idx]
-            else: value = level["default"][idx]
+            if key in level: value = level[key]
+            else: value = level["default"]
+
+            if keys_pressed[key] and len(value) > 1: value = value[1]
+            else: value = value[0]
 
             color = colors[value]
 
