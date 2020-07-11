@@ -22,8 +22,7 @@ def init_globals():
         key_rects[key]["y"] = 320 - key_rects[key]["y"] - key_rects[key]["h"]
 
     global balls
-    balls = [{"pos":Vector2(100,100), "vel": Vector2(70,60), \
-                "caught": "none", "dia":20, "extratime":0}]
+    balls = []
 
     global level_idx
     level_idx = 0
@@ -41,6 +40,21 @@ def init_globals():
     bounce_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1,3)]
 
 
+def next_level():
+    print("Level complete.")
+
+    global level_idx
+    global levels
+    global level
+    global balls
+
+    level_idx += 1
+
+    if level_idx < len(levels):
+        level = levels[level_idx]
+        balls = []
+
+
 global levels
 levels = []
 
@@ -54,3 +68,21 @@ levels.append({
         "dead-balls": 0,
     })
 
+levels.append({
+        "default": ["none","wall"],
+        "H": ["none","gravity"],
+        "ENTER": ["hazard"],
+        "I": ["goal"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 2,
+        "dead-balls": 0,
+    })
+
+levels.append({
+        "default": ["hazard"],
+        "H": ["none","gravity"],
+        "ENTER": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 2,
+        "dead-balls": 0,
+    })

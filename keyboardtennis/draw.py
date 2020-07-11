@@ -13,7 +13,6 @@ def draw():
 
     balls = globs.balls
     keys = globs.keys
-    level = globs.level
     keys_pressed = globs.keys_pressed
     key_rects = globs.key_rects
 
@@ -76,6 +75,7 @@ def draw():
 
     while True:
         yield "on_draw"
+        level = globs.level
 
         glColor4f(1,1,1,1)
         glRectf(0,0,960,320)

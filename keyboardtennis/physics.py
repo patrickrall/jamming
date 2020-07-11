@@ -95,13 +95,15 @@ def frame():
     balls = globs.balls
     key_rects = globs.key_rects
 
-    level = globs.level
     keys = globs.keys
     keys_pressed = globs.keys_pressed
 
+    level_idx = globs.level_idx
+    levels = globs.levels
 
     while True:
         _, dt = yield "on_frame"
+        level = globs.level
 
         dimsx,dimsy,boty = 960,320,60
 
@@ -210,15 +212,18 @@ def frame():
 
                         if circle_intersect_rect(pos+nudge, 10, rpos, rdims):
 
+                            if kind == "none": continue
+                            if kind == "hazard": continue
+
+                            if kind == "goal":
+                                globs.next_level()
+
                             if kind in ["wall", "goal"]:
                                 if (nudge.x == 0): ball["vel"].y *= -1
                                 if (nudge.y == 0): ball["vel"].x *= -1
 
                                 ball["vel"].x = int(ball["vel"].x)
                                 ball["vel"].y = int(ball["vel"].y)
-
-                            if kind == "goal":
-                                pass
 
                             anyCollide = True
                             break
