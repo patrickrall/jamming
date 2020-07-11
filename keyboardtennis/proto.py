@@ -23,16 +23,17 @@ def main():
         key_rects[key]["y"] = 244 - key_rects[key]["y"] - key_rects[key]["h"]
 
     global balls
-    balls = [{"pos":Vector2(100,100), "vel": Vector2(60,60), "caught": "none", "dia":5, "extratime":0}]
+    balls = [{"pos":Vector2(100,100), "vel": Vector2(600,200), \
+                "caught": "none", "dia":20, "extratime":0}]
 
     global level
     level = {
         "default": ["none","wall"],
         "GRAVE": ["wall", "none"],
         "TAB": ["none", "goal"],
-        "K": ["goal"],
-        "C": ["hazard"],
-        "LSHIFT": ["hazard"],
+        "K": ["goal", "wall"],
+        "C": ["hazard", "none"],
+        "LSHIFT": ["hazard", "none"],
     }
 
 
@@ -69,6 +70,9 @@ def find_keys_pressed():
 
     while True:
         event, symbol, modifiers = yield ["on_key_press", "on_key_release"]
+
+        if symbol == "LCTRL":
+            balls
 
         for key in keys:
             if getattr(pyglet.window.key, key) == symbol:
@@ -136,6 +140,34 @@ def split_delta(delta):
         for i in range(int(x*m)-y):
             yield Vector2(0,sy)
         y = int(x*m)
+
+def ball_touching_rect(center, radius, rect_pos, rect_size):
+    # center, rect_pos, and rect_size are Vector2, radius is float
+    # left
+    if center.x + radius < rect_pos.x:
+        if center.y + radius < rect_pos.y:
+            #top left
+            return sqrt((center.x - rect_pos.x) + \
+                (center.y - rect_pos.y)**2 ) <= radius
+        elif center.y - radius > rect_pos.y + rect_size.y:
+            # top right
+            return sqrt((center.x - rect_pos.x) + \
+                (center.y - (rect_pos.y + rect_size.y))**2 ) <= radius
+        else: return False # securely to the left, can't hit
+    #right
+    elif center.x - radius > rect_pos.x + rect_size.x:
+        if center.y + radius < rect_pos.y:
+            # bottom left
+            return sqrt((center.x - (rect_pos.x + rect_size.x)) + \
+                (center.y - rect_pos.y)**2 ) <= radius
+        elif center.y - radius > rect_pos.y + rect_size.y:
+            # bottom right
+            return sqrt((center.x - (rect_pos.x + rect_size.x)) + \
+                (center.y - rect_pos.y + rect_size.y)**2 ) <= radius
+        else: return False # securely to the right
+    else:
+        #secturely to the top or bottom
+        return False
 
 
 def simpleframe():
@@ -215,7 +247,7 @@ def draw():
         for ball in balls:
             glColor4f(0,0,0,1)
             x,y = ball["pos"].x, ball["pos"].y
-            r = ball["dia"]
+            r = ball["dia"]/2.0
             t = 10
             glRectf(x-r, y-r, x+r,y+r)
 

@@ -2,20 +2,33 @@ from swyne.node import *
 import math
 
 
-def ball_rect_side(center, radius, rect_pos, rect_size):
+def ball_touching_rect(center, radius, rect_pos, rect_size):
 	# center, rect_pos, and rect_size are Vector2, radius is float
 	# left
 	if center.x + radius < rect_pos.x:
-		if center.y + radius < rect_pos.y: return "tl"
-		elif center.y - radius > rect_pos.y + rect_size.y: return "bl"
-		else: return "l"
+		if center.y + radius < rect_pos.y:
+			#top left
+			return sqrt((center.x - rect_pos.x) + \
+				(center.y - rect_pos.y)**2 ) <= radius
+		elif center.y - radius > rect_pos.y + rect_size.y:
+			# top right
+			return sqrt((center.x - rect_pos.x) + \
+				(center.y - (rect_pos.y + rect_size.y))**2 ) <= radius
+		else: return False # securely to the left, can't hit
 	#right
 	elif center.x - radius > rect_pos.x + rect_size.x:
-		if center.y + radius < rect_pos.y: return "tr"
-		elif center.y - radius > rect_pos.y + rect_size.y: return "br"
-		else: return "r"
+		if center.y + radius < rect_pos.y:
+			# bottom left
+			return sqrt((center.x - (rect_pos.x + rect_size.x)) + \
+				(center.y - rect_pos.y)**2 ) <= radius
+		elif center.y - radius > rect_pos.y + rect_size.y:
+			# bottom right
+			return sqrt((center.x - (rect_pos.x + rect_size.x)) + \
+				(center.y - rect_pos.y + rect_size.y)**2 ) <= radius
+		else: return False # securely to the right
 	else:
-		return "close"
+		#secturely to the top or bottom
+		return False
 
 
 def handle_collision(pos, target, wall):
