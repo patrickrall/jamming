@@ -31,9 +31,9 @@ def main():
         "default": ["none","wall"],
         "GRAVE": ["wall", "none"],
         "TAB": ["none", "goal"],
-        "K": ["goal", "wall"],
-        "C": ["hazard", "none"],
-        "LSHIFT": ["hazard", "none"],
+        "K": ["goal"],
+        "C": ["hazard"],
+        "LSHIFT": ["hazard"],
     }
 
 
@@ -131,8 +131,7 @@ def split_delta(delta):
         for i in range(magy):
             yield Vector2(sx,0)
         return
-
-
+    
     y = 0
     m = magx/magy
     for x in range(1,magx+1):
@@ -140,6 +139,7 @@ def split_delta(delta):
         for i in range(int(x*m)-y):
             yield Vector2(0,sy)
         y = int(x*m)
+
 
 def ball_touching_rect(center, radius, rect_pos, rect_size):
     # center, rect_pos, and rect_size are Vector2, radius is float
