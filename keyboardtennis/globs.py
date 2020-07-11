@@ -38,9 +38,6 @@ def init_globals():
     global keys_pressed
     keys_pressed = {key: False for key in keys}
 
-    global images
-    images = {}
-
     global key_sounds
     key_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1, 8)]
 
