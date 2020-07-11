@@ -23,6 +23,7 @@ def main():
     init_physics(w)
     init_draw(w)
     w.launch_listener(record_key_presses)
+    globs.background_music_player.play()
     pyglet.app.run()
 
 
