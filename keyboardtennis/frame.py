@@ -44,7 +44,6 @@ def frame():
         	ball_radius = ball["dia"]/2.0
 
 
-
         	for key in key_rects:
         		# check if the key is not empty
         		can_collide = False
@@ -60,6 +59,8 @@ def frame():
         					can_collide = True
 
         		if can_collide:
-        			
+        			key_pos = Vector2(key["x"], key["y"])
+        			key_size = Vector2(key["w"], key["h"])
 
-        		if dest.x < key["x"]:
+        			side = ball_rect_side(ball["pos"], ball_radius\
+        								key_pos, key_size)

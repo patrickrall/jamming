@@ -264,9 +264,12 @@ def point_on_path_alt(point, path):
 	tolerance = 0.1
 	for i in range(len(path["path"]) - 1):
 		p1, p2 = path["path"][i], path["path"][i + 1]
-		slope = (p2.y-p1.y)/(p2.x-p1.x)
+		# check vertical lines ..... awk
+		if p2.x == p1.x:
+			if math.abs(p1.x - point.x) < tolerance: return True
 
 		# using point slope form, find abs(f(x3) - y3)
+		slope = (p2.y-p1.y)/(p2.x-p1.x)
 		if math.abs((slope) * (point.x - p1.x) + p1.y - point.y) < tolerance:
 			return True
 	return False
