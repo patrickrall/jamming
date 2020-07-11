@@ -33,6 +33,9 @@ def init_globals():
         "K": ["goal"],
         "C": ["hazard"],
         "LSHIFT": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 2,
+        "dead-balls": 0,
     }
 
     global keys_pressed
