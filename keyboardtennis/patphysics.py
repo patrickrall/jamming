@@ -5,6 +5,7 @@ import globs
 import pyglet
 
 def init_patphysics(w):
+    w.launch_listener(ball_spawning)
     w.launch_listener(frame)
 
 def circle_intersect_rect(cpos,cr,rpos,rdims):
@@ -226,4 +227,58 @@ def frame():
                         break
 
                 ball["pos"] += nudge
+
+
+def ball_spawning():
+    balls = globs.balls
+    key_rects = globs.key_rects
+    level = globs.level
+    key_sounds = globs.key_sounds
+
+    # I dont think this needs to be global, right?
+    ball_spawner = {
+        "ctrl_held": False, "ctrl_frames": 0,
+        "speed_min": 20, "speed_scale": 10, "speed_reset": 30,
+        "angle_min": 20, "angle_limit": 240, "angle_reset": 200,
+        "dia": 10, "bot_left": [key_rects["LSHIFT"]["x"], \
+                key_rects["LSHIFT"]["y"]]}
+
+    while True:
+        event, *args = yield ["on_key_press", "on_key_release", "on_frame"]
+
+        if event == "on_frame":
+            if ball_spawner["ctrl_held"]:
+                ball_spawner["ctrl_frames"] += 1
+
+        else:
+            symbol, modifiers = args
+
+            # handle ball spawning
+            if getattr(pyglet.window.key, "LCTRL") == symbol:
+                if event == "on_key_press":
+                    ball_spawner["ctrl_held"] = True
+                # control was already held a little bit
+                elif ball_spawner["ctrl_frames"] <= 10 or \
+                        len(balls) >= level["simultaneous-balls"] or \
+                        len(balls) + level["dead-balls"] > level["max-balls"]:
+                    key_sounds[2].play()
+                else:
+                    # call all params now for concise equations later
+                    vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
+                    ball_spawner["speed_min"], ball_spawner["speed_scale"],
+                    ball_spawner["speed_reset"], ball_spawner["angle_min"],
+                    ball_spawner["angle_limit"], ball_spawner["angle_reset"]]
+                    bl_corner = ball_spawner["bot_left"]
+                    # calculate speed and angle of velocity, and position
+                    sp = vp[3] * (vp[0] % vp[4]) + vp[2]
+                    th = ((vp[0] % vp[7]) + vp[5]) * (pi / (2*vp[6]))
+                    pos = [bl_corner[0] + vp[1], bl_corner[1] + vp[1]]
+                    # add new ball!
+                    balls.append({"pos":Vector2(pos[0], pos[1]), \
+                        "vel": Vector2(sp*cos(th), sp*sin(th)),\
+                        "caught": "none", "dia":vp[1], "extratime":0})
+                    key_sounds[4].play()
+                    # reset control key counter
+                    ball_spawner["ctrl_held"] = False
+                    ball_spawner["ctrl_frames"] = 0
 

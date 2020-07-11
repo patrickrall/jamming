@@ -32,7 +32,10 @@ def ball_touching_rect(center, radius, rect_pos, rect_size):
 
 def ball_touching_ball(center1, radius1, center2, radius2):
     # center1 and center2 are vector2, radius1 and radius2 are float
-    
+    if center1.x + radius1 > center2.x - radius2:
+        pass
+    else: pass
+
 
 
 def is_nearby(pos, range, radius, rect, outside=True):
