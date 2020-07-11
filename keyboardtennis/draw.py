@@ -23,7 +23,7 @@ def draw():
 
     ctrlkey = pyglet.image.load("assets/ctrl.png")
 
-    img = pyglet.image.load("assets/keys_lettersonly_pressed.png")
+    img = pyglet.image.load("assets/letters.png")
     letters_image = {}
     for key in key_rects.keys():
         rect = key_rects[key]
@@ -43,9 +43,9 @@ def draw():
 
     # syntax ["static_keyboard_image.png", None or "animated_sprite.gif"]
     kinds = {
-        "none": ["assets/keys_noletters_unpressed.png", None],
-        "wall": ["assets/keys_noletters_pressed.png", None],
-        "goal": ["assets/keys_noletters_unpressed.png", "assets/moth_idle.gif"],
+        "none": ["assets/lowered_keys.png", None],
+        "wall": ["assets/raised_keys.png", None],
+        "goal": ["assets/lowered_keys.png", "assets/moth_idle.gif"],
     }
 
     for kind in kinds.keys():
