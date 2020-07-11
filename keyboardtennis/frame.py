@@ -4,11 +4,18 @@ from swyne.node import *
 
 def ball_rect_side(center, radius, rect_pos, rect_size):
 	# center, rect_pos, and rect_size are Vector2, radius is float
+	# left
 	if center.x + radius < rect_pos.x:
 		if center.y + radius < rect_pos.y: return "tl"
 		elif center.y - radius > rect_pos.y + rect_size.y: return "bl"
-		else: ball_rect_touch(center, radius, rect_pos, rect_size)
-
+		else: return "l"
+	#right
+	elif center.x - radius > rect_pos.x + rect_size.x:
+		if center.y + radius < rect_pos.y: return "tr"
+		elif center.y - radius > rect_pos.y + rect_size.y: return "br"
+		else: return "r"
+	else:
+		return "close"
 
 
 def will_collide(pos, target, wall):
@@ -16,7 +23,6 @@ def will_collide(pos, target, wall):
 
 def finish_game():
 	pass
-
 
 def frame():
 
@@ -59,7 +65,7 @@ def frame():
         			key_pos = Vector2(key["x"], key["y"])
         			key_size = Vector2(key["w"], key["h"])
 
-        			
-        			
         			side = ball_rect_side(ball["pos"], ball_radius\
         								key_pos, key_size)
+
+        			
