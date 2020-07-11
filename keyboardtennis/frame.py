@@ -30,8 +30,15 @@ def ball_touching_rect(center, radius, rect_pos, rect_size):
 		#secturely to the top or bottom
 		return False
 
+def ball_touching_ball(center1, radius1, center2, radius2):
+
+
 def is_nearby(pos, range, radius, rect, outside=True):
 	return False
+
+def find_walls(rect, inside):
+
+
 
 def handle_collision(pos, target, wall):
 	return True
@@ -87,7 +94,7 @@ def frame():
         		h = key_rects["LSHIFT"][y] + key_rects["LSHIFT"][h]}
 
         # move all balls with collision detection
-        for ball in balls:
+        for n, ball in enumerate(balls):
         	#check if the ball was caught last frame
         	caught = ball["caught"] != "none"
 
@@ -101,7 +108,7 @@ def frame():
         	ball_obstacles = []
 
         	if is_nearby(ball["pos"], travel_dist, radius, play_area, False):
-        		ball_obstacles = 
+        		ball_obstacles.append((play_area, False])
 
         	for key in key_rects:
         		# check if the key is not permeable
@@ -115,51 +122,45 @@ def frame():
 
         		if can_collide:
 
-        			if caught: if ball["caught"] == key: continue
+        			#if caught: if ball["caught"] == key: break
 
         			# check if the ball is close enough to hit it this frame
         			if is_nearby(ball["pos"], travel_dist, radius, key):
-        				ball_obstacles.append(key)
+        				ball_obstacles.append((key, True))
 
+        	for m, other_ball in enumerate(balls):
+        		if m == n: continue
 
+        		other_ball
+        		if is_nearby(ball["pos"], travel_dist, radius, other_ball):
 
-def simpleframe():
+        	if len(ball_obstacles) >= 1:
+        		# move carefully
+        		delta = ball["vel"]*(dt + ball["extratime"])
+	            ball["extratime"] = (delta.x - int(delta.x))/ball["vel"].x
+	            delta.x = int(delta.x)
+	            delta.y = int(delta.y)
 
-    global balls
-
-
-    while True:
-        _, dt = yield "on_frame"
-
-        walls = {"x":, "y":, }
-
-        for ball in balls:
-            dimsx,dimsy,boty = 724,244,48
-
-            delta = ball["vel"]*(dt + ball["extratime"])
-            ball["extratime"] = (delta.x - int(delta.x))/ball["vel"].x
-            delta.x = int(delta.x)
-            delta.y = int(delta.y)
-
-            pos = ball["pos"]
-
-
-            for nudge in split_delta(delta):
-
-                if True:
-                    if pos.x + nudge.x > dimsx:
-                        ball["vel"].x *= -1
-                        break
-                    if pos.x + nudge.x < 0:
-                        ball["vel"].x *= -1
-                        break
-                    if pos.y + nudge.y > dimsy:
-                        ball["vel"].y *= -1
-                        break
-                    if pos.y + nudge.y < boty:
-                        ball["vel"].y *= -1
-                        break
-
-                pos += nudge
-            ball["pos"] = pos
-        			
+	            for nudge in split_delta(delta):
+	            	
+	            	for xbound in find_walls(ball_obstacles, "r"):
+	        
+	            			if pos.x + nudge.x > bounds:
+		                        ball["vel"].x *= -1
+		                        break
+		            for 
+		                    if pos.x + nudge.x < sbound:
+		                        ball["vel"].x *= -1
+		                        break
+		                    if pos.y + nudge.y > d:
+		                        ball["vel"].y *= -1
+		                        break
+		                    if pos.y + nudge.y < boty:
+		                        ball["vel"].y *= -1
+		                        break
+		            pos += nudge
+		        ball["pos"] = pos
+		    
+		    # no walls nearby
+		    else:
+		    	ball["pos"] = target
