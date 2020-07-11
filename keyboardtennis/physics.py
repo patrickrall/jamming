@@ -125,8 +125,9 @@ def frame():
                     rect = key_rects[key]
                     rpos = Vector2(rect["x"],rect["y"])
                     rdims = Vector2(rect["w"],rect["h"])
+                    radius = ball["dia"]/2
 
-                    if circle_intersect_rect(ball["pos"], 10, rpos, rdims):
+                    if circle_intersect_rect(ball["pos"], radius, rpos, rdims):
 
                         ignore_key = key
 
@@ -143,7 +144,7 @@ def frame():
             for nudge in split_delta(delta):
                 pos = ball["pos"]
 
-                r = 15
+                r = ball["dia"]/2
 
                 if pos.x + r + nudge.x > ctrl_rect["x"]+ctrl_rect["w"]:
                     ball["vel"].x *= -1
@@ -168,6 +169,7 @@ def frame():
             delta = ball["vel"]*dt
             delta.x = int(delta.x)
             delta.y = int(delta.y)
+            radius = ball["dia"]/2
 
             for nudge in split_delta(delta):
                 pos = ball["pos"]
@@ -202,7 +204,7 @@ def frame():
                         rpos = Vector2(rect["x"],rect["y"])
                         rdims = Vector2(rect["w"],rect["h"])
 
-                        if circle_intersect_rect(pos+nudge, 10, rpos, rdims):
+                        if circle_intersect_rect(pos+nudge, radius, rpos, rdims):
 
                             if kind == "none": continue
                             if kind == "hazard":
@@ -240,6 +242,7 @@ def ball_spawning():
     key_rects = globs.key_rects
     level = globs.level
     key_sounds = globs.key_sounds
+    trapped_balls = globs.trapped_balls
 
     # I dont think this needs to be global, right?
     ball_spawner = {
@@ -287,4 +290,6 @@ def ball_spawning():
                     # reset control key counter
                     ball_spawner["ctrl_held"] = False
                     ball_spawner["ctrl_frames"] = 0
+                    trapped_balls.pop()
+
 

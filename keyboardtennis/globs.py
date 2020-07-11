@@ -61,7 +61,7 @@ def next_level():
     if level_idx < len(levels):
         level = levels[level_idx]
         for i in range(len(balls)):
-            balls.pop(0)
+            balls.pop()
 
         import math
         import random
@@ -71,13 +71,14 @@ def next_level():
             v = random.uniform(50,100)
             th = random.uniform(0, math.pi*2)
 
-            r = 15
+            r = 14
 
             x = random.uniform(ctrl_rect["x"]+r, ctrl_rect["x"]+ctrl_rect["w"]-r)
             y = random.uniform(ctrl_rect["y"]+r, ctrl_rect["y"]+ctrl_rect["h"]-r)
 
             trapped_balls.append({"pos":Vector2(x,y),
-                                "vel": Vector2(v*math.cos(th), v*math.sin(th))})
+                                "vel": Vector2(v*math.cos(th), v*math.sin(th)),
+                                "dia": r * 2, "caught": "none", "extratime": 0})
 
 
 global levels
