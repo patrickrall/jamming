@@ -4,7 +4,7 @@ from swyne.node import Vector2
 import globs
 import pyglet
 
-def init_patphysics(w):
+def init_physics(w):
     w.launch_listener(ball_spawning)
     w.launch_listener(frame)
 
@@ -74,11 +74,11 @@ def split_delta(delta):
     # deal with case where things are zero
     if delta.x == 0 and delta.y == 0: return
     if delta.x == 0:
-        for i in range(magx):
+        for i in range(magy):
             yield Vector2(0,sy)
         return
     if delta.y == 0:
-        for i in range(magy):
+        for i in range(magx):
             yield Vector2(sx,0)
         return
 
@@ -151,7 +151,6 @@ def frame():
                         ball["vel"].x = int(ball["vel"].x)
                         ball["vel"].y = int(ball["vel"].y)
 
-                        print(ball["vel"])
                         break
 
             v2 = ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y
@@ -161,7 +160,6 @@ def frame():
 
                 ball["vel"].x = int(ball["vel"].x)
                 ball["vel"].y = int(ball["vel"].y)
-                print(ball["vel"])
 
             if v2 < 10000:
                 ball["vel"].x *= 1.1
@@ -169,13 +167,11 @@ def frame():
 
                 ball["vel"].x = int(ball["vel"].x)
                 ball["vel"].y = int(ball["vel"].y)
-                print(ball["vel"])
 
 
             delta = ball["vel"]*dt
             delta.x = int(delta.x)
             delta.y = int(delta.y)
-
 
             for nudge in split_delta(delta):
                 pos = ball["pos"]
