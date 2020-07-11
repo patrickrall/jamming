@@ -12,6 +12,7 @@ def init_draw(w):
 def draw():
 
     balls = globs.balls
+    trapped_balls = globs.trapped_balls
     keys = globs.keys
     keys_pressed = globs.keys_pressed
     key_rects = globs.key_rects
@@ -20,12 +21,17 @@ def draw():
 
     active_sprites = {key: None for key in keys}
 
+    ctrlkey = pyglet.image.load("assets/ctrl.png")
+
     img = pyglet.image.load("assets/keys_lettersonly_pressed.png")
     letters_image = {}
     for key in key_rects.keys():
         rect = key_rects[key]
         letters_image[key] = img.get_region(x=rect["x"]-border,
                 y=rect["y"]-border, width=rect["w"]+2*border, height=rect["h"]+2*border)
+
+    background_anim = pyglet.image.load_animation("assets/background.gif")
+    background = pyglet.sprite.Sprite(background_anim,x=0,y=0)
 
     anim = pyglet.image.load_animation("assets/ball_sprite.gif")
     w,h = anim.get_max_width(), anim.get_max_height()
@@ -77,8 +83,7 @@ def draw():
         yield "on_draw"
         level = globs.level
 
-        glColor4f(1,1,1,1)
-        glRectf(0,0,960,320)
+        background.draw()
 
         for key in keys:
 
@@ -126,14 +131,23 @@ def draw():
 
         for ball in balls:
 
-            if False:
+            if True:
                 glPushMatrix()
                 glTranslatef(ball["pos"].x,ball["pos"].y,0)
                 beachball_sprite.draw()
                 glPopMatrix()
+            else:
+                glColor4f(1.,0,1.,1)
+                x,y = ball["pos"].x,ball["pos"].y
+                glRectf(x-10, y-10, x+10, y+10)
 
-            glColor4f(1.,0,1.,1)
-            x,y = ball["pos"].x,ball["pos"].y
-            glRectf(x-10, y-10, x+10, y+10)
+
+        for ball in trapped_balls:
+            glPushMatrix()
+            glTranslatef(ball["pos"].x,ball["pos"].y,0)
+            beachball_sprite.draw()
+            glPopMatrix()
+
+        ctrlkey.blit(0,0)
 
 

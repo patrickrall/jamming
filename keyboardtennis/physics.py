@@ -98,79 +98,45 @@ def frame():
     keys = globs.keys
     keys_pressed = globs.keys_pressed
 
-    level_idx = globs.level_idx
-    levels = globs.levels
+    trapped_balls = globs.trapped_balls
+    ctrl_rect = globs.ctrl_rect
 
     while True:
         _, dt = yield "on_frame"
         level = globs.level
 
+
+        for ball in trapped_balls:
+
+            delta = ball["vel"]*dt
+
+            delta.x = int(delta.x)
+            delta.y = int(delta.y)
+
+            for nudge in split_delta(delta):
+                pos = ball["pos"]
+
+                r = 15
+
+                if pos.x + r + nudge.x > ctrl_rect["x"]+ctrl_rect["w"]:
+                    ball["vel"].x *= -1
+                    break
+                if pos.x - r + nudge.x < ctrl_rect["x"]:
+                    ball["vel"].x *= -1
+                    break
+                if pos.y + r + nudge.y > ctrl_rect["y"]+ctrl_rect["h"]:
+                    ball["vel"].y *= -1
+                    break
+                if pos.y - r + nudge.y < ctrl_rect["y"]:
+                    ball["vel"].y *= -1
+                    break
+
+                ball["pos"] += nudge
+
+
         dimsx,dimsy,boty = 960,320,60
 
         for ball in balls:
-
-            ignore_key = None
-            if True:
-
-                for key in keys:
-                    if key in level: kind = level[key]
-                    else: kind = level["default"]
-                    if keys_pressed[key] and len(kind) > 1: kind = kind[1]
-                    else: kind = kind[0]
-
-                    if kind != "wall": continue
-
-
-                    rect = key_rects[key]
-                    rpos = Vector2(rect["x"],rect["y"])
-                    rdims = Vector2(rect["w"],rect["h"])
-
-                    if circle_intersect_rect(ball["pos"], 10, rpos, rdims):
-
-                        ignore_key = key
-
-                        dright = (rpos.x + rdims.x - ball["pos"].x)
-                        dleft = (ball["pos"].x - rpos.x)
-
-                        dtop = (rpos.y + rdims.y - ball["pos"].y)
-                        dbot = (ball["pos"].y - rpos.y)
-
-                        mi = min(dright,dleft,dtop,dbot)
-                        delta = mi*2
-
-                        if mi == dright:
-                            if ball["vel"].x < 0: ball["vel"].x = 0
-                            ball["vel"].x += delta
-                        if mi == dleft:
-                            if ball["vel"].x > 0: ball["vel"].x = 0
-                            ball["vel"].x -= delta
-                        if mi == dtop:
-                            if ball["vel"].y < 0: ball["vel"].y = 0
-                            ball["vel"].y += delta
-                        if mi == dbot:
-                            if ball["vel"].y > 0: ball["vel"].y = 0
-                            ball["vel"].y -= delta
-
-                        ball["vel"].x = int(ball["vel"].x)
-                        ball["vel"].y = int(ball["vel"].y)
-
-                        break
-
-            v2 = ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y
-            if v2 > 20000:
-                ball["vel"].x *= 0.8
-                ball["vel"].y *= 0.8
-
-                ball["vel"].x = int(ball["vel"].x)
-                ball["vel"].y = int(ball["vel"].y)
-
-            if v2 < 10000:
-                ball["vel"].x *= 1.1
-                ball["vel"].y *= 1.1
-
-                ball["vel"].x = int(ball["vel"].x)
-                ball["vel"].y = int(ball["vel"].y)
-
 
             delta = ball["vel"]*dt
             delta.x = int(delta.x)
@@ -199,7 +165,6 @@ def frame():
                     # check against rectangles
                     anyCollide = False
                     for key in keys:
-                        if key == ignore_key: continue
 
                         if key in level: kind = level[key]
                         else: kind = level["default"]

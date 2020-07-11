@@ -24,11 +24,18 @@ def init_globals():
     global balls
     balls = []
 
+    global trapped_balls
+    trapped_balls = []
+
+    global ctrl_rect
+    ctrl_rect = data["frames"][str(len(data["frames"])-1)]["frame"]
+    ctrl_rect["y"] = 320 - ctrl_rect["y"] - ctrl_rect["h"]
+
     global level_idx
-    level_idx = 0
+    level_idx = -1
 
     global level
-    level = levels[0]
+    level = {"default": ["none"]}
 
     global keys_pressed
     keys_pressed = {key: False for key in keys}
@@ -47,12 +54,33 @@ def next_level():
     global levels
     global level
     global balls
+    global trapped_balls
+    global ctrl_rect
 
     level_idx += 1
 
     if level_idx < len(levels):
         level = levels[level_idx]
         balls = []
+
+        import math
+        import random
+
+        while len(trapped_balls) < level["max-balls"]:
+
+            v = random.uniform(50,100)
+            th = random.uniform(0, math.pi*2)
+
+            r = 15
+
+            x = random.uniform(ctrl_rect["x"]+r, ctrl_rect["x"]+ctrl_rect["w"]-r)
+            y = random.uniform(ctrl_rect["y"]+r, ctrl_rect["y"]+ctrl_rect["h"]-r)
+
+            trapped_balls.append({"pos":Vector2(x,y),
+                                "vel": Vector2(v*math.cos(th), v*math.sin(th))})
+
+
+
 
 
 global levels

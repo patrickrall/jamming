@@ -18,9 +18,10 @@ def main():
     HintedLayoutNode [960,320]
     """)
 
+    globs.next_level()
+
     init_physics(w)
     init_draw(w)
-
     w.launch_listener(record_key_presses)
     pyglet.app.run()
 
