@@ -43,9 +43,11 @@ def draw():
 
     # syntax ["static_keyboard_image.png", None or "animated_sprite.gif"]
     kinds = {
-        "none": ["assets/lowered_keys.png", None],
-        "wall": ["assets/raised_keys.png", None],
-        "goal": ["assets/lowered_keys.png", "assets/moth_idle.gif"],
+        "none": ["assets/lowered_keys_2.png", None],
+        "wall": ["assets/raised_keys_2.png", None],
+        "gravity-off": ["assets/lowered_keys_2.png", "assets/gravity_hole_idle.gif"],
+        "gravity-on": ["assets/lowered_keys_2.png", "assets/gravity_hole_idle.gif"],
+        "goal": ["assets/lowered_keys_2.png", "assets/moth_idle.gif"],
     }
 
     for kind in kinds.keys():
@@ -72,9 +74,10 @@ def draw():
 
     # used as override if we don't have assets for it yet
     tmp_colors = {
-        "hazard": [1.,0.,0.,1.],
-        "gravity": [0.,0.,1.,1.],
-    }
+            "hazard": [1.,0.,0.,1.],
+        #"gravity": [0.,0.,1.,1.],
+
+        }
 
     ##################################################################################
 
