@@ -48,7 +48,6 @@ def init_globals():
 
 
 def next_level():
-    print("Level complete.")
 
     global level_idx
     global levels
@@ -61,7 +60,8 @@ def next_level():
 
     if level_idx < len(levels):
         level = levels[level_idx]
-        balls = []
+        for i in range(len(balls)):
+            balls.pop(0)
 
         import math
         import random
@@ -80,11 +80,18 @@ def next_level():
                                 "vel": Vector2(v*math.cos(th), v*math.sin(th))})
 
 
-
-
-
 global levels
 levels = []
+
+levels.append({
+        "default": ["none", "wall"],
+        "S": ["hazard", "none"],
+        "MINUS": ["goal"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+
+    })
 
 levels.append({
         "default": ["none","wall"],
@@ -121,6 +128,9 @@ levels.append({
         "R": ["wall"],
         "U": ["wall"],
         "I": ["wall"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
     })
 
 levels.append({

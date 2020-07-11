@@ -105,6 +105,33 @@ def frame():
         _, dt = yield "on_frame"
         level = globs.level
 
+        dimsx,dimsy,boty = 960,320,60
+
+        dead_ball_indices = []
+        for n, ball in enumerate(balls):
+
+            ignore_key = None
+            if True:
+
+                for key in keys:
+                    if key in level: kind = level[key]
+                    else: kind = level["default"]
+                    if keys_pressed[key] and len(kind) > 1: kind = kind[1]
+                    else: kind = kind[0]
+
+                    if kind != "wall": continue
+
+
+                    rect = key_rects[key]
+                    rpos = Vector2(rect["x"],rect["y"])
+                    rdims = Vector2(rect["w"],rect["h"])
+
+                    if circle_intersect_rect(ball["pos"], 10, rpos, rdims):
+
+                        ignore_key = key
+
+                        dright = (rpos.x + rdims.x - ball["pos"].x)
+                        dleft = (ball["pos"].x - rpos.x)
 
         for ball in trapped_balls:
 
@@ -178,7 +205,10 @@ def frame():
                         if circle_intersect_rect(pos+nudge, 10, rpos, rdims):
 
                             if kind == "none": continue
-                            if kind == "hazard": continue
+                            if kind == "hazard":
+                                if n not in dead_ball_indices:
+                                    dead_ball_indices.append(n)
+                                continue
 
                             if kind == "goal":
                                 globs.next_level()
@@ -199,6 +229,12 @@ def frame():
                 ball["pos"] += nudge
 
 
+        for dead_ball_index in dead_ball_indices:
+            level["dead-balls"] += 1
+            balls.pop(dead_ball_index)
+        dead_ball_indices = []
+
+
 def ball_spawning():
     balls = globs.balls
     key_rects = globs.key_rects
@@ -210,7 +246,7 @@ def ball_spawning():
         "ctrl_held": False, "ctrl_frames": 0,
         "speed_min": 20, "speed_scale": 10, "speed_reset": 30,
         "angle_min": 20, "angle_limit": 240, "angle_reset": 200,
-        "dia": 10, "bot_left": [key_rects["LSHIFT"]["x"], \
+        "dia": 28, "bot_left": [key_rects["LSHIFT"]["x"], \
                 key_rects["LSHIFT"]["y"]]}
 
     while True:
