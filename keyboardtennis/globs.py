@@ -1,5 +1,5 @@
 
-
+import pyglet
 import json
 from swyne.node import Vector2
 from pyglet.resource import media
