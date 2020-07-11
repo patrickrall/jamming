@@ -13,7 +13,7 @@ def circle_intersect_rect(cpos,cr,rpos,rdims):
     if rpos.x < cpos.x and cpos.x < rpos.x + rdims.x and\
         rpos.y < cpos.y and cpos.y < rpos.y + rdims.y: return True
 
-    # center is to far from rectangle (quick escapes to avoid complex math)
+    # center is too far from rectangle (quick escapes to avoid complex math)
     if cpos.x + cr*1.5 < rpos.x: return False
     if cpos.y + cr*1.5 < rpos.y: return False
     if rpos.x < rpos.x - cr*1.5 : return False
@@ -23,7 +23,7 @@ def circle_intersect_rect(cpos,cr,rpos,rdims):
         # look for solutions for t of the following system
         # x = (1-t) * p1.x + t * p2.x
         # y = (1-t) * p1.x + t * p2.y
-        # (x - cpos.x)**2 + (y - cpos.y)**2 = cr
+        # (x - cpos.x)**2 + (y - cpos.y)**2 = cr**2
 
         # expand out
         # ((1-t) * p1.x + t* p2.x - cpos.x)**2 + ((1-t) * p1.x + t * p2.y - cpos.y)**2 = cr**2
@@ -45,7 +45,7 @@ def circle_intersect_rect(cpos,cr,rpos,rdims):
         if (b**2 - 4*a*c < 0): return False
 
         t1 = ( -b + sqrt(b**2 - 4*a*c) ) / 2*a
-        t2 = ( -b + sqrt(b**2 - 4*a*c) ) / 2*a
+        t2 = ( -b - sqrt(b**2 - 4*a*c) ) / 2*a
 
         if 0 <= t1 <= 1: return True
         if 0 <= t2 <= 1: return True
@@ -102,12 +102,60 @@ def frame():
     while True:
         _, dt = yield "on_frame"
 
+        dimsx,dimsy,boty = 960,320,60
 
         for ball in balls:
-            dimsx,dimsy,boty = 960,320,60
 
-            delta = ball["vel"]*(dt + ball["extratime"])
-            ball["extratime"] = (delta.x - int(delta.x))/ball["vel"].x
+            ignore_key = None
+            if True:
+
+
+                for key in keys:
+                    if key in level: kind = level[key]
+                    else: kind = level["default"]
+                    if keys_pressed[key] and len(kind) > 1: kind = kind[1]
+                    else: kind = kind[0]
+
+                    if kind != "wall": continue
+
+                    rect = key_rects[key]
+                    rpos = Vector2(rect["x"],rect["y"])
+                    rdims = Vector2(rect["w"],rect["h"])
+
+                    if circle_intersect_rect(ball["pos"], 10, rpos, rdims):
+
+                        ignore_key = key
+
+                        dright = (rpos.x + rdims.x - ball["pos"].x)
+                        dleft = (ball["pos"].x - rpos.x)
+
+                        dtop = (rpos.y + rdims.y - ball["pos"].y)
+                        dbot = (ball["pos"].y - rpos.y)
+
+                        mi = min(dright,dleft,dtop,dbot)
+                        delta = mi*2
+
+                        if mi == dright:
+                            if ball["vel"].x < 0: ball["vel"].x = 0
+                            ball["vel"].x += delta
+                        if mi == dleft:
+                            if ball["vel"].x > 0: ball["vel"].x = 0
+                            ball["vel"].x -= delta
+                        if mi == dtop:
+                            if ball["vel"].y < 0: ball["vel"].y = 0
+                            ball["vel"].y += delta
+                        if mi == dbot:
+                            if ball["vel"].y > 0: ball["vel"].y = 0
+                            ball["vel"].y -= delta
+
+                        ball["vel"].x = int(ball["vel"].x)
+                        ball["vel"].y = int(ball["vel"].y)
+
+                        break
+
+
+
+            delta = ball["vel"]*dt
             delta.x = int(delta.x)
             delta.y = int(delta.y)
 
@@ -135,6 +183,8 @@ def frame():
                     # check against rectangles
                     anyCollide = False
                     for key in keys:
+                        if key == ignore_key: continue
+
                         if key in level: kind = level[key]
                         else: kind = level["default"]
                         if keys_pressed[key] and len(kind) > 1: kind = kind[1]
@@ -147,8 +197,12 @@ def frame():
                         rdims = Vector2(rect["w"],rect["h"])
 
                         if circle_intersect_rect(pos+nudge, 10, rpos, rdims):
-                            if (nudge.x == 0): ball["vel"].y *= -1
-                            if (nudge.y == 0): ball["vel"].x *= -1
+                            if (nudge.x == 0): ball["vel"].y *= -0.8
+                            if (nudge.y == 0): ball["vel"].x *= -0.8
+
+                            ball["vel"].x = int(ball["vel"].x)
+                            ball["vel"].y = int(ball["vel"].y)
+
                             anyCollide = True
                             break
 
