@@ -1,5 +1,5 @@
 from swyne.node import *
-
+import math
 
 
 def ball_rect_side(center, radius, rect_pos, rect_size):
@@ -18,7 +18,8 @@ def ball_rect_side(center, radius, rect_pos, rect_size):
 		return "close"
 
 
-def will_collide(pos, target, wall):
+def handle_collision(pos, target, wall):
+
 	return True
 
 def finish_game():
@@ -32,26 +33,24 @@ def frame():
     global level
 
     while True:
-        dt = yield "on_frame"
+        _, dt = yield "on_frame"
 
         # move all balls with collision detection
         for ball in balls:
         	#check if the ball was caught last frame
-        	if ball["caught"] != "none":
-        		if keys_pressed[ball["caught"]]:
-        			ball["caught"] = "none"
-        		else:
-        			continue
+        	caught = ball["caught"] != "none"
 
         	#check unhindered position
-        	target = Vector2(ball["pos"].x + ball["vel"].x,\
-        					 ball["pos"].y + ball["vel"].y)
+        	target = Vector2(ball["pos"].x + (ball["vel"].x * dt),\
+        					 ball["pos"].y + (ball["vel"].y * dt))
 
         	ball_radius = ball["dia"]/2.0
 
+        	# find all walls to consider
+        	ball_obstacles = []
 
         	for key in key_rects:
-        		# check if the key is not empty
+        		# check if the key is not permeable
         		can_collide = False
         		if (not keys_pressed[key]) or len(level[key]) < 2:
         			if level[key][0] != "none":
@@ -61,11 +60,24 @@ def frame():
         					can_collide = True
 
         		if can_collide:
+
+        			if caught: if ball["caught"] == key: continue
+
         			# check if it is getting caught
+        			side = ball_rect_side(ball["pos"], ball_radius\
+        								key_pos, key_size)
+        			if side == "close":
+        				if handle_capture(ball, key_pos, key_size)
+        			else:
+        				ball = handle_collision(ball, key, side)
+
+
+        			# check if the ball is close enough to hit it this frame
+        			travel_dist = math.sqrt(target.x**2 + target.y**2)
         			key_pos = Vector2(key["x"], key["y"])
         			key_size = Vector2(key["w"], key["h"])
 
-        			side = ball_rect_side(ball["pos"], ball_radius\
-        								key_pos, key_size)
+        			if is_nearby(ball["pos"], travel_dist, key_pos, key_size):
+       	 				
 
         			
