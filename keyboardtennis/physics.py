@@ -252,10 +252,10 @@ def ball_spawning():
                     ball_spawner["ctrl_held"] = True
                 # control was already held a little bit
                 elif ball_spawner["ctrl_frames"] <= 10 or \
-                        len(balls) >= level["simultaneous-balls"]
+                        len(balls) >= level["simultaneous-balls"]:
                     launch_sounds[1].play()
                 else:
-                    if len(trapped_balls <= 1):
+                    if len(trapped_balls) <= 1:
                         while len(trapped_balls) < level["max-balls"]:
                             v, th = random.uniform(50,100), random.uniform(0, math.pi*2)
                             x = random.uniform(ctrl_rect["x"]+r, ctrl_rect["x"]+ctrl_rect["w"]-r)
