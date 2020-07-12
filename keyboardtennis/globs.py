@@ -206,3 +206,103 @@ levels.append({
         "dead-balls": 0,
         "speed": 150,
     })
+
+"""levels.append({ # thread the needle, easy
+        "default": ["none", "wall"],
+        "D": ["gravity-off","gravity-on"],
+        "A": ["soda"],
+        "_6": ["wall"],
+        "Y": ["wall", "none"],
+        "H": ["wall"],
+        "N": ["wall"],
+        "K": ["goal"],
+        "Q": ["soda"],
+        "W": ["soda"],
+        "S": ["soda"],
+        "Z": ["soda"],
+        "X": ["soda"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 300,
+    })"""
+
+"""levels.append({# thread the needle, dangerous
+        "default": ["none","wall"],
+        "B": ["wall"],
+        "G": ["wall"],
+        "_5": ["wall"],
+        "T": ["wall", "none"],
+        "H": ["none","gravity-off"],
+        "MINUS": ["goal"],
+        "_0": ["wall"],
+        "P": ["wall"],
+        "RSHIFT": ["wall"],
+        "ENTER": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 150,
+    })"""
+
+"""levels.append({ # boomerang level
+        "default": ["none","wall"],
+        "H": ["none","gravity-on"],
+        "ENTER": ["hazard"],
+        "RSHIFT": ["hazard"],
+        "BACKSLASH": ["hazard"],
+        "BACKSPACE": ["hazard"],
+        "_8": ["goal"],
+        "_7": ["wall"],
+        "U": ["wall"],
+        "I": ["wall"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 150,
+    })
+"""
+"""
+levels.append({
+        "default": ["none", "wall"],
+        "W": ["hazard", "none"],
+        "E": ["hazard", "none"],
+        "F": ["hazard", "none"],
+        "V": ["hazard", "none"],
+        "B": ["hazard", "none"],
+        "H": ["hazard", "none"],
+        "U": ["hazard", "none"],
+        "I": ["hazard", "none"],
+        "O": ["hazard", "none"],
+        "M": ["goal"],
+        "max-balls" : 5,
+        "simultaneous-balls" : 2,
+        "dead-balls": 0,
+        "speed": 300,
+
+    })
+
+levels.append({ # all walls
+        "default": ["wall", "none"],
+        "RSHIFT": ["hazard"],
+        "_6": ["wall", "goal"],
+        "T": ["wall"],
+        "R": ["wall"],
+        "U": ["wall"],
+        "I": ["wall"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 150,
+    })
+
+levels.append({
+        "default": ["hazard", "none"],
+        "H": ["none","gravity"],
+        "ENTER": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 150,
+    })"""
+
