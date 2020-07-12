@@ -6,3 +6,6 @@ __pycache__/
 *.swp
 
 *.py~
+keyboardtennis/build
+keyboardtennis/dist
+*.spec
