@@ -249,7 +249,7 @@ if True:
         "angle": 60,
     })
 
-if False:
+if True:
     levels.append({
         "default": ["none", "wall"],
         "D": ["gravity-off","gravity-on"],
