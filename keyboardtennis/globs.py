@@ -191,7 +191,8 @@ if True:
             "_8": ["wall"],
             "_9": ["wall"],
             "_0": ["wall"],
-            "G": ["gravity-off", "gravity-on"],
+            "GRAVE": ["gravity-off", "gravity-on"],
+            "COMMA": ["gravity-off", "gravity-on"],
             "RSHIFT": ["hazard"],
             "max-balls" : 3,
             "simultaneous-balls" : 10,
@@ -255,29 +256,6 @@ if True:
             "speed": 150,
         })
 
-
-if True:
-    levels.append({ # remove hazards  level
-            "default": ["none", "wall"],
-            "W": ["hazard", "none"],
-            "E": ["hazard", "none"],
-            "F": ["hazard", "none"],
-            "V": ["hazard", "none"],
-            "B": ["hazard", "none"],
-            "H": ["hazard", "none"],
-            "U": ["hazard", "none"],
-            "I": ["hazard", "none"],
-            "O": ["hazard", "none"],
-            "_5": ["wall"],
-            "M": ["goal"],
-            "max-balls" : 5,
-            "simultaneous-balls" : 2,
-            "dead-balls": 0,
-            "speed-min": 200,
-            "speed-max": 400,
-            "angle-min": 20,
-            "angle-max": 70,
-        })
 
 if True:
     levels.append({ # all walls.
@@ -352,7 +330,7 @@ if True:
     })
 
 if True:
-    levels.append({
+    levels.append({ # gravity slingshot
         "default": ["none", "wall"],
         "D": ["gravity-off","gravity-on"],
         "A": ["soda"],
@@ -405,6 +383,31 @@ if True:
         "dead-balls": 0,
         "speed": 100,
     })
+
+
+if True:
+    levels.append({ # remove hazards  level
+            "default": ["none", "wall"],
+            "W": ["hazard", "none"],
+            "E": ["hazard", "none"],
+            "F": ["hazard", "none"],
+            "V": ["hazard", "none"],
+            "B": ["hazard", "none"],
+            "H": ["hazard", "none"],
+            "U": ["hazard", "none"],
+            "I": ["hazard", "none"],
+            "O": ["hazard", "none"],
+            "_5": ["wall"],
+            "M": ["goal"],
+            "max-balls" : 5,
+            "simultaneous-balls" : 2,
+            "dead-balls": 0,
+            "speed-min": 200,
+            "speed-max": 400,
+            "angle-min": 20,
+            "angle-max": 70,
+        })
+
 
 
 ############################### OLD LEVELS FOR DEBUG
