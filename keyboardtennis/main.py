@@ -43,8 +43,7 @@ def record_key_presses():
 
     while True:
         event, symbol, modifiers = yield ["on_key_press", "on_key_release"]
-        level_idx = globs.level_idx
-        level = globs.levels[level_idx]
+        level = globs.level
 
         for key in keys:
             if getattr(pyglet.window.key, key) == symbol:
