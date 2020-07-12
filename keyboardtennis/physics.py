@@ -1,6 +1,5 @@
 
 from math import sqrt, copysign, sin, cos, pi
-import random
 from swyne.node import Vector2
 import globs
 import pyglet
@@ -228,6 +227,10 @@ def ball_spawning():
     key_sounds = globs.key_sounds
     trapped_balls = globs.trapped_balls
     launch_sounds = globs.launch_sounds
+    ctrl_rect = globs.ctrl_rect
+
+    import math
+    import random
 
     # I dont think this needs to be global, right?
     ball_spawner = {
@@ -258,12 +261,13 @@ def ball_spawning():
                 else:
                     if len(trapped_balls) <= 1:
                         while len(trapped_balls) < level["max-balls"]:
+                            r = ball_spawner["dia"]
                             v, th = random.uniform(50,100), random.uniform(0, math.pi*2)
                             x = random.uniform(ctrl_rect["x"]+r, ctrl_rect["x"]+ctrl_rect["w"]-r)
                             y = random.uniform(ctrl_rect["y"]+r, ctrl_rect["y"]+ctrl_rect["h"]-r)
                             trapped_balls.append({"pos":Vector2(x,y),
                                 "vel": Vector2(v*math.cos(th), v*math.sin(th)),
-                                "dia": ball_spawner["dia"], "caught": "none", "extratime": 0})
+                                "dia": r, "caught": "none", "extratime": 0})
 
                     # call all params now for concise equations later
                     vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],

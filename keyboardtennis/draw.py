@@ -4,10 +4,27 @@ import globs
 import pyglet
 import os
 
+
+menuActive = 0 # 0 = game, 1 = title, 2 = tutorial
+
 def init_draw(w):
+    
+    w.launch_listener(title_draw)
 
     w.launch_listener(draw)
 
+def title_draw():
+
+    title = pyglet.image.load("assets/title.png")
+    tutorial = pyglet.image.load("assets/tutorial.png")
+    while True:
+        yield "on_draw"
+        if not menuActive:
+            continue
+        elif menuActive is 1:
+            title.blit(0, 0)
+        elif menuActive is 2:
+            tutorial.blit(0,0)
 
 def draw():
 
@@ -92,6 +109,8 @@ def draw():
 
     while True:
         yield "on_draw"
+        if menuActive > 0:
+            continue
         level = globs.level
 
         background.draw()
