@@ -250,6 +250,7 @@ def ball_spawning():
     balls = globs.balls
     key_rects = globs.key_rects
     level = globs.level
+    launcher_state = globs.launcher_state
     key_sounds = globs.key_sounds
     trapped_balls = globs.trapped_balls
     launch_sounds = globs.launch_sounds
@@ -259,19 +260,16 @@ def ball_spawning():
     import random
 
     # I dont think this needs to be global, right?
-    ball_spawner = {
-        "ctrl_held": False, "ctrl_frames": 0,
-        "speed_min": 150, "speed_max": 300, "speed_reset": 30,
-        "angle_min": 20, "angle_limit": 80, "angle_reset": 150,
-        "dia": 28, "bot_left": [key_rects["LSHIFT"]["x"], \
-            key_rects["LSHIFT"]["y"], key_rects["LSHIFT"]["w"]]}
+    ball_diameter = 28
+    bl_corner = [key_rects["LSHIFT"]["x"], key_rects["LSHIFT"]["y"], \
+                                    key_rects["LSHIFT"]["w"]]
 
     while True:
         event, *args = yield ["on_key_press", "on_key_release", "on_frame"]
 
         if event == "on_frame":
-            if ball_spawner["ctrl_held"]:
-                ball_spawner["ctrl_frames"] += 1
+            if launcher_state[0]:
+                launcher_state[1] += 1
 
         elif globs.menuActive is 0:
             symbol, modifiers = args
@@ -279,15 +277,15 @@ def ball_spawning():
             # handle ball spawning
             if getattr(pyglet.window.key, "LCTRL") == symbol:
                 if event == "on_key_press":
-                    ball_spawner["ctrl_held"] = True
+                    launcher_state[0] = True
                 # control was already held a little bit
-                elif ball_spawner["ctrl_frames"] <= 10 or \
+                elif launcher_state[1] <= 10 or \
                         len(balls) >= level["simultaneous-balls"]:
                     launch_sounds[1].play()
                 else:
                     if len(trapped_balls) <= 1:
                         while len(trapped_balls) < level["max-balls"]:
-                            r = ball_spawner["dia"]
+                            r = ball_diameter/2.
                             v, th = random.uniform(50,100), random.uniform(0, math.pi*2)
                             x = random.uniform(ctrl_rect["x"]+r, ctrl_rect["x"]+ctrl_rect["w"]-r)
                             y = random.uniform(ctrl_rect["y"]+r, ctrl_rect["y"]+ctrl_rect["h"]-r)
@@ -296,15 +294,11 @@ def ball_spawning():
                                 "dia": r, "caught": "none", "extratime": 0})
 
                     # call all params now for concise equations later
-                    vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
-                    ball_spawner["speed_min"], ball_spawner["speed_max"],
-                    ball_spawner["speed_reset"], ball_spawner["angle_min"],
-                    ball_spawner["angle_limit"], ball_spawner["angle_reset"]]
-                    bl_corner = ball_spawner["bot_left"]
                     
+
                     # calculate speed and angle of velocity, and position
                     sp = level["speed"]
-                    th = vp[0] * (vp[7] / 180) * (2 * pi / 360)
+                    th = launcher_state[1] * (launcher_state[2] / 180) * (2 * pi / 360)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
 
                     if degrees(th) % 90 < 10: th = radians(10)
@@ -313,14 +307,14 @@ def ball_spawning():
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
                         "vel": Vector2(sp*abs(cos(th)), sp*abs(sin(th))),\
-                        "caught": "none", "dia":vp[1], "extratime":0})
+                        "caught": "none", "dia":ball_diameter, "extratime":0})
                     print("%f deg, %f x, %f y, %d frames" % \
-                        (th, sp*abs(cos(th)), sp*abs(sin(th)), ball_spawner["ctrl_frames"]))
+                        (th, sp*abs(cos(th)), sp*abs(sin(th)), launcher_state[1]))
                     #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
-                    ball_spawner["ctrl_held"] = False
-                    ball_spawner["ctrl_frames"] = 0
+                    launcher_state[0] = False
+                    launcher_state[1] = 0
                     trapped_balls.pop()
 
 
