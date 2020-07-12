@@ -16,10 +16,14 @@ def init_draw(w):
     w.launch_listener(draw)
 
 def title_draw():
+
+    pyglet.resource.path = ["assets/", "audio/"]
+    pyglet.resource.reindex()
+
     keys_down = key.KeyStateHandler()
-    title = pyglet.image.load("assets/title.png")
-    tutorial = pyglet.image.load("assets/tutorial.png")
-    ending = pyglet.image.load("assets/ending.png")
+    title = pyglet.resource.image("title.png")
+    tutorial = pyglet.resource.image("tutorial.png")
+    ending = pyglet.resource.image("ending.png")
     while True:
         event, *args = yield ["on_key_press", "on_draw"]
         ctrlDown = False
@@ -66,19 +70,19 @@ def draw():
 
     active_sprites = {key: None for key in keys}
 
-    ctrlkey = pyglet.image.load("assets/ctrl.png")
+    ctrlkey = pyglet.resource.image("ctrl.png")
 
-    img = pyglet.image.load("assets/letters.png")
+    img = pyglet.resource.image("letters.png")
     letters_image = {}
     for key in key_rects.keys():
         rect = key_rects[key]
         letters_image[key] = img.get_region(x=rect["x"]-border,
                 y=rect["y"]-border, width=rect["w"]+2*border, height=rect["h"]+2*border)
 
-    background_anim = pyglet.image.load_animation("assets/background.gif")
+    background_anim = pyglet.resource.animation("background.gif")
     background = pyglet.sprite.Sprite(background_anim,x=0,y=0)
 
-    anim = pyglet.image.load_animation("assets/ball_sprite.gif")
+    anim = pyglet.resource.animation("ball_sprite.gif")
     w,h = anim.get_max_width(), anim.get_max_height()
     beachball_sprite = pyglet.sprite.Sprite(anim,x=-w/2,y=-h/2) # centered at origin
 
@@ -89,19 +93,19 @@ def draw():
 
     # syntax ["static_keyboard_image.png", None or "animated_sprite.gif"]
     kinds = {
-        "none": ["assets/lowered_keys.png", None],
-        "wall": ["assets/raised_keys.png", None],
-        "soda": ["assets/keys_soda.png", None],
-        "gravity-off": ["assets/lowered_keys.png", "assets/gravity_hole_idle.gif"],
-        "gravity-on": ["assets/lowered_keys.png", "assets/gravity_hole_active.gif"],
-        "goal": ["assets/raised_keys.png", "assets/moth_idle.gif"],
-        "goal-nomoth": ["assets/raised_keys.png", None],
-        "hazard": ["assets/keys_hazard.png", None],
+        "none": ["lowered_keys.png", None],
+        "wall": ["raised_keys.png", None],
+        "soda": ["keys_soda.png", None],
+        "gravity-off": ["lowered_keys.png", "gravity_hole_idle.gif"],
+        "gravity-on": ["lowered_keys.png", "gravity_hole_active.gif"],
+        "goal": ["raised_keys.png", "moth_idle.gif"],
+        "goal-nomoth": ["raised_keys.png", None],
+        "hazard": ["keys_hazard.png", None],
     }
 
     for kind in kinds.keys():
         # populate keyboard_images
-        img = pyglet.image.load(kinds[kind][0])
+        img = pyglet.resource.image(kinds[kind][0])
         keyboard_images[kind] = {}
         for key in key_rects.keys():
             rect = key_rects[key]
@@ -112,7 +116,7 @@ def draw():
         if kinds[kind][1] == None:
             sprite_animations[kind] = None
         else:
-            sprite_animations[kind] = pyglet.image.load_animation(kinds[kind][1])
+            sprite_animations[kind] = pyglet.resource.animation(kinds[kind][1])
 
     # Drawing method:
     #      (letter)    from letters_image, if key is pressable
@@ -210,7 +214,7 @@ def kill_ball(ball):
 
     dead_beachball_sprites = globs.dead_beachball_sprites
 
-    death = pyglet.image.load_animation("assets/ball_sprite_death.gif")
+    death = pyglet.resource.animation("ball_sprite_death.gif")
     sprite = pyglet.sprite.Sprite(death,x=ball["pos"].x-ball["dia"]/2,y=ball["pos"].y-ball["dia"]/2)
 
     dead_beachball_sprites.append(sprite)

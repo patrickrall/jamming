@@ -14,8 +14,11 @@ def init_globals():
             "CAPSLOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "SEMICOLON", "APOSTROPHE", "ENTER",
             "LSHIFT", "Z", "X", "C", "V", "B", "N", "M", "COMMA", "PERIOD", "SLASH", "RSHIFT"]
 
+    pyglet.resource.path = ["assets/", "audio/"]
+    pyglet.resource.reindex()
 
-    with open("assets/keyboard.json") as f:
+
+    with pyglet.resource.file("keyboard.json") as f:
         data = json.loads(f.read())
 
     global key_rects
@@ -50,21 +53,21 @@ def init_globals():
     keys_pressed = {key: False for key in keys}
 
     global key_sounds
-    key_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1, 8)]
+    key_sounds = [media("keyboard_%d.wav" %i, streaming=False) for i in range(1, 8)]
 
     global bounce_sounds
-    bounce_sounds = [media("audio/keyboard_%d.wav" %i, streaming=False) for i in range(1,3)]
+    bounce_sounds = [media("keyboard_%d.wav" %i, streaming=False) for i in range(1,3)]
 
     global launch_sounds
-    launch_sounds = [media("audio/launch.wav", streaming=False),
-                     media("audio/launch_empty.wav", streaming=False)]
+    launch_sounds = [media("launch.wav", streaming=False),
+                     media("launch_empty.wav", streaming=False)]
 
     global background_music_player
     background_music_player = pyglet.media.Player()
     background_music_player.volume = 0.01
 
-    background_music = [media("audio/Eva_soundtrack.wav", streaming=False),
-                        media("audio/DzGrimX_soundtrack.wav", streaming=False)]
+    background_music = [media("Eva_soundtrack.wav", streaming=False),
+                        media("DzGrimX_soundtrack.wav", streaming=False)]
     background_music_player.queue(background_music)
     global moths
     moths = []
@@ -84,7 +87,7 @@ def launch_moth(key):
     level[key] = ["goal-nomoth"]
 
     global moths
-    anim = pyglet.image.load_animation("assets/moth_flying.gif")
+    anim = pyglet.resource.animation("moth_flying.gif")
     rect = key_rects[key]
     x = rect["x"] + rect["w"]/2 - anim.get_max_width()/2
     y = rect["y"] + rect["h"]/2 - anim.get_max_height()/2
