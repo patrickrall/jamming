@@ -88,6 +88,7 @@ def draw():
         "gravity-on": ["assets/lowered_keys.png", "assets/gravity_hole_active.gif"],
         "goal": ["assets/raised_keys.png", "assets/moth_idle.gif"],
         "goal-nomoth": ["assets/raised_keys.png", None],
+        "hazard": ["assets/keys_hazard.png", None],
     }
 
     for kind in kinds.keys():
@@ -112,12 +113,7 @@ def draw():
     #      (sprite)    stored in active_sprites, animations in sprite_animations
     #      (keyboard)  from keyboard_images
 
-    # used as override if we don't have assets for it yet
-    tmp_colors = {
-            "hazard": [1.,0.,0.,1.],
-        #"gravity": [0.,0.,1.,1.],
 
-        }
 
     ##################################################################################
 
@@ -139,45 +135,38 @@ def draw():
 
             rect = key_rects[key]
 
-            if kind in tmp_colors:
-                color = tmp_colors[kind]
 
-                # draw key as rectangle
-                glColor4f(color[0],color[1],color[2],color[3])
-                glRectf(rect["x"],rect["y"],rect["x"]+rect["w"],rect["y"]+rect["h"])
+            glColor4f(1,1,1,1)
 
+            # draw keyboard
+            keyboard_images[kind][key].blit(rect["x"]-border, rect["y"]-border)
+
+            # draw sprite
+            if sprite_animations[kind] == None:
+                # delete sprite if there should be none
+                if active_sprites[key] != None:
+                    active_sprites[key].delete()
+                    active_sprites[key] = None
             else:
-                glColor4f(1,1,1,1)
 
-                # draw keyboard
-                keyboard_images[kind][key].blit(rect["x"]-border, rect["y"]-border)
-
-                # draw sprite
-                if sprite_animations[kind] == None:
-                    # delete sprite if there should be none
-                    if active_sprites[key] != None:
-                        active_sprites[key].delete()
-                        active_sprites[key] = None
-                else:
-
-                    if active_sprites[key] != None and active_sprites[key].image != sprite_animations[kind]:
-                        active_sprites[key].delete()
-                        active_sprites[key] = None
+                if active_sprites[key] != None and active_sprites[key].image != sprite_animations[kind]:
+                    active_sprites[key].delete()
+                    active_sprites[key] = None
 
 
-                    if active_sprites[key] == None:
-                        # create sprite if there should be one
-                        w,h = sprite_animations[kind].get_max_width(), sprite_animations[kind].get_max_height()
-                        x,y = rect["x"] + rect["w"]/2 - w/2, rect["y"]+rect["h"]/2 - h/2
-                        active_sprites[key] = pyglet.sprite.Sprite(sprite_animations[kind], x, y)
+                if active_sprites[key] == None:
+                    # create sprite if there should be one
+                    w,h = sprite_animations[kind].get_max_width(), sprite_animations[kind].get_max_height()
+                    x,y = rect["x"] + rect["w"]/2 - w/2, rect["y"]+rect["h"]/2 - h/2
+                    active_sprites[key] = pyglet.sprite.Sprite(sprite_animations[kind], x, y)
 
-                    active_sprites[key].draw()
+                active_sprites[key].draw()
 
 
-                # draw letter
-                if (key in level and len(level[key]) == 2) or\
-                        (key not in level and len(level["default"]) == 2):
-                    letters_image[key].blit(rect["x"]-border, rect["y"]-border)
+            # draw letter
+            if (key in level and len(level[key]) == 2) or\
+                    (key not in level and len(level["default"]) == 2):
+                letters_image[key].blit(rect["x"]-border, rect["y"]-border)
 
 
         for ball in balls:
