@@ -11,7 +11,7 @@ from physics import init_physics
 def main():
     globs.init_globals()
 
-    w = NodeWindow()
+    w = NodeWindow(960,320)
     w.fps = 60
 
     w.node, _ = deserialize_node("""
