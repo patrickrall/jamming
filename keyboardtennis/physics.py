@@ -139,8 +139,8 @@ def frame():
 
         dimsx,dimsy,boty = 960,320,60
 
-        dead_balls = []
-        for ball in balls:
+        balls_to_kill = [[],[]]
+        for n, ball in enumerate(balls):
 
 
             delta = ball["vel"]*dt
@@ -189,31 +189,35 @@ def frame():
                         if circle_intersect_rect(pos+nudge, r, rpos, rdims):
 
                             if kind == "hazard":
-                                if ball not in dead_balls:
-                                    dead_balls.append(ball)
+                                if n not in balls_to_kill[1]:
+                                    balls_to_kill[0].append(ball)
+                                    balls_to_kill[1].append(n)
                                 continue
 
-                            if kind in ["wall", "goal"]:
+                            if kind in ["wall", "goal", "goal-nomoth"]:
                                 if (nudge.x == 0): ball["vel"].y *= -1
                                 if (nudge.y == 0): ball["vel"].x *= -1
 
                                 ball["vel"].x = int(ball["vel"].x)
                                 ball["vel"].y = int(ball["vel"].y)
 
+                                anyCollide = True
+
                             if kind == "goal":
                                 globs.launch_moth(key)
 
+                            if anyCollide:
+                                break
 
-                            anyCollide = True
-                            break
                     if anyCollide:
                         break
                 ball["pos"] += nudge
 
-
-        for dead_ball in dead_balls:
-            level["dead-balls"].append(balls.remove(dead_ball))
-        dead_ball_indices = []
+        dead_balls = globs.dead_balls
+        for dead_ball in balls_to_kill[1]:
+            level["dead-balls"]+= 1
+            dead_balls.append(balls.pop(dead_ball))
+        balls_to_kill = []
 
 
 def ball_spawning():
@@ -249,7 +253,7 @@ def ball_spawning():
                 # control was already held a little bit
                 elif ball_spawner["ctrl_frames"] <= 10 or \
                         len(balls) >= level["simultaneous-balls"] or \
-                        len(balls) + len(level["dead-balls"]) > level["max-balls"]:
+                        len(balls) + level["dead-balls"] > level["max-balls"]:
                     launch_sounds[1].play()
                 else:
                     # call all params now for concise equations later

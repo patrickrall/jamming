@@ -53,7 +53,7 @@ def record_key_presses():
                         keys_pressed[key] = True
                         num_pressed += 1
 
-                        if key in level.keys():
+                        if key not in level.keys():
                             r = random.randint(0, 6)
                             key_sounds[r].play()
 

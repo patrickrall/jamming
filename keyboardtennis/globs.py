@@ -27,6 +27,9 @@ def init_globals():
     global trapped_balls
     trapped_balls = []
 
+    global dead_balls
+    dead_balls = []
+
     global ctrl_rect
     ctrl_rect = data["frames"][str(len(data["frames"])-1)]["frame"]
     ctrl_rect["y"] = 320 - ctrl_rect["y"] - ctrl_rect["h"]
@@ -53,7 +56,8 @@ def init_globals():
     global background_music_player
     background_music_player = pyglet.media.Player()
     background_music_player.volume = 0.01
-    background_music = [media("audio/Eva_soundtrack.mp3"), media("audio/DzGrimX_soundtrack.mp3")]
+    background_music = [media("audio/Eva_soundtrack.mp3", streaming=False),
+                        media("audio/DzGrimX_soundtrack.mp3", streaming=False)]
     background_music_player.queue(background_music)
 
 
@@ -115,7 +119,7 @@ levels.append({
         "V": ["soda"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": [],
+        "dead-balls": 0,
 
     })
 
@@ -133,7 +137,7 @@ levels.append({
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": [],
+        "dead-balls": 0,
     })
 
 levels.append({
@@ -143,7 +147,7 @@ levels.append({
         "I": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": [],
+        "dead-balls": 0,
     })
 
 levels.append({
@@ -156,7 +160,7 @@ levels.append({
         "I": ["wall"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": [],
+        "dead-balls": 0,
     })
 
 levels.append({
@@ -165,5 +169,5 @@ levels.append({
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
-        "dead-balls": [],
+        "dead-balls": 0,
     })
