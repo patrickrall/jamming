@@ -85,7 +85,7 @@ def draw():
         "wall": ["assets/raised_keys.png", None],
         "soda": ["assets/keys_soda.png", None],
         "gravity-off": ["assets/lowered_keys.png", "assets/gravity_hole_idle.gif"],
-        "gravity-on": ["assets/lowered_keys.png", "assets/gravity_hole_idle.gif"],
+        "gravity-on": ["assets/lowered_keys.png", "assets/gravity_hole_active.gif"],
         "goal": ["assets/raised_keys.png", "assets/moth_idle.gif"],
         "goal-nomoth": ["assets/raised_keys.png", None],
     }
@@ -159,6 +159,12 @@ def draw():
                         active_sprites[key].delete()
                         active_sprites[key] = None
                 else:
+
+                    if active_sprites[key] != None and active_sprites[key].image != sprite_animations[kind]:
+                        active_sprites[key].delete()
+                        active_sprites[key] = None
+
+
                     if active_sprites[key] == None:
                         # create sprite if there should be one
                         w,h = sprite_animations[kind].get_max_width(), sprite_animations[kind].get_max_height()

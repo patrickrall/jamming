@@ -142,6 +142,65 @@ def frame():
         balls_to_kill = [[],[]]
         for n, ball in enumerate(balls):
 
+            prv_v = sqrt(ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y)
+
+            # gravity
+            for key in keys:
+                break
+
+                if key in level: kind = level[key]
+                else: kind = level["default"]
+                if keys_pressed[key] and len(kind) > 1: kind = kind[1]
+                else: kind = kind[0]
+
+                if kind != "gravity-on": continue
+
+                rect = key_rects[key]
+                x,y = rect["x"] + rect["w"]/2, rect["y"]+rect["h"]/2
+
+                dv = Vector2(x - ball["pos"].x, y - ball["pos"].y)
+                d2 = dv.x*dv.x + dv.y*dv.y
+
+                mind = 10
+                if d2 < mind: d2 = mind
+
+                G = 1e4
+                dv = dv * (G / (d2)) * dt
+
+                ball["vel"] += dv
+
+
+            current_v = sqrt(ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y)
+            if current_v > 0:
+                ball["vel"] = ball["vel"] * (prv_v / current_v)
+
+            ball["vel"].x = round(ball["vel"].x)
+            ball["vel"].y = round(ball["vel"].y)
+
+            # slowness
+            for key in keys:
+
+                if key in level: kind = level[key]
+                else: kind = level["default"]
+                if keys_pressed[key] and len(kind) > 1: kind = kind[1]
+                else: kind = kind[0]
+
+                if kind != "soda": continue
+
+                rect = key_rects[key]
+                rpos = Vector2(rect["x"],rect["y"])
+                rdims = Vector2(rect["w"],rect["h"])
+
+                r = ball["dia"]/2
+
+                if circle_intersect_rect(pos+nudge, r, rpos, rdims):
+                    ball["vel"] = ball["vel"]*0.5
+                    ball["vel"].x = round(ball["vel"].x)
+                    ball["vel"].y = round(ball["vel"].y)
+
+                    print(ball["vel"])
+                    break
+
 
             delta = ball["vel"]*dt
             delta.x = int(delta.x)

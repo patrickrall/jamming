@@ -129,10 +129,13 @@ levels = []
 
 levels.append({
         "default": ["none", "wall"],
-        "D": ["goal"],
-        "H": ["goal"],
-        "L": ["goal"],
-        "V": ["soda"],
+        "D": ["gravity-off","gravity-on"],
+        "A": ["soda"],
+        "_6": ["wall"],
+        "Y": ["wall"],
+        "H": ["wall"],
+        "N": ["wall"],
+        "K": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
