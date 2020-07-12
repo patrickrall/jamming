@@ -3,28 +3,41 @@ from pyglet.gl import *
 import globs
 import pyglet
 import os
+from pyglet.window import key
 
 
-menuActive = 0 # 0 = game, 1 = title, 2 = tutorial
 
 def init_draw(w):
+    keys_down = key.KeyStateHandler()
+    w.push_handlers(keys_down)
 
     w.launch_listener(title_draw)
 
     w.launch_listener(draw)
 
 def title_draw():
-
+    keys_down = key.KeyStateHandler()
     title = pyglet.image.load("assets/title.png")
     tutorial = pyglet.image.load("assets/tutorial.png")
     while True:
-        yield "on_draw"
-        if not menuActive:
+        event, *args = yield ["on_key_press", "on_draw"]
+        ctrlDown = False
+        if event == "on_key_press":
+            symbol, modifiers = args
+            # handle ball spawning
+            if getattr(pyglet.window.key, "LCTRL") == symbol or getattr(pyglet.window.key, "RCTRL") == symbol:
+                ctrlDown = True
+
+        if globs.menuActive is 0:
             continue
-        elif menuActive is 1:
+        elif globs.menuActive is 1:
             title.blit(0, 0)
-        elif menuActive is 2:
+            if ctrlDown:
+                globs.menuActive = 2
+        elif globs.menuActive is 2:
             tutorial.blit(0,0)
+            if ctrlDown: #(keys_down[key.LCTRL] or keys_down[key.RCTRL]):
+                globs.menuActive = 0
 
 def draw():
 
@@ -111,7 +124,7 @@ def draw():
 
     while True:
         yield "on_draw"
-        if menuActive > 0:
+        if globs.menuActive > 0:
             continue
         level = globs.level
 

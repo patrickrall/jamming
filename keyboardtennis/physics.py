@@ -273,7 +273,7 @@ def ball_spawning():
             if ball_spawner["ctrl_held"]:
                 ball_spawner["ctrl_frames"] += 1
 
-        else:
+        elif globs.menuActive is 0:
             symbol, modifiers = args
 
             # handle ball spawning
