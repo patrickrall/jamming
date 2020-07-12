@@ -149,7 +149,7 @@ global levels
 levels = []
 
     
-if True:
+if False:
     levels.append({ # easy easy, moth in corner, few scattered walls
             "default": ["none", "wall"],
             "GRAVE": ["goal"],
@@ -161,7 +161,7 @@ if True:
             "angle": 30,
         })
 
-if True:
+if False:
     levels.append({ # slightly more walls
             "default": ["none", "wall"],
             "_1": ["goal"],
@@ -179,6 +179,40 @@ if True:
         })
    
 if True:
+    levels.append({ # boomerang level
+            "default": ["none","wall"],
+            "H": ["none","gravity-on"],
+            "ENTER": ["hazard"],
+            "RSHIFT": ["hazard"],
+            "BACKSLASH": ["hazard"],
+            "BACKSPACE": ["hazard"],
+            "_8": ["goal"],
+            "_7": ["wall"],
+            "U": ["wall"],
+            "I": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 1,
+            "dead-balls": 0,
+            "speed": 150,
+        })
+
+if False:
+    levels.append({ # thread the needle, easy
+            "default": ["none", "wall"],
+            "_6": ["wall"],
+            "Y": ["wall", "none"],
+            "H": ["wall"],
+            "N": ["wall"],
+            "K": ["goal"],
+            "RSHIFT": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 10,
+            "dead-balls": 0,
+            "speed": 300,
+            "angle": 30,
+        })
+
+if False:
     levels.append({  # tucked in
             "default": ["none", "wall"],
             "_1": ["wall"],
@@ -202,22 +236,6 @@ if True:
         })
 
 if True:
-    levels.append({ # thread the needle, easy
-            "default": ["none", "wall"],
-            "_6": ["wall"],
-            "Y": ["wall", "none"],
-            "H": ["wall"],
-            "N": ["wall"],
-            "K": ["goal"],
-            "RSHIFT": ["wall"],
-            "max-balls" : 3,
-            "simultaneous-balls" : 10,
-            "dead-balls": 0,
-            "speed": 300,
-            "angle": 30,
-        })
-
-if True:
     levels.append({# thread the needle, dangerous
             "default": ["none","wall"],
             "GRAVE": ["hazard"],
@@ -227,6 +245,7 @@ if True:
             "G": ["wall"],
             "_5": ["wall"],
             "T": ["wall", "none"],
+            "Y": ["none", "wall"],
             "MINUS": ["goal"],
             "_9": ["wall"],
             "I": ["wall"],
@@ -238,23 +257,6 @@ if True:
             "speed": 200,
         })
 
-if True:
-    levels.append({ # boomerang level
-            "default": ["none","wall"],
-            "H": ["none","gravity-on"],
-            "ENTER": ["hazard"],
-            "RSHIFT": ["hazard"],
-            "BACKSLASH": ["hazard"],
-            "BACKSPACE": ["hazard"],
-            "_8": ["goal"],
-            "_7": ["wall"],
-            "U": ["wall"],
-            "I": ["wall"],
-            "max-balls" : 3,
-            "simultaneous-balls" : 1,
-            "dead-balls": 0,
-            "speed": 150,
-        })
 
 
 if True:
