@@ -166,6 +166,24 @@ if True:
         })
 
 if True:
+    levels.append({ # boomerang level
+            "default": ["none","wall"],
+            "H": ["none","gravity-on"],
+            "ENTER": ["hazard"],
+            "RSHIFT": ["hazard"],
+            "BACKSLASH": ["hazard"],
+            "BACKSPACE": ["hazard"],
+            "_8": ["goal"],
+            "_7": ["wall"],
+            "U": ["wall"],
+            "I": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 1,
+            "dead-balls": 0,
+            "speed": 150,
+        })
+
+if True:
     levels.append({# thread the needle, dangerous
             "default": ["none","wall"],
             "GRAVE": ["hazard"],
@@ -185,25 +203,6 @@ if True:
             "dead-balls": 0,
             "speed": 200,
         })
-
-if True:
-    levels.append({ # boomerang level
-            "default": ["none","wall"],
-            "H": ["none","gravity-on"],
-            "ENTER": ["hazard"],
-            "RSHIFT": ["hazard"],
-            "BACKSLASH": ["hazard"],
-            "BACKSPACE": ["hazard"],
-            "_8": ["goal"],
-            "_7": ["wall"],
-            "U": ["wall"],
-            "I": ["wall"],
-            "max-balls" : 3,
-            "simultaneous-balls" : 1,
-            "dead-balls": 0,
-            "speed": 150,
-        })
-
 
 if True:
     levels.append({ # remove hazards  level
@@ -301,16 +300,16 @@ if True:
     })
 
 if True:
-    levels.append({
+    levels.append({ # gravitation dodge
         "default": ["none", "wall"],
         "D": ["gravity-off","gravity-on"],
+        "GRAVE": ["gravity-off", "gravity-on"],
         "A": ["soda"],
         "_6": ["wall"],
         "Y": ["wall", "none"],
         "H": ["wall"],
         "N": ["wall"],
         "K": ["goal"],
-        "Q": ["hazard"],
         "W": ["hazard"],
         "S": ["hazard"],
         "Z": ["hazard"],
