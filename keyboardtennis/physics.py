@@ -194,12 +194,6 @@ def frame():
                                     balls_to_kill[1].append(n)
                                 continue
 
-                            if kind == "soda":
-                                slow_ratio = 0.99
-                                if ball["vel"].x + ball["vel"].y > 100:
-                                    ball["vel"].x *= slow_ratio
-                                    ball["vel"].x *= slow_ratio
-
                             if kind in ["wall", "goal", "goal-nomoth"]:
                                 if (nudge.x == 0): ball["vel"].y *= -1
                                 if (nudge.y == 0): ball["vel"].x *= -1
