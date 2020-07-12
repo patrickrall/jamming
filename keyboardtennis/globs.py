@@ -250,28 +250,6 @@ if True:
     })
 
 if True:
-    levels.append({
-        "default": ["none", "wall"],
-        "D": ["gravity-off","gravity-on"],
-        "A": ["soda"],
-        "_6": ["wall"],
-        "Y": ["wall", "none"],
-        "H": ["wall"],
-        "N": ["wall"],
-        "K": ["goal"],
-        "Q": ["hazard"],
-        "W": ["hazard"],
-        "S": ["hazard"],
-        "Z": ["hazard"],
-        "X": ["hazard"],
-        "max-balls" : 3,
-        "simultaneous-balls" : 1,
-        "dead-balls": 0,
-        "speed": 300,
-        "angle": 10,
-    })
-
-if True:
     levels.append({ # gravitation
         "default": ["none"],
         "RSHIFT": ["wall"],
@@ -292,6 +270,28 @@ if True:
         "simultaneous-balls" : 1,
         "dead-balls": 0,
         "speed": 300,
+    })
+
+if True:
+    levels.append({
+        "default": ["none", "wall"],
+        "D": ["gravity-off","gravity-on"],
+        "A": ["soda"],
+        "_6": ["wall"],
+        "Y": ["wall", "none"],
+        "H": ["wall"],
+        "N": ["wall"],
+        "K": ["goal"],
+        "Q": ["hazard"],
+        "W": ["hazard"],
+        "S": ["hazard"],
+        "Z": ["hazard"],
+        "X": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 300,
+        "angle": 10,
     })
 
 if True:
