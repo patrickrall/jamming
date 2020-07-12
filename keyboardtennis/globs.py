@@ -148,8 +148,6 @@ def next_level():
 global levels
 levels = []
 
-
-if True:
     
 if True:
     levels.append({ # easy easy, moth in corner, few scattered walls
@@ -179,7 +177,8 @@ if True:
             "speed": 300,
             "angle": 30,
         })
-    
+   
+if True:
     levels.append({  # tucked in
             "default": ["none", "wall"],
             "_1": ["wall"],
