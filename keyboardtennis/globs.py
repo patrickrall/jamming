@@ -162,7 +162,7 @@ if True:
             "_8": ["wall"],
             "_9": ["wall"],
             "_0": ["wall"],
-            "G": ["gravity-off", "gravity-on"]
+            "G": ["gravity-off", "gravity-on"],
             "RSHIFT": ["hazard"],
             "max-balls" : 3,
             "simultaneous-balls" : 10,
