@@ -383,7 +383,7 @@ if False:
         "R": ["wall"],
         "U": ["wall"],
         "I": ["wall"],
-        "P": ["goal"]
+        "P": ["goal"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
