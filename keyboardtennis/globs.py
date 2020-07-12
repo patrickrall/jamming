@@ -78,6 +78,9 @@ def init_globals():
     global dead_beachball_sprites
     dead_beachball_sprites = []
 
+    global num_pressed
+    num_pressed = 0
+
 
 def launch_moth(key):
 
@@ -110,7 +113,9 @@ def next_level():
     global trapped_balls
     global ctrl_rect
     global menuActive
+    global num_pressed
 
+    num_pressed = 0
     level_idx += 1
 
     import copy

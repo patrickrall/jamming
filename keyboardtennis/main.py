@@ -37,6 +37,7 @@ def record_key_presses():
     keys_pressed = globs.keys_pressed
     keys = globs.keys
     key_sounds = globs.key_sounds
+    num_pressed = globs.num_pressed
 
     waiting_keys = []
     num_pressed = 0
