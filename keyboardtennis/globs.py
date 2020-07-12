@@ -145,9 +145,10 @@ if False:
             "K": ["goal"],
             "RSHIFT": ["wall"],
             "max-balls" : 3,
-            "simultaneous-balls" : 1,
+            "simultaneous-balls" : 10,
             "dead-balls": 0,
             "speed": 300,
+            "angle": 30,
         })
 
 if False:
@@ -234,6 +235,7 @@ if False:
         "simultaneous-balls" : 1,
         "dead-balls": 0,
         "speed": 300,
+        "angle": 60,
     })
 
 
