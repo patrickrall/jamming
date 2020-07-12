@@ -153,7 +153,7 @@ def next_level():
 global levels
 levels = []
 
-    
+ 
 if True:
     levels.append({ # easy easy, moth in corner, few scattered walls
             "default": ["none", "wall"],
@@ -335,85 +335,7 @@ if True:
         "speed": 300,
     })
 
-if True:
-    levels.append({ # gravity slingshot
-        "default": ["none", "wall"],
-        "D": ["gravity-off","gravity-on"],
-        "A": ["soda"],
-        "_6": ["wall"],
-        "Y": ["wall", "none"],
-        "H": ["wall"],
-        "N": ["wall"],
-        "K": ["goal"],
-        "Q": ["hazard"],
-        "W": ["hazard"],
-        "S": ["hazard"],
-        "Z": ["hazard"],
-        "X": ["hazard"],
-        "max-balls" : 3,
-        "simultaneous-balls" : 1,
-        "dead-balls": 0,
-        "speed": 300,
-        "angle": 10,
-    })
-
-if True:
-    levels.append({ # gravitation tightwalk
-        "default": ["hazard"],
-        "LSHIFT": ["none"],
-        "CAPSLOCK": ["none"],
-        "A": ["none"],
-        "S": ["none"],
-        "D": ["none"],
-        "F": ["none"],
-        "G": ["none"],
-        "H": ["none"],
-        "J": ["none"],
-        "K": ["none"],
-        "L": ["none"],
-        "C": ["gravity-off", "gravity-on"],
-        "B": ["gravity-off", "gravity-on"],
-        "M": ["gravity-off", "gravity-on"],
-        "PERIOD": ["gravity-off", "gravity-on"],
-        "GRAVE": ["gravity-off", "gravity-on"],
-        "_2": ["gravity-off", "gravity-on"],
-        "_4": ["gravity-off", "gravity-on"],
-        "_6": ["gravity-off", "gravity-on"],
-        "_8": ["gravity-off", "gravity-on"],
-        "_0": ["gravity-off", "gravity-on"],
-        "SEMICOLON": ["none"],
-        "APOSTROPHE": ["none"],
-        "ENTER": ["goal"],
-        "max-balls" : 3,
-        "simultaneous-balls" : 1,
-        "dead-balls": 0,
-        "speed": 100,
-    })
-
-
-if True:
-    levels.append({ # remove hazards  level
-            "default": ["none", "wall"],
-            "W": ["hazard", "none"],
-            "E": ["hazard", "none"],
-            "F": ["hazard", "none"],
-            "V": ["hazard", "none"],
-            "B": ["hazard", "none"],
-            "H": ["hazard", "none"],
-            "U": ["hazard", "none"],
-            "I": ["hazard", "none"],
-            "O": ["hazard", "none"],
-            "_5": ["wall"],
-            "M": ["goal"],
-            "max-balls" : 5,
-            "simultaneous-balls" : 2,
-            "dead-balls": 0,
-            "speed-min": 200,
-            "speed-max": 400,
-            "angle-min": 20,
-            "angle-max": 70,
-        })
-
+    
 
 if True:
     levels.append({ # pendulum
@@ -453,6 +375,88 @@ if True:
             "angle-min": 20,
             "angle-max": 70,
         })
+
+if True:
+    levels.append({ # gravitation tightwalk
+        "default": ["hazard"],
+        "LSHIFT": ["none"],
+        "CAPSLOCK": ["none"],
+        "A": ["none"],
+        "S": ["none"],
+        "D": ["none"],
+        "F": ["none"],
+        "G": ["none"],
+        "H": ["none"],
+        "J": ["none"],
+        "K": ["none"],
+        "L": ["none"],
+        "C": ["gravity-off", "gravity-on"],
+        "B": ["gravity-off", "gravity-on"],
+        "M": ["gravity-off", "gravity-on"],
+        "PERIOD": ["gravity-off", "gravity-on"],
+        "GRAVE": ["gravity-off", "gravity-on"],
+        "_2": ["gravity-off", "gravity-on"],
+        "_4": ["gravity-off", "gravity-on"],
+        "_6": ["gravity-off", "gravity-on"],
+        "_8": ["gravity-off", "gravity-on"],
+        "_0": ["gravity-off", "gravity-on"],
+        "SEMICOLON": ["none"],
+        "APOSTROPHE": ["none"],
+        "ENTER": ["goal"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 100,
+    })
+    
+if True:
+    levels.append({ # gravity slingshot
+        "default": ["none", "wall"],
+        "D": ["gravity-off","gravity-on"],
+        "GRAVE": ["gravity-off","gravity-on"],
+        "A": ["hazard"],
+        "_6": ["wall"],
+        "Y": ["wall", "none"],
+        "H": ["wall"],
+        "N": ["wall"],
+        "K": ["goal"],
+        "S": ["hazard"],
+        "Z": ["hazard"],
+        "X": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 300,
+        "angle": 10,
+    })
+    
+
+
+if True:
+    levels.append({ # remove hazards  level
+            "default": ["none", "wall"],
+            "W": ["hazard", "none"],
+            "E": ["hazard", "none"],
+            "F": ["hazard", "none"],
+            "V": ["hazard", "none"],
+            "B": ["hazard", "none"],
+            "H": ["hazard", "none"],
+            "U": ["hazard", "none"],
+            "I": ["hazard", "none"],
+            "O": ["hazard", "none"],
+            "T": ["gravity-off", "gravity-on"],
+            "_5": ["wall"],
+            "M": ["goal"],
+            "max-balls" : 5,
+            "simultaneous-balls" : 2,
+            "dead-balls": 0,
+            "speed-min": 200,
+            "speed-max": 400,
+            "angle-min": 20,
+            "angle-max": 70,
+        })
+
+
     
 ############################### OLD LEVELS FOR DEBUG
 if False:
