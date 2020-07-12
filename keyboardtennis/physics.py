@@ -1,5 +1,6 @@
 
 from math import sqrt, copysign, sin, cos, pi
+import random
 from swyne.node import Vector2
 import globs
 import pyglet
