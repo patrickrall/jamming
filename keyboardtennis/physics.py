@@ -367,11 +367,13 @@ def ball_spawning():
                     elif "speed-min" in level and "speed-max" in level:
                         sp = random.uniform(level["speed-min"], level["speed-max"])
                         level["speed"] = sp
-                    else: sp = 250
+                    else: level["speed"], sp = 250, 250
+
                     if "angle" in level: th = radians(level["angle"])
                     elif "angle-min" in level and "angle-max" in level:
                         th = radians(random.uniform(level["angle-min"], level["angle-max"]))
                     else: th = radians(45)
+
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
                     vx, vy = sp*sin(th), sp*cos(th)
 
