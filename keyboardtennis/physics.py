@@ -365,19 +365,16 @@ def ball_spawning():
                     sp = level["speed"]
                     th = launcher_state[1] * (launcher_state[2] / 180) * (2 * pi / 360)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
-                    vx, vy = sp*abs(cos(th)), sp*abs(sin(th))
 
                     if degrees(th) % 90 < 10: th = radians(10)
                     if degrees(th) % 90 > 80: th = radians(80)
-                    while vx < 50: vx * 1.1
-                    while vy < 50: vy * 1.1
 
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
-                        "vel": Vector2(vx, vy), "caught": "none", 
-                        "dia":ball_diameter, "extratime":0})
+                        "vel": Vector2(sp*abs(cos(th)), sp*abs(sin(th))),\
+                        "caught": "none", "dia":ball_diameter, "extratime":0})
                     print("%f deg, %f x, %f y, %d frames" % \
-                        (degrees(th), sp*abs(cos(th)), sp*abs(sin(th)), launcher_state[1]))
+                        (th, sp*abs(cos(th)), sp*abs(sin(th)), launcher_state[1]))
                     #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
