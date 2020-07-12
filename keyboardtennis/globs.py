@@ -113,6 +113,7 @@ levels = []
 
 levels.append({
         "default": ["none", "wall"],
+        "W": ["hazard"],
         "D": ["goal"],
         "H": ["goal"],
         "L": ["goal"],
