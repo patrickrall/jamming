@@ -135,7 +135,7 @@ global levels
 levels = []
 
 
-if False:
+if True:
     levels.append({ # thread the needle, easy
             "default": ["none", "wall"],
             "_6": ["wall"],
@@ -145,9 +145,10 @@ if False:
             "K": ["goal"],
             "RSHIFT": ["wall"],
             "max-balls" : 3,
-            "simultaneous-balls" : 1,
+            "simultaneous-balls" : 10,
             "dead-balls": 0,
             "speed": 300,
+            "angle": 30,
         })
 
 if False:
@@ -210,7 +211,7 @@ if False:
 
         })
 
-if False:
+if True:
     levels.append({ # all walls.
         "default": ["wall", "none"],
         "RSHIFT": ["wall"],
@@ -234,10 +235,11 @@ if False:
         "simultaneous-balls" : 1,
         "dead-balls": 0,
         "speed": 300,
+        "angle": 60,
     })
 
-
-levels.append({ # gravitation
+if True:
+    levels.append({ # gravitation
     "default": ["none"],
     "RSHIFT": ["wall"],
     "D": ["gravity-off","gravity-on"],

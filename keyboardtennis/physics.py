@@ -365,17 +365,15 @@ def ball_spawning():
                     # calculate speed and angle of velocity, and position
                     if "speed" in level: sp = level["speed"]
                     else: sp = 250
-                    if "angle" in level: th = level["angle"]
+                    if "angle" in level: th = radians(level["angle"])
                     elif "angle-min" in level and "angle-max" in level:
                         th = radians(random.uniform(level["angle-min"], level["angle-max"]))
                     else: th = radians(45)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
-                    vx, vy = sp*abs(sin(th)), sp*abs(cos(th))
+                    vx, vy = sp*sin(th), sp*cos(th)
 
                     if degrees(th) % 90 < 30: th = radians(30)
                     if degrees(th) % 90 > 60: th = radians(60)
-                    while vx < 50: vx *= 1.1
-                    while vy < 50: vy *= 1.1
 
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
