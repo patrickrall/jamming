@@ -36,6 +36,10 @@ def init_globals():
     ctrl_rect = data["frames"][str(len(data["frames"])-1)]["frame"]
     ctrl_rect["y"] = 320 - ctrl_rect["y"] - ctrl_rect["h"]
 
+    global launcher_state
+    # [ctrl is pushed, frames it has been held, frames for 90+90deg]
+    launcher_state = [False, 0, 150]
+
     global level_idx
     level_idx = -1
 
