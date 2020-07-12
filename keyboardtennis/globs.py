@@ -60,29 +60,18 @@ def init_globals():
                         media("audio/DzGrimX_soundtrack.mp3", streaming=False)]
     background_music_player.queue(background_music)
 
-    global moths
-    moths = []
-
 
 def launch_moth(key):
 
     global level
     global keys
-    global key_rects
     level[key] = ["goal-nomoth"]
 
-    global moths
-    animation = pyglet.image.load_animation("assets/moth_idle.gif")
-    rect = key_rects["key"]
-    x = rect["x"] + rect["w"]/2
-    y = rect["y"] + rect["h"]/2
-    sprite = pyglet.sprite.Sprite(anim,x=x,y=y)
+    for otherkey in keys:
+        if otherkey not in level: continue
+        if level[otherkey][0] == "goal": return
 
-    th = random.uniform(0, math.pi*2)
-    v = 70
-    sprite.velocity = Vector2(v*math.cos(th), v*math.sin(th))
-
-    moths.append(sprite)
+    next_level()
 
 
 def next_level():

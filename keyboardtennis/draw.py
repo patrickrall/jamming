@@ -8,7 +8,7 @@ import os
 menuActive = 0 # 0 = game, 1 = title, 2 = tutorial
 
 def init_draw(w):
-
+    
     w.launch_listener(title_draw)
 
     w.launch_listener(draw)
