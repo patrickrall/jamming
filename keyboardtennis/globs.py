@@ -64,7 +64,7 @@ def init_globals():
 
     global background_music_player
     background_music_player = pyglet.media.Player()
-    background_music_player.volume = 0.05
+    background_music_player.volume = 0.1
 
     background_music = [media("Eva_soundtrack.wav", streaming=False),
                         media("DzGrimX_soundtrack.wav", streaming=False)]
@@ -149,7 +149,7 @@ global levels
 levels = []
 
     
-if False:
+if True:
     levels.append({ # easy easy, moth in corner, few scattered walls
             "default": ["none", "wall"],
             "GRAVE": ["goal"],
@@ -161,7 +161,7 @@ if False:
             "angle": 30,
         })
 
-if False:
+if True:
     levels.append({ # slightly more walls
             "default": ["none", "wall"],
             "_1": ["goal"],
@@ -196,7 +196,7 @@ if True:
             "speed": 150,
         })
 
-if False:
+if True:
     levels.append({ # thread the needle, easy
             "default": ["none", "wall"],
             "_6": ["wall"],
@@ -212,7 +212,7 @@ if False:
             "angle": 30,
         })
 
-if False:
+if True:
     levels.append({  # tucked in
             "default": ["none", "wall"],
             "_1": ["wall"],
