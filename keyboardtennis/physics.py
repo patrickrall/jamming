@@ -282,7 +282,7 @@ def frame():
         moths = globs.moths
         moths_to_delete = []
         for moth in moths:
-            delta = moth.velocity * dt
+            delta = moth.velocity * dt * 3
             moth.x += delta.x
             moth.y += delta.y
 
@@ -307,7 +307,8 @@ def frame():
         dead_beachball_sprites = globs.dead_beachball_sprites
         for sprite in dead_beachball_sprites:
             delta = sprite.target - Vector2(sprite.x, sprite.y)
-            delta = delta * (1/sqrt(delta.x*delta.x + delta.y*delta.y)) * dt * 100
+            if delta.x != 0 or delta.y != 0:
+                delta = delta * (1/sqrt(delta.x*delta.x + delta.y*delta.y)) * dt * 100
 
             sprite.x += int(delta.x)
             sprite.y += int(delta.y)
@@ -374,7 +375,7 @@ def ball_spawning():
 
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
-                        "vel": Vector2(vx, vy), "caught": "none", 
+                        "vel": Vector2(vx, vy), "caught": "none",
                         "dia":ball_diameter, "extratime":0})
                     print("%f deg, %f x, %f y, %d frames" % \
                         (degrees(th), sp*abs(cos(th)), sp*abs(sin(th)), launcher_state[1]))
