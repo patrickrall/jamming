@@ -379,8 +379,8 @@ def ball_spawning():
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
                         "vel": Vector2(vx, vy), "caught": "none",
                         "dia":ball_diameter, "extratime":0})
-                    print("%f deg, %f x, %f y, %d frames" % \
-                        (degrees(th), vx, vy, launcher_state[1]))
+                    #print("%f deg, %f x, %f y, %d frames" % \
+                    #    (degrees(th), vx, vy, launcher_state[1]))
                     #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter

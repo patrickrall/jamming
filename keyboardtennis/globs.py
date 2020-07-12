@@ -249,6 +249,27 @@ if True:
         "angle": 60,
     })
 
+if False:
+    levels.append({
+        "default": ["none", "wall"],
+        "D": ["gravity-off","gravity-on"],
+        "A": ["soda"],
+        "_6": ["wall"],
+        "Y": ["wall", "none"],
+        "H": ["wall"],
+        "N": ["wall"],
+        "K": ["goal"],
+        "Q": ["hazard"],
+        "W": ["hazard"],
+        "S": ["hazard"],
+        "Z": ["hazard"],
+        "X": ["hazard"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 300,
+        "angle": 10,
+    })
 
 if True:
     levels.append({ # gravitation
@@ -308,41 +329,22 @@ if True:
 
 
 ############################### OLD LEVELS FOR DEBUG
-
 if False:
     levels.append({ # Warning: I think this level is impossible
             "default": ["hazard", "none"],
-            "H": ["none","gravity"],
+            "LSHIFT": ["none"],
+            "H": ["none","gravity-on"],
             "ENTER": ["hazard"],
             "max-balls" : 3,
             "simultaneous-balls" : 1,
             "dead-balls": 0,
             "speed": 150,
+            "angle": 30,
         })
 
 
-"""
-levels.append({
-        "default": ["none", "wall"],
-        "D": ["gravity-off","gravity-on"],
-        "A": ["soda"],
-        "_6": ["wall"],
-        "Y": ["wall", "none"],
-        "H": ["wall"],
-        "N": ["wall"],
-        "K": ["goal"],
-        "Q": ["hazard"],
-        "W": ["hazard"],
-        "S": ["hazard"],
-        "Z": ["hazard"],
-        "X": ["hazard"],
-        "max-balls" : 3,
-        "simultaneous-balls" : 1,
-        "dead-balls": 0,
-        "speed": 300,
-    })
-
-levels.append({
+if False:
+    levels.append({
         "default": ["none","wall"],
         "B": ["wall"],
         "G": ["wall"],
@@ -360,9 +362,10 @@ levels.append({
         "speed": 150,
     })
 
-levels.append({
+if False:
+    levels.append({
         "default": ["none","wall"],
-        "H": ["none","gravity"],
+        "H": ["none","gravity-on"],
         "ENTER": ["hazard"],
         "I": ["goal"],
         "max-balls" : 3,
@@ -371,7 +374,8 @@ levels.append({
         "speed": 150,
     })
 
-levels.append({
+if False:
+    levels.append({
         "default": ["wall", "none"],
         "RSHIFT": ["hazard"],
         "_6": ["wall", "goal"],
@@ -379,13 +383,15 @@ levels.append({
         "R": ["wall"],
         "U": ["wall"],
         "I": ["wall"],
+        "P": ["goal"]
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
         "speed": 150,
     })
 
-levels.append({
+if False:
+    levels.append({
         "default": ["hazard", "none"],
         "H": ["none","gravity"],
         "ENTER": ["hazard"],
@@ -394,4 +400,3 @@ levels.append({
         "dead-balls": 0,
         "speed": 150,
     })
-"""
