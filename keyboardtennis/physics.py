@@ -248,10 +248,18 @@ def ball_spawning():
                     ball_spawner["ctrl_held"] = True
                 # control was already held a little bit
                 elif ball_spawner["ctrl_frames"] <= 10 or \
-                        len(balls) >= level["simultaneous-balls"] or \
-                        len(balls) + level["dead-balls"] > level["max-balls"]:
+                        len(balls) >= level["simultaneous-balls"]
                     launch_sounds[1].play()
                 else:
+                    if len(trapped_balls <= 1):
+                        while len(trapped_balls) < level["max-balls"]:
+                            v, th = random.uniform(50,100), random.uniform(0, math.pi*2)
+                            x = random.uniform(ctrl_rect["x"]+r, ctrl_rect["x"]+ctrl_rect["w"]-r)
+                            y = random.uniform(ctrl_rect["y"]+r, ctrl_rect["y"]+ctrl_rect["h"]-r)
+                            trapped_balls.append({"pos":Vector2(x,y),
+                                "vel": Vector2(v*math.cos(th), v*math.sin(th)),
+                                "dia": ball_spawner["dia"], "caught": "none", "extratime": 0})
+
                     # call all params now for concise equations later
                     vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
                     ball_spawner["speed_min"], ball_spawner["speed_scale"],
