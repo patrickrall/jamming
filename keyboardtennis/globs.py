@@ -186,7 +186,6 @@ if True:
 if True:
     levels.append({ # boomerang level
             "default": ["none","wall"],
-            "H": ["none","gravity-on"],
             "ENTER": ["hazard"],
             "RSHIFT": ["hazard"],
             "BACKSLASH": ["hazard"],
