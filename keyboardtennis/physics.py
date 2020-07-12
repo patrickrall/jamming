@@ -194,17 +194,21 @@ def frame():
                                     balls_to_kill[1].append(n)
                                 continue
 
-                            if kind == "goal":
-                                globs.next_level()
-
-                            if kind in ["wall", "goal"]:
+                            if kind in ["wall", "goal", "goal-nomoth"]:
                                 if (nudge.x == 0): ball["vel"].y *= -1
                                 if (nudge.y == 0): ball["vel"].x *= -1
 
                                 ball["vel"].x = int(ball["vel"].x)
                                 ball["vel"].y = int(ball["vel"].y)
-                            anyCollide = True
-                            break
+
+                                anyCollide = True
+
+                            if kind == "goal":
+                                globs.launch_moth(key)
+
+                            if anyCollide:
+                                break
+
                     if anyCollide:
                         break
                 ball["pos"] += nudge

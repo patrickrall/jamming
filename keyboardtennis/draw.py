@@ -18,6 +18,10 @@ def draw():
     keys_pressed = globs.keys_pressed
     key_rects = globs.key_rects
 
+
+    global dead_beachballs
+    dead_beachballs = []
+
     border = 4
 
     active_sprites = {key: None for key in keys}
@@ -45,11 +49,13 @@ def draw():
 
     # syntax ["static_keyboard_image.png", None or "animated_sprite.gif"]
     kinds = {
-        "none": ["assets/lowered_keys_2.png", None],
-        "wall": ["assets/raised_keys_2.png", None],
-        "gravity-off": ["assets/lowered_keys_2.png", "assets/gravity_hole_idle.gif"],
-        "gravity-on": ["assets/lowered_keys_2.png", "assets/gravity_hole_idle.gif"],
-        "goal": ["assets/lowered_keys_2.png", "assets/moth_idle.gif"],
+        "none": ["assets/lowered_keys.png", None],
+        "wall": ["assets/raised_keys.png", None],
+        "soda": ["assets/keys_soda.png", None],
+        "gravity-off": ["assets/lowered_keys.png", "assets/gravity_hole_idle.gif"],
+        "gravity-on": ["assets/lowered_keys.png", "assets/gravity_hole_idle.gif"],
+        "goal": ["assets/raised_keys.png", "assets/moth_idle.gif"],
+        "goal-nomoth": ["assets/raised_keys.png", None],
     }
 
     for kind in kinds.keys():
@@ -156,6 +162,10 @@ def draw():
             beachball_sprite.draw()
             glPopMatrix()
 
+
+        for sprite in dead_beachballs:
+            sprite.draw()
+
         ctrlkey.blit(0,0)
 
 
@@ -163,9 +173,18 @@ def draw():
 
 def kill_ball(ball):
 
-    #death = pyglet.image.load_animation("assets/ball_sprite_death.gif")
-    #beachball_death = pyglet.sprite.Sprite(death,x=-w/2,y=-h/2)
+    global dead_beachballs
 
-    print("kill %s" % ball)
+    death = pyglet.image.load_animation("assets/ball_sprite_death.gif")
+    sprite = pyglet.sprite.Sprite(death,x=ball["pos"].x-ball["dia"]/2,y=ball["pos"].y-ball["dia"]/2)
 
-    pass
+    dead_beachballs.append(sprite)
+
+    #def del_sprite():
+    #    global dead_beachballs
+    #    dead_beachballs.remove(sprite)
+
+    #sprite.on_animation_end = del_sprite
+
+
+
