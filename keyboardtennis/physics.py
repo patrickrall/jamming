@@ -1,5 +1,5 @@
 
-from math import sqrt, copysign, sin, cos, pi
+from math import sqrt, copysign, sin, cos, pi, degrees, radians
 from swyne.node import Vector2
 import globs
 import pyglet
@@ -67,10 +67,10 @@ def split_delta(delta):
     assert delta.x == int(delta.x)
     assert delta.y == int(delta.y)
 
-    sx = copysign(1,delta.x)
-    sy = copysign(1,delta.y)
-    magx = abs(delta.x)
-    magy = abs(delta.y)
+    sx = int(copysign(1,delta.x))
+    sy = int(copysign(1,delta.y))
+    magx = int(abs(delta.x))
+    magy = int(abs(delta.y))
 
     # deal with case where things are zero
     if delta.x == 0 and delta.y == 0: return
@@ -84,7 +84,7 @@ def split_delta(delta):
         return
 
     y = 0
-    m = magx/magy
+    m = magy/magx
     for x in range(1,magx+1):
         yield Vector2(sx,0)
         for i in range(int(x*m)-y):
@@ -107,7 +107,6 @@ def frame():
         level = globs.level
 
         dimsx,dimsy,boty = 960,320,60
-
 
         for ball in trapped_balls:
 
@@ -142,11 +141,10 @@ def frame():
         balls_to_kill = [[],[]]
         for n, ball in enumerate(balls):
 
-            prv_v = sqrt(ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y)
+            s = level["speed"]
 
             # gravity
             for key in keys:
-                break
 
                 if key in level: kind = level[key]
                 else: kind = level["default"]
@@ -158,26 +156,26 @@ def frame():
                 rect = key_rects[key]
                 x,y = rect["x"] + rect["w"]/2, rect["y"]+rect["h"]/2
 
-                dv = Vector2(x - ball["pos"].x, y - ball["pos"].y)
+                dv = Vector2(x,y) - ball["pos"]
                 d2 = dv.x*dv.x + dv.y*dv.y
 
                 mind = 10
                 if d2 < mind: d2 = mind
 
-                G = 1e4
-                dv = dv * (G / (d2)) * dt
+                G = 1e3
+                dv = dv * (G / sqrt(d2)) * dt
 
                 ball["vel"] += dv
 
-
             current_v = sqrt(ball["vel"].x*ball["vel"].x + ball["vel"].y*ball["vel"].y)
-            if current_v > 0:
-                ball["vel"] = ball["vel"] * (prv_v / current_v)
+
+            ball["vel"] = ball["vel"] * (s / current_v)
 
             ball["vel"].x = round(ball["vel"].x)
             ball["vel"].y = round(ball["vel"].y)
 
             # slowness
+            v = Vector2(ball["vel"].x, ball["vel"].y)
             for key in keys:
 
                 if key in level: kind = level[key]
@@ -193,19 +191,18 @@ def frame():
 
                 r = ball["dia"]/2
 
-                if circle_intersect_rect(pos+nudge, r, rpos, rdims):
-                    ball["vel"] = ball["vel"]*0.5
-                    ball["vel"].x = round(ball["vel"].x)
-                    ball["vel"].y = round(ball["vel"].y)
+                if circle_intersect_rect(ball["pos"], r, rpos, rdims):
+                    v = v*0.5
+                    v.x = int(v.x)
+                    v.y = int(v.y)
 
-                    print(ball["vel"])
                     break
 
-
-            delta = ball["vel"]*dt
+            delta = v*dt
             delta.x = int(delta.x)
             delta.y = int(delta.y)
             radius = ball["dia"]/2
+
 
             for nudge in split_delta(delta):
                 pos = ball["pos"]
@@ -320,8 +317,8 @@ def ball_spawning():
     # I dont think this needs to be global, right?
     ball_spawner = {
         "ctrl_held": False, "ctrl_frames": 0,
-        "speed_min": 60, "speed_scale": 10, "speed_reset": 30,
-        "angle_min": 20, "angle_limit": 240, "angle_reset": 200,
+        "speed_min": 150, "speed_max": 300, "speed_reset": 30,
+        "angle_min": 20, "angle_limit": 80, "angle_reset": 150,
         "dia": 28, "bot_left": [key_rects["LSHIFT"]["x"], \
             key_rects["LSHIFT"]["y"], key_rects["LSHIFT"]["w"]]}
 
@@ -356,18 +353,25 @@ def ball_spawning():
 
                     # call all params now for concise equations later
                     vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
-                    ball_spawner["speed_min"], ball_spawner["speed_scale"],
+                    ball_spawner["speed_min"], ball_spawner["speed_max"],
                     ball_spawner["speed_reset"], ball_spawner["angle_min"],
                     ball_spawner["angle_limit"], ball_spawner["angle_reset"]]
                     bl_corner = ball_spawner["bot_left"]
+
                     # calculate speed and angle of velocity, and position
-                    sp = 200
-                    th = pi/6
+                    sp = level["speed"]
+                    th = vp[0] * (vp[7] / 180) * (2 * pi / 360)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
+
+                    if degrees(th) % 90 < 10: th = radians(10)
+                    if degrees(th) % 90 > 80: th = radians(80)
+
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
-                        "vel": Vector2(sp*cos(th), sp*sin(th)),\
+                        "vel": Vector2(sp*abs(cos(th)), sp*abs(sin(th))),\
                         "caught": "none", "dia":vp[1], "extratime":0})
+                    print("%f deg, %f x, %f y, %d frames" % \
+                        (th, sp*abs(cos(th)), sp*abs(sin(th)), ball_spawner["ctrl_frames"]))
                     #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
