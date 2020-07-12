@@ -19,7 +19,7 @@ def main():
     HintedLayoutNode [960,320]
     """)
 
-    globs.next_level()
+    globs.next_level() 
 
     init_draw(w)
     init_physics(w)
