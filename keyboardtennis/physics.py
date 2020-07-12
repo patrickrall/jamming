@@ -369,8 +369,8 @@ def ball_spawning():
 
                     if degrees(th) % 90 < 10: th = radians(10)
                     if degrees(th) % 90 > 80: th = radians(80)
-                    while vx < 50: vx * 1.1
-                    while vy < 50: vy * 1.1
+                    while vx < 50: vx *= 1.1
+                    while vy < 50: vy *= 1.1
 
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
