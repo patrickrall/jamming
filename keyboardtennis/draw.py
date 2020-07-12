@@ -19,9 +19,11 @@ def title_draw():
     keys_down = key.KeyStateHandler()
     title = pyglet.image.load("assets/title.png")
     tutorial = pyglet.image.load("assets/tutorial.png")
+    ending = pyglet.image.load("assets/ending.png")
     while True:
         event, *args = yield ["on_key_press", "on_draw"]
         ctrlDown = False
+
         if event == "on_key_press":
             symbol, modifiers = args
             # handle ball spawning
@@ -30,14 +32,20 @@ def title_draw():
 
         if globs.menuActive is 0:
             continue
-        elif globs.menuActive is 1:
+        elif globs.menuActive == 1:
             title.blit(0, 0)
             if ctrlDown:
                 globs.menuActive = 2
-        elif globs.menuActive is 2:
+        elif globs.menuActive == 2:
             tutorial.blit(0,0)
             if ctrlDown: #(keys_down[key.LCTRL] or keys_down[key.RCTRL]):
                 globs.menuActive = 0
+        elif globs.menuActive == 3:
+            ending.blit(0,0)
+            if ctrlDown: #(keys_down[key.LCTRL] or keys_down[key.RCTRL]):
+                globs.menuActive = 1
+
+
 
 def draw():
 
@@ -106,14 +114,10 @@ def draw():
         else:
             sprite_animations[kind] = pyglet.image.load_animation(kinds[kind][1])
 
-
-
     # Drawing method:
     #      (letter)    from letters_image, if key is pressable
     #      (sprite)    stored in active_sprites, animations in sprite_animations
     #      (keyboard)  from keyboard_images
-
-
 
     ##################################################################################
 

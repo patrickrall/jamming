@@ -32,7 +32,6 @@ def main():
 # Keeps the keys_pressed dictionary up to date in such a way
 # that at most two keys are pressed at any given time
 def record_key_presses():
-    # TODO: make sure all keys, e.g. capslock work
 
     keys_pressed = globs.keys_pressed
     keys = globs.keys

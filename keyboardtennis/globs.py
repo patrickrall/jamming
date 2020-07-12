@@ -106,15 +106,17 @@ def next_level():
     global balls
     global trapped_balls
     global ctrl_rect
+    global menuActive
 
     level_idx += 1
 
+    import copy
+
     if level_idx < len(levels):
-        level = levels[level_idx]
+        level = copy.deepcopy(levels[level_idx])
+
         for i in range(len(balls)):
             balls.pop()
-
-
 
         while len(trapped_balls) < level["max-balls"]:
 
@@ -129,13 +131,22 @@ def next_level():
             trapped_balls.append({"pos":Vector2(x,y),
                                 "vel": Vector2(v*math.cos(th), v*math.sin(th)),
                                 "dia": r * 2, "caught": "none", "extratime": 0})
+    else:
+        menuActive = 3
+        level_idx = 0
+        level = copy.deepcopy(levels[level_idx])
+
+        for i in range(len(balls)):
+            balls.pop()
+
+
 
 
 global levels
 levels = []
 
 
-if False:
+if True:
     levels.append({ # thread the needle, easy
             "default": ["none", "wall"],
             "_6": ["wall"],
@@ -151,7 +162,7 @@ if False:
             "angle": 30,
         })
 
-if False:
+if True:
     levels.append({# thread the needle, dangerous
             "default": ["none","wall"],
             "GRAVE": ["hazard"],
@@ -172,7 +183,7 @@ if False:
             "speed": 200,
         })
 
-if False:
+if True:
     levels.append({ # boomerang level
             "default": ["none","wall"],
             "H": ["none","gravity-on"],
@@ -191,7 +202,7 @@ if False:
         })
 
 
-if False:
+if True:
     levels.append({ # remove walls level
             "default": ["none", "wall"],
             "W": ["hazard", "none"],
@@ -211,7 +222,7 @@ if False:
 
         })
 
-if False:
+if True:
     levels.append({ # all walls.
         "default": ["wall", "none"],
         "RSHIFT": ["wall"],
@@ -239,7 +250,7 @@ if False:
     })
 
 
-if False:
+if True:
     levels.append({ # gravitation
         "default": ["none"],
         "RSHIFT": ["wall"],
@@ -262,37 +273,38 @@ if False:
         "speed": 300,
     })
 
-levels.append({ # gravitation tightwalk
-    "default": ["hazard"],
-    "LSHIFT": ["none"],
-    "CAPSLOCK": ["none"],
-    "A": ["none"],
-    "S": ["none"],
-    "D": ["none"],
-    "F": ["none"],
-    "G": ["none"],
-    "H": ["none"],
-    "J": ["none"],
-    "K": ["none"],
-    "L": ["none"],
-    "C": ["gravity-off", "gravity-on"],
-    "B": ["gravity-off", "gravity-on"],
-    "M": ["gravity-off", "gravity-on"],
-    "PERIOD": ["gravity-off", "gravity-on"],
-    "GRAVE": ["gravity-off", "gravity-on"],
-    "_2": ["gravity-off", "gravity-on"],
-    "_4": ["gravity-off", "gravity-on"],
-    "_6": ["gravity-off", "gravity-on"],
-    "_8": ["gravity-off", "gravity-on"],
-    "_0": ["gravity-off", "gravity-on"],
-    "SEMICOLON": ["none"],
-    "APOSTROPHE": ["none"],
-    "ENTER": ["goal"],
-    "max-balls" : 3,
-    "simultaneous-balls" : 1,
-    "dead-balls": 0,
-    "speed": 100,
-})
+if True:
+    levels.append({ # gravitation tightwalk
+        "default": ["hazard"],
+        "LSHIFT": ["none"],
+        "CAPSLOCK": ["none"],
+        "A": ["none"],
+        "S": ["none"],
+        "D": ["none"],
+        "F": ["none"],
+        "G": ["none"],
+        "H": ["none"],
+        "J": ["none"],
+        "K": ["none"],
+        "L": ["none"],
+        "C": ["gravity-off", "gravity-on"],
+        "B": ["gravity-off", "gravity-on"],
+        "M": ["gravity-off", "gravity-on"],
+        "PERIOD": ["gravity-off", "gravity-on"],
+        "GRAVE": ["gravity-off", "gravity-on"],
+        "_2": ["gravity-off", "gravity-on"],
+        "_4": ["gravity-off", "gravity-on"],
+        "_6": ["gravity-off", "gravity-on"],
+        "_8": ["gravity-off", "gravity-on"],
+        "_0": ["gravity-off", "gravity-on"],
+        "SEMICOLON": ["none"],
+        "APOSTROPHE": ["none"],
+        "ENTER": ["goal"],
+        "max-balls" : 3,
+        "simultaneous-balls" : 1,
+        "dead-balls": 0,
+        "speed": 100,
+    })
 
 
 ############################### OLD LEVELS FOR DEBUG
