@@ -59,9 +59,9 @@ def init_globals():
     background_music_player = pyglet.media.Player()
     background_music_player.volume = 0.01
 
-    # background_music = [media("audio/Eva_soundtrack.mp3", streaming=False),
-    #                     media("audio/DzGrimX_soundtrack.mp3", streaming=False)]
-    # background_music_player.queue(background_music)
+    background_music = [media("audio/Eva_soundtrack.wav", streaming=False),
+                        media("audio/DzGrimX_soundtrack.wav", streaming=False)]
+    background_music_player.queue(background_music)
     global moths
     moths = []
 
