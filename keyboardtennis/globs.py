@@ -203,7 +203,7 @@ if True:
 
 
 if True:
-    levels.append({ # remove walls level
+    levels.append({ # remove hazards  level
             "default": ["none", "wall"],
             "W": ["hazard", "none"],
             "E": ["hazard", "none"],
@@ -214,12 +214,15 @@ if True:
             "U": ["hazard", "none"],
             "I": ["hazard", "none"],
             "O": ["hazard", "none"],
+            "_5": ["wall"],
             "M": ["goal"],
             "max-balls" : 5,
             "simultaneous-balls" : 2,
             "dead-balls": 0,
-            "speed": 300,
-
+            "speed-min": 200,
+            "speed-max": 400,
+            "angle-min": 20,
+            "angle-max": 70,
         })
 
 if True:

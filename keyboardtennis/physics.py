@@ -339,7 +339,7 @@ def ball_spawning():
             if launcher_state[0]:
                 launcher_state[1] += 1
 
-        elif globs.menuActive is 0:
+        elif globs.menuActive == 0:
             symbol, modifiers = args
 
             # handle ball spawning
@@ -364,6 +364,9 @@ def ball_spawning():
 
                     # calculate speed and angle of velocity, and position
                     if "speed" in level: sp = level["speed"]
+                    elif "speed-min" in level and "speed-max" in level:
+                        sp = random.uniform(level["speed-min"], level["speed-max"])
+                        level["speed"] = sp
                     else: sp = 250
                     if "angle" in level: th = radians(level["angle"])
                     elif "angle-min" in level and "angle-max" in level:
@@ -371,9 +374,6 @@ def ball_spawning():
                     else: th = radians(45)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
                     vx, vy = sp*sin(th), sp*cos(th)
-
-                    if degrees(th) % 90 < 30: th = radians(30)
-                    if degrees(th) % 90 > 60: th = radians(60)
 
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
