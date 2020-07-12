@@ -203,15 +203,11 @@ def kill_ball(ball):
 
     dead_beachballs.append(sprite)
 
-    def del_sprite():
+    #def del_sprite():
+    #    global dead_beachballs
+    #    dead_beachballs.remove(sprite)
 
-        global dead_beachballs
-
-        if sprite in dead_beachballs:
-            dead_beachballs.remove(sprite)
-            sprite.delete()
-
-    sprite.on_animation_end = del_sprite
+    #sprite.on_animation_end = del_sprite
 
 
 
