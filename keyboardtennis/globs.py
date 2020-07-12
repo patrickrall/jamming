@@ -64,7 +64,7 @@ def init_globals():
 
     global background_music_player
     background_music_player = pyglet.media.Player()
-    background_music_player.volume = 0.1
+    background_music_player.volume = 0.05
 
     background_music = [media("Eva_soundtrack.wav", streaming=False),
                         media("DzGrimX_soundtrack.wav", streaming=False)]
