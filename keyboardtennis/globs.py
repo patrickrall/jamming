@@ -136,7 +136,7 @@ levels.append({
         "D": ["gravity-off","gravity-on"],
         "A": ["soda"],
         "_6": ["wall"],
-        "Y": ["wall"],
+        "Y": ["wall", "none"],
         "H": ["wall"],
         "N": ["wall"],
         "K": ["goal"],

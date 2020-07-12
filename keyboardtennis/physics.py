@@ -349,13 +349,6 @@ def ball_spawning():
                                 "vel": Vector2(v*math.cos(th), v*math.sin(th)),
                                 "dia": r, "caught": "none", "extratime": 0})
 
-                    # call all params now for concise equations later
-                    vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
-                    ball_spawner["speed_min"], ball_spawner["speed_max"],
-                    ball_spawner["speed_reset"], ball_spawner["angle_min"],
-                    ball_spawner["angle_limit"], ball_spawner["angle_reset"]]
-                    bl_corner = ball_spawner["bot_left"]
-
 
                     # calculate speed and angle of velocity, and position
                     sp = level["speed"]
