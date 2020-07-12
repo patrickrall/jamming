@@ -72,6 +72,9 @@ def init_globals():
     global menuActive  # 0 = game, 1 = title, 2 = tutorial
     menuActive = 1
 
+    global dead_beachball_sprites
+    dead_beachball_sprites = []
+
 
 def launch_moth(key):
 
@@ -140,11 +143,11 @@ levels.append({
         "H": ["wall"],
         "N": ["wall"],
         "K": ["goal"],
-        "Q": ["soda"],
-        "W": ["soda"],
-        "S": ["soda"],
-        "Z": ["soda"],
-        "X": ["soda"],
+        "Q": ["hazard"],
+        "W": ["hazard"],
+        "S": ["hazard"],
+        "Z": ["hazard"],
+        "X": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,

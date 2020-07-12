@@ -100,6 +100,7 @@ def frame():
     keys_pressed = globs.keys_pressed
 
     trapped_balls = globs.trapped_balls
+    dead_beachball_sprites = globs.dead_beachball_sprites
     ctrl_rect = globs.ctrl_rect
 
     while True:
@@ -138,7 +139,7 @@ def frame():
 
         dimsx,dimsy,boty = 960,320,60
 
-        balls_to_kill = [[],[]]
+        balls_to_kill = [[],[],[]]
         for n, ball in enumerate(balls):
 
             s = level["speed"]
@@ -248,6 +249,7 @@ def frame():
                                 if n not in balls_to_kill[1]:
                                     balls_to_kill[0].append(ball)
                                     balls_to_kill[1].append(n)
+                                    balls_to_kill[2].append(rpos + rdims*0.5)
                                 continue
 
                             if kind in ["wall", "goal", "goal-nomoth"]:
@@ -270,9 +272,11 @@ def frame():
                 ball["pos"] += nudge
 
         dead_balls = globs.dead_balls
-        for dead_ball in balls_to_kill[1]:
+        for i in range(len(balls_to_kill[1])):
+            dead_ball = balls_to_kill[1][i]
             level["dead-balls"]+= 1
             dead_balls.append(balls.pop(dead_ball))
+            dead_balls[-1]["target"] = balls_to_kill[2][i]
         balls_to_kill = []
 
         moths = globs.moths
@@ -300,6 +304,13 @@ def frame():
             if not any_moths:
                 globs.next_level()
 
+        dead_beachball_sprites = globs.dead_beachball_sprites
+        for sprite in dead_beachball_sprites:
+            delta = sprite.target - Vector2(sprite.x, sprite.y)
+            delta = delta * (1/sqrt(delta.x*delta.x + delta.y*delta.y)) * dt * 100
+
+            sprite.x += int(delta.x)
+            sprite.y += int(delta.y)
 
 
 def ball_spawning():

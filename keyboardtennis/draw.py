@@ -195,14 +195,14 @@ def draw():
         for ball in dead_balls:
             kill_ball(dead_balls.pop())
 
-
         for ball in trapped_balls:
             glPushMatrix()
             glTranslatef(ball["pos"].x,ball["pos"].y,0)
             beachball_sprite.draw()
             glPopMatrix()
 
-        for sprite in dead_beachballs:
+        dead_beachball_sprites = globs.dead_beachball_sprites
+        for sprite in dead_beachball_sprites:
             sprite.draw()
 
         for moth in moths:
@@ -215,18 +215,20 @@ def draw():
 
 def kill_ball(ball):
 
-    global dead_beachballs
+    dead_beachball_sprites = globs.dead_beachball_sprites
 
     death = pyglet.image.load_animation("assets/ball_sprite_death.gif")
     sprite = pyglet.sprite.Sprite(death,x=ball["pos"].x-ball["dia"]/2,y=ball["pos"].y-ball["dia"]/2)
 
-    dead_beachballs.append(sprite)
+    dead_beachball_sprites.append(sprite)
+    sprite.target = ball["target"]
 
-    #def del_sprite():
-    #    global dead_beachballs
-    #    dead_beachballs.remove(sprite)
+    def del_sprite():
+        if sprite in dead_beachball_sprites:
+            dead_beachball_sprites.remove(sprite)
+            sprite.delete()
 
-    #sprite.on_animation_end = del_sprite
+    sprite.on_animation_end = del_sprite
 
 
 
