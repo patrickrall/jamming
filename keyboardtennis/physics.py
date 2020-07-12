@@ -346,7 +346,7 @@ def ball_spawning():
                 if event == "on_key_press":
                     launcher_state[0] = True
                 # control was already held a little bit
-                elif launcher_state[1] <= 10 or \
+                elif launcher_state[1] <= 30 or \
                         len(balls) >= level["simultaneous-balls"]:
                     launch_sounds[1].play()
                 else:
@@ -362,13 +362,17 @@ def ball_spawning():
 
 
                     # calculate speed and angle of velocity, and position
-                    sp = level["speed"]
-                    th = launcher_state[1] * (launcher_state[2] / 180) * (2 * pi / 360)
+                    if "speed" in level: sp = level["speed"]
+                    else: sp = 250
+                    if "angle" in level: th = level["angle"]
+                    elif "angle-min" in level and "angle-max" in level:
+                        th = radians(random.uniform(level["angle-min"], level["angle-max"]))
+                    else: th = radians(45)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
-                    vx, vy = sp*abs(cos(th)), sp*abs(sin(th))
+                    vx, vy = sp*abs(sin(th)), sp*abs(cos(th))
 
-                    if degrees(th) % 90 < 10: th = radians(10)
-                    if degrees(th) % 90 > 80: th = radians(80)
+                    if degrees(th) % 90 < 30: th = radians(30)
+                    if degrees(th) % 90 > 60: th = radians(60)
                     while vx < 50: vx *= 1.1
                     while vy < 50: vy *= 1.1
 
@@ -377,7 +381,7 @@ def ball_spawning():
                         "vel": Vector2(vx, vy), "caught": "none", 
                         "dia":ball_diameter, "extratime":0})
                     print("%f deg, %f x, %f y, %d frames" % \
-                        (degrees(th), sp*abs(cos(th)), sp*abs(sin(th)), launcher_state[1]))
+                        (degrees(th), vx, vy, launcher_state[1]))
                     #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
