@@ -34,7 +34,7 @@ def title_draw():
             if getattr(pyglet.window.key, "LCTRL") == symbol or getattr(pyglet.window.key, "RCTRL") == symbol:
                 ctrlDown = True
 
-        if globs.menuActive == 0:
+        if globs.menuActive is 0:
             continue
         elif globs.menuActive == 1:
             title.blit(0, 0)

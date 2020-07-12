@@ -165,7 +165,7 @@ if True:
             "angle": 30,
         })
 
-if True :
+if True:
     levels.append({# thread the needle, dangerous
             "default": ["none","wall"],
             "GRAVE": ["hazard"],
@@ -254,28 +254,6 @@ if True:
         "speed": 300,
         "angle": 60,
     })
-
-if True:
-    levels.append({ # slow
-        "default": ["soda", "none"],
-        "RSHIFT": ["wall"],
-        "COMMA": ["goal"],
-        "M": ["wall"],
-        "G": ["gravity-off", "gravity-on"],
-        "Z": ["none"],
-        "LSHIFT": ["none"],
-        "CAPSLOCK": ["none"],
-        "A": ["none"],
-        "X": ["none"],
-        "S": ["none"],
-        "Q": ["none"],
-        "W": ["none"],
-        "max-balls" : 3,
-        "simultaneous-balls" : 1,
-        "dead-balls": 0,
-        "speed": 300,
-        "angle": 60,
-        })
 
 if True:
     levels.append({ # gravitation
