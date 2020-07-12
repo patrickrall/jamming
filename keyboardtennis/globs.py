@@ -150,6 +150,36 @@ levels = []
 
 
 if True:
+    
+if True:
+    levels.append({ # easy easy, moth in corner, few scattered walls
+            "default": ["none", "wall"],
+            "GRAVE": ["goal"],
+            "RSHIFT": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 10,
+            "dead-balls": 0,
+            "speed": 300,
+            "angle": 30,
+        })
+
+if True:
+    levels.append({ # slightly more walls
+            "default": ["none", "wall"],
+            "_1": ["goal"],
+            "GRAVE": ["wall"],
+            "_2": ["wall"],
+            "CAPSLOCK": ["wall"],
+            "R": ["wall"],
+            "F": ["wall"],
+            "RSHIFT": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 10,
+            "dead-balls": 0,
+            "speed": 300,
+            "angle": 30,
+        })
+    
     levels.append({  # tucked in
             "default": ["none", "wall"],
             "_1": ["wall"],
