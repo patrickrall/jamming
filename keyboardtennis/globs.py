@@ -64,7 +64,7 @@ def init_globals():
 
     global background_music_player
     background_music_player = pyglet.media.Player()
-    background_music_player.volume = 0.1
+    background_music_player.volume = 0.025
 
     background_music = [media("Eva_soundtrack.wav", streaming=False),
                         media("DzGrimX_soundtrack.wav", streaming=False)]
@@ -77,9 +77,6 @@ def init_globals():
 
     global dead_beachball_sprites
     dead_beachball_sprites = []
-
-    global num_pressed
-    num_pressed = 0
 
 
 def launch_moth(key):
@@ -113,9 +110,7 @@ def next_level():
     global trapped_balls
     global ctrl_rect
     global menuActive
-    global num_pressed
 
-    num_pressed = 0
     level_idx += 1
 
     import copy
@@ -416,7 +411,45 @@ if True:
         })
 
 
-
+if True:
+    levels.append({ # pendulum
+            "default": ["none", "wall"],
+            "Q": ["wall"],
+            "A": ["wall"],
+            "Z": ["wall"],
+            "S": ["gravity-off", "gravity-on"],
+            "_3": ["wall"],
+            "E": ["wall"],
+            "D": ["wall"],
+            "R": ["gravity-off", "gravity-on"],
+            "T": ["wall"],
+            "G": ["wall"],
+            "B": ["wall"],
+            "H": ["gravity-off", "gravity-on"],
+            "_7": ["wall"],
+            "U": ["wall"],
+            "J": ["wall"],
+            "I": ["gravity-off", "gravity-on"],
+            "O": ["wall"],
+            "L": ["wall"],
+            "PERIOD": ["wall", "none"],
+            "_9": ["soda","none"],
+            "_0": ["soda", "none"],
+            "SEMICOLON": ["gravity-off", "gravity-on"],
+            "BACKSPACE": ["hazard"],
+            "BACKSLASH": ["hazard"],
+            "ENTER": ["hazard"],
+            "RSHIFT": ["hazard"],
+            "SLASH": ["goal"],
+            "max-balls" : 5,
+            "simultaneous-balls" : 3,
+            "dead-balls": 0,
+            "speed-min": 200,
+            "speed-max": 400,
+            "angle-min": 20,
+            "angle-max": 70,
+        })
+    
 ############################### OLD LEVELS FOR DEBUG
 if False:
     levels.append({ # Warning: I think this level is impossible
