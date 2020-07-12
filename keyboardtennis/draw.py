@@ -35,6 +35,8 @@ def draw():
     keys_pressed = globs.keys_pressed
     key_rects = globs.key_rects
 
+    moths = globs.moths
+
 
     global dead_beachballs
     dead_beachballs = []
@@ -181,9 +183,11 @@ def draw():
             beachball_sprite.draw()
             glPopMatrix()
 
-
         for sprite in dead_beachballs:
             sprite.draw()
+
+        for moth in moths:
+            moth.draw()
 
         ctrlkey.blit(0,0)
 

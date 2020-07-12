@@ -219,6 +219,32 @@ def frame():
             dead_balls.append(balls.pop(dead_ball))
         balls_to_kill = []
 
+        moths = globs.moths
+        moths_to_delete = []
+        for moth in moths:
+            delta = moth.velocity * dt
+            moth.x += delta.x
+            moth.y += delta.y
+
+            tol = 50
+            if moth.x > dimsx + tol or moth.x < -tol or\
+                    moth.y > dimsy + tol or moth.y < -tol:
+                moths_to_delete.append(moth)
+
+        for moth in moths_to_delete:
+            moths.remove(moth)
+
+        if len(moths) == 0:
+            any_moths = False
+            for key in keys:
+                if key not in level: continue
+                if level[key][0] == "goal":
+                    any_moths = True
+                    break
+            if not any_moths:
+                globs.next_level()
+
+
 
 def ball_spawning():
     balls = globs.balls

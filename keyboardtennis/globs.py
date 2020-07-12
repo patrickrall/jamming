@@ -3,6 +3,8 @@ import pyglet
 import json
 from swyne.node import Vector2
 from pyglet.resource import media
+import math
+import random
 
 def init_globals():
 
@@ -72,10 +74,11 @@ def launch_moth(key):
     level[key] = ["goal-nomoth"]
 
     global moths
-    animation = pyglet.image.load_animation("assets/moth_idle.gif")
-    rect = key_rects["key"]
-    x = rect["x"] + rect["w"]/2
-    y = rect["y"] + rect["h"]/2
+    anim = pyglet.image.load_animation("assets/moth_flying.gif")
+    rect = key_rects[key]
+    x = rect["x"] + rect["w"]/2 - anim.get_max_width()/2
+    y = rect["y"] + rect["h"]/2 - anim.get_max_height()/2
+
     sprite = pyglet.sprite.Sprite(anim,x=x,y=y)
 
     th = random.uniform(0, math.pi*2)
@@ -101,8 +104,7 @@ def next_level():
         for i in range(len(balls)):
             balls.pop()
 
-        import math
-        import random
+
 
         while len(trapped_balls) < level["max-balls"]:
 
@@ -124,7 +126,6 @@ levels = []
 
 levels.append({
         "default": ["none", "wall"],
-        "W": ["hazard"],
         "D": ["goal"],
         "H": ["goal"],
         "L": ["goal"],
