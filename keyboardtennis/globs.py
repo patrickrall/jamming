@@ -148,6 +148,57 @@ def next_level():
 global levels
 levels = []
 
+    
+if True:
+    levels.append({ # easy easy, moth in corner, few scattered walls
+            "default": ["none", "wall"],
+            "GRAVE": ["goal"],
+            "RSHIFT": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 10,
+            "dead-balls": 0,
+            "speed": 300,
+            "angle": 30,
+        })
+
+if True:
+    levels.append({ # slightly more walls
+            "default": ["none", "wall"],
+            "_1": ["goal"],
+            "GRAVE": ["wall"],
+            "_2": ["wall"],
+            "CAPSLOCK": ["wall"],
+            "R": ["wall"],
+            "F": ["wall"],
+            "RSHIFT": ["wall"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 10,
+            "dead-balls": 0,
+            "speed": 300,
+            "angle": 30,
+        })
+   
+if True:
+    levels.append({  # tucked in
+            "default": ["none", "wall"],
+            "_1": ["wall"],
+            "_2": ["wall"],
+            "_3": ["wall"],
+            "_4": ["wall"],
+            "_5": ["wall"],
+            "_6": ["wall"],
+            "_7": ["goal"],
+            "_8": ["wall"],
+            "_9": ["wall"],
+            "_0": ["wall"],
+            "G": ["gravity-off", "gravity-on"],
+            "RSHIFT": ["hazard"],
+            "max-balls" : 3,
+            "simultaneous-balls" : 10,
+            "dead-balls": 0,
+            "speed": 300,
+            "angle": 55,
+        })
 
 if True:
     levels.append({ # thread the needle, easy

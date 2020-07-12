@@ -13,7 +13,7 @@ def main():
 
     w = NodeWindow(960,320)
     w.fps = 60
-    w.set_caption('CTRL-Keysmash')
+    w.set_caption('Ctrl+Keysmash')
 
     w.node, _ = deserialize_node("""
     HintedLayoutNode [960,320]
