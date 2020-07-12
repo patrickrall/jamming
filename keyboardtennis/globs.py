@@ -133,10 +133,11 @@ levels.append({
         "H": ["goal"],
         "L": ["goal"],
         "V": ["soda"],
+        "E": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
-
+        "speed": 300,
     })
 
 levels.append({
@@ -154,6 +155,7 @@ levels.append({
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
+        "speed": 150,
     })
 
 levels.append({
@@ -164,6 +166,7 @@ levels.append({
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
+        "speed": 150,
     })
 
 levels.append({
@@ -177,13 +180,15 @@ levels.append({
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
+        "speed": 150,
     })
 
 levels.append({
-        "default": ["hazard"],
+        "default": ["hazard", "none"],
         "H": ["none","gravity"],
         "ENTER": ["hazard"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": 0,
+        "speed": 150,
     })

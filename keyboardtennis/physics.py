@@ -1,5 +1,5 @@
 
-from math import sqrt, copysign, sin, cos, pi
+from math import sqrt, copysign, sin, cos, pi, degrees, radians
 from swyne.node import Vector2
 import globs
 import pyglet
@@ -261,8 +261,8 @@ def ball_spawning():
     # I dont think this needs to be global, right?
     ball_spawner = {
         "ctrl_held": False, "ctrl_frames": 0,
-        "speed_min": 60, "speed_scale": 10, "speed_reset": 30,
-        "angle_min": 20, "angle_limit": 240, "angle_reset": 200,
+        "speed_min": 150, "speed_max": 300, "speed_reset": 30,
+        "angle_min": 20, "angle_limit": 80, "angle_reset": 150,
         "dia": 28, "bot_left": [key_rects["LSHIFT"]["x"], \
             key_rects["LSHIFT"]["y"], key_rects["LSHIFT"]["w"]]}
 
@@ -297,18 +297,25 @@ def ball_spawning():
 
                     # call all params now for concise equations later
                     vp = [ball_spawner["ctrl_frames"], ball_spawner["dia"],
-                    ball_spawner["speed_min"], ball_spawner["speed_scale"],
+                    ball_spawner["speed_min"], ball_spawner["speed_max"],
                     ball_spawner["speed_reset"], ball_spawner["angle_min"],
                     ball_spawner["angle_limit"], ball_spawner["angle_reset"]]
                     bl_corner = ball_spawner["bot_left"]
+                    
                     # calculate speed and angle of velocity, and position
-                    sp = 200
-                    th = pi/6
+                    sp = level["speed"]
+                    th = vp[0] * (vp[7] / 180) * (2 * pi / 360)
                     pos = [bl_corner[0] + bl_corner[2]/2, bl_corner[1]]
+
+                    if degrees(th) % 90 < 10: th = radians(10)
+                    if degrees(th) % 90 > 80: th = radians(80)
+
                     # add new ball!
                     balls.append({"pos":Vector2(pos[0], pos[1]), \
-                        "vel": Vector2(sp*cos(th), sp*sin(th)),\
+                        "vel": Vector2(sp*abs(cos(th)), sp*abs(sin(th))),\
                         "caught": "none", "dia":vp[1], "extratime":0})
+                    print("%f deg, %f x, %f y, %d frames" % \
+                        (th, sp*abs(cos(th)), sp*abs(sin(th)), ball_spawner["ctrl_frames"]))
                     #print(balls[-1]["vel"])
                     launch_sounds[0].play()
                     # reset control key counter
