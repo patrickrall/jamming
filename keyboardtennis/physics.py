@@ -142,7 +142,8 @@ def frame():
         balls_to_kill = [[],[],[]]
         for n, ball in enumerate(balls):
 
-            s = level["speed"]
+            if "speed" in level: s = level["speed"]
+            else: s = 250
 
             # gravity
             for key in keys:
