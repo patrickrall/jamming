@@ -48,9 +48,11 @@ def draw():
     kinds = {
         "none": ["assets/lowered_keys_2.png", None],
         "wall": ["assets/raised_keys_2.png", None],
+        "soda": ["assets/keys_soda.png", None],
         "gravity-off": ["assets/lowered_keys_2.png", "assets/gravity_hole_idle.gif"],
         "gravity-on": ["assets/lowered_keys_2.png", "assets/gravity_hole_idle.gif"],
-        "goal": ["assets/lowered_keys_2.png", "assets/moth_idle.gif"],
+        "goal": ["assets/raised_keys_2.png", "assets/moth_idle.gif"],
+        "goal-nomoth": ["assets/raised_keys_2.png", None],
     }
 
     for kind in kinds.keys():

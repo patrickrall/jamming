@@ -56,6 +56,20 @@ def init_globals():
     background_music = [media("audio/Eva_soundtrack.mp3"), media("audio/DzGrimX_soundtrack.mp3")]
     background_music_player.queue(background_music)
 
+
+def launch_moth(key):
+
+    global level
+    global keys
+    level[key] = ["goal-nomoth"]
+
+    for otherkey in keys:
+        if otherkey not in level: continue
+        if level[otherkey][0] == "goal": return
+
+    next_level()
+
+
 def next_level():
 
     global level_idx
@@ -95,8 +109,10 @@ levels = []
 
 levels.append({
         "default": ["none", "wall"],
-        "S": ["hazard", "none"],
-        "MINUS": ["goal"],
+        "D": ["goal"],
+        "H": ["goal"],
+        "L": ["goal"],
+        "V": ["soda"],
         "max-balls" : 3,
         "simultaneous-balls" : 1,
         "dead-balls": [],

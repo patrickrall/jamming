@@ -193,15 +193,17 @@ def frame():
                                     dead_balls.append(ball)
                                 continue
 
-                            if kind == "goal":
-                                globs.next_level()
-
                             if kind in ["wall", "goal"]:
                                 if (nudge.x == 0): ball["vel"].y *= -1
                                 if (nudge.y == 0): ball["vel"].x *= -1
 
                                 ball["vel"].x = int(ball["vel"].x)
                                 ball["vel"].y = int(ball["vel"].y)
+
+                            if kind == "goal":
+                                globs.launch_moth(key)
+
+
                             anyCollide = True
                             break
                     if anyCollide:
