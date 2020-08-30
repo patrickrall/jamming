@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <!--<link rel="stylesheet" type="text/css" href="style.css" /> -->
+        <style>
+            video {
+                width:250px; 
+                height:250px; 
+            }
+            table {
+                margin:10px;
+            }
+            td {
+                border:1px solid black;
+            }
+            div {
+                margin:10px;
+            }
+        </style>
+        <script src="main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/peerjs@1.2.0/dist/peerjs.min.js"></script>
+    </head>
+    <body onload="init()">
+        <div id="login">
+            <input type="text" placeholder="Your name" id="username" />
+            <input type="password" placeholder="Server password" id="password" />
+        </div>
+        
+        <div id="user">
+            <p id="userstatus">Logged in as Chris. Your mic is off.</p>
+            <p><input type="button" value="Open door" disabled id="openbutton"> <input type="button" value="Shut door" disabled id="closebutton"> <span id="closetimer">Will close in 15:20.</span> </p>
+            <p id="doorstatus">You are at Patrick's door. <input type="button" value="Leave"></p>
+            <!--<p>Your door is open, and Chris is talking at you. <input type="button" value="Respond"></p>
+            <p>Your door is open, and Chris is talking with you. <input type="button" value="Unmute"><input type="button" value="Mute" disabled></p>-->
+            <hr/>
+        </div>
+
+        <div id="others">
+            <!--
+            <p>Becky: door is open and is talking to Stella. <input type="button" value="Visit" disabled></p>
+            <p>Patrick: door is open and is talking to you. <input type="button" value="Leave"></p>
+
+            <p>Billy: door is closed. <input type="button" value="Knock"></p>
+            <p>Stella: is at Becky's door.</p>-->
+        </div>
+        
+
+        <div id="messages">
+            <hr/>
+            <!--<p>Chris at 11:43 am: Hello world! (1:20)</p>-->
+        </div>
+        <input type="text" placeholder="Send message" id="sendmessage" />
+
+        <p id="knockdisplay"></p>
+
+        <div id="error">
+            Disconnected.
+        </div>
+
+        <!--style="display:hidden;"-->
+        <div id="media"></div>
+
+    </body>
+</html>

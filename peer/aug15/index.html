@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <!--<link rel="stylesheet" type="text/css" href="style.css" /> -->
+        <style>
+            video {
+                width:250px; 
+                height:250px; 
+            }
+            table {
+                margin:10px;
+            }
+            td {
+                border:1px solid black;
+            }
+        </style>
+        <script src="main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/peerjs@1.2.0/dist/peerjs.min.js"></script>
+    </head>
+    <body onload="init()">
+        <p id="my_id"></p>
+        <table><tbody><tr>
+        <td><input id="mic_checkbox" type="checkbox" onchange="checkbox_change('mic')"/> mic</td>
+        <td><input id="cam_checkbox" type="checkbox" onchange="checkbox_change('cam')"/> cam</td>
+        <td><input id="screen_checkbox" type="checkbox" onchange="checkbox_change('screen')"/> screen</td>
+        <td><input id="speaker_checkbox" type="checkbox" onchange="checkbox_change('speaker')"/> speaker</td>
+        </tr></tbody></table>
+        <!-- mic / cam / screen / speaker  -->
+        <input type="text" placeholder="Connect to id" id="try_connect" />
+        <table><tbody id="other_peers"></tbody></table>
+        <input type="text" placeholder="Broadcast" id="broadcast" />
+        <p id="chat_log"></p>
+
+    </body>
+</html>
