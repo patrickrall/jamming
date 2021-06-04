@@ -37,7 +37,7 @@ def rotateY(theta):
     m = np.eye(4)
     m[0,0] = c
     m[0,2] = -s
-    m[2,1] = s
+    m[2,0] = s
     m[2,2] = c
     return m
 
