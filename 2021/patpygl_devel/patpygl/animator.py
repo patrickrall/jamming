@@ -4,6 +4,37 @@ from PIL import Image
 from .vector import Vec
 
 
+# turns an image into a frame dictionary
+def load_png(fname):
+    img = Image.open(fname)
+    width, height = img.size
+
+    pixels = img.tobytes()
+
+    texture = glGenTextures(1)
+    glBindTexture(GL_TEXTURE_2D, texture)
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+
+    if img.mode not in ["RGB", "RGBA"]:
+        img = img.convert("RGBA")
+    if img.mode == "RGB":
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels)
+    else:
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels)
+
+    glBindTexture(GL_TEXTURE_2D, 0)
+
+    return {
+        "texture": texture,
+        "duration": 1, # 1 second
+        "w": width, "h": height,
+        "texcoords": { "tl": Vec(0,0), "tr": Vec(1,0),
+                        "bl": Vec(0,1),"br": Vec(1,1),
+        },
+    }
+
 
 # Returns a list of frames, each is a dict with
 # {
