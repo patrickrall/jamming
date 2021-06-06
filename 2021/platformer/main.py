@@ -15,7 +15,6 @@ from render import render_init
 from edit import edit_init
 from play import play_init
 
-PIXELS_PER_UNIT = 16
 
 def main():
     glfw.init()
@@ -139,7 +138,7 @@ def load_assets():
     # load HUD elements, note window is 800x640
     for element in globs.hud_elements:
         hud_asset = load_png(element["sprite"])
-        hud_asset["size"] = Vec(element["size"]["x"], element["size"]["y"]) / PIXELS_PER_UNIT # 16 pixels per unit in the camera
+        hud_asset["size"] = Vec(element["size"]["x"], element["size"]["y"]) / globs.cam["pixels_per_unit"] # 16 pixels per unit in the camera
         hud_array = QuadArray(hud_asset)
         hud_array.quads.append(Vec(element["location"]["x"], element["location"]["y"], 0.5))  # +z draws on top of -z
         hud_array.update()

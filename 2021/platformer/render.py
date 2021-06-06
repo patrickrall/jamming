@@ -21,7 +21,7 @@ def render_init(w,h):
         "projection-inv": None, # and its inverse here.
         "w_asset" : w/16/3,     # width in asset pixels is width / pixels_per_unit / pixel_scale
         "h_asset" : h/16/3,     # height in asset pixels is height / pixels_per_unit / pixel_scale
-        "smoothing" : False,     # is the camera's motion smoothed (True), or does it snap to the player (False)
+        "smoothing" : False,    # is the camera's motion smoothed (True), or does it snap to the player (False)
         "smoothing_factor" : 5  # how smooth is the motion (higher numbers are slower, smoother motion
     }
     globs.hud_elements = [

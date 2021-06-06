@@ -175,9 +175,7 @@ def hud_loop():
     # look for clicks that fall in the areas covered by HUD elements
     while True:
         events = yield from listen.any(
-            enter=listen.on_cursor_enter(globs.window),
             pos=listen.on_cursor_pos(globs.window),
-            scroll=listen.on_scroll(globs.window),
             button=listen.on_mouse_button(globs.window)
         )
 
@@ -192,7 +190,8 @@ def hud_loop():
             if glfw.get_mouse_button(globs.window, glfw.MOUSE_BUTTON_LEFT) == glfw.PRESS and hud_element != "":
                 # left click might select a UI button
                 if hud_element == "test":
-                    print("Click received. Run test function for HUD element") # TODO add meaningful functions for HUD elements being clicked
+                    print("Click received. Run test function for HUD element")
+                    # TODO add meaningful functions for HUD elements being clicked
                 elif hud_element == "inventory":
                     print("Click received. Run inventory function for HUD element")
 

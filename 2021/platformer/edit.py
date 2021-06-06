@@ -190,6 +190,7 @@ def grid_editor_loop():
         events = yield from listen.any(
                 enter=listen.on_cursor_enter(globs.window),
                 pos=listen.on_cursor_pos(globs.window),
+                scroll=listen.on_scroll(globs.window),
                 button=listen.on_mouse_button(globs.window)
                 )
 
