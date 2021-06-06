@@ -5,12 +5,11 @@ from patpygl import listen
 from patpygl.quadarray import *
 from render import mouse_coords
 import numpy as np
-from play import place_player
+from play import place_player, center_camera
 
 import globs
 
 def edit_init():
-
     globs.mode = "grid_edit"
     globs.grid = Grid()
 
@@ -27,6 +26,7 @@ def editor_camera_loop():
         glfw.KEY_D: False,
         glfw.KEY_LEFT_SHIFT: False,
         glfw.KEY_SPACE: False,
+        glfw.KEY_P: False
     }
     while True:
         events = yield from listen.any(
@@ -190,7 +190,6 @@ def grid_editor_loop():
         events = yield from listen.any(
                 enter=listen.on_cursor_enter(globs.window),
                 pos=listen.on_cursor_pos(globs.window),
-                scroll=listen.on_scroll(globs.window),
                 button=listen.on_mouse_button(globs.window)
                 )
 
@@ -204,8 +203,8 @@ def grid_editor_loop():
                 globs.grid.save()
 
             # middle click
-            if button == glfw.MOUSE_BUTTON_MIDDLE and\
-                    action == glfw.PRESS:
+            if (button == glfw.MOUSE_BUTTON_MIDDLE and\
+                    action == glfw.PRESS):
                 x,y = glfw.get_cursor_pos(globs.window)
                 x,y = mouse_to_grid(x,y)
                 if (x,y) in globs.grid:
@@ -217,8 +216,9 @@ def grid_editor_loop():
                     cursor_array.asset.enqueue(globs.assets[globs.grid.assets[cursor_asset]],loop=True)
                     cursor_array.update()
                 else:
-                    # click on empty space: place the player there and go into play mode
+                    # click on empty space with middle mouse: place the player there and go into play mode
                     place_player(x,y)
+                    center_camera(x,y)
                     # delete the cursor quad if we have it
                     if len(cursor_array.quads) > 0:
                         del cursor_array.quads[0]
