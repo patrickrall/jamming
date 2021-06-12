@@ -1,22 +1,28 @@
 from patpygl.vector import *
-from patpygl import listen
 import globs
 from polygon import Polygon
+from patpygl.textbox import *
 
-# # HUD
-# proj = globs.cam["projection"] @ translate(0, 0, -0.2)
-# set_uniform_matrix(Polygon.polygon_shader, "projection", proj)
-# for polygon in globs.hud_polygons:
-#     polygon.draw()
 def hud_init():
     globs.hud_polygons = []
+    globs.textboxes = []
+    globs.click_count = 0
+    # initialize libraries
+    init_textbox(w=2000, h=2000)  # dimension of glyph atlas
+
 
 def update_hud():
+    fpsbox = TextBox("IBMPlexSans-Regular.ttf",
+                     size=30,
+                     color=Vec(0.0, 0.0, 0.0), # black
+                     pos=Vec(12, 760, -0.2))
+    globs.textboxes = [fpsbox]
+    fpsbox.text = "Moves: " + str(globs.click_count)
     colors = globs.polydata["colors"]
     count = len(colors)
     nextColor = globs.selected_color
 
-    moveCounterBkgd = Polygon(Vec(0.0, 0.0, 0.0),
+    moveCounterBkgd = Polygon(Vec(0.0, 1.0, 0.0),
                               [Vec(0,7), Vec(0, 9), Vec(5, 9)])
 
     paletteBkgd = Polygon(Vec(0.0, 0.0, 0.0),

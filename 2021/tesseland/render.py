@@ -7,6 +7,7 @@ import glfw
 from patpygl import listen
 from patpygl.vector import *
 from patpygl.projection import *
+from patpygl.textbox import *
 
 from polygon import *
 
@@ -71,10 +72,19 @@ def render_loop():
                     polygon.draw()
 
         # HUD
-        proj = globs.cam["projection"] @ translate(0, 0, -1)
+        proj = globs.cam["projection"] @ translate(0, 0, -0.1)
         set_uniform_matrix(Polygon.polygon_shader, "projection", proj)
         for polygon in globs.hud_polygons:
             polygon.draw()
+
+        # Load the textbox shader. Text is in pixels, not units,
+        # so need to scale appropriately. Ignore camera position.
+        glUseProgram(TextBox.textshader)
+        s = globs.cam["scale"]
+        tproj =  globs.cam["projection"] @scale(1/s, 1/s, 1)
+        set_uniform_matrix(TextBox.textshader, "projection", tproj)
+        for textbox in globs.textboxes:
+            textbox.draw()
 
         glfw.swap_buffers(globs.window)
 

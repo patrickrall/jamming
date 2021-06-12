@@ -82,11 +82,13 @@ def play_loop():
             print("Level complete!")
             globs.bgcolor = globs.polydata["colors"][globs.selected_color]
             listen.launch(next_level())
+            globs.click_count = 0
+            update_hud()
 
         else:
             globs.selected_color += 1
             globs.selected_color %= len(globs.polydata["colors"])
-
+            globs.click_count += 1
             update_hud()
 
 
