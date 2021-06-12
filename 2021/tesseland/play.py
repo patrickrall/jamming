@@ -38,10 +38,23 @@ def play_loop():
 
         assert found is not None
 
+        """
+        def tmp_recolor(neighbor):
+            prvcolor = neighbor.color
+            neighbor.color = Vec(0,0,0)
+            yield from listen.wait(0.2)
+            neighbor.color = prvcolor
+            yield from listen.wait(0.2)
+            neighbor.color = Vec(0,0,0)
+            yield from listen.wait(0.2)
+            neighbor.color = prvcolor
+
         # debugging tool for figuring out the neighbors of a polygon
-        # for neighbor in found.neighbors:
-        #     neighbor.color = globs.polydata["colors"][globs.selected_color]
-        # continue
+        for neighbor in found.neighbors:
+            listen.launch(tmp_recolor(neighbor))
+
+        continue
+        """
 
         polygons_to_update = [found]
         while True:
