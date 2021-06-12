@@ -23,7 +23,16 @@ def play_loop():
         x,y = glfw.get_cursor_pos(globs.window)
         pt = mouse_coords(x, y)
 
+        # Ignore clicks that hit the HUD
+        clicked_hud = None
+        for polygon in globs.hud_polygons:
+            if is_point_in_triangle(pt, polygon.points[0], polygon.points[1], polygon.points[2]):
+                clicked_hud = polygon
+                break
+        if clicked_hud is not None:
+            continue
 
+        # Look for clicks that hit the puzzle
         found = None
         for x in range(globs.polydata["nx"]):
             if found: break
