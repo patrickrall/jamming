@@ -1,3 +1,5 @@
+# module dependencies: numpy, pillow, pyopengl, glfw, freetype-py
+
 import glfw
 from OpenGL.GL import *
 import numpy as np
@@ -12,7 +14,6 @@ import globs
 from render import render_init
 from edit import edit_init
 from play import play_init
-
 
 
 def main():
@@ -35,6 +36,7 @@ def main():
     globs.spf = 0.015 # 60ish fps
 
     # this stuff gets rendered by the render_loop
+    globs.hud_quadarrays = []
     globs.quadarrays = []
     globs.textboxes = []
 
@@ -85,7 +87,7 @@ def game_loop():
 
 
 def load_assets():
-
+    from patpygl.quadarray import QuadArray
     spritesheets = []
     spritesheets.append("assets/grassland.json")
     spritesheets.append("assets/dino.json")
@@ -133,5 +135,13 @@ def load_assets():
                 globs.assets[key[:-6]+"-left"] = flipped_frames
 
 
+    # load HUD elements, note window is 800x640
+    for element in globs.hud_elements:
+        hud_asset = load_png(element["sprite"])
+        hud_asset["size"] = Vec(element["size"]["x"], element["size"]["y"]) / globs.cam["pixels_per_unit"] # 16 pixels per unit in the camera
+        hud_array = QuadArray(hud_asset)
+        hud_array.quads.append(Vec(element["location"]["x"], element["location"]["y"], 0.5))  # +z draws on top of -z
+        hud_array.update()
+        globs.hud_quadarrays.append(hud_array)
 
 if __name__ == "__main__": main()
