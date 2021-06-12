@@ -70,6 +70,12 @@ def render_loop():
                 for polygon in globs.polygons:
                     polygon.draw()
 
+        # HUD
+        proj = globs.cam["projection"] @ translate(0, 0, -1)
+        set_uniform_matrix(Polygon.polygon_shader, "projection", proj)
+        for polygon in globs.hud_polygons:
+            polygon.draw()
+
         glfw.swap_buffers(globs.window)
 
 

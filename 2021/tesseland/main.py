@@ -10,6 +10,7 @@ from render import render_init
 from levels import levels_init
 from play import play_init
 from polygon import *
+from hud import hud_init
 
 
 def main():
@@ -33,6 +34,7 @@ def main():
 
     render_init(w,h)
     play_init()
+    hud_init()
 
     # the main loop.
     while not glfw.window_should_close(globs.window):

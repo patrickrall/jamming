@@ -6,6 +6,7 @@ from patpygl import listen
 
 import globs
 from polygon import Polygon
+from hud import load_hud_for_level
 
 def levels_init():
     globs.play_disabled = True
@@ -29,7 +30,7 @@ def levels_init():
 
     # load the first level
     listen.launch(next_level())
-
+    load_hud_for_level()
 
 def next_level():
     globs.play_disabled = True
@@ -41,15 +42,16 @@ def next_level():
         print("Loading level",globs.level_idx+1,"of",len(globs.levels))
 
         polys = globs.levels[globs.level_idx]()
+
         np.random.shuffle(polys)
         globs.polygons = []
         for poly in polys:
             yield from listen.wait(0.03)
             globs.polygons.append(poly)
         globs.play_disabled = False
+        load_hud_for_level()
     else:
         print("Game complete!")
-
 
 
 def repeat_cell(repeat_x, repeat_y, unit_dx, unit_dy, polys):
