@@ -10,7 +10,6 @@ from polygon import Polygon
 def levels_init():
     globs.play_disabled = True
 
-
     globs.selected_color = 0
     globs.bgcolor = Vec(1.0,1.0,0)
 
@@ -33,6 +32,7 @@ def levels_init():
 
 
 def next_level():
+    globs.play_disabled = True
     yield from listen.wait(1)
     if globs.level_idx+1 < len(globs.levels):
         globs.selected_color = 0
@@ -46,6 +46,7 @@ def next_level():
         for poly in polys:
             yield from listen.wait(0.03)
             globs.polygons.append(poly)
+        globs.play_disabled = False
     else:
         print("Game complete!")
 

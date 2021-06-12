@@ -14,6 +14,7 @@ def play_loop():
     while True:
         _, button, action, mods = yield from listen.on_mouse_button(globs.window)
 
+        if globs.play_disabled: continue
 
         if button != glfw.MOUSE_BUTTON_LEFT: continue
         if action != glfw.PRESS: continue
