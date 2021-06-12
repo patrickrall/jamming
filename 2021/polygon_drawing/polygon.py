@@ -27,6 +27,14 @@ class Polygon():
         self.points = points
         self.update()
 
+    def get_color(self):
+        return self.color
+
+    def get_points(self):
+        return self.points
+
+    def set_color(self, color):
+        self.color = color
 
     # call this after changing self.points
     # dont need to call this if all you change is the color
