@@ -8,12 +8,10 @@ import globs
 from polygon import Polygon
 
 def levels_init():
-
-    globs.level_idx = 0
-    globs.levels = [level1,level2]
+    globs.play_disabled = True
 
     globs.selected_color = 0
-    globs.polygons = []
+    globs.bgcolor = Vec(1.0,1.0,0)
 
     globs.polydata = {
         "unit_dx": Vec(1,0),
@@ -24,58 +22,94 @@ def levels_init():
         "colors":[],
     }
 
+    globs.level_idx = -1
+    globs.levels = [level1,level2]
+
+    globs.polygons = []
+
     # load the first level
-    globs.levels[globs.level_idx]()
+    listen.launch(next_level())
 
 
 def next_level():
+    globs.play_disabled = True
     yield from listen.wait(1)
     if globs.level_idx+1 < len(globs.levels):
-        globs.polygons = []
+        globs.selected_color = 0
+
         globs.level_idx += 1
         print("Loading level",globs.level_idx+1,"of",len(globs.levels))
-        globs.levels[globs.level_idx]()
+
+        polys = globs.levels[globs.level_idx]()
+        np.random.shuffle(polys)
+        globs.polygons = []
+        for poly in polys:
+            yield from listen.wait(0.03)
+            globs.polygons.append(poly)
+        globs.play_disabled = False
     else:
         print("Game complete!")
 
 
 
+def repeat_cell(repeat_x, repeat_y, unit_dx, unit_dy, polys):
+    globs.polydata["unit_dx"] = unit_dx * repeat_x
+    globs.polydata["unit_dy"] = unit_dy * repeat_y
+
+    out = {}
+    out_list = []
+
+    for rx in range(repeat_x):
+        for ry in range(repeat_y):
+            out[rx,ry] = {}
+            delta = rx * unit_dx + ry * unit_dy
+            for key in polys.keys():
+                new_points = [delta + v for v in polys[key].points]
+                out[rx,ry][key] = Polygon(polys[key].color, new_points)
+                out_list.append(out[rx,ry][key])
+
+
+    for rx in range(repeat_x):
+        for ry in range(repeat_y):
+            for key in polys.keys():
+                for dx,dy,nkey in polys[key].neighbors:
+                    nx,ny = rx+dx,ry+dy
+                    if nx < 0: nx += repeat_x
+                    if nx >= repeat_x: nx -= repeat_x
+                    if ny < 0: ny += repeat_y
+                    if ny >= repeat_y: ny -= repeat_y
+
+                    neighbor = out[nx,ny][nkey]
+                    out[rx,ry][key].neighbors.append(neighbor)
+
+    return out_list
+
+
 def level1():
-    r3 = np.sqrt(3)
-
-    globs.polydata["unit_dx"] = Vec(1,0)
-    globs.polydata["unit_dy"] = Vec(0,1)
-
     globs.polydata["origin"] = Vec(-0.3,-1.2)
-    globs.polydata["nx"] = 10
-    globs.polydata["ny"] = 10
+    globs.polydata["nx"] = 2
+    globs.polydata["ny"] = 2
 
     cs = []
     cs.append(Vec(1.0, 0.0, 1.0))
     cs.append(Vec(0.0, 1.0, 1.0))
     globs.polydata["colors"] = cs
 
-    t1 = Polygon(cs[0],[Vec(0,0), Vec(0,1), Vec(1,0)])
-    t2 = Polygon(cs[1],[Vec(1,1), Vec(0,1), Vec(1,0)])
+    polys = {}
 
-    globs.polygons = [t1,t2]
-    t1.neighbors = [t2]
-    t2.neighbors = [t1]
+    polys["t1"] = Polygon(cs[0],[Vec(0,0), Vec(0,1), Vec(1,0)])
+    polys["t2"] = Polygon(cs[1],[Vec(1,1), Vec(0,1), Vec(1,0)])
 
+    polys["t1"].neighbors = [(0,0,"t2"),(-1,0,"t2"),(0,-1,"t2")]
+    polys["t2"].neighbors = [(0,0,"t1"),(1,0,"t1"),(0,1,"t1")]
 
-
+    return repeat_cell(5, 5, Vec(1,0), Vec(0,1), polys)
 
 
 def level2():
-    r3 = np.sqrt(3)
-
-    globs.polydata["unit_dx"] = Vec(1+r3,0)
-    globs.polydata["unit_dy"] = Vec(0,1+r3)
-
     globs.polydata["origin"] = Vec(-0.3,-1.2)
-    globs.polydata["nx"] = 4
-    globs.polydata["ny"] = 4
-
+    globs.polydata["nx"] = 2
+    globs.polydata["ny"] = 2
 
     cs = []
     cs.append(Vec(1.0, 0.0, 1.0))
@@ -83,46 +117,51 @@ def level2():
     cs.append(Vec(0.5, 0.5, 1.0))
     globs.polydata["colors"] = cs
 
-    t1 = Polygon(cs[0],[Vec(0,0), Vec(0,1), Vec(r3/2,0.5)])
+    r3 = np.sqrt(3)
 
-    t2 = Polygon(cs[0],[Vec(r3/2,0.5), Vec(1+r3/2,0.5), Vec(0.5+r3/2,0.5-r3/2)])
+    polys = {}
 
-    t3 = Polygon(cs[1],[Vec(r3/2,0.5), Vec(1+r3/2,0.5), Vec(0.5+r3/2,0.5+r3/2)])
+    polys["t1"] = Polygon(cs[0],[Vec(0,0), Vec(0,1), Vec(r3/2,0.5)])
 
-    t4 = Polygon(cs[1],[ Vec(1+r3/2,0.5),  Vec(1+r3,0.0),Vec(1+r3,1.0)])
+    polys["t2"] = Polygon(cs[0],[Vec(r3/2,0.5), Vec(1+r3/2,0.5), Vec(0.5+r3/2,0.5-r3/2)])
+
+    polys["t3"] = Polygon(cs[1],[Vec(r3/2,0.5), Vec(1+r3/2,0.5), Vec(0.5+r3/2,0.5+r3/2)])
+
+    polys["t4"] = Polygon(cs[1],[ Vec(1+r3/2,0.5),  Vec(1+r3,0.0),Vec(1+r3,1.0)])
 
     delta1 = Vec(r3/2,0.5) - Vec(0,1)
     delta2 = Vec(0.5,1+r3/2) - Vec(0,1)
-    s5 = Polygon(cs[2],[Vec(0,1) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s5"] = Polygon(cs[2],[Vec(0,1) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
-    s6 = Polygon(cs[2],[Vec(0.5+r3/2,1.5+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s6"] = Polygon(cs[2],[Vec(0.5+r3/2,1.5+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
-    t7 = Polygon(cs[0],[Vec(0,1), Vec(0.5,1+r3/2), Vec(-0.5,1+r3/2)])
+    polys["t7"] = Polygon(cs[0],[Vec(0,1), Vec(0.5,1+r3/2), Vec(-0.5,1+r3/2)])
 
-    t8 = Polygon(cs[1],[Vec(0,1+r3), Vec(0.5,1+r3/2), Vec(-0.5,1+r3/2)])
+    polys["t8"] = Polygon(cs[1],[Vec(0,1+r3), Vec(0.5,1+r3/2), Vec(-0.5,1+r3/2)])
 
-    t9 = Polygon(cs[1],[Vec(0.5,1+r3/2), Vec(0.5+r3/2,1+r3/2+0.5), Vec(0.5+r3/2,1+r3/2-0.5)])
+    polys["t9"] = Polygon(cs[1],[Vec(0.5,1+r3/2), Vec(0.5+r3/2,1+r3/2+0.5), Vec(0.5+r3/2,1+r3/2-0.5)])
 
-    t10 = Polygon(cs[0],[Vec(0.5+r3,1+r3/2), Vec(0.5+r3/2,1+r3/2+0.5), Vec(0.5+r3/2,1+r3/2-0.5)])
+    polys["t10"] = Polygon(cs[0],[Vec(0.5+r3,1+r3/2), Vec(0.5+r3/2,1+r3/2+0.5), Vec(0.5+r3/2,1+r3/2-0.5)])
 
     delta1 = Vec(delta1.x,-delta1.y)
     delta2 = Vec(-delta2.x,delta2.y)
-    s11 = Polygon(cs[2],[Vec(1+r3/2,0.5) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s11"] = Polygon(cs[2],[Vec(1+r3/2,0.5) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
-    s12 = Polygon(cs[2],[Vec(0.5,1+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s12"] = Polygon(cs[2],[Vec(0.5,1+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
-    globs.polygons = [t1,t2,t3,t4,s5,s6,t7,t8,t9,t10,s11,s12]
 
-    t1.neighbors = [t4,s5,s12]
-    t2.neighbors = [t3,s12,s6]
-    t3.neighbors = [t2,s5,s11]
-    t4.neighbors = [t1,s6,s11]
-    s5.neighbors = [t1,t7,t3,t9]
-    s6.neighbors = [t10,t8,t2,t4]
-    t7.neighbors = [s5,s11,t8]
-    t8.neighbors = [s6,s12,t7]
-    t9.neighbors = [s5,s12,t10]
-    t10.neighbors = [s11,s6,t9]
-    s11.neighbors = [t3,t4,t10,t7]
-    s12.neighbors = [t8,t9,t2,t1]
+    polys["t1"].neighbors = [(-1,0,"t4"),(0,0,"s5"),(0,-1,"s12")]
+    polys["t2"].neighbors = [(0,0,"t3"),(0,-1,"s12"),(0,-1,"s6")]
+    polys["t3"].neighbors = [(0,0,"t2"),(0,0,"s6"),(0,0,"s11")]
+    polys["t4"].neighbors = [(1,0,"t1"),(0,-1,"s6"),(0,0,"s11")]
+    polys["s5"].neighbors = [(0,0,"t1"),(0,0,"t7"),(0,0,"t3"),(0,0,"t9")]
+    polys["s6"].neighbors = [(0,0,"t10"),(1,0,"t8"),(0,1,"t2"),(0,1,"t4")]
+    polys["t7"].neighbors = [(0,0,"s5"),(-1,0,"s11"),(0,0,"t8")]
+    polys["t8"].neighbors = [(-1,0,"s6"),(0,0,"s12"),(0,0,"t7")]
+    polys["t9"].neighbors = [(0,0,"s5"),(0,0,"s12"),(0,0,"t10")]
+    polys["t10"].neighbors = [(0,0,"s11"),(0,0,"s6"),(0,0,"t9")]
+    polys["s11"].neighbors = [(0,0,"t3"),(0,0,"t4"),(0,0,"t10"),(1,0,"t7")]
+    polys["s12"].neighbors = [(0,0,"t8"),(0,0,"t9"),(0,1,"t2"),(0,1,"t1")]
+
+    return repeat_cell(2, 2, Vec(1+r3,0), Vec(0,1+r3), polys)
 

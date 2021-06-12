@@ -14,6 +14,7 @@ def play_loop():
     while True:
         _, button, action, mods = yield from listen.on_mouse_button(globs.window)
 
+        if globs.play_disabled: continue
 
         if button != glfw.MOUSE_BUTTON_LEFT: continue
         if action != glfw.PRESS: continue
@@ -33,6 +34,13 @@ def play_loop():
                     if is_point_in_poly(pt-delta, polygon):
                         found = polygon
                         break
+
+        assert found is not None
+
+        # debugging tool for figuring out the neighbors of a polygon
+        # for neighbor in found.neighbors:
+        #     neighbor.color = globs.polydata["colors"][globs.selected_color]
+        # continue
 
         polygons_to_update = [found]
         while True:
@@ -58,6 +66,7 @@ def play_loop():
 
         if done:
             print("Level complete!")
+            globs.bgcolor = globs.polydata["colors"][globs.selected_color]
             listen.launch(next_level())
 
         else:
