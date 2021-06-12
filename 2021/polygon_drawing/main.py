@@ -18,23 +18,28 @@ def main():
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 4)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 6)
 
-    w,h = 800, 800
+    w,h = 800, 640
+    globs.h = h
+    globs.w = w
 
     globs.window = glfw.create_window(w, h, 'Polygon', None, None)
     x = glfw.make_context_current(globs.window)
 
     init_polygon_shader()
 
+    # flood-fill colors
     globs.colors = [Vec(1.0, 0.0, 1.0, 1.0), Vec(1.0, 1.0, 1.0, 1.0), Vec(0.5, 0.5, 1.0, 1.0), Vec(0.0,1.0,1.0,1.0)]
     globs.colorIndex = 0
-    print(globs.colors[0])
+    # data to scale and shape the triangle array
     globs.tri = {}
-    globs.tri["i_max"] = 5
-    globs.tri["j_max"] = 5
-    globs.tri["offsetX"] = 50
+    globs.tri["i_max"] = 7    # number of columns
+    globs.tri["j_max"] = 5    # number of rows
+    globs.tri["offsetX"] = 50 # x, y (pixel) position of lower left corner of the array
     globs.tri["offsetY"] = 50
-    globs.tri["scaleX"] = 50
-    globs.tri["scaleY"] = 50
+    globs.tri["scaleX"] = 50 # 1/2 the width of a triangle
+    globs.tri["scaleY"] = 50 # 1/2 the height of a triangle
+    # score
+    globs.numberClicksThisLevel = 0
 
     # this stuff gets rendered by the render_loop
     globs.polygons = []
@@ -44,14 +49,14 @@ def main():
             isStaggered = (j % 2 == 1)
             if not isStaggered:
                 p1, p2, p3 = grid_index_to_position(i, j, True) # upward point
-                globs.polygons.append(Polygon(Vec(i/globs.tri["i_max"], j/globs.tri["j_max"], 1.0, 1.0), [p1, p2, p3]))
+                globs.polygons.append(Polygon(globs.colors[0 if isStaggered else 2], [p1, p2, p3]))
                 p1, p2, p3 = grid_index_to_position(i, j, False) # downward point
                 globs.polygons.append(Polygon(globs.colors[1 if isStaggered else 3], [p1, p2, p3]))
             else:
                 p1, p2, p3 = grid_index_to_position(i, j, False) # downward point
                 globs.polygons.append(Polygon(globs.colors[1 if isStaggered else 3], [p1, p2, p3]))
                 p1, p2, p3 = grid_index_to_position(i, j, True) # upward point
-                globs.polygons.append(Polygon(Vec(i/globs.tri["i_max"], j/globs.tri["j_max"], 1.0, 1.0), [p1, p2, p3]))
+                globs.polygons.append(Polygon(globs.colors[0 if isStaggered else 2], [p1, p2, p3]))
 
     # launch loops (order matters here)
     globs.spf = 0.015 # 60ish fps
