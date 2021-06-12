@@ -1,0 +1,122 @@
+{ "frames": {
+   "dino 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 1.ase": {
+    "frame": { "x": 15, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 2.ase": {
+    "frame": { "x": 30, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 3.ase": {
+    "frame": { "x": 45, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 4.ase": {
+    "frame": { "x": 60, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 5.ase": {
+    "frame": { "x": 75, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 6.ase": {
+    "frame": { "x": 90, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 7.ase": {
+    "frame": { "x": 105, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 8.ase": {
+    "frame": { "x": 120, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 9.ase": {
+    "frame": { "x": 135, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 10.ase": {
+    "frame": { "x": 150, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 11.ase": {
+    "frame": { "x": 165, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   },
+   "dino 12.ase": {
+    "frame": { "x": 180, "y": 0, "w": 15, "h": 15 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 15 },
+    "sourceSize": { "w": 15, "h": 15 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.25-x64",
+  "image": "dino.png",
+  "format": "RGBA8888",
+  "size": { "w": 195, "h": 15 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "dino-idle-right", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "dino-move-right", "from": 1, "to": 6, "direction": "forward" },
+   { "name": "dino-sneak-right", "from": 7, "to": 12, "direction": "forward" }
+  ],
+  "slices": [
+  ]
+ }
+}
