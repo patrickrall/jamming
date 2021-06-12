@@ -12,7 +12,7 @@ def levels_init():
     globs.play_disabled = True
 
     globs.selected_color = 0
-    globs.bgcolor = Vec(1.0,1.0,0)
+    globs.bgcolor = Vec(0.0,0.0,0)
 
     globs.polydata = {
         "unit_dx": Vec(1,0),
@@ -24,7 +24,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level4]
+    globs.levels = [level1,level2,level3,level4]
 
     globs.polygons = []
 
@@ -173,9 +173,9 @@ def level3():
     s = 1.0
     t = s * np.sqrt(3)/2
 
-    globs.polydata["origin"] = Vec(-0.3,-1.2)
-    globs.polydata["nx"] = 4
-    globs.polydata["ny"] = 2
+    globs.polydata["origin"] = Vec(-10,0)
+    globs.polydata["nx"] = 5
+    globs.polydata["ny"] = 4
 
     cs = []
     cs.append(Vec(1.0, 0.0, 0.0)) # red 0
@@ -186,27 +186,27 @@ def level3():
     globs.polydata["colors"] = cs
 
     polys = {}
-    polys["sa"] = Polygon(cs[0], [Vec(t,-s/2), Vec(t,s/2), Vec(s+t,-s/2), Vec(s+t,-s/2)])
+    polys["sa"] = Polygon(cs[0], [Vec(t,-s/2), Vec(t,s/2), Vec(s+t,s/2), Vec(s+t,-s/2)])
 
-    polys["tb"] = Polygon(cs[3], [Vec(t,s/2), Vec(t+s/2, t+s/2), Vec(t+s, s/2)])
+    polys["tb"] = Polygon(cs[3], [Vec(t,s/2), Vec(t+(s/2), t+(s/2)), Vec(t+s, s/2)])
     
-    polys["tc"] = Polygon(cs[2], [Vec(s+t, -s/2), Vec(s+t, s/2), Vec(0, (2*t)+s)])
+    polys["tc"] = Polygon(cs[2], [Vec(s+t, -s/2), Vec(s+t, s/2), Vec((2*t)+s, 0)])
     
     polys["td"] = Polygon(cs[1], [Vec(s+t, s/2), Vec(s+(2*t), s), Vec(s+(2*t), 0)])
 
-    polys["se"] = Polygon(cs[4], [Vec(s+t,s/2), Vec(t+s/2, s+t/2), Vec((s/2)+(2*t),s+t), Vec((2*t)+s,s)])
+    polys["se"] = Polygon(cs[4], [Vec(s+t,s/2), Vec(t+(s/2), (s/2)+t), Vec((s/2)+(2*t),s+t), Vec((2*t)+s,s)])
 
     polys["tf"] = Polygon(cs[2], [Vec(t+s/2,s/2+t), Vec(t+s/2, (1.5*s)+t), Vec((2*t)+(s/2),s+t)])
 
-    polys["tg"] = Polygon(cs[1], [Vec(s/2,s+t), Vec(t+s/2,(1.5*s)+(t/2)), Vec((s/2)+t,(1.5*s)+(t/2))])
+    polys["tg"] = Polygon(cs[1], [Vec(s/2,s+t),Vec(t+(s/2),(1.5*s)+t),Vec((s/2)+t,(s/2)+t)])
 
     polys["sh"] = Polygon(cs[4], [Vec(0,s), Vec(s/2,s+t), Vec(t+s/2,t+s/2), Vec(t,s/2)])
 
-    polys["ti"] = Polygon(cs[2], [Vec(0,0), Vec(0,s), Vec(t,s)])
+    polys["ti"] = Polygon(cs[2], [Vec(0,0), Vec(0,s), Vec(t,s/2)])
 
     polys["tj"] = Polygon(cs[1], [Vec(0,0), Vec(t,s/2), Vec(t,-s/2)])
 
-    polys["tk"] = Polygon(cs[3], [Vec((2*t)+(s/2),s+t), Vec((2*t)+s,s+t), Vec((2*t)+s,s)])
+    polys["tk"] = Polygon(cs[3], [Vec((2*t)+(s/2),s+t), Vec((2*t)+(1.5*s),s+t), Vec((2*t)+s,s)])
  
     #####
     polys["sa"].neighbors = [(0,0,"tc"), (0,0,"tb"), (0,0,"tj"), (0,-1,"tk")]
@@ -221,7 +221,7 @@ def level3():
     polys["tj"].neighbors = [(0,0,"sa"),(0,0,"ti"),(0,-1,"tf")]
     polys["tk"].neighbors = [(0,0,"se"),(0,1,"sa"),(1,0,"sh")]
 
-    return repeat_cell(2, 3, Vec((2*s)+t,0), Vec((s+t/2),(1.5*s)+(t)), polys)
+    return repeat_cell(2, 3, Vec((2*t)+s,0), Vec((t+s/2),(1.5*s)+(t)), polys)
 
 def level4():
     r3 = np.sqrt(3)
