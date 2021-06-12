@@ -34,6 +34,13 @@ def play_loop():
                         found = polygon
                         break
 
+        assert found is not None
+
+        # debugging tool for figuring out the neighbors of a polygon
+        # for neighbor in found.neighbors:
+        #     neighbor.color = globs.polydata["colors"][globs.selected_color]
+        # continue
+
         polygons_to_update = [found]
         while True:
             done = True
@@ -58,6 +65,7 @@ def play_loop():
 
         if done:
             print("Level complete!")
+            globs.bgcolor = globs.polydata["colors"][globs.selected_color]
             listen.launch(next_level())
 
         else:

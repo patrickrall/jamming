@@ -55,7 +55,7 @@ def render_loop():
         yield from listen.event("on_render")
 
         # black background
-        glClearColor(0,0,0.0,1.0)
+        glClearColor(globs.bgcolor.x,globs.bgcolor.y,globs.bgcolor.z,1.0)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         glUseProgram(Polygon.polygon_shader)
