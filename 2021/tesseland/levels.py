@@ -6,7 +6,7 @@ from patpygl import listen
 
 import globs
 from polygon import Polygon
-from hud import load_hud_for_level
+from hud import update_hud
 
 def levels_init():
     globs.play_disabled = True
@@ -24,17 +24,16 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1,level2]
+    globs.levels = [level4]
 
     globs.polygons = []
 
     # load the first level
     listen.launch(next_level())
-    load_hud_for_level()
 
 def next_level():
     globs.play_disabled = True
-    yield from listen.wait(1)
+    yield from listen.wait(0.1)
     if globs.level_idx+1 < len(globs.levels):
         globs.selected_color = 0
 
@@ -49,7 +48,8 @@ def next_level():
             yield from listen.wait(0.03)
             globs.polygons.append(poly)
         globs.play_disabled = False
-        load_hud_for_level()
+
+        update_hud()
     else:
         print("Game complete!")
 
@@ -167,3 +167,46 @@ def level2():
 
     return repeat_cell(2, 2, Vec(1+r3,0), Vec(0,1+r3), polys)
 
+def level4():
+    r3 = np.sqrt(3)
+    globs.polydata["origin"] = Vec(0,0)
+    globs.polydata["nx"] = 1
+    globs.polydata["ny"] = 1
+
+    cs = []
+    cs.append(Vec(1.0, 0.0, 1.0)) # yellow
+    cs.append(Vec(0.0, 1.0, 1.0)) # pink
+    cs.append(Vec(1.0, 1.0, 0.0)) # cyan
+    cs.append(Vec(0.0, 0.0, 1.0)) # red
+    globs.polydata["colors"] = cs
+
+    polys = {}
+
+    delta1 = Vec(r3/2,0.5) - Vec(0,1)
+    delta2 = Vec(-delta1.y, delta1.x)
+    polys["s1"] = Polygon(cs[0],[Vec(0,1) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+
+
+    delta1 = Vec(delta1.x,-delta1.y)
+    delta2 = Vec(delta2.x,-delta2.y)
+    polys["s2"] = Polygon(cs[0],[Vec(0,2+r3) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+
+    delta1 = Vec(1,0)
+    delta2 = Vec(0,1)
+    polys["s3"] = Polygon(cs[0],[Vec(0.5+r3,1+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+
+    # lolwut no 4
+
+    polys["d5"] = Polygon(cs[3],[Vec(r3/2 + 0.5, 2.5+r3/2), Vec(r3/2, 2.5+r3), Vec(r3/2, 3.5+r3),
+                                 Vec(r3/2+0.5, 3.5+1.5*r3), Vec(r3+0.5, 4+1.5*r3), Vec(r3+1.5, 4+1.5*r3),
+                                 Vec(r3*1.5+1.5, 3.5+1.5*r3),Vec(r3*1.5+2, 3.5+r3),Vec(r3*1.5+2, 2.5+r3),
+                                 Vec(r3*1.5+1.5, 2.5+r3/2), Vec(r3+1.5, 2+r3/2), Vec(r3+0.5, 2+r3/2),])
+
+
+    polys["t6"] = Polygon(cs[2],[Vec(0,0), Vec(0,1), Vec(r3/2,0.5)])
+
+
+    #polys["t1"].neighbors = [(0,0,"t2"),(-1,0,"t2"),(0,-1,"t2")]
+    #polys["t2"].neighbors = [(0,0,"t1"),(1,0,"t1"),(0,1,"t1")]
+
+    return repeat_cell(2, 2, Vec(1.5*r3 + 1.5, 1.5+r3/2), Vec(0,r3+3), polys)

@@ -10,14 +10,12 @@ from polygon import Polygon
 #     polygon.draw()
 def hud_init():
     globs.hud_polygons = []
-    # load_hud_for_level()
 
-def load_hud_for_level():
-    if not globs.polydata or not globs.selected_color:
-        return
+def update_hud():
     colors = globs.polydata["colors"]
     count = len(colors)
     nextColor = globs.selected_color
+
     moveCounterBkgd = Polygon(Vec(0.0, 0.0, 0.0),
                               [Vec(0,7), Vec(0, 9), Vec(5, 9)])
 

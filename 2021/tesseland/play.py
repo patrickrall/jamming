@@ -5,7 +5,7 @@ from patpygl.vector import *
 
 import globs
 from levels import next_level
-from hud import load_hud_for_level
+from hud import update_hud
 
 def play_init():
     listen.launch(play_loop())
@@ -17,7 +17,6 @@ def play_loop():
 
         if globs.play_disabled: continue
 
-        load_hud_for_level() # update HUD
         if button != glfw.MOUSE_BUTTON_LEFT: continue
         if action != glfw.PRESS: continue
 
@@ -74,6 +73,8 @@ def play_loop():
         else:
             globs.selected_color += 1
             globs.selected_color %= len(globs.polydata["colors"])
+
+            update_hud()
 
 
 
