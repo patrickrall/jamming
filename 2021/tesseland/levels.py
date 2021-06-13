@@ -23,7 +23,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1,level2,level3,level4,level5]
+    globs.levels = [level4,level5,level4]
 
     globs.polygons = []
 
@@ -113,7 +113,7 @@ def repeat_cell(repeat_x, repeat_y, unit_dx, unit_dy, polys):
 
 
 def level1():
-    globs.move_count = 7
+    globs.move_count = 7 # optimized
 
     globs.polydata["origin"] = Vec(-0.3,-1.2)
     globs.polydata["nx"] = 2
@@ -136,7 +136,7 @@ def level1():
 
 
 def level2():
-    globs.move_count = 8
+    globs.move_count = 8 # optimized
 
     globs.polydata["origin"] = Vec(-0.3,-1.2)
     globs.polydata["nx"] = 2
@@ -198,7 +198,7 @@ def level2():
 
 
 def level3():
-    globs.move_count = 5
+    globs.move_count = 100
 
     s = 1.0
     t = s * np.sqrt(3)/2
@@ -256,7 +256,7 @@ def level3():
 
 
 def level4():
-    globs.move_count = 5
+    globs.move_count = 8 # optimized
 
     r3 = np.sqrt(3)
     globs.polydata["origin"] = Vec(-1,-5.5)
@@ -350,7 +350,7 @@ def level4():
 
 
 def level5():
-    globs.move_count = 5
+    globs.move_count = 7 # optimized
 
     r3 = np.sqrt(3)
     globs.polydata["origin"] = Vec(-3,-5)
@@ -365,8 +365,8 @@ def level5():
 
     polys = {}
 
-    polys["t1"] = Polygon(cs[0],[Vec(0,0), Vec(3,0), Vec(1.5, 3*r3/2)])
-    polys["t2"] = Polygon(cs[1],[Vec(1, 2*r3/2), Vec(0.5, 3*r3/2), Vec(1.5, 3*r3/2)])
+    polys["t1"] = Polygon(cs[1],[Vec(0,0), Vec(3,0), Vec(1.5, 3*r3/2)])
+    polys["t2"] = Polygon(cs[0],[Vec(1, 2*r3/2), Vec(0.5, 3*r3/2), Vec(1.5, 3*r3/2)])
     polys["t3"] = Polygon(cs[2],[Vec(2.5, r3/2), Vec(1.5, 3*r3/2), Vec(3.5, 3*r3/2)])
 
     polys["t1"].neighbors = [(0,0,"t2"),(0,-1,"t2"),(1,-1,"t2"),(0,0,"t3"),(0,-1,"t3"),(-1,0,"t3")]
