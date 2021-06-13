@@ -25,7 +25,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1, level2, level0, level5, level4, level3, level7, level6, level555555]
+    globs.levels = [level555555] #[level1, level2, level0, level5, level4, level3, level7, level6, level555555]
     globs.polygons = []
 
     listen.launch(next_level_loop())
@@ -616,7 +616,7 @@ def level555555():
     cs.append(colors["steelblue"]) # 4
     cs.append(colors["firebrick"]) # 5
     cs.append(colors["snow"]) # 6
-    globs.polydata["colors"] = cs
+    globs.polydata["colors"] = [cs[6], cs[5], cs[3], cs[0], cs[4], cs[2], cs[3]]
 
     polys = {}
 
