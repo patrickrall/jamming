@@ -111,20 +111,22 @@ def level6():
 
         def n(tile): return tile + str((cut + 1) % 6)
 
-        def p(tile):
-            return tile + str((cut - 1) % 6)
+        def p(tile): return tile + str((cut - 1) % 6)
 
-        def b(): # returns [1st,2nd,3rd borders: (unit_x, unit+y, cut)]
-            if cut == 0: return [(0,1,4), (1,0,2), (1,0,3)]
-            else: if cut == 1: return [(1,-1,5), (0,1,3), (0,1,4)]
-                else: if cut == 2: return [(-1,0,0), (1,-1,4), (1,-1,5)]
-                    else: if cut == 3: return [(0,-1,1), (-1,0,5), (-1,0,0)]
-                        else: if cut == 4: return [(1,-1,2), (0,-1,0), (0,-1,1)]
-                            else: if cut == 5: return [(1,0,3), (1,-1,1), (1,-1,2)]
-                                else: return [(0,0,0),(0,0,0),(0,0,0)]
+        def c(tile, a_cut): return tile + str(a_cut)
 
-        polys["ta"+str(cut)].neighbors = [(0,0,n("ta")), (0,0,"sb"), (0,0,"tj"), (0,-1,"tk")]
+        # (b[my cut][which border] = (neighbor unit x, neighbor unit y, neighbor cut))
+        b = [[(0,1,4), (1,0,2), (1,0,3)], [(1,-1,5), (0,1,3), (0,1,4)], \
+        [(-1,0,0), (1,-1,4), (1,-1,5)], [(0,-1,1), (-1,0,5), (-1,0,0)], \
+        [(1,-1,2), (0,-1,0), (0,-1,1)], [(1,0,3), (1,-1,1), (1,-1,2)]]
 
+        polys["ta"+str(cut)].neighbors = [(0,0,n("ta")), (0,0,"b"), (0,0,"tj")]
+        
+
+        polys["sj"+srt(cut)].neighbors = [(0,0,c("ti")), (0,0,c("tg")), \
+                                [(x,y,"te" + str(z)) for x,y,z in [b][cut]][1],
+                                [(x,y,"tj" + str(z)) for x,y,z in [b][cut]][2]]
+                                          
 
     print(polys)
 
