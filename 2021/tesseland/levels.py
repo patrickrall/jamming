@@ -497,13 +497,14 @@ def level7():
     globs.polydata["ny"] = 4
 
     cs = []
-    darkgreen = colors["mediumseagreen"]
-    green = colors["lightseagreen"]#green
-    yellow = colors["whitesmoke"]#yellow
+    darkgreen = colors["lavender"]
+    green = colors["lightseagreen"] #green
+    yellow = colors["whitesmoke"] #yellow
     lightpurple = colors["violet"]
-    blue = colors["lavender"]#blue
-    purple = colors["darkorchid"]#purple
-    cs = [darkgreen, green, blue, purple, yellow, lightpurple]
+    blue = colors["darkorchid"] #blue
+    #purple = colors["darkorchid"] #purple
+    # cs = [darkgreen, green, blue, purple, yellow, lightpurple]
+    cs = [darkgreen, green, blue, lightpurple, yellow]
     globs.polydata["colors"] = cs
 
     polys = {}
@@ -538,7 +539,7 @@ def level7():
     polys["t25"] = Polygon(darkgreen,[Vec(2*h+3.5, h), Vec(3*h+3.5,h+0.5), Vec(3*h+3.5,h+1.5),
                                 Vec(2*h+3.5,h+2),Vec(h+3.5,h+1.5), Vec(h+3.5,h+0.5)])
 
-    polys["t30"] = Polygon(purple,[Vec(0, 2*h+2), Vec(1,2*h+2), Vec(1.5, 3*h+2),
+    polys["t30"] = Polygon(darkgreen,[Vec(0, 2*h+2), Vec(1,2*h+2), Vec(1.5, 3*h+2),
                                 Vec(1, 4*h+2), Vec(0, 4*h+2), Vec(-0.5, 3*h+2)])
 
     polys["t1"].neighbors = [(0,0,"t9"),(0,-1,"t23"),(-1,0,"t12")]
