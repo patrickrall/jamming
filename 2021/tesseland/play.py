@@ -4,8 +4,6 @@ from patpygl import listen
 from patpygl.vector import *
 
 import globs
-from levels import next_level
-from hud import update_hud
 
 def play_init():
     listen.launch(play_loop())
@@ -26,7 +24,7 @@ def play_loop():
         # Ignore clicks that hit the HUD
         clicked_hud = None
         for polygon in globs.hud_polygons:
-            if is_point_in_triangle(pt, polygon.points[0], polygon.points[1], polygon.points[2]):
+            if is_point_in_poly(pt, polygon):
                 clicked_hud = polygon
                 break
         if clicked_hud is not None:
@@ -87,20 +85,22 @@ def play_loop():
                 done = False
                 break
 
+        globs.move_count -= 1
+
         if done:
             print("Level complete!")
             globs.bgcolor = globs.polydata["colors"][globs.selected_color]
-            listen.launch(next_level())
-            globs.click_count = 0
-            update_hud()
+            listen.dispatch("next_level")
 
         else:
             globs.selected_color += 1
             globs.selected_color %= len(globs.polydata["colors"])
-            globs.click_count += 1
-            update_hud()
+
+            if globs.move_count == 0:
+                listen.dispatch("reset_level")
 
 
+        listen.dispatch("update_hud")
 
 
 

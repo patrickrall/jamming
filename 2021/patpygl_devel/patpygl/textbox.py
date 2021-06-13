@@ -64,7 +64,7 @@ class TextBox():
         glBindTexture(GL_TEXTURE_2D, TextBox.atlas_texture)
 
         for c in chars:
-            if c+":"+str(self._size) in TextBox.atlas_chars: continue
+            if c+":"+str(self._size)+":"+str(self.face) in TextBox.atlas_chars: continue
             self.face.load_char(c)
             bitmap = self.face.glyph.bitmap
 
@@ -99,7 +99,7 @@ class TextBox():
                 # return tcoord
                 return Vec(tcoord.x/TextBox.atlas_dim.x, tcoord.y/TextBox.atlas_dim.y)
 
-            TextBox.atlas_chars[c+":"+str(self._size)] = {
+            TextBox.atlas_chars[c+":"+str(self._size)+":"+str(self.face)] = {
                 "shape": Vec(*vertices),
                 "tex": Vec(*[normalize(v) for v in texcoords]),
                 "advance": self.face.glyph.metrics.horiAdvance/64,
@@ -121,7 +121,7 @@ class TextBox():
 
         iterpos = Vec(self._pos)
         for c in self._text:
-            k = c+":"+str(self._size)
+            k = c+":"+str(self._size)+":"+str(self.face)
             for i in range(6): newpos.append(iterpos)
             newshape.append(TextBox.atlas_chars[k]["shape"])
             newtex.append(TextBox.atlas_chars[k]["tex"])

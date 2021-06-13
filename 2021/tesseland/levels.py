@@ -6,7 +6,6 @@ from patpygl import listen
 
 import globs
 from polygon import Polygon
-from hud import update_hud
 
 def levels_init():
     globs.play_disabled = True
@@ -24,34 +23,60 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1,level2,level3,level4]
+    globs.levels = [level1,level2,level3,level4,level5]
 
     globs.polygons = []
 
-    # load the first level
-    listen.launch(next_level())
+    listen.launch(next_level_loop())
+    listen.launch(reset_level_loop())
 
-def next_level():
-    globs.play_disabled = True
-    yield from listen.wait(0.1)
-    if globs.level_idx+1 < len(globs.levels):
-        globs.selected_color = 0
+def next_level_loop():
+    while True:
+        yield from listen.event("next_level")
 
-        globs.level_idx += 1
-        print("Loading level",globs.level_idx+1,"of",len(globs.levels))
+        globs.play_disabled = True
+        yield from listen.wait(0.1)
+        if globs.level_idx+1 < len(globs.levels):
+            globs.selected_color = 0
+
+            globs.level_idx += 1
+            print("Loading level",globs.level_idx+1,"of",len(globs.levels))
+
+            polys = globs.levels[globs.level_idx]()
+            idxs = list(range(len(polys)))
+            np.random.shuffle(idxs)
+            globs.polygons = []
+            for i in idxs:
+                yield from listen.wait(2/len(polys))
+                globs.polygons.append(polys[i])
+
+            globs.polygons = polys # to reset the order
+            globs.play_disabled = False
+
+            listen.dispatch("update_hud")
+        else:
+            globs.level_idx = -1
+            listen.dispatch("ending_screen")
+
+
+def reset_level_loop():
+    while True:
+        yield from listen.event("reset_level")
+        globs.play_disabled = True
 
         polys = globs.levels[globs.level_idx]()
+        idxs = list(range(len(polys)))
+        np.random.shuffle(idxs)
 
-        np.random.shuffle(polys)
-        globs.polygons = []
-        for poly in polys:
-            yield from listen.wait(2/len(polys))
-            globs.polygons.append(poly)
+        for i in idxs:
+            if globs.polygons[i].color != polys[i].color:
+                yield from listen.wait(2/len(polys))
+            globs.polygons[i].color = polys[i].color
+
+        globs.selected_color = 0
+        listen.dispatch("update_hud")
+
         globs.play_disabled = False
-
-        update_hud()
-    else:
-        print("Game complete!")
 
 
 def repeat_cell(repeat_x, repeat_y, unit_dx, unit_dy, polys):
@@ -88,6 +113,8 @@ def repeat_cell(repeat_x, repeat_y, unit_dx, unit_dy, polys):
 
 
 def level1():
+    globs.move_count = 7
+
     globs.polydata["origin"] = Vec(-0.3,-1.2)
     globs.polydata["nx"] = 2
     globs.polydata["ny"] = 2
@@ -109,6 +136,8 @@ def level1():
 
 
 def level2():
+    globs.move_count = 8
+
     globs.polydata["origin"] = Vec(-0.3,-1.2)
     globs.polydata["nx"] = 2
     globs.polydata["ny"] = 2
@@ -169,6 +198,7 @@ def level2():
 
 
 def level3():
+    globs.move_count = 5
 
     s = 1.0
     t = s * np.sqrt(3)/2
@@ -226,6 +256,8 @@ def level3():
 
 
 def level4():
+    globs.move_count = 5
+
     r3 = np.sqrt(3)
     globs.polydata["origin"] = Vec(-1,-5.5)
     globs.polydata["nx"] = 2
@@ -315,3 +347,34 @@ def level4():
         polys[key].points = [p*s for p in polys[key].points]
 
     return repeat_cell(3, 3, s*Vec(1.5*r3 + 1.5, 1.5+r3/2), s*Vec(0,r3+3), polys)
+
+
+def level5():
+    globs.move_count = 5
+
+    r3 = np.sqrt(3)
+    globs.polydata["origin"] = Vec(-3,-5)
+    globs.polydata["nx"] = 3
+    globs.polydata["ny"] = 3
+
+    cs = []
+    cs.append(Vec(1.0, 0.0, 1.0)) # red
+    cs.append(Vec(0.0, 1.0, 1.0)) # yellow
+    cs.append(Vec(1.0, 1.0, 0.0)) # blue
+    globs.polydata["colors"] = cs
+
+    polys = {}
+
+    polys["t1"] = Polygon(cs[0],[Vec(0,0), Vec(3,0), Vec(1.5, 3*r3/2)])
+    polys["t2"] = Polygon(cs[1],[Vec(1, 2*r3/2), Vec(0.5, 3*r3/2), Vec(1.5, 3*r3/2)])
+    polys["t3"] = Polygon(cs[2],[Vec(2.5, r3/2), Vec(1.5, 3*r3/2), Vec(3.5, 3*r3/2)])
+
+    polys["t1"].neighbors = [(0,0,"t2"),(0,-1,"t2"),(1,-1,"t2"),(0,0,"t3"),(0,-1,"t3"),(-1,0,"t3")]
+    polys["t2"].neighbors = [(0,0,"t1"),(0,1,"t1"),(-1,1,"t1")]
+    polys["t3"].neighbors = [(0,0,"t1"),(0,1,"t1"),(1,0,"t1")]
+
+    s = 0.5
+    for key in polys.keys():
+        polys[key].points = [p*s for p in polys[key].points]
+
+    return repeat_cell(4, 4, s*Vec(2.5, r3/2), s*Vec(0.5, 3*r3/2), polys)
