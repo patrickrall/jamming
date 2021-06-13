@@ -25,7 +25,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1,level0,level2,level4,level3,level5,level7]
+    globs.levels = [level6]
     globs.polygons = []
 
     listen.launch(next_level_loop())
@@ -393,7 +393,7 @@ def level6():
     globs.move_count = 9
     globs.polydata["origin"] = Vec(-5,-2)
     globs.polydata["nx"] = 5
-    globs.polydata["ny"] = 4
+    globs.polydata["ny"] = 5
 
     cs = []
     cs.append(Vec(0.0, 1.0, 1.0)) # cyan 0
@@ -436,7 +436,7 @@ def level6():
             rotate(Vec(xr[3],yr[5]),cen,th), rotate(Vec(xr[5],yr[4]),cen,th)])
 
         polys[c("sf")] = Polygon(cs[5], \
-            [rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[5],yr[3]),cen,th), \
+            [rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[5],yr[4]),cen,th), \
             rotate(Vec(xr[6],yr[2]),cen,th), rotate(Vec(xr[4],yr[1]),cen,th)])
 
         polys[c("tg")] = Polygon(cs[3], [rotate(Vec(xr[4],yr[1]),cen,th), \
