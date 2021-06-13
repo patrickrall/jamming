@@ -390,6 +390,7 @@ def rotate(vect, center, angle):
 
 def level6():
 
+    globs.move_count = 9
     globs.polydata["origin"] = Vec(-5,-2)
     globs.polydata["nx"] = 5
     globs.polydata["ny"] = 4
@@ -401,12 +402,12 @@ def level6():
     cs.append(Vec(1.0, 0.0, 1.0)) # pink 3
     cs.append(Vec(1.0, 1.0, 0.0)) # yellow 4
     cs.append(Vec(0.0, 0.0, 0.0)) # black 5
-    globs.polydata["colors"] = [cs[0], cs[2], cs[4], cs[3], cs[2], cs[5], cs[1]]
+    globs.polydata["colors"] = [cs[0], cs[2], cs[4], cs[3], cs[2], cs[5], cs[2], cs[4], cs[2]]
 
 
     polys = {}
 
-    s = 1.0
+    s = 0.5
     t = s * np.sqrt(3.0)/2.0
     xr = [0, s/2, t, t+(s/2), t+s, (s/2)+(2*t), (2*t)+s, (1.5*s) + (2*t), (2*t) + (2*s)]
     yr = [0, s/2, s, (s/2)+t, s+t, (1.5*s)+t]
@@ -435,7 +436,7 @@ def level6():
             rotate(Vec(xr[3],yr[5]),cen,th), rotate(Vec(xr[5],yr[4]),cen,th)])
 
         polys[c("sf")] = Polygon(cs[5], \
-            [rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[4],yr[5]),cen,th), \
+            [rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[5],yr[3]),cen,th), \
             rotate(Vec(xr[6],yr[2]),cen,th), rotate(Vec(xr[4],yr[1]),cen,th)])
 
         polys[c("tg")] = Polygon(cs[3], [rotate(Vec(xr[4],yr[1]),cen,th), \
@@ -464,25 +465,27 @@ def level6():
 
         polys[c("td")].neighbors = [(0,0,c("te")), (0,0,c("sb")), (0,0,n("tg"))]
 
+
         polys[c("te")].neighbors = [(0,0,c("sf")), (0,0,c("td")), \
-                                [(x,y,c("sj",z)) for x,y,z in [b][cut]][0]]
+                                [(x,y,c("sj",z)) for x,y,z in [b][0][cut]][0]]
 
         polys[c("sf")].neighbors = [(0,0,c("tc")), (0,0,c("te")), (0,0,c("th")), (0,0,c("tg"))]
 
         polys[c("tg")].neighbors = [(0,0,c("sf")), (0,0,c("sj")), (0,0,p("td"))]
 
         polys[c("th")].neighbors = [(0,0,c("sf")), (0,0,c("ti")), \
-                                [(x,y,c("ti",z)) for x,y,z in [b][cut]][0]]
+                                [(x,y,c("ti",z)) for x,y,z in [b][0][cut]][0]]
 
         polys[c("ti")].neighbors = [(0,0,c("th")), (0,0,c("sj")), \
-                                [(x,y,c("th",z)) for x,y,z in [b][cut]][0]]
+                                [(x,y,c("th",z)) for x,y,z in [b][0][cut]][0]]
+
 
         polys[c("sj")].neighbors = [(0,0,c("ti")), (0,0,c("tg")), \
-                                [(x,y,c("te",z)) for x,y,z in [b][cut]][1],
-                                [(x,y,c("sj",z)) for x,y,z in [b][cut]][2]]
+                                [(x,y,c("te",z)) for x,y,z in [b][0][cut]][1],
+                                [(x,y,c("sj",z)) for x,y,z in [b][0][cut]][2]]
 
 
-    return repeat_cell(2, 3, Vec((2*t)+s,0), Vec((t+s/2),(1.5*s)+(t)), polys)
+    return repeat_cell(1, 1, Vec((4*t)+(3*s),0), Vec((2*t) + (1.5*s),(3*s)+(3*t)), polys)
 
 def level7():
     globs.move_count = 11
