@@ -25,7 +25,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1,level2,level3,level4,level5]
+    globs.levels = [level1,level2,level4,level5,level3]
 
     globs.polygons = []
 

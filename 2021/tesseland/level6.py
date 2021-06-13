@@ -76,59 +76,106 @@ def level6():
     for cut in range(6):
         th, cen = np.radians(cut*60), Vec(0,0)
 
-        polys["ta"+str(cut)] = Polygon(cs[2], [rotate(Vec(xr[0],yr[0]),cen,th), \
+        def n(tile): return tile + str((cut + 1) % 6) # tile name with id for next cut (ccw)
+        def p(tile): return tile + str((cut - 1) % 6) # tile name with id for previous cut (cw)
+        def c(tile, a_cut=cut): return tile + str(a_cut) # tile+id: arbitrary cut (default active)
+
+        polys[c("ta")] = Polygon(cs[2], [rotate(Vec(xr[0],yr[0]),cen,th), \
             rotate(Vec(xr[0],yr[2]),cen,th), rotate(Vec(xr[2],yr[1]),cen,th)])
 
-        polys["sb"+str(cut)] = Polygon(cs[0], \
+        polys[c("sb")] = Polygon(cs[0], \
             [rotate(Vec(xr[0],yr[2]),cen,th), rotate(Vec(xr[1],yr[4]),cen,th), \
             rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[2],yr[1]),cen,th)])
 
-        polys["tc"+str(cut)] = Polygon(cs[4], [rotate(Vec(xr[2],yr[1]),cen,th), \
+        polys[c("tc")] = Polygon(cs[4], [rotate(Vec(xr[2],yr[1]),cen,th), \
             rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[4],yr[1]),cen,th)])
         
-        polys["td"+str(cut)] = Polygon(cs[4], [rotate(Vec(xr[1],yr[4]),cen,th), \
+        polys[c("td")] = Polygon(cs[4], [rotate(Vec(xr[1],yr[4]),cen,th), \
             rotate(Vec(xr[3],yr[5]),cen,th), rotate(Vec(xr[3],yr[3]),cen,th)])
 
-        polys["te"+str(cut)] = Polygon(cs[3], [rotate(Vec(xr[3],yr[3]),cen,th), \
+        polys[c("te")] = Polygon(cs[3], [rotate(Vec(xr[3],yr[3]),cen,th), \
             rotate(Vec(xr[3],yr[5]),cen,th), rotate(Vec(xr[5],yr[4]),cen,th)])
 
-        polys["sf"+str(cut)] = Polygon(cs[5], \
+        polys[c("sf")] = Polygon(cs[5], \
             [rotate(Vec(xr[3],yr[3]),cen,th), rotate(Vec(xr[4],yr[5]),cen,th), \
             rotate(Vec(xr[6],yr[2]),cen,th), rotate(Vec(xr[4],yr[1]),cen,th)])
 
-        polys["tg"+str(cut)] = Polygon(cs[3], [rotate(Vec(xr[4],yr[1]),cen,th), \
+        polys[c("tg")] = Polygon(cs[3], [rotate(Vec(xr[4],yr[1]),cen,th), \
             rotate(Vec(xr[6],yr[2]),cen,th), rotate(Vec(xr[6],yr[0]),cen,th)])
 
-        polys["th"+str(cut)] = Polygon(cs[4], [rotate(Vec(xr[5],yr[4]),cen,th), \
+        polys[c("th")] = Polygon(cs[4], [rotate(Vec(xr[5],yr[4]),cen,th), \
             rotate(Vec(xr[7],yr[4]),cen,th), rotate(Vec(xr[6],yr[2]),cen,th)])
 
-        polys["ti"+str(cut)] = Polygon(cs[2], [rotate(Vec(xr[6],yr[2]),cen,th), \
+        polys[c("ti")] = Polygon(cs[2], [rotate(Vec(xr[6],yr[2]),cen,th), \
             rotate(Vec(xr[7],yr[4]),cen,th), rotate(Vec(xr[8],yr[2]),cen,th)])
 
-        polys["sj"+str(cut)] = Polygon(cs[1], \
+        polys[c("sj")] = Polygon(cs[1], \
             [rotate(Vec(xr[6],yr[0]),cen,th), rotate(Vec(xr[6],yr[2]),cen,th), \
             rotate(Vec(xr[8],yr[2]),cen,th), rotate(Vec(xr[8],yr[0]),cen,th)])
-
-        def n(tile): return tile + str((cut + 1) % 6)
-
-        def p(tile): return tile + str((cut - 1) % 6)
-
-        def c(tile, a_cut): return tile + str(a_cut)
 
         # (b[my cut][which border] = (neighbor unit x, neighbor unit y, neighbor cut))
         b = [[(0,1,4), (1,0,2), (1,0,3)], [(1,-1,5), (0,1,3), (0,1,4)], \
         [(-1,0,0), (1,-1,4), (1,-1,5)], [(0,-1,1), (-1,0,5), (-1,0,0)], \
         [(1,-1,2), (0,-1,0), (0,-1,1)], [(1,0,3), (1,-1,1), (1,-1,2)]]
 
-        polys["ta"+str(cut)].neighbors = [(0,0,n("ta")), (0,0,"b"), (0,0,"tj")]
+        polys[c("ta")].neighbors = [(0,0,n("ta")), (0,0,c("sb")), (0,0,p("ta"))]
         
+        polys[c("sb")].neighbors = [(0,0,c("ta")), (0,0,c("tc")), (0,0,n("tc")), (0,0,c("td"))]
 
-        polys["sj"+srt(cut)].neighbors = [(0,0,c("ti")), (0,0,c("tg")), \
-                                [(x,y,"te" + str(z)) for x,y,z in [b][cut]][1],
-                                [(x,y,"tj" + str(z)) for x,y,z in [b][cut]][2]]
-                                          
+        polys[c("tc")].neighbors = [(0,0,c("sf")), (0,0,c("sb")), (0,0,p("sb"))]
 
-    print(polys)
+        polys[c("td")].neighbors = [(0,0,c("te")), (0,0,c("sb")), (0,0,n("tg"))]
+
+        polys[c("te")].neighbors = [(0,0,c("sf")), (0,0,c("td")), \
+                                [(x,y,c("sj",z)) for x,y,z in [b][cut]][0]]
+
+        polys[c("sf")].neighbors = [(0,0,c("tc")), (0,0,c("te")), (0,0,c("th")), (0,0,c("tg"))]
+
+        polys[c("tg")].neighbors = [(0,0,c("sf")), (0,0,c("sj")), (0,0,p("td"))]
+
+        polys[c("th")].neighbors = [(0,0,c("sf")), (0,0,c("ti")), \
+                                [(x,y,c("ti",z)) for x,y,z in [b][cut]][0]]
+
+        polys[c("ti")].neighbors = [(0,0,c("th")), (0,0,c("sj")), \
+                                [(x,y,c("th",z)) for x,y,z in [b][cut]][0]]
+
+        polys[c("sj")].neighbors = [(0,0,c("ti")), (0,0,c("tg")), \
+                                [(x,y,c("te",z)) for x,y,z in [b][cut]][1],
+                                [(x,y,c("sj",z)) for x,y,z in [b][cut]][2]]
 
 
     return repeat_cell(2, 3, Vec((2*t)+s,0), Vec((t+s/2),(1.5*s)+(t)), polys)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
