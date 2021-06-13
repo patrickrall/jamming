@@ -146,11 +146,12 @@ def ending_screen():
 
         name_boxes = [TextBox("fonts/Vitreous-Medium.ttf",
                          size=30, color=Vec(0,0,0),
-                         pos=Vec(150, 325 - 50*k, -0.2)) for k in range(4)]
-        name_boxes[0].text = "Special thanks to our playtesters"
-        name_boxes[1].text = "Levi Walker"
-        name_boxes[2].text = "Jayashree Srinivasan"
-        name_boxes[3].text = "Stella Wang"
+                         pos=Vec(150, 325 - 50*k, -0.2)) for k in range(5)]
+        name_boxes[0].text = "Special guest level by Billy Rieger"
+        name_boxes[1].text = "Special thanks to our playtesters"
+        name_boxes[2].text = "Levi Walker"
+        name_boxes[3].text = "Jayashree Srinivasan"
+        name_boxes[4].text = "Stella Wang"
         globs.textboxes += name_boxes
 
 

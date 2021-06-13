@@ -25,7 +25,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level6]
+    globs.levels = [level1, level2, level0, level4, level5,  level7, level3, level6]
     globs.polygons = []
 
     listen.launch(next_level_loop())
