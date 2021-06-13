@@ -25,7 +25,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level1, level2, level0, level4, level5,  level7, level3, level6]
+    globs.levels = [level1, level2, level0, level5, level4, level3, level7, level6, level555555]
     globs.polygons = []
 
     listen.launch(next_level_loop())
@@ -257,7 +257,7 @@ def level3():
 
 
 def level4():
-    globs.move_count = 10 # optimized
+    globs.move_count = 12 #in progress
 
     r3 = np.sqrt(3)
     globs.polydata["origin"] = Vec(-1,-5.5)
@@ -269,7 +269,7 @@ def level4():
     cs.append(colors["darkturquoise"])
     cs.append(colors["slategray"])
     cs.append(colors["honeydew"])
-    globs.polydata["colors"] = cs
+    globs.polydata["colors"] = [cs[0], cs[1], cs[2], cs[0], cs[3]]
 
     polys = {}
 
@@ -497,12 +497,13 @@ def level7():
     globs.polydata["ny"] = 4
 
     cs = []
-    red = colors["firebrick"]#red
-    green = colors["limegreen"]#green
-    blue = colors["dodgerblue"]#blue
-    purple = colors["purple"]#purple
-    yellow = colors["lemonchiffon"]#yellow
-    cs = [red, green, blue, purple, yellow]
+    darkgreen = colors["mediumseagreen"]
+    green = colors["lightseagreen"]#green
+    yellow = colors["whitesmoke"]#yellow
+    lightpurple = colors["violet"]
+    blue = colors["lavender"]#blue
+    purple = colors["darkorchid"]#purple
+    cs = [darkgreen, green, blue, purple, yellow, lightpurple]
     globs.polydata["colors"] = cs
 
     polys = {}
@@ -525,19 +526,19 @@ def level7():
     # polys["t15"] = Polygon(blue,[Vec(h+1.5, 3*h+1.5), Vec(h+2,4*h+1.5), Vec(2,4*h+2), Vec(1.5,3*h+2.5)])
 
     #purple squares
-    polys["t18"] = Polygon(purple,[Vec(h+1.5, h+0.5), Vec(h+2.5,h+0.5), Vec(h+2.5,h+1.5), Vec(h+1.5,h+1.5)])
+    polys["t18"] = Polygon(lightpurple,[Vec(h+1.5, h+0.5), Vec(h+2.5,h+0.5), Vec(h+2.5,h+1.5), Vec(h+1.5,h+1.5)])
 
-    polys["t19"] = Polygon(purple,[Vec(h+1, 2*h+1.5), Vec(h+1.5,3*h+1.5), Vec(1.5,3*h+2), Vec(1,2*h+2)])
-    polys["t20"] = Polygon(purple,[Vec(h+3, 2*h+1.5), Vec(2*h+3,2*h+2), Vec(2*h+2.5,3*h+2), Vec(h+2.5,3*h+1.5)])
+    polys["t19"] = Polygon(lightpurple,[Vec(h+1, 2*h+1.5), Vec(h+1.5,3*h+1.5), Vec(1.5,3*h+2), Vec(1,2*h+2)])
+    polys["t20"] = Polygon(lightpurple,[Vec(h+3, 2*h+1.5), Vec(2*h+3,2*h+2), Vec(2*h+2.5,3*h+2), Vec(h+2.5,3*h+1.5)])
 
     #yellow hex
     polys["t23"] = Polygon(yellow,[Vec(h+1.5, h+1.5), Vec(h+2.5,h+1.5), Vec(h+3,2*h+1.5),
                                    Vec(h+2.5,3*h+1.5), Vec(h+1.5,3*h+1.5), Vec(h+1,2*h+1.5)])
     #red hex
-    polys["t25"] = Polygon(red,[Vec(2*h+3.5, h), Vec(3*h+3.5,h+0.5), Vec(3*h+3.5,h+1.5),
+    polys["t25"] = Polygon(darkgreen,[Vec(2*h+3.5, h), Vec(3*h+3.5,h+0.5), Vec(3*h+3.5,h+1.5),
                                 Vec(2*h+3.5,h+2),Vec(h+3.5,h+1.5), Vec(h+3.5,h+0.5)])
 
-    polys["t30"] = Polygon(red,[Vec(0, 2*h+2), Vec(1,2*h+2), Vec(1.5, 3*h+2),
+    polys["t30"] = Polygon(purple,[Vec(0, 2*h+2), Vec(1,2*h+2), Vec(1.5, 3*h+2),
                                 Vec(1, 4*h+2), Vec(0, 4*h+2), Vec(-0.5, 3*h+2)])
 
     polys["t1"].neighbors = [(0,0,"t9"),(0,-1,"t23"),(-1,0,"t12")]
@@ -565,7 +566,6 @@ def level7():
         polys[key].points = [p*s for p in polys[key].points]
 
     return repeat_cell(1,2, s*Vec(2*h+3,0), s*Vec(h+1.5,3*h+1.5), polys)
-
 
 def level0():
     globs.move_count = 6
@@ -601,30 +601,143 @@ def level0():
     return repeat_cell(3, 3, Vec(3/2,0), Vec(3/4,3*sqrt(3)/4), polys)
 
 
+def level555555():
+    globs.move_count = 100
 
+    globs.polydata["origin"] = Vec(-4,0)
+    globs.polydata["nx"] = 3
+    globs.polydata["ny"] = 3
 
+    cs = []
+    cs.append(colors["indigo"])
+    cs.append(colors["seagreen"])
+    cs.append(colors["orchid"])
+    cs.append(colors["lightsalmon"])
+    cs.append(colors["steelblue"])
+    cs.append(colors["firebrick"])
+    cs.append(colors["snow"])
+    globs.polydata["colors"] = cs
 
+    polys = {}
 
+    polys["d1"] = Polygon(cs[1], [Vec(-0.965926, -0.258819), Vec(-0.707107, -0.707107), Vec(-0.258819, -0.965926), Vec(0.258819, -0.965926), Vec(0.707107, -0.707107), Vec(0.965926, -0.258819), Vec(0.965926, 0.258819), Vec(0.707107, 0.707107), Vec(0.258819, 0.965926), Vec(-0.258819, 0.965926), Vec(-0.707107, 0.707107), Vec(-0.965926, 0.258819)])
 
+    polys["s1"] = Polygon(cs[2], [Vec(-0.965926, 0.258819), Vec(-0.965926, -0.258819), Vec(-1.48356, -0.258819), Vec(-1.48356, 0.258819)])
+    polys["s2"] = Polygon(cs[3], [Vec(-1.48356, 0.258819), Vec(-1.48356, -0.258819), Vec(-2.0012, -0.258819), Vec(-2.0012, 0.258819)])
+    polys["s3"] = Polygon(cs[2], [Vec(-2.0012, 0.258819), Vec(-2.0012, -0.258819), Vec(-2.51884, -0.258819), Vec(-2.51884, 0.258819)])
 
+    polys["s4"] = Polygon(cs[2], [Vec(-0.707107, -0.707107), Vec(-0.258819, -0.965926), Vec(-0.517638, -1.41421), Vec(-0.965926, -1.15539)])
+    polys["s5"] = Polygon(cs[3], [Vec(-0.965926, -1.15539), Vec(-0.517638, -1.41421), Vec(-0.776457, -1.8625), Vec(-1.22474, -1.60368)])
+    polys["s6"] = Polygon(cs[2], [Vec(-1.22474, -1.60368), Vec(-0.776457, -1.8625), Vec(-1.03528, -2.31079), Vec(-1.48356, -2.05197)])
 
+    polys["s7"] = Polygon(cs[2], [Vec(0.258819, -0.965926), Vec(0.707107, -0.707107), Vec(0.965926, -1.15539), Vec(0.517638, -1.41421)])
+    polys["s8"] = Polygon(cs[3], [Vec(0.517638, -1.41421), Vec(0.965926, -1.15539), Vec(1.22474, -1.60368), Vec(0.776457, -1.8625)])
+    polys["s9"] = Polygon(cs[2], [Vec(0.776457, -1.8625), Vec(1.22474, -1.60368), Vec(1.48356, -2.05197), Vec(1.03528, -2.31079)])
 
+    polys["t1"] = Polygon(cs[0], [Vec(-0.707107, -0.707107), Vec(-0.965926, -0.258819), Vec(-1.22474, -0.707107)])
+    polys["t2"] = Polygon(cs[4], [Vec(-0.965926, -0.258819), Vec(-1.48356, -0.258819), Vec(-1.22474, -0.707107)])
+    polys["t3"] = Polygon(cs[4], [Vec(-1.22474, -0.707107), Vec(-1.48356, -0.258819), Vec(-1.74238, -0.707107)])
+    polys["t4"] = Polygon(cs[4], [Vec(-1.48356, -0.258819), Vec(-2.0012, -0.258819), Vec(-1.74238, -0.707107)])
+    polys["t5"] = Polygon(cs[4], [Vec(-1.74238, -0.707107), Vec(-2.0012, -0.258819), Vec(-2.26002, -0.707107)])
+    polys["t6"] = Polygon(cs[4], [Vec(-2.0012, -0.258819), Vec(-2.51884, -0.258819), Vec(-2.26002, -0.707107)])
+    polys["t7"] = Polygon(cs[0], [Vec(-2.26002, -0.707107), Vec(-2.51884, -0.258819), Vec(-2.77766, -0.707107)])
+    polys["t8"] = Polygon(cs[4], [Vec(-0.707107, -0.707107), Vec(-1.22474, -0.707107), Vec(-0.965926, -1.15539)])
+    polys["t9"] = Polygon(cs[4], [Vec(-0.965926, -1.15539), Vec(-1.22474, -0.707107), Vec(-1.48356, -1.15539)])
+    polys["t10"] = Polygon(cs[3], [Vec(-1.22474, -0.707107), Vec(-1.74238, -0.707107), Vec(-1.48356, -1.15539)])
+    polys["t11"] = Polygon(cs[3], [Vec(-1.48356, -1.15539), Vec(-1.74238, -0.707107), Vec(-2.0012, -1.15539)])
+    polys["t12"] = Polygon(cs[3], [Vec(-1.74238, -0.707107), Vec(-2.26002, -0.707107), Vec(-2.0012, -1.15539)])
+    polys["t13"] = Polygon(cs[4], [Vec(-2.0012, -1.15539), Vec(-2.26002, -0.707107), Vec(-2.51884, -1.15539)])
+    polys["t14"] = Polygon(cs[4], [Vec(-2.26002, -0.707107), Vec(-2.77766, -0.707107), Vec(-2.51884, -1.15539)])
+    polys["t15"] = Polygon(cs[4], [Vec(-0.965926, -1.15539), Vec(-1.48356, -1.15539), Vec(-1.22474, -1.60368)])
+    polys["t16"] = Polygon(cs[4], [Vec(-1.22474, -1.60368), Vec(-1.48356, -1.15539), Vec(-1.74238, -1.60368)])
+    polys["t17"] = Polygon(cs[3], [Vec(-1.48356, -1.15539), Vec(-2.0012, -1.15539), Vec(-1.74238, -1.60368)])
+    polys["t18"] = Polygon(cs[4], [Vec(-1.74238, -1.60368), Vec(-2.0012, -1.15539), Vec(-2.26002, -1.60368)])
+    polys["t19"] = Polygon(cs[4], [Vec(-2.0012, -1.15539), Vec(-2.51884, -1.15539), Vec(-2.26002, -1.60368)])
+    polys["t20"] = Polygon(cs[4], [Vec(-1.22474, -1.60368), Vec(-1.74238, -1.60368), Vec(-1.48356, -2.05197)])
+    polys["t21"] = Polygon(cs[0], [Vec(-1.48356, -2.05197), Vec(-1.74238, -1.60368), Vec(-2.0012, -2.05197)])
+    polys["t22"] = Polygon(cs[4], [Vec(-1.74238, -1.60368), Vec(-2.26002, -1.60368), Vec(-2.0012, -2.05197)])
 
+    polys["t23"] = Polygon(cs[6], [Vec(0.258819, -0.965926), Vec(-0.258819, -0.965926), Vec(0., -1.41421)])
+    polys["t24"] = Polygon(cs[4], [Vec(-0.258819, -0.965926), Vec(-0.517638, -1.41421), Vec(0., -1.41421)])
+    polys["t25"] = Polygon(cs[5], [Vec(0., -1.41421), Vec(-0.517638, -1.41421), Vec(-0.258819, -1.8625)])
+    polys["t26"] = Polygon(cs[5], [Vec(-0.517638, -1.41421), Vec(-0.776457, -1.8625), Vec(-0.258819, -1.8625)])
+    polys["t27"] = Polygon(cs[5], [Vec(-0.258819, -1.8625), Vec(-0.776457, -1.8625), Vec(-0.517638, -2.31079)])
+    polys["t28"] = Polygon(cs[4], [Vec(-0.776457, -1.8625), Vec(-1.03528, -2.31079), Vec(-0.517638, -2.31079)])
+    polys["t29"] = Polygon(cs[6], [Vec(-0.517638, -2.31079), Vec(-1.03528, -2.31079), Vec(-0.776457, -2.75908)])
+    polys["t30"] = Polygon(cs[4], [Vec(0.258819, -0.965926), Vec(0., -1.41421), Vec(0.517638, -1.41421)])
+    polys["t31"] = Polygon(cs[5], [Vec(0.517638, -1.41421), Vec(0., -1.41421), Vec(0.258819, -1.8625)])
+    polys["t32"] = Polygon(cs[5], [Vec(0., -1.41421), Vec(-0.258819, -1.8625), Vec(0.258819, -1.8625)])
+    polys["t33"] = Polygon(cs[6], [Vec(0.258819, -1.8625), Vec(-0.258819, -1.8625), Vec(0., -2.31079)])
+    polys["t34"] = Polygon(cs[5], [Vec(-0.258819, -1.8625), Vec(-0.517638, -2.31079), Vec(0., -2.31079)])
+    polys["t35"] = Polygon(cs[5], [Vec(0., -2.31079), Vec(-0.517638, -2.31079), Vec(-0.258819, -2.75908)])
+    polys["t36"] = Polygon(cs[4], [Vec(-0.517638, -2.31079), Vec(-0.776457, -2.75908), Vec(-0.258819, -2.75908)])
+    polys["t37"] = Polygon(cs[5], [Vec(0.517638, -1.41421), Vec(0.258819, -1.8625), Vec(0.776457, -1.8625)])
+    polys["t38"] = Polygon(cs[5], [Vec(0.776457, -1.8625), Vec(0.258819, -1.8625), Vec(0.517638, -2.31079)])
+    polys["t39"] = Polygon(cs[5], [Vec(0.258819, -1.8625), Vec(0., -2.31079), Vec(0.517638, -2.31079)])
+    polys["t40"] = Polygon(cs[5], [Vec(0.517638, -2.31079), Vec(0., -2.31079), Vec(0.258819, -2.75908)])
+    polys["t41"] = Polygon(cs[5], [Vec(0., -2.31079), Vec(-0.258819, -2.75908), Vec(0.258819, -2.75908)])
+    polys["t42"] = Polygon(cs[4], [Vec(0.776457, -1.8625), Vec(0.517638, -2.31079), Vec(1.03528, -2.31079)])
+    polys["t43"] = Polygon(cs[6], [Vec(1.03528, -2.31079), Vec(0.517638, -2.31079), Vec(0.776457, -2.75908)])
+    polys["t44"] = Polygon(cs[4], [Vec(0.517638, -2.31079), Vec(0.258819, -2.75908), Vec(0.776457, -2.75908)])
 
+    polys["d1"].neighbors = [(0,0,"s1"),(0,0,"t1"),(0,0,"s4"),(0,0,"t23"),(0,0,"s7"),(1,0,"t7"),(1,0,"s3"),(0,1,"t29"),(0,1,"s6"),(0,1,"t21"),(-1,1,"s9"),(-1,1,"t43")]
 
+    polys["s1"].neighbors = [(0,0,"d1"),(0,0,"s2"),(0,0,"t2"),(-1,1,"t44")]
+    polys["s2"].neighbors = [(0,0,"s1"),(0,0,"s3"),(0,0,"t4"),(-1,1,"t41")]
+    polys["s3"].neighbors = [(0,0,"s2"),(-1,0,"d1"),(0,0,"t6"),(-1,1,"t36")]
 
+    polys["s4"].neighbors = [(0,0,"d1"),(0,0,"s5"),(0,0,"t8"),(0,0,"t24")]
+    polys["s5"].neighbors = [(0,0,"s4"),(0,0,"s6"),(0,0,"t15"),(0,0,"t26")]
+    polys["s6"].neighbors = [(0,0,"s5"),(0,-1,"d1"),(0,0,"t20"),(0,0,"t28")]
 
+    polys["s7"].neighbors = [(0,0,"d1"),(0,0,"s8"),(0,0,"t30"),(1,0,"t14")]
+    polys["s8"].neighbors = [(0,0,"s7"),(0,0,"s9"),(0,0,"t37"),(1,0,"t19")]
+    polys["s9"].neighbors = [(0,0,"s8"),(1,-1,"d1"),(0,0,"t42"),(1,0,"t2")]
 
+    polys["t1"].neighbors = [(0,0,"t2"),(0,0,"t8"),(0,0,"d1")]
+    polys["t2"].neighbors = [(0,0,"s1"),(0,0,"t1"),(0,0,"t3")]
+    polys["t3"].neighbors = [(0,0,"t2"),(0,0,"t4"),(0,0,"t10")]
+    polys["t4"].neighbors = [(0,0,"s2"),(0,0,"t3"),(0,0,"t5")]
+    polys["t5"].neighbors = [(0,0,"t4"),(0,0,"t6"),(0,0,"t12")]
+    polys["t6"].neighbors = [(0,0,"s3"),(0,0,"t5"),(0,0,"t7")]
+    polys["t7"].neighbors = [(0,0,"t6"),(0,0,"t14"),(-1,0,"d1")]
+    polys["t8"].neighbors = [(0,0,"s4"),(0,0,"t1"),(0,0,"t9")]
+    polys["t9"].neighbors = [(0,0,"t8"),(0,0,"t10"),(0,0,"t15")]
+    polys["t10"].neighbors = [(0,0,"t3"),(0,0,"t9"),(0,0,"t11")]
+    polys["t11"].neighbors = [(0,0,"t10"),(0,0,"t12"),(0,0,"t17")]
+    polys["t12"].neighbors = [(0,0,"t5"),(0,0,"t11"),(0,0,"t13")]
+    polys["t13"].neighbors = [(0,0,"t12"),(0,0,"t14"),(0,0,"t19")]
+    polys["t14"].neighbors = [(0,0,"t7"),(0,0,"t13"),(-1,0,"s7")]
+    polys["t15"].neighbors = [(0,0,"t9"),(0,0,"t16"),(0,0,"s5")]
+    polys["t16"].neighbors = [(0,0,"t15"),(0,0,"t17"),(0,0,"t20")]
+    polys["t17"].neighbors = [(0,0,"t11"),(0,0,"t16"),(0,0,"t18")]
+    polys["t18"].neighbors = [(0,0,"t17"),(0,0,"t19"),(0,0,"t22")]
+    polys["t19"].neighbors = [(0,0,"t13"),(0,0,"t18"),(-1,0,"s8")]
+    polys["t20"].neighbors = [(0,0,"t16"),(0,0,"t21"),(0,0,"s6")]
+    polys["t21"].neighbors = [(0,0,"t20"),(0,0,"t22"),(0,-1,"d1")]
+    polys["t22"].neighbors = [(0,0,"t18"),(0,0,"t21"),(-1,0,"s9")]
 
+    polys["t23"].neighbors = [(0,0,"d1"),(0,0,"t24"),(0,0,"t30")]
+    polys["t24"].neighbors = [(0,0,"s4"),(0,0,"t23"),(0,0,"t25")]
+    polys["t25"].neighbors = [(0,0,"t24"),(0,0,"t26"),(0,0,"t32")]
+    polys["t26"].neighbors = [(0,0,"s5"),(0,0,"t25"),(0,0,"t27")]
+    polys["t27"].neighbors = [(0,0,"t26"),(0,0,"t28"),(0,0,"t34")]
+    polys["t28"].neighbors = [(0,0,"s6"),(0,0,"t27"),(0,0,"t29")]
+    polys["t29"].neighbors = [(0,-1,"d1"),(0,0,"t28"),(0,0,"t36")]
+    polys["t30"].neighbors = [(0,0,"s7"),(0,0,"t23"),(0,0,"t31")]
+    polys["t31"].neighbors = [(0,0,"t30"),(0,0,"t32"),(0,0,"t37")]
+    polys["t32"].neighbors = [(0,0,"t25"),(0,0,"t31"),(0,0,"t33")]
+    polys["t33"].neighbors = [(0,0,"t32"),(0,0,"t34"),(0,0,"t39")]
+    polys["t34"].neighbors = [(0,0,"t27"),(0,0,"t33"),(0,0,"t35")]
+    polys["t35"].neighbors = [(0,0,"t34"),(0,0,"t36"),(0,0,"t41")]
+    polys["t36"].neighbors = [(0,0,"t29"),(0,0,"t35"),(1,-1,"s3")]
+    polys["t37"].neighbors = [(0,0,"s8"),(0,0,"t31"),(0,0,"t38")]
+    polys["t38"].neighbors = [(0,0,"t37"),(0,0,"t39"),(0,0,"t42")]
+    polys["t39"].neighbors = [(0,0,"t33"),(0,0,"t38"),(0,0,"t40")]
+    polys["t40"].neighbors = [(0,0,"t39"),(0,0,"t41"),(0,0,"t44")]
+    polys["t41"].neighbors = [(0,0,"t35"),(0,0,"t40"),(1,-1,"s2")]
+    polys["t42"].neighbors = [(0,0,"s9"),(0,0,"t38"),(0,0,"t43")]
+    polys["t43"].neighbors = [(0,0,"t42"),(0,0,"t44"),(1,-1,"d1")]
+    polys["t44"].neighbors = [(0,0,"t40"),(0,0,"t43"),(1,-1,"s1")]
 
-
-
-
-
-
-
-
-
-
-
-
+    return repeat_cell(2, 2, Vec(3.48477,0), Vec(1.74238, 3.0179), polys)
