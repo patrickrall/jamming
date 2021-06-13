@@ -7,6 +7,8 @@ from patpygl import listen
 import globs
 from polygon import Polygon
 
+from colors import colors
+
 def levels_init():
     globs.play_disabled = True
 
@@ -23,7 +25,7 @@ def levels_init():
     }
 
     globs.level_idx = -1
-    globs.levels = [level4,level5,level4]
+    globs.levels = [level1,level2,level3,level4,level5]
 
     globs.polygons = []
 
@@ -120,8 +122,8 @@ def level1():
     globs.polydata["ny"] = 2
 
     cs = []
-    cs.append(Vec(1.0, 0.0, 1.0))
-    cs.append(Vec(0.0, 1.0, 1.0))
+    cs.append(colors["maroon"])
+    cs.append(colors["goldenrod"])
     globs.polydata["colors"] = cs
 
     polys = {}
@@ -143,9 +145,9 @@ def level2():
     globs.polydata["ny"] = 2
 
     cs = []
-    cs.append(Vec(1.0, 0.0, 1.0))
-    cs.append(Vec(0.0, 1.0, 1.0))
-    cs.append(Vec(0.5, 0.5, 1.0))
+    cs.append(colors["mediumseagreen"])
+    cs.append(colors["crimson"])
+    cs.append(colors["indigo"])
     globs.polydata["colors"] = cs
 
     r3 = np.sqrt(3)
@@ -198,7 +200,7 @@ def level2():
 
 
 def level3():
-    globs.move_count = 100
+    globs.move_count = 9
 
     s = 1.0
     t = s * np.sqrt(3)/2
@@ -208,12 +210,12 @@ def level3():
     globs.polydata["ny"] = 4
 
     cs = []
-    cs.append(Vec(1.0, 0.0, 0.0)) # red 0
-    cs.append(Vec(0.0, 1.0, 0.0)) # green 1
-    cs.append(Vec(0.0, 0.0, 1.0)) # blue 2
-    cs.append(Vec(1.0, 0.0, 1.0)) # pink 3
-    cs.append(Vec(1.0, 1.0, 0.0)) # yellow 4
-    globs.polydata["colors"] = cs
+    cs.append(colors["skyblue"])
+    cs.append(colors["lightslategray"])
+    cs.append(colors["burlywood"])
+    cs.append(colors["tomato"])
+    cs.append(colors["palegreen"])
+    globs.polydata["colors"] = [cs[x] for x in [3, 2, 1, 2, 3, 4, 1, 2, 4]]
 
     polys = {}
     polys["sa"] = Polygon(cs[0], [Vec(t,-s/2), Vec(t,s/2), Vec(s+t,s/2), Vec(s+t,-s/2)])
@@ -251,12 +253,12 @@ def level3():
     polys["tj"].neighbors = [(0,0,"sa"),(0,0,"ti"),(0,-1,"tf")]
     polys["tk"].neighbors = [(0,0,"se"),(0,1,"sa"),(1,0,"sh")]
 
-    return repeat_cell(2, 3, Vec((2*t)+s,0), Vec((t+s/2),(1.5*s)+(t)), polys)
+    return repeat_cell(2, 1, Vec((2*t)+s,0), Vec((t+s/2),(1.5*s)+(t)), polys)
 
 
 
 def level4():
-    globs.move_count = 8 # optimized
+    globs.move_count = 10 # optimized
 
     r3 = np.sqrt(3)
     globs.polydata["origin"] = Vec(-1,-5.5)
@@ -264,29 +266,29 @@ def level4():
     globs.polydata["ny"] = 2
 
     cs = []
-    cs.append(Vec(1.0, 0.0, 1.0)) # yellow
-    cs.append(Vec(0.0, 1.0, 1.0)) # pink
-    cs.append(Vec(1.0, 1.0, 0.0)) # cyan
-    cs.append(Vec(0.0, 0.0, 1.0)) # red
+    cs.append(colors["crimson"])
+    cs.append(colors["darkturquoise"])
+    cs.append(colors["slategray"])
+    cs.append(colors["honeydew"])
     globs.polydata["colors"] = cs
 
     polys = {}
 
     delta1 = Vec(r3/2,0.5) - Vec(0,1)
     delta2 = Vec(-delta1.y, delta1.x)
-    polys["s1"] = Polygon(cs[0],[Vec(0,1) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s1"] = Polygon(cs[3],[Vec(0,1) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
 
     delta1 = Vec(delta1.x,-delta1.y)
     delta2 = Vec(delta2.x,-delta2.y)
-    polys["s2"] = Polygon(cs[0],[Vec(0,2+r3) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s2"] = Polygon(cs[3],[Vec(0,2+r3) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
     delta1 = Vec(1,0)
     delta2 = Vec(0,1)
-    polys["s3"] = Polygon(cs[0],[Vec(0.5+r3,1+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
+    polys["s3"] = Polygon(cs[3],[Vec(0.5+r3,1+r3/2) + v for v in [Vec(0,0), delta1, delta2+delta1, delta2]])
 
     # lolwut no 4
-    polys["d5"] = Polygon(cs[3],[Vec(r3/2 + 0.5, 2.5+r3/2), Vec(r3/2, 2.5+r3), Vec(r3/2, 3.5+r3),
+    polys["d5"] = Polygon(cs[0],[Vec(r3/2 + 0.5, 2.5+r3/2), Vec(r3/2, 2.5+r3), Vec(r3/2, 3.5+r3),
                                  Vec(r3/2+0.5, 3.5+1.5*r3), Vec(r3+0.5, 4+1.5*r3), Vec(r3+1.5, 4+1.5*r3),
                                  Vec(r3*1.5+1.5, 3.5+1.5*r3),Vec(r3*1.5+2, 3.5+r3),Vec(r3*1.5+2, 2.5+r3),
                                  Vec(r3*1.5+1.5, 2.5+r3/2), Vec(r3+1.5, 2+r3/2), Vec(r3+0.5, 2+r3/2),])
@@ -358,9 +360,9 @@ def level5():
     globs.polydata["ny"] = 3
 
     cs = []
-    cs.append(Vec(1.0, 0.0, 1.0)) # red
-    cs.append(Vec(0.0, 1.0, 1.0)) # yellow
-    cs.append(Vec(1.0, 1.0, 0.0)) # blue
+    cs.append(colors["crimson"]) # red
+    cs.append(colors["khaki"]) # yellow
+    cs.append(colors["royalblue"]) # blue
     globs.polydata["colors"] = cs
 
     polys = {}
