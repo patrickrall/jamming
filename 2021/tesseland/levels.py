@@ -602,20 +602,20 @@ def level0():
 
 
 def level555555():
-    globs.move_count = 100
+    globs.move_count = 22
 
     globs.polydata["origin"] = Vec(-4,0)
     globs.polydata["nx"] = 3
     globs.polydata["ny"] = 3
 
     cs = []
-    cs.append(colors["indigo"])
-    cs.append(colors["seagreen"])
-    cs.append(colors["orchid"])
-    cs.append(colors["lightsalmon"])
-    cs.append(colors["steelblue"])
-    cs.append(colors["firebrick"])
-    cs.append(colors["snow"])
+    cs.append(colors["indigo"]) # 0 purple
+    cs.append(colors["seagreen"]) # 1
+    cs.append(colors["orchid"]) # 2 pink
+    cs.append(colors["lightsalmon"]) # 3
+    cs.append(colors["steelblue"]) # 4
+    cs.append(colors["firebrick"]) # 5
+    cs.append(colors["snow"]) # 6
     globs.polydata["colors"] = cs
 
     polys = {}
