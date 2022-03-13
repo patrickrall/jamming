@@ -1,0 +1,61 @@
+Star systems:
+1) Corin (aka Corenne) - Home System
+	
+	a) Cork:
+
+	b) Willow: Home Planet
+
+	c) Lux: 
+
+
+2) Wharf - 
+
+	a) Dyna:
+
+	b) Wane: Ocean Planet
+
+	c) Minnow: Moon of Wane
+
+	d) Bass: Moon of Wane
+
+
+3) Silo - 
+
+	a) Garish
+
+
+4) Ringo - 
+
+	a) Trin
+
+	b) Lang
+
+
+5) Millet - 
+
+	a) Yard
+
+	b) Stilt
+
+	c) Crash
+
+
+6) Brines - 
+
+	a) Brackish
+
+	b) Silt
+
+7) SuperMassive Black Hole
+
+	a) Prime - moderate speed, low eccentricity, furthest from smbh
+		Main space station for SMBH, mostly navigation, refuel, and science
+
+	b) Single - slow orbit, no station, 4th from smbh
+
+	c) Escape - fast orbit, 3rd from smbh
+		Secondary space station, only set up for refuel for emergencies
+
+	d) Streak - fairly eccentric orbit, no station, 2nd from smbh
+
+	e) Event - fast tight orbit, no station, closest to smbh (degrading?)
