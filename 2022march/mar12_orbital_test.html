@@ -1,0 +1,233 @@
+<html><body><script>
+
+window.canvas = document.createElement("canvas")
+document.body.appendChild(window.canvas)
+window.canvas.height = 800
+window.canvas.width = 800
+window.canvas.style.border = "1px solid white"
+document.body.style.backgroundColor = "black"
+document.body.style.color = "white"
+
+
+camx = 0
+camy = 0
+origin_planet = 1
+zoom = 0.1
+planets = [
+    {"x":250, "y":400, "vx":-25, "vy":0, "m":0, "r":4, "c":"yellow", "bx":0, "by":0},
+    {"x":250, "y":250, "vx":0, "vy":0, "m":10000, "r":30, "c":"red", "bx":0, "by":0},
+    {"x":250, "y":600, "vx":-5, "vy":0, "m":1000, "r":10, "c":"blue", "bx":0, "by":0},
+    {"x":250, "y":1000, "vx":-5, "vy":0, "m":1000, "r":10, "c":"cyan", "bx":0, "by":0},
+]
+
+
+function draw() {
+    var ctx = window.canvas.getContext("2d")
+
+    ctx.clearRect(0,0,window.canvas.width, window.canvas.height)
+
+    const z = Math.pow(2,zoom)
+    const cx = window.canvas.width/2-camx
+    const cy = window.canvas.height/2-camy
+
+    state = planets
+    for (var i = 0; i < 1000; i++) {
+        state = physics(state, tstep)
+        
+        const ox = state[origin_planet].x
+        const oy = state[origin_planet].y
+
+        for (var p of state) {
+            ctx.fillStyle = p.c
+            ctx.beginPath()
+            ctx.arc(z*(p.x-ox)+cx,z*(p.y-oy)+cy,1,0,Math.PI*2)
+            ctx.fill()
+        }
+    } 
+    
+    const ox = planets[origin_planet].x
+    const oy = planets[origin_planet].y
+   
+    ctx.strokeStyle = "white"
+    ctx.lineWidth = 5
+    for (var p of planets) {
+        ctx.fillStyle = p.c
+
+        ctx.beginPath()
+        ctx.arc(z*(p.x-ox)+cx,z*(p.y-oy)+cy,z*p.r,0,Math.PI*2)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.moveTo(z*(p.x-ox)+cx,z*(p.y-oy)+cy)
+        ctx.lineTo(z*(p.bx+p.x-ox)+cx,z*(p.by+p.y-oy)+cy)
+        ctx.stroke()
+        
+    }
+
+    if (paused) {
+        ctx.fillStyle = "white"
+        ctx.fillRect(10,10,12,30)
+        ctx.fillRect(32,10,12,30)
+    }
+
+}
+
+grav_const = 2
+
+function physics(objs, dt) {
+    var out = []
+    
+    for (var i = 0; i < objs.length; i++) {
+        var ax_tot = 0
+        var ay_tot = 0
+        for (var j = 0; j < objs.length; j++) {
+            if (i == j) continue
+            const dx = objs[i].x - objs[j].x 
+            const dy = objs[i].y - objs[j].y
+            var d2 = dx * dx + dy * dy
+            if (d2 < 1) d2 = 1
+            const f = - grav_const * objs[j].m / d2
+            
+            ax_tot += dx * f / Math.sqrt(d2)
+            ay_tot += dy * f / Math.sqrt(d2)
+        }
+
+        var out_obj = {}
+        for (var key in objs[i]) {
+            out_obj[key] = objs[i][key]
+        }
+
+        const bl = Math.sqrt(out_obj.bx*out_obj.bx + out_obj.by*out_obj.by)
+        if (bl > 0) {
+
+            var newbl = 0
+            var bstep = 50*dt
+            if (bstep > bl) {
+                bstep = bl
+            } else {
+                newbl = bl - bstep
+            }
+
+            const ba = 0.1
+            ax_tot += ba*bstep * out_obj.bx / bl
+            ay_tot += ba*bstep * out_obj.by / bl
+            
+            out_obj.bx *= newbl/bl
+            out_obj.by *= newbl/bl
+        }
+
+        out_obj.vx += ax_tot*dt
+        out_obj.vy += ay_tot*dt
+
+        out_obj.x += out_obj.vx*dt
+        out_obj.y += out_obj.vy*dt
+
+        out.push(out_obj)
+    }
+    
+    return out
+}
+
+start = undefined
+paused = true
+timebuffer = 0
+tstep = 0.3
+function main_loop(timestamp) {
+    if (start == undefined) start = timestamp
+    var dt = (timestamp - start) * 0.005
+    start = timestamp
+
+    if (!paused) {
+        timebuffer += dt
+        while (timebuffer > tstep) {
+            timebuffer -= tstep
+            planets = physics(planets, tstep)
+        }
+    }
+
+
+    var dx = 0
+    if (arrows["ArrowLeft"]) dx -= 1
+    if (arrows["ArrowRight"]) dx += 1
+    var dy = 0
+    if (arrows["ArrowUp"]) dy -= 1
+    if (arrows["ArrowDown"]) dy += 1
+  
+    var any = false
+    for (var i = 0; i <= Math.min(planets.length-1,9); i++) {
+        if (arrows[i] ) {
+            any = true
+            const v = 30*Math.pow(1.5,zoom)
+            planets[i].bx += dx*dt*v
+            planets[i].by += dy*dt*v
+            break
+        }
+    }
+    if (!any) {
+        if (arrows["Control"]) {
+            zoom -= 0.05*dy
+        } else {
+            const v = 50
+            camx += dx*dt*v
+            camy += dy*dt*v
+        }
+    }
+
+    if (!paused || dx != 0 || dy != 0) draw()
+
+    window.requestAnimationFrame(main_loop)
+}
+
+
+
+draw()
+window.requestAnimationFrame(main_loop)
+
+
+
+arrows = {}
+window.addEventListener("keydown", function(e) {
+    if (e.key.includes("Arrow")) arrows[e.key] = true
+
+    if ("0123456789".includes(e.key)) arrows[Number(e.key)] = true
+
+    if (e.key == " ") {
+        paused = !paused
+        draw()
+    }
+
+    if (e.key == "Control") arrows["Control"] = true
+
+    if (e.key == "Escape") {
+        e.preventDefault()
+        for (var i = 0; i <= Math.min(planets.length-1,9); i++) {
+            if (arrows[i] ) {
+                planets[i].bx = 0
+                planets[i].by = 0
+                draw()
+                break
+            }
+        }
+    }
+    if (e.key == "Tab") {
+        e.preventDefault()
+        for (var i = 0; i <= Math.min(planets.length-1,9); i++) {
+            if (arrows[i]) {
+                origin_planet = i
+                draw()
+                break
+            }
+        }
+    }
+})
+
+
+window.addEventListener("keyup", function(e) {
+    if (e.key.includes("Arrow")) arrows[e.key] = false
+    if ("0123456789".includes(e.key)) arrows[Number(e.key)] = false
+
+    if (e.key == "Control") arrows["Control"] = false
+})
+
+
+</script></body></html>
