@@ -1,32 +1,53 @@
 Star systems:
-1) Corin (aka Corenne) - Home System
+1) Corin (aka Corenne) - yellow dwarf - Home System
 	
-	a) Cork:
+	a) Cork: Ocean Planet
+		Cork is mostly ocean, but its proximity to the Corin keeps the algae fed and the fish thriving.
+		Floating metal fishing villages ship huge, fresh fish across the system with cryogenics.
 
-	b) Willow: Home Planet
-
-	c) Lux: 
-
-
-2) Wharf - 
-
-	a) Dyna:
-
-	b) Wane: Ocean Planet
-
-	c) Minnow: Moon of Wane
-
-	d) Bass: Moon of Wane
+	b) Willow: Mining Planet
+		Willow is mostly covered in iron-rich soil, and its mineral exports put it on the map.
+		wild west mining towns and oil barons
+		
+	c) Lux: Farming Planet - Home Planet
+		Lux has a ton of land and nice soil, with very consistent seasons.
+		The vegetables here are to die for, and the benign governments provide a lot of subsidies for the farming and cooking locals to be able to export off-world. think super gentrified cottage-core.
 
 
-3) Silo - 
+2) Wharf - blue dwarf
 
-	a) Garish
+	a) Dyna: 2-Faced Planet
+		Dyna's orbit keeps it very close to their very hot sun during summer, but its rotation matches its revolution, so only one side of the planet gets scorched. 
+		On the other side, which gets 8 months of mild winter followed by 4 months of darkness, people hunt big game animals that migrate, living in mobile tribes with extreme temperature protection.
+
+	b) Wane: Ocean Planet - uninhabited except for robotic water pumps that feed Minnow and Bass
+
+	c) Minnow: Moon of Wane and dirty Cyberpunk City
+		Exports: packaging/labor, 
+		Minnow's calm weather, shallow bedrock, and smooth surface made it very enticing for factory
+		establishment. Many impoverished move here to make a living monitoring robotic equipment.
+		The cities are aesthetically drab, with exposed pipes and simple concrete construction.
 
 
-4) Ringo - 
+	d) Bass: Moon of Wane and High-Class Arts District
+		Exports: Art, wine,
+		Bass has excellent weather, soft soil, and rolling hills, that make picturesque (terraformed)
+		scenery for the wealthy of the system to enjoy. Transit between Bass and Minnow is common - 
+		Minnow citizens visit for vacation, while Bass citizens own and operate the factories on Minnow.
 
-	a) Trin
+
+
+3) Silo - blue dwarf
+
+	a) Garish: Rainforest Planet
+		Silo's bright sun makes agriculture hard on Garish, but it has caused the megafauna to flourish.
+		Ecclectic explorers search for biological mysteries here, and native sapience has been rumored.
+		With the planet mostly visited by tourists and scientists, the space station here is well stocked.
+
+
+4) Ringo - red giant
+
+	a) Trin: Binary 
 
 	b) Lang
 
