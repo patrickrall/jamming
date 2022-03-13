@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Orbit.gd" type="Script" id=1]
+[ext_resource path="res://art/Bread.png" type="Texture" id=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 305, 124, 0, 0, 0, 0, 36, 319, 0, 0, 0, 0, 383.238, 382.63, 0, 0, 0, 0, 1.67905, 388.271, 37.8412, -41.2303, -37.8412, 41.2303, 555, 214, 0, 0, 0, 0, 667, -5, 0, 0, 0, 0, 457.944, 44.4853, 0, 0, 0, 0, 536.433, 67.8198 )
+}
+
+[node name="Orbit" type="Path2D"]
+curve = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="Planet" type="PathFollow2D" parent="."]
+position = Vector2( 305, 124 )
+rotation = 2.51434
+
+[node name="Sprite" type="Sprite" parent="Planet"]
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2( 7, 7 )

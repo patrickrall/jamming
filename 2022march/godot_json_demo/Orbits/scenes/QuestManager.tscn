@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://QuestManager.gd" type="Script" id=1]
+[ext_resource path="res://art/SkyBkgd.png" type="Texture" id=3]
+[ext_resource path="res://art/DialogueBkgd.png" type="Texture" id=4]
+
+[node name="QuestManager" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.470588, 0.470588, 0.470588, 1 )
+margin_left = 3.0
+margin_top = 411.0
+margin_right = 1458.0
+margin_bottom = 1503.0
+rect_scale = Vector2( 0.7, 0.2 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 34.0
+margin_top = 32.0
+margin_right = 703.0
+margin_bottom = 288.0
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+self_modulate = Color( 0.262745, 0.262745, 0.262745, 1 )
+margin_left = 830.143
+margin_top = 5.65686
+margin_right = 1022.14
+margin_bottom = 401.657
+texture = ExtResource( 4 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShipLog" type="Label" parent="TextureRect2"]
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+text = "Ship Log Requests:"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 3.0
+margin_top = 425.0
+margin_right = 1024.0
+margin_bottom = 614.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+
+[node name="DEBUG_button" type="Button" parent="."]
+visible = false
+margin_left = 479.0
+margin_top = 91.0
+margin_right = 666.0
+margin_bottom = 145.0
+text = "Get Croissant"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DEBUG_button2" type="Button" parent="."]
+margin_left = 479.0
+margin_top = 154.0
+margin_right = 666.0
+margin_bottom = 208.0
+text = "Go to quest planet (1,1)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DEBUG_button3" type="Button" parent="."]
+margin_left = 479.0
+margin_top = 222.0
+margin_right = 666.0
+margin_bottom = 276.0
+text = "Go to croissant planet (1,3)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DEBUG_inventory" type="Label" parent="."]
+margin_left = 476.0
+margin_top = 18.0
+margin_right = 725.0
+margin_bottom = 85.0
+text = "Inventory: "
+autowrap = true
+
+[connection signal="pressed" from="DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
+[connection signal="pressed" from="DEBUG_button2" to="." method="_on_DEBUG_button2_pressed"]
+[connection signal="pressed" from="DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]

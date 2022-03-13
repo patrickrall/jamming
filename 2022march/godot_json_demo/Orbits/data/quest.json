@@ -1,0 +1,74 @@
+{
+	"root": [
+		{
+				"quest_name": "Blob Shopper",
+				"stages": {
+					"0": {
+						"solar_system": 1,
+						"planet": 1,
+						"speaker_name": "Sentient Beach Ball Alien",
+						"dialogue": "Would you tell me where the nearest blob shop is?",
+						"choices": [
+							"Right over there.",
+							"Sorry, I don't know."
+						],
+						"speaker_responses": [
+							"Thank you!",
+							"Oh... Let me know if you find out..."
+						]
+					}
+				}
+		},
+		{
+			"quest_name": "Case in Croissant",
+			"stages": {
+				"0": {
+					"solar_system": 1,
+					"planet": 1,
+					"speaker_name": "Strange Woman Laying in a Pond",
+					"dialogue": "Help, I am so hungry and I cannot get up! I need... croissants...",
+					"choices": [
+						"OK, I'll get some",
+						"No croissants for you"
+					],
+					"ship_log": "Bring croissants to System 1 Planet 1"
+				},
+				"1": {
+					"solar_system": 1,
+					"planet": 3,
+					"speaker_name": "Hunched-Over Croissant Seller",
+					"dialogue": "Hehe. You look like someone down on their luck... Want to buy a load of croissants? It's very safe.",
+					"choices": [
+						"(Buy croissants for 100g)",
+						"No"
+					],
+					"speaker_responses": [
+						"Pleasure doing business with you, hehe.",
+						"Hehe... don't be surprised if you regret this..."
+					],
+					"yes_money_change": -100,
+					"yes_reward_items": ["croissants"]
+				},
+				"2": {
+					"required_inventory": [
+						"croissants"
+					],
+					"solar_system": 1,
+					"planet": 1,
+					"speaker_name": "Strange Woman Laying in a Pond",
+					"dialogue": "I smell croissants! Please, please give them to me...",
+					"choices": [
+						"Ok",
+						"No croissants for you"
+					],
+					"speaker_responses": [
+						"Wow, thank you! Here, take this sword, I think I missed my chance to give it to the right person anyway...",
+						"Ugh... "
+					],
+					"yes_cost_items": ["croissants"],
+					"yes_reward_items": ["rusty sword"]
+				}
+			}
+		}
+	]
+}
