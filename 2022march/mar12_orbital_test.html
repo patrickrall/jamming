@@ -15,6 +15,7 @@ origin_planet = 1
 zoom = 0.1
 planets = [
     {"x":250, "y":400, "vx":-25, "vy":0, "m":0, "r":4, "c":"yellow", "bx":0, "by":0},
+    {"x":250, "y":400, "vx":-25, "vy":0, "m":0, "r":4, "c":"white", "bx":0, "by":0},
     {"x":250, "y":250, "vx":0, "vy":0, "m":10000, "r":30, "c":"red", "bx":0, "by":0},
     {"x":250, "y":600, "vx":-5, "vy":0, "m":1000, "r":10, "c":"blue", "bx":0, "by":0},
     {"x":250, "y":1000, "vx":-5, "vy":0, "m":1000, "r":10, "c":"cyan", "bx":0, "by":0},
@@ -157,7 +158,7 @@ function main_loop(timestamp) {
     for (var i = 0; i <= Math.min(planets.length-1,9); i++) {
         if (arrows[i] ) {
             any = true
-            const v = 30*Math.pow(1.5,zoom)
+            const v = 30*Math.pow(1.5,-zoom)
             planets[i].bx += dx*dt*v
             planets[i].by += dy*dt*v
             break
