@@ -1,0 +1,43 @@
+{
+    "quests": [
+        {
+            "quest_name": "Case in Croissant",
+            "stages": {
+                "0": {
+                    "solar_system": 1,
+                    "planet": 1,
+                    "speaker_name": "Strange Woman Laying in a Pond",
+                    "dialogue": "Help, I am so hungry and I cannot get up! I need... croissants...",
+                    "choices": [
+                        "Ok",
+                        "No croissants for you"
+                    ]
+                },
+                "1": {
+                    "solar_system": 1,
+                    "planet": 3,
+                    "speaker_name": "Hunched-Over Croissant Seller",
+                    "dialogue": "Hehe. You look like someone down on their luck... Want to buy a load of croissants? It's very safe.",
+                    "choices": [
+                        "(Buy croissants for 100g)",
+                        "No"
+                    ],
+                    "yes_cost": 100,
+                    "yes_reward_item": "croissants"
+                },
+                "2": {
+                    "solar_system": 1,
+                    "planet": 1,
+                    "speaker_name": "Strange Woman Laying in a Pond",
+                    "dialogue": "I smell croissants! Please, please give them to me...",
+                    "choices": [
+                        "Ok",
+                        "No croissants for you"
+                    ],
+                    "yes_cost": "croissants",
+                    "yes_reward_item": "rusty sword"
+                }
+            }
+        }
+    ]
+}
