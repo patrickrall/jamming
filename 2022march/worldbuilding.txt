@@ -47,25 +47,37 @@ Star systems:
 
 4) Ringo - red giant
 
-	a) Trin: Binary 
+	a) Trin, the older sister binary planet
+		The residents of Trin have begun to worship their star, Ringo, with fervor and joy.
+		Their position gives them well balanced seasons and powerful tides, and they celebrate the occasional brief eclipse from their smaller sister planet when they happen.
+		Trin has a long culture with deep history, and exports a lot of music, art, and traditions.
 
-	b) Lang
-
-
-5) Millet - 
-
-	a) Yard
-
-	b) Stilt
-
-	c) Crash
+	b) Lang, the younger sister binary planet
+		Lang citizens resent Trin, their larger sister planet, because its weight creates devastating seasonal floods and stints of week-long darkness. The timing of the floods and eclipses does not align with the solar seasons, causing inconsistent planting and harvesting, so Lang is mostly an industrialized and military power. They don't have enough income for a major interstellar force of their own, but they make weapons for other groups often, and they are very suspicious of foreigners.
 
 
-6) Brines - 
+5) Millet - yellow dwarf
 
-	a) Brackish
+	a) Yard: Middle Millet Planet - Amber Waves of Grain
+	b) Stilt: Smallest Millet Planet - Textile Heaven
+	c) Crash: Biggest Millet Planet - To Beef or Not To Beef
+		The Millet planets all follow the same orbit, but out of sync, so millions of migrant workers travel between each of them in turn, reaping and planting when the season is right.
+		This means that Millet is a huge agriculture powerhouse, able to churn out tons of food for cheap.
+		The people who stay on-planet during the off seasons can be very off-putting.
+		Meanwhile the underfed migrant workers are friendly, but they have no roots or education, often going generations without breaking the pattern.
 
-	b) Silt
+
+6) Brines - red dwarf
+
+	a) Brackish - The Swamp
+		Mostly composed of shallow marshland, this planet gets low sunlight but plenty of heat.
+		The residents catch and live with exotic creatures, either to sell for food or just to subsist.
+		Its long summers can get to the people living there, but they are quick to offer hospitality.
+
+	b) Silt - Beach Episode
+		This planet has long days with low sunlight, perfect weather for its abundant sandy beaches.
+		The people who live there spend their time surfing and sunbathing during the long days. 
+		During the long nights, they drink together in cities while nocturnal predators roam the shallows. 
 
 7) SuperMassive Black Hole
 
