@@ -7,6 +7,8 @@ onready var ship_log = $CanvasLayer/RequestPanel/ScrollContainer/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
 onready var ui_inventory = $CanvasLayer/DEBUG_inventory
+onready var planet_request_toggle = $CanvasLayer/TogglePlanetRequests
+onready var ship_log_toggle = $CanvasLayer/ToggleShipLog
 
 var dict = {}
 var inventory = []
@@ -25,13 +27,13 @@ func _ready() -> void:
 	arrive_at_planet(0,1)
 
 func arrive_at_planet(solar_system: int, planet: int):
+	# react to the player arriving at the planet specified by the arguments
+	# by updating the ui with requests from that planet
 	var relevant_stages = get_relevant_stages_for_planet(solar_system, planet, inventory)
-#	print("RELEVENT STAGES=" + str(relevant_stages))
-	update_inventory()
-	
 	for child in dialogue_choice_ui_parent.get_children():
 		child.queue_free()
 
+	# instantiate Ui elements representing each request on the planet
 	for a in range(relevant_stages.size()):
 		var ui = dialogue_choice_ui_prefab.instance()
 		ui.init(relevant_stages[a])
@@ -39,7 +41,11 @@ func arrive_at_planet(solar_system: int, planet: int):
 		ui.connect("append_to_ship_log", self, "on_append_to_ship_log")
 		ui.connect("yes_chosen", self, "on_yes_chosen")
 		ui.connect("no_chosen", self, "on_no_chosen")
-	update_ship_log()
+		planet_request_toggle.text = str(relevant_stages.size())
+	
+	# other ui updates
+	update_ship_log()	
+	update_inventory()
 
 
 func on_append_to_ship_log(stage_idx: int) -> void:
@@ -191,11 +197,13 @@ func get_relevant_stages_for_planet(
 	
 ## UI
 func update_ship_log() -> void:
+	ship_log_toggle.text = str(accepted_requests.size())
 	print("ship log update for " + str(accepted_requests))
 	ship_log.text = "SHIP LOG:\n"
 	for stage_idx in accepted_requests:
 		var stage : Stage =  all_stages[stage_idx]
 		ship_log.text += stage.quest_name + ": " + stage.yes_accepted_quest_info
+
 
 #JSON
 func read_json2():
@@ -214,7 +222,7 @@ func _on_DEBUG_button_pressed() -> void:
 	update_inventory()
 
 func update_inventory():
-	ui_inventory.text = str(player_money) + "gold " + str(inventory)
+	ui_inventory.text = str(player_money) + " gold " + str(inventory)
 
 
 func _on_DEBUG_button3_pressed() -> void:

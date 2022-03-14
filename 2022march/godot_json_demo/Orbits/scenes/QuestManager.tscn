@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=2]
 [ext_resource path="res://art/SkyBkgd.png" type="Texture" id=3]
 [ext_resource path="res://art/DialogueBkgd.png" type="Texture" id=4]
-[ext_resource path="res://art/ship.png" type="Texture" id=5]
+[ext_resource path="res://art/Bread.png" type="Texture" id=5]
 [ext_resource path="res://art/planet.png" type="Texture" id=6]
 
 [node name="QuestManager" type="Node"]
@@ -26,10 +26,14 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="CanvasLayer"]
-margin_left = 14.201
-margin_top = 15.0294
-margin_right = 197.201
-margin_bottom = 223.029
+margin_left = 5.0
+margin_top = 279.0
+margin_right = 240.0
+margin_bottom = 362.0
+text = "Controls: 
+WASD or arrow keys = pan
+I, O or mouse scroll = zoom
+mouse to click buttons"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -84,8 +88,8 @@ __meta__ = {
 visible = false
 margin_left = 7.35858
 margin_top = 132.012
-margin_right = 207.359
-margin_bottom = 172.012
+margin_right = 257.359
+margin_bottom = 152.012
 text = "Get Croissants"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -94,19 +98,19 @@ __meta__ = {
 [node name="DEBUG_button2" type="Button" parent="CanvasLayer"]
 margin_left = 10.8953
 margin_top = 38.0345
-margin_right = 210.895
-margin_bottom = 78.0345
-text = "Go to quest planet (1,1)"
+margin_right = 260.895
+margin_bottom = 58.0345
+text = "Debug: Go to quest planet (1,1)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DEBUG_button3" type="Button" parent="CanvasLayer"]
 margin_left = 9.48108
-margin_top = 86.2355
-margin_right = 209.481
-margin_bottom = 126.235
-text = "Go to croissant planet (1,3)"
+margin_top = 61.2903
+margin_right = 259.481
+margin_bottom = 81.2903
+text = "Debug: Go to croissant planet (1,3)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -123,11 +127,13 @@ __meta__ = {
 }
 
 [node name="ToggleShipLog" type="Button" parent="CanvasLayer"]
-margin_left = 611.411
-margin_top = 4.71344
-margin_right = 636.411
-margin_bottom = 32.7134
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -55.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 55, 30 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
+text = "00"
 icon = ExtResource( 5 )
 expand_icon = true
 __meta__ = {
@@ -135,12 +141,17 @@ __meta__ = {
 }
 
 [node name="TogglePlanetRequests" type="Button" parent="CanvasLayer"]
-margin_left = 604.661
-margin_top = 328.96
-margin_right = 638.661
-margin_bottom = 359.96
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -55.0
+margin_top = -30.0
+rect_min_size = Vector2( 55, 30 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
+text = "00"
 icon = ExtResource( 6 )
+align = 2
 expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
