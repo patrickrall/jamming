@@ -51,6 +51,10 @@ StageClass="*res://scripts/Stage.gd"
 window/size/width=640
 window/size/height=360
 
+[global]
+
+background=false
+
 [input]
 
 left={
@@ -96,5 +100,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_clear_color=Color( 0.0509804, 0.0431373, 0.0705882, 1 )
 environment/default_environment="res://default_env.tres"

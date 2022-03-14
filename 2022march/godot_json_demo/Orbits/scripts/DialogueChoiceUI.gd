@@ -13,6 +13,7 @@ onready var ui_no_button = $ChoicesParent/NoButton
 onready var ui_choices_parent = $ChoicesParent
 
 var this_stage : Stage = null
+var is_yes_no_chosen = false
 
 func init(stage : Stage) -> void:
 	this_stage = stage
@@ -47,18 +48,25 @@ func show_choices(is_shown : bool) -> void:
 
 
 func _on_YesButton_pressed() -> void:
+	is_yes_no_chosen = true
 	update_dialogue(this_stage.speaker_responses[0])
 	show_choices(false)
 	print("yes")
 	emit_signal("yes_chosen", this_stage)
 	emit_signal("append_to_yes_accepted_quest_info", this_stage.id)
+	fade_to_disabled()
 
 
 func _on_NoButton_pressed() -> void:
+	is_yes_no_chosen = true
 	update_dialogue(this_stage.speaker_responses[1])
 	emit_signal("no_chosen", this_stage)
 	show_choices(false)
 	print("no")
+	fade_to_disabled()
 
 func _on_IgnoreButton_pressed() -> void:
 	self.queue_free()
+
+func fade_to_disabled()-> void:
+	$AnimationPlayer.play("fade_normal_to_disabled")

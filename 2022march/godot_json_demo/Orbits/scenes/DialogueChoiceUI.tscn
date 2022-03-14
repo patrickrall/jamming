@@ -1,24 +1,57 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/DialogueChoiceUI.gd" type="Script" id=1]
-[ext_resource path="res://art/DialogueBkgd.png" type="Texture" id=2]
+[ext_resource path="res://art/Square.png" type="Texture" id=2]
+[ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/base_theme.tres" type="Theme" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade_normal_to_disabled"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.584314 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle_normal"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="DialogueChoiceUI" type="Panel"]
-self_modulate = Color( 0.14902, 0.14902, 0.14902, 1 )
-margin_left = 4.23785
-margin_top = 5.29732
-margin_right = 604.238
-margin_bottom = 105.297
-rect_min_size = Vector2( 600, 100 )
+margin_left = 4.0
+margin_top = 5.0
+margin_right = 234.0
+margin_bottom = 205.0
+rect_min_size = Vector2( 230, 200 )
+theme = ExtResource( 4 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
-self_modulate = Color( 0.305882, 0.305882, 0.305882, 1 )
-margin_right = 627.0
-margin_bottom = 106.0
+visible = false
+self_modulate = Color( 0.282353, 0.231373, 0.384314, 0.498039 )
+margin_right = 232.0
+margin_bottom = 191.0
 texture = ExtResource( 2 )
 stretch_mode = 1
 __meta__ = {
@@ -26,61 +59,82 @@ __meta__ = {
 }
 
 [node name="ChoicesParent" type="VBoxContainer" parent="."]
-margin_left = 425.38
-margin_top = 16.6542
-margin_right = 587.38
-margin_bottom = 84.6542
+margin_left = 4.75507
+margin_top = 107.062
+margin_right = 217.755
+margin_bottom = 175.062
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="YesButton" type="Button" parent="ChoicesParent"]
-margin_right = 162.0
+[node name="YesButton" type="Button" parent="ChoicesParent" groups=[
+"font",
+]]
+margin_right = 213.0
 margin_bottom = 20.0
 size_flags_vertical = 3
+theme = ExtResource( 4 )
 text = "Yes"
 
-[node name="NoButton" type="Button" parent="ChoicesParent"]
+[node name="NoButton" type="Button" parent="ChoicesParent" groups=[
+"font",
+]]
 margin_top = 24.0
-margin_right = 162.0
+margin_right = 213.0
 margin_bottom = 44.0
 size_flags_vertical = 3
+theme = ExtResource( 4 )
 text = "No"
 
-[node name="IgnoreButton" type="Button" parent="ChoicesParent"]
+[node name="IgnoreButton" type="Button" parent="ChoicesParent" groups=[
+"font",
+]]
 margin_top = 48.0
-margin_right = 162.0
+margin_right = 213.0
 margin_bottom = 68.0
 size_flags_vertical = 3
+theme = ExtResource( 4 )
 text = "I'll get back to you later"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 8.0
 margin_top = 7.0
-margin_right = 419.0
-margin_bottom = 94.0
+margin_right = 218.0
+margin_bottom = 99.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SpeakerName" type="Label" parent="VBoxContainer"]
-margin_right = 411.0
-margin_bottom = 14.0
+[node name="SpeakerName" type="Label" parent="VBoxContainer" groups=[
+"font",
+]]
+margin_right = 210.0
+margin_bottom = 17.0
+theme = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 text = "Strange Lady"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dialogue" type="Label" parent="VBoxContainer"]
-margin_top = 18.0
-margin_right = 411.0
-margin_bottom = 32.0
+[node name="Dialogue" type="Label" parent="VBoxContainer" groups=[
+"font",
+]]
+margin_top = 21.0
+margin_right = 210.0
+margin_bottom = 58.0
+theme = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 text = "So... hungry... you should give me stuff. Lots of stuff."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_normal_to_disabled = SubResource( 1 )
+anims/idle_normal = SubResource( 2 )
 
 [connection signal="pressed" from="ChoicesParent/YesButton" to="." method="_on_YesButton_pressed"]
 [connection signal="pressed" from="ChoicesParent/NoButton" to="." method="_on_NoButton_pressed"]

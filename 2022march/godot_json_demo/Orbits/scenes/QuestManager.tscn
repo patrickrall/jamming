@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/QuestManager.gd" type="Script" id=1]
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=2]
 [ext_resource path="res://art/SkyBkgd.png" type="Texture" id=3]
-[ext_resource path="res://art/DialogueBkgd.png" type="Texture" id=4]
-[ext_resource path="res://art/Bread.png" type="Texture" id=5]
+[ext_resource path="res://art/Square.png" type="Texture" id=4]
+[ext_resource path="res://fonts/base_theme.tres" type="Theme" id=5]
 [ext_resource path="res://art/planet.png" type="Texture" id=6]
+[ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=8]
+[ext_resource path="res://art/ship.png" type="Texture" id=9]
 
 [node name="QuestManager" type="Node"]
 script = ExtResource( 1 )
@@ -25,11 +27,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-margin_left = 5.0
-margin_top = 279.0
-margin_right = 240.0
-margin_bottom = 362.0
+[node name="Label" type="Label" parent="CanvasLayer" groups=[
+"font",
+]]
+margin_left = 438.0
+margin_top = 271.0
+margin_right = 631.0
+margin_bottom = 354.0
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
 WASD or arrow keys = pan
 I, O or mouse scroll = zoom
@@ -39,13 +45,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RequestPanel" type="TextureRect" parent="CanvasLayer"]
-visible = false
-self_modulate = Color( 0.262745, 0.262745, 0.262745, 1 )
-margin_left = 441.0
-margin_top = 7.0
-margin_right = 633.0
-margin_bottom = 243.0
+[node name="OngoingQuests" type="TextureRect" parent="CanvasLayer"]
+self_modulate = Color( 0.282353, 0.231373, 0.384314, 0.498039 )
+margin_left = 239.0
+margin_top = 32.3082
+margin_right = 431.0
+margin_bottom = 103.308
 texture = ExtResource( 4 )
 stretch_mode = 1
 script = ExtResource( 2 )
@@ -53,19 +58,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/RequestPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/OngoingQuests"]
 margin_left = 8.0
 margin_top = 9.0
 margin_right = 185.0
-margin_bottom = 228.0
+margin_bottom = 68.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ShipLog" type="Label" parent="CanvasLayer/RequestPanel/ScrollContainer"]
+[node name="ShipLog" type="Label" parent="CanvasLayer/OngoingQuests/ScrollContainer"]
 margin_right = 177.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 size_flags_horizontal = 3
+theme = ExtResource( 5 )
 text = "Ship Log Requests:"
 autowrap = true
 __meta__ = {
@@ -73,10 +79,10 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
-margin_left = 9.0
-margin_top = 250.0
-margin_right = 630.0
-margin_bottom = 351.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -329.0
+margin_right = 232.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -86,72 +92,82 @@ __meta__ = {
 
 [node name="DEBUG_button" type="Button" parent="CanvasLayer"]
 visible = false
-margin_left = 7.35858
-margin_top = 132.012
-margin_right = 257.359
-margin_bottom = 152.012
+margin_left = 178.0
+margin_top = 288.0
+margin_right = 346.0
+margin_bottom = 308.0
+theme = ExtResource( 5 )
 text = "Get Croissants"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DEBUG_button2" type="Button" parent="CanvasLayer"]
-margin_left = 10.8953
-margin_top = 38.0345
-margin_right = 260.895
-margin_bottom = 58.0345
-text = "Debug: Go to quest planet (1,1)"
+margin_left = 176.0
+margin_top = 311.0
+margin_right = 348.0
+margin_bottom = 331.0
+theme = ExtResource( 5 )
+text = "Debug: Go to planet (1,1)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DEBUG_button3" type="Button" parent="CanvasLayer"]
-margin_left = 9.48108
-margin_top = 61.2903
-margin_right = 259.481
-margin_bottom = 81.2903
-text = "Debug: Go to croissant planet (1,3)"
+margin_left = 174.0
+margin_top = 334.0
+margin_right = 348.0
+margin_bottom = 354.0
+theme = ExtResource( 5 )
+text = "Debug: Go to planet (1,3)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DEBUG_inventory" type="Label" parent="CanvasLayer"]
-margin_left = 9.30945
-margin_top = 13.7574
-margin_right = 258.309
-margin_bottom = 80.7574
+[node name="Inventory" type="Label" parent="CanvasLayer" groups=[
+"font",
+]]
+margin_left = 438.0
+margin_top = 8.0
+margin_right = 634.0
+margin_bottom = 82.0
+theme = ExtResource( 5 )
 text = "Inventory: "
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToggleShipLog" type="Button" parent="CanvasLayer"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -55.0
+[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
+margin_left = 240.305
+margin_right = 295.305
 margin_bottom = 30.0
 rect_min_size = Vector2( 55, 30 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 text = "00"
-icon = ExtResource( 5 )
+icon = ExtResource( 9 )
+align = 0
 expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TogglePlanetRequests" type="Button" parent="CanvasLayer"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -55.0
-margin_top = -30.0
+[node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
+margin_right = 55.0
+margin_bottom = 30.0
 rect_min_size = Vector2( 55, 30 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 text = "00"
 icon = ExtResource( 6 )
-align = 2
+align = 0
 expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -160,5 +176,5 @@ __meta__ = {
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button2" to="." method="_on_DEBUG_button2_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
-[connection signal="pressed" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/RequestPanel" method="_on_ToggleShipLog_pressed"]
+[connection signal="pressed" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/OngoingQuests" method="_on_ToggleShipLog_pressed"]
 [connection signal="pressed" from="CanvasLayer/TogglePlanetRequests" to="CanvasLayer/ScrollContainer" method="_on_TogglePlanetRequests_pressed"]

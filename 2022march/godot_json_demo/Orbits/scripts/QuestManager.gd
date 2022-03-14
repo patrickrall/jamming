@@ -3,10 +3,10 @@ extends Node
 
 # Declare member variables here. Examples:
 onready var json_label = $CanvasLayer/Label
-onready var ship_log = $CanvasLayer/RequestPanel/ScrollContainer/ShipLog
+onready var ship_log = $CanvasLayer/OngoingQuests/ScrollContainer/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
-onready var ui_inventory = $CanvasLayer/DEBUG_inventory
+onready var ui_inventory = $CanvasLayer/Inventory
 onready var planet_request_toggle = $CanvasLayer/TogglePlanetRequests
 onready var ship_log_toggle = $CanvasLayer/ToggleShipLog
 
@@ -26,6 +26,8 @@ func _ready() -> void:
 	print("\n END ALL STAGES\n ")
 	arrive_at_planet(0,1)
 
+
+
 func arrive_at_planet(solar_system: int, planet: int):
 	# react to the player arriving at the planet specified by the arguments
 	# by updating the ui with requests from that planet
@@ -41,12 +43,21 @@ func arrive_at_planet(solar_system: int, planet: int):
 		ui.connect("append_to_ship_log", self, "on_append_to_ship_log")
 		ui.connect("yes_chosen", self, "on_yes_chosen")
 		ui.connect("no_chosen", self, "on_no_chosen")
-		planet_request_toggle.text = str(relevant_stages.size())
+		
+	
+	update_planet_request_toggle()
 	
 	# other ui updates
 	update_ship_log()	
 	update_inventory()
 
+func update_planet_request_toggle()-> void:
+	# update the number on the toggle button for showing/hiding planet requests
+	var active_request_count = 0
+	for child in dialogue_choice_ui_parent.get_children():
+		if !child.is_yes_no_chosen:
+			active_request_count+=1
+	planet_request_toggle.text = str(active_request_count)
 
 func on_append_to_ship_log(stage_idx: int) -> void:
 	# this stage has a component to record in the quest list of the player
@@ -71,6 +82,7 @@ func on_yes_chosen(stage: Stage) -> void:
 	mark_complete(stage.id)
 	update_ship_log()
 	update_inventory()
+	update_planet_request_toggle()
 	
 
 func on_no_chosen(stage: Stage) -> void:
@@ -88,6 +100,7 @@ func on_no_chosen(stage: Stage) -> void:
 	mark_complete(stage.id)
 	update_ship_log()
 	update_inventory()
+	update_planet_request_toggle()
 
 func mark_complete(stage_idx: int)-> void:
 	# player said yes or no to this stage, which means this stage and this 
