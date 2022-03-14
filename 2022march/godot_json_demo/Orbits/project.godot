@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "AnimatedSprite",
+"class": "Planet",
+"language": "GDScript",
+"path": "res://physics_scripts/Planet.gd"
+}, {
 "base": "Resource",
 "class": "SaveData",
 "language": "GDScript",
@@ -18,10 +23,17 @@ _global_script_classes=[ {
 "class": "Stage",
 "language": "GDScript",
 "path": "res://scripts/Stage.gd"
+}, {
+"base": "AnimatedSprite",
+"class": "Traceable",
+"language": "GDScript",
+"path": "res://physics_scripts/Traceable.gd"
 } ]
 _global_script_class_icons={
+"Planet": "",
 "SaveData": "",
-"Stage": ""
+"Stage": "",
+"Traceable": ""
 }
 
 [application]
@@ -45,4 +57,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"
