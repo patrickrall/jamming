@@ -2,8 +2,6 @@ extends Control
 
 
 # Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
 onready var json_label = $Label
 onready var ship_log = $TextureRect2/ShipLog
 onready var dialogue_choice_ui_parent = $ScrollContainer/VBoxContainer
@@ -19,15 +17,10 @@ var current_stage : Stage = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-#	var quest_dict = read_json()
-#	print(quest_dict.result)
 	dict = read_json2()
-#	print(str(dict))
-#	print("\n END DICT\n ")
 	parse_jsondict_to_structs(dict) # updates all_stages
 	print(str(all_stages))
 	print("\n END ALL STAGES\n ")
-#	var stage = dict.root[0]["stages"]["0"]
 	arrive_at_planet(1,1)
 
 func arrive_at_planet(solar_system: int, planet: int):
@@ -48,26 +41,26 @@ func arrive_at_planet(solar_system: int, planet: int):
 	update_ship_log()
 
 
-func on_append_to_ship_log(stage: Stage) -> void:
+func on_append_to_ship_log(stage_idx: int) -> void:
 	# this stage has a component to record in the quest list of the player
-	for accepted in accepted_requests:
-		if accepted.quest_name == stage.quest_name and accepted.dialogue == stage.dialogue:
-			return # don't append duplicates
-	accepted_requests.append(stage)
+	if !stage_idx in accepted_requests:
+		accepted_requests.append(stage_idx)
+	else:
+		print("WARNING accepted request not added -- has request been added before?")
 	update_ship_log()
 	
 
 func on_yes_chosen(stage: Stage) -> void:
 	# the player fulfilled the quest ask
-	if (accepted_requests.has(stage)):
-		accepted_requests.remove(stage)
+	if (!accepted_requests.has(stage.id) and all_stages[stage.id].yes_accepted_quest_info != ""):
+		accepted_requests.append(stage.id)
 	for reward in stage.yes_reward_items:
 		inventory.append(reward)
 	for cost in stage.yes_cost_items:
 		if inventory.has(cost):
 			inventory.remove(cost)
 	player_money += stage.yes_money_change
-	mark_complete(stage)
+	mark_complete(stage.id)
 	update_ship_log()
 	update_inventory()
 	
@@ -82,22 +75,27 @@ func on_no_chosen(stage: Stage) -> void:
 		if inventory.has(cost):
 			inventory.remove(cost)
 	player_money += stage.no_money_change
-	mark_complete(stage)
+	mark_complete(stage.id)
 	update_ship_log()
 	update_inventory()
 
-func mark_complete(stage: Stage)-> void:
-	# player said yes or no to this stage
-	for a in range(all_stages.size()):
-		if all_stages[a].quest_name == stage.quest_name:
-			if all_stages[a].dialogue == stage.dialogue:
-				all_stages[a].is_complete = true
-	print("Warning: unable to find stage to mark complete")
+func mark_complete(stage_idx: int)-> void:
+	# player said yes or no to this stage, which means this stage and this 
+	# dialogue is done and will never be shown again
+	if stage_idx > -1 and all_stages.size() > stage_idx:
+		all_stages[stage_idx].is_complete = true
+	else:
+		print("Warning: unable to find stage to mark complete")
 
 func parse_jsondict_to_structs(json_result) -> void:
 	# turn the json dictionary into a struct
+	# the goal is to ensure we don't have to deal with invalid dictionary accesses
+	# because the struct's default values will be returned or typos in the field
+	# name will be easier to correct 
+	# this is the only function that should use hardcoded strings to access data 
+	# imported from JSON. This limits human error in typing field names.
+	
 	for quest_line in range(json_result.root.size()):
-		
 		var dict_stages = json_result.root[quest_line]["stages"]
 		var quest_name = json_result.root[quest_line]["quest_name"]
 		for key in dict_stages.keys():
@@ -114,8 +112,8 @@ func parse_jsondict_to_structs(json_result) -> void:
 				new_stage.required_inventory = dict_stages[key]["required_inventory"]
 			if dict_stages[key].has("required_money"):
 				new_stage.required_money = dict_stages[key]["required_money"]
-			if dict_stages[key].has("ship_log"):
-				new_stage.ship_log = dict_stages[key]["ship_log"]
+			if dict_stages[key].has("yes_accepted_quest_info"):
+				new_stage.yes_accepted_quest_info = dict_stages[key]["yes_accepted_quest_info"]
 			if dict_stages[key].has("is_complete"):
 				new_stage.is_complete = dict_stages[key]["is_complete"]
 			# results of yes and no
@@ -132,6 +130,7 @@ func parse_jsondict_to_structs(json_result) -> void:
 			if dict_stages[key].has("no_money_change"):
 				new_stage.no_money_change = dict_stages[key]["no_money_change"]
 			
+			new_stage.id = all_stages.size()
 			all_stages.append(new_stage)
 			
 			
@@ -147,7 +146,6 @@ func get_relevant_stages_for_planet(
 	for i in range(all_stages.size()):
 		var stage : Stage = all_stages[i]
 		is_relevant = true
-		print(str(stage))
 		if stage.solar_system == solar_system and stage.planet == planet:
 			if stage.required_inventory.size() > 0:
 				for item in stage.required_inventory:
@@ -163,9 +161,11 @@ func get_relevant_stages_for_planet(
 	
 ## UI
 func update_ship_log() -> void:
+	print("ship log update for " + str(accepted_requests))
 	ship_log.text = "SHIP LOG:\n"
-	for stage in accepted_requests:
-		ship_log.text += stage.quest_name + ": " + stage.ship_log
+	for stage_idx in accepted_requests:
+		var stage : Stage =  all_stages[stage_idx]
+		ship_log.text += stage.quest_name + ": " + stage.yes_accepted_quest_info
 
 
 #JSON

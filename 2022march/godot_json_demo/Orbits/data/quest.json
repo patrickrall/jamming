@@ -31,7 +31,7 @@
 						"OK, I'll get some",
 						"No croissants for you"
 					],
-					"ship_log": "Bring croissants to System 1 Planet 1"
+					"yes_accepted_quest_info": "Bring croissants to System 1 Planet 1"
 				},
 				"1": {
 					"solar_system": 1,

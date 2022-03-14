@@ -2,7 +2,7 @@ extends Panel
 
 signal yes_chosen(stage)
 signal no_chosen(stage)
-signal append_to_ship_log(stage)
+signal append_to_yes_accepted_quest_info(stage)
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
@@ -51,8 +51,7 @@ func _on_YesButton_pressed() -> void:
 	show_choices(false)
 	print("yes")
 	emit_signal("yes_chosen", this_stage)
-	if this_stage.ship_log != "":
-		emit_signal("append_to_ship_log", this_stage)
+	emit_signal("append_to_yes_accepted_quest_info", this_stage.id)
 
 
 func _on_NoButton_pressed() -> void:
