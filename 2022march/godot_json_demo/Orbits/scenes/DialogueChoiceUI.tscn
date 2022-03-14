@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/DialogueChoiceUI.gd" type="Script" id=1]
+[ext_resource path="res://art/DialogueBkgd.png" type="Texture" id=2]
 
 [node name="DialogueChoiceUI" type="Panel"]
 self_modulate = Color( 0.14902, 0.14902, 0.14902, 1 )
@@ -10,6 +11,16 @@ margin_right = 604.238
 margin_bottom = 105.297
 rect_min_size = Vector2( 600, 100 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color( 0.305882, 0.305882, 0.305882, 1 )
+margin_right = 627.0
+margin_bottom = 106.0
+texture = ExtResource( 2 )
+stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

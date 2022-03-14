@@ -8,7 +8,7 @@
 [ext_resource path="res://physics_scripts/Ship.gd" type="Script" id=6]
 [ext_resource path="res://art/sun.png" type="Texture" id=7]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
@@ -16,7 +16,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -24,7 +24,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
@@ -32,7 +32,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
@@ -40,42 +40,57 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Node2D" type="Node2D" groups=["Background"]]
+[node name="Node2D" type="Node2D" groups=[
+"Background",
+]]
 script = ExtResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 146, -118 )
-current = true
+position = Vector2( 357.124, 389.968 )
 
-[node name="Ship" type="AnimatedSprite" parent="." groups=["Traced"]]
-position = Vector2( 149, -127 )
-frames = SubResource( 3 )
+[node name="Ship" type="AnimatedSprite" parent="." groups=[
+"Traced",
+]]
+position = Vector2( 360.124, 380.968 )
+frames = SubResource( 1 )
 script = ExtResource( 6 )
 initial_v = Vector2( 0.447, 0.885 )
 
-[node name="Sun" type="AnimatedSprite" parent="." groups=["Planets", "Traced"]]
-position = Vector2( 246, -181 )
-frames = SubResource( 4 )
+[node name="Sun" type="AnimatedSprite" parent="." groups=[
+"Planets",
+"Traced",
+]]
+position = Vector2( 457.124, 326.968 )
+frames = SubResource( 2 )
 script = ExtResource( 3 )
 
-[node name="Earth" type="AnimatedSprite" parent="Sun" groups=["Planets", "Traced"]]
+[node name="Earth" type="AnimatedSprite" parent="Sun" groups=[
+"Planets",
+"Traced",
+]]
 position = Vector2( 202, -302 )
-frames = SubResource( 1 )
+frames = SubResource( 3 )
 script = ExtResource( 3 )
 clockwise = false
 eccentricity = 0.59
 mass = 10
 
-[node name="Moon" type="AnimatedSprite" parent="Sun/Earth" groups=["Planets", "Traced"]]
+[node name="Moon" type="AnimatedSprite" parent="Sun/Earth" groups=[
+"Planets",
+"Traced",
+]]
 position = Vector2( -102, -11 )
-frames = SubResource( 2 )
+frames = SubResource( 4 )
 script = ExtResource( 3 )
 clockwise = false
 mass = 1
 
-[node name="Moon2" type="AnimatedSprite" parent="Sun/Earth" groups=["Planets", "Traced"]]
+[node name="Moon2" type="AnimatedSprite" parent="Sun/Earth" groups=[
+"Planets",
+"Traced",
+]]
 position = Vector2( 97, -127 )
-frames = SubResource( 2 )
+frames = SubResource( 4 )
 script = ExtResource( 3 )
 eccentricity = 0.17
 mass = 1

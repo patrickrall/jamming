@@ -1,11 +1,12 @@
-extends Control
+extends Node
 
 
 # Declare member variables here. Examples:
-onready var json_label = $Label
-onready var ship_log = $RequestPanel/ScrollContainer/ShipLog
-onready var dialogue_choice_ui_parent = $ScrollContainer/VBoxContainer
+onready var json_label = $CanvasLayer/Label
+onready var ship_log = $CanvasLayer/RequestPanel/ScrollContainer/ShipLog
+onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
+onready var ui_inventory = $CanvasLayer/DEBUG_inventory
 
 var dict = {}
 var inventory = []
@@ -21,7 +22,7 @@ func _ready() -> void:
 	parse_jsondict_to_structs(dict) # updates all_stages
 	print(str(all_stages))
 	print("\n END ALL STAGES\n ")
-	arrive_at_planet(1,1)
+	arrive_at_planet(0,1)
 
 func arrive_at_planet(solar_system: int, planet: int):
 	var relevant_stages = get_relevant_stages_for_planet(solar_system, planet, inventory)
@@ -213,7 +214,7 @@ func _on_DEBUG_button_pressed() -> void:
 	update_inventory()
 
 func update_inventory():
-	$DEBUG_inventory.text = str(player_money) + "gold " + str(inventory)
+	ui_inventory.text = str(player_money) + "gold " + str(inventory)
 
 
 func _on_DEBUG_button3_pressed() -> void:
