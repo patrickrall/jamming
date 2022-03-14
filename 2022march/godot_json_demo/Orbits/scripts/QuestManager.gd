@@ -3,7 +3,7 @@ extends Control
 
 # Declare member variables here. Examples:
 onready var json_label = $Label
-onready var ship_log = $TextureRect2/ShipLog
+onready var ship_log = $RequestPanel/ScrollContainer/ShipLog
 onready var dialogue_choice_ui_parent = $ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
 
@@ -43,7 +43,8 @@ func arrive_at_planet(solar_system: int, planet: int):
 
 func on_append_to_ship_log(stage_idx: int) -> void:
 	# this stage has a component to record in the quest list of the player
-	if !stage_idx in accepted_requests:
+	print("append to ship log: " + str(stage_idx))
+	if !(stage_idx in accepted_requests):
 		accepted_requests.append(stage_idx)
 	else:
 		print("WARNING accepted request not added -- has request been added before?")
@@ -52,7 +53,7 @@ func on_append_to_ship_log(stage_idx: int) -> void:
 
 func on_yes_chosen(stage: Stage) -> void:
 	# the player fulfilled the quest ask
-	if (!accepted_requests.has(stage.id) and all_stages[stage.id].yes_accepted_quest_info != ""):
+	if !(stage.id in accepted_requests) and all_stages[stage.id].yes_accepted_quest_info != "":
 		accepted_requests.append(stage.id)
 	for reward in stage.yes_reward_items:
 		inventory.append(reward)
@@ -67,8 +68,10 @@ func on_yes_chosen(stage: Stage) -> void:
 
 func on_no_chosen(stage: Stage) -> void:
 	# the player refused the quest ask
-	if (accepted_requests.has(stage)):
-		accepted_requests.remove(stage)
+	if (stage.id in accepted_requests):
+		accepted_requests.remove(stage.id)
+	if (stage.dependent_stages in accepted_requests):
+		accepted_requests.remove(stage.dependent_stages)
 	for reward in stage.no_reward_items:
 		inventory.append(reward)
 	for cost in stage.no_cost_items:
@@ -86,6 +89,22 @@ func mark_complete(stage_idx: int)-> void:
 		all_stages[stage_idx].is_complete = true
 	else:
 		print("Warning: unable to find stage to mark complete")
+		return
+#	print("dependents:" + str(all_stages[stage_idx].dependent_stages))
+#	print("accepted:" + str(accepted_requests))
+	for dependent in all_stages[stage_idx].dependent_stages:
+		var idx = get_stage_idx(all_stages[stage_idx].quest_name, dependent)
+		accepted_requests.erase(idx)
+
+
+func get_stage_idx(quest_name: String, stage_name : String)-> int:
+	# find index of stage that has the given quest_name and stage_name
+	for i in range(all_stages.size()):
+		if quest_name == all_stages[i].quest_name:
+			if stage_name == all_stages[i].stage_name:
+				print("found idx=" + str(i) +  " of " + quest_name + " " + stage_name)
+				return i
+	return -1
 
 func parse_jsondict_to_structs(json_result) -> void:
 	# turn the json dictionary into a struct
@@ -98,39 +117,49 @@ func parse_jsondict_to_structs(json_result) -> void:
 	for quest_line in range(json_result.root.size()):
 		var dict_stages = json_result.root[quest_line]["stages"]
 		var quest_name = json_result.root[quest_line]["quest_name"]
-		for key in dict_stages.keys():
+		var stage_ids_of_this_quest = [] # list of id for all stages in this quest
+		for key in dict_stages.keys(): # note: unordered
 			var new_stage : Stage = Stage.new()
+			var dict = dict_stages[key] # the dictionary relevent to this stage
 			new_stage.quest_name = quest_name
-			new_stage.speaker_name = dict_stages[key]["speaker_name"]
-			new_stage.dialogue = dict_stages[key]["dialogue"]
-			new_stage.choices = dict_stages[key]["choices"]
-			if dict_stages[key].has("speaker_responses"):
-				new_stage.speaker_responses = dict_stages[key]["speaker_responses"]
-			new_stage.solar_system = dict_stages[key]["solar_system"]
-			new_stage.planet = dict_stages[key]["planet"]
-			if dict_stages[key].has("required_inventory"):
-				new_stage.required_inventory = dict_stages[key]["required_inventory"]
-			if dict_stages[key].has("required_money"):
-				new_stage.required_money = dict_stages[key]["required_money"]
-			if dict_stages[key].has("yes_accepted_quest_info"):
-				new_stage.yes_accepted_quest_info = dict_stages[key]["yes_accepted_quest_info"]
-			if dict_stages[key].has("is_complete"):
-				new_stage.is_complete = dict_stages[key]["is_complete"]
+			new_stage.stage_name = key
+			new_stage.speaker_name = dict["speaker_name"]
+			new_stage.dialogue = dict["dialogue"]
+			new_stage.choices = dict["choices"]
+			if dict.has("speaker_responses"):
+				new_stage.speaker_responses = dict["speaker_responses"]
+			new_stage.solar_system = dict["solar_system"]
+			new_stage.planet = dict["planet"]
+			if dict.has("required_inventory"):
+				new_stage.required_inventory = dict["required_inventory"]
+			if dict.has("required_money"):
+				new_stage.required_money = dict["required_money"]
+			if dict.has("yes_accepted_quest_info"):
+				new_stage.yes_accepted_quest_info = dict["yes_accepted_quest_info"]
+			if dict.has("is_complete"):
+				new_stage.is_complete = dict["is_complete"]
+			if dict.has("dependent_stages"):
+				new_stage.dependent_stages = dict["dependent_stages"]
+			elif key == "end": # the last stage in a quest will close out all ids in the quest
+				print("Dependents:" + str(dict_stages.keys()))
+				new_stage.dependent_stages = dict_stages.keys()
+				
 			# results of yes and no
-			if dict_stages[key].has("yes_money_change"):
-				new_stage.yes_money_change = dict_stages[key]["yes_money_change"]
-			if dict_stages[key].has("yes_cost_items"):
-				new_stage.yes_cost_items = dict_stages[key]["yes_cost_items"]
-			if dict_stages[key].has("yes_reward_items"):
-				new_stage.yes_reward_items = dict_stages[key]["yes_reward_items"]
-			if dict_stages[key].has("no_cost_items"):
-				new_stage.no_cost_items = dict_stages[key]["no_cost_items"]
-			if dict_stages[key].has("no_reward_items"):
-				new_stage.no_reward_items = dict_stages[key]["no_reward_items"]
-			if dict_stages[key].has("no_money_change"):
-				new_stage.no_money_change = dict_stages[key]["no_money_change"]
+			if dict.has("yes_money_change"):
+				new_stage.yes_money_change = dict["yes_money_change"]
+			if dict.has("yes_cost_items"):
+				new_stage.yes_cost_items = dict["yes_cost_items"]
+			if dict.has("yes_reward_items"):
+				new_stage.yes_reward_items = dict["yes_reward_items"]
+			if dict.has("no_cost_items"):
+				new_stage.no_cost_items = dict["no_cost_items"]
+			if dict.has("no_reward_items"):
+				new_stage.no_reward_items = dict["no_reward_items"]
+			if dict.has("no_money_change"):
+				new_stage.no_money_change = dict["no_money_change"]
 			
 			new_stage.id = all_stages.size()
+			stage_ids_of_this_quest.append(new_stage.id)
 			all_stages.append(new_stage)
 			
 			
@@ -166,7 +195,6 @@ func update_ship_log() -> void:
 	for stage_idx in accepted_requests:
 		var stage : Stage =  all_stages[stage_idx]
 		ship_log.text += stage.quest_name + ": " + stage.yes_accepted_quest_info
-
 
 #JSON
 func read_json2():

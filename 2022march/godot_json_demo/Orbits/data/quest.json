@@ -3,7 +3,7 @@
 		{
 				"quest_name": "Blob Shopper",
 				"stages": {
-					"0": {
+					"end": {
 						"solar_system": 1,
 						"planet": 1,
 						"speaker_name": "Sentient Beach Ball Alien",
@@ -49,7 +49,7 @@
 					"yes_money_change": -100,
 					"yes_reward_items": ["croissants"]
 				},
-				"2": {
+				"end": {
 					"required_inventory": [
 						"croissants"
 					],
