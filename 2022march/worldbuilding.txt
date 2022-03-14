@@ -1,4 +1,23 @@
-Star systems:
+Star systems - Planets
+1) Corin
+	1) Cork			2) Willow		3) Lux
+2) Wharf
+	1) Dyna 		2) Wane			3) Minnow 		4)Bass
+3) Silo
+	1) Garish
+4) Ringo
+	1) Trin 		2) Lang
+5) Millet
+	1) Stilt		2) Yard			3) Crash
+6) Brines
+	1) Brackish		2) Silt
+7) Super Massive Black Hole
+	1) Prime		2) Single		3) Escape		4) Streak		5) Event
+
+
+
+
+
 1) Corin (aka Corenne) - yellow dwarf - Home System
 	
 	a) Cork: Ocean Planet
@@ -58,8 +77,8 @@ Star systems:
 
 5) Millet - yellow dwarf
 
-	a) Yard: Middle Millet Planet - Amber Waves of Grain
 	b) Stilt: Smallest Millet Planet - Textile Heaven
+	a) Yard: Middle Millet Planet - Amber Waves of Grain
 	c) Crash: Biggest Millet Planet - To Beef or Not To Beef
 		The Millet planets all follow the same orbit, but out of sync, so millions of migrant workers travel between each of them in turn, reaping and planting when the season is right.
 		This means that Millet is a huge agriculture powerhouse, able to churn out tons of food for cheap.
