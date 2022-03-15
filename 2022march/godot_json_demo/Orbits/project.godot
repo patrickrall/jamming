@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Stage.gd"
 }, {
-"base": "AnimatedSprite",
+"base": "Node2D",
 "class": "Traceable",
 "language": "GDScript",
 "path": "res://physics_scripts/Traceable.gd"
@@ -38,7 +38,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Orbits"
+config/name="Star Truck"
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://art/Bread.png"
 

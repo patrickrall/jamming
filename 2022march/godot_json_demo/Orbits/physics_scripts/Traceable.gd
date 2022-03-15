@@ -1,5 +1,5 @@
 tool
-extends AnimatedSprite
+extends Node2D
 class_name Traceable
 
 var positions  # a cache of positions of this object

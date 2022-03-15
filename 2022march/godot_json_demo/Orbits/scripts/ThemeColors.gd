@@ -8,11 +8,11 @@ export var line_color : Color = Color("#ffefe2") # off-white physics lines
 
 export var theme : Theme = preload("res://fonts/base_theme.tres")
 
-# This script is a storage place for the color values and a pointer to the theme
-# used in this project. it does not enforce these colors.
+# This script is documentation for the color values and a pointer to the theme
+# used in this project. It does not enforce these colors.
 # To change the colors, edit the file base_theme.tres -- 
 # the theme editor shows previews of buttons, panels, etc.
 
 # Other settings to change with theme color:
-# Project Settings > Application > Default Clear Color
+# Project > Project Settings > Rendering > Environment > Default Clear Color
 
