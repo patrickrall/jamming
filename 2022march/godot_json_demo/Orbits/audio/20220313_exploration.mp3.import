@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/20220313_exploration.mp3-c6161587eb1f9194e3c1199cedd51467.mp3str"
+
+[deps]
+
+source_file="res://audio/20220313_exploration.mp3"
+dest_files=[ "res://.import/20220313_exploration.mp3-c6161587eb1f9194e3c1199cedd51467.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

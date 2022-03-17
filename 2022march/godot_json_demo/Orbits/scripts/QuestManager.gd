@@ -15,7 +15,7 @@ onready var system_spinbox = $CanvasLayer/DEBUG_button/SystemSpinBox
 onready var planet_spinbox = $CanvasLayer/DEBUG_button/PlanetSpinBox
 
 
-var dict = {}
+#var dict = {}
 var inventory = []
 var player_money : int = 1000
 var all_stages = [] # MASTER plot point tracker
@@ -25,7 +25,7 @@ var all_quests_path = "res://data//quest.json"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	dict = read_json2()
+	var dict = read_json2()
 	parse_jsondict_to_structs(dict) # updates all_stages
 	print(str(all_stages))
 	print("\n END ALL STAGES\n ")
@@ -145,43 +145,43 @@ func parse_jsondict_to_structs(json_result) -> void:
 		var stage_ids_of_this_quest = [] # list of id for all stages in this quest
 		for key in dict_stages.keys(): # note: unordered
 			var new_stage : Stage = Stage.new()
-			var dict = dict_stages[key] # the dictionary relevent to this stage
+			var d = dict_stages[key] # the dictionary relevent to this stage
 			new_stage.quest_name = quest_name
 			new_stage.stage_name = key
-			new_stage.speaker_name = dict["speaker_name"]
-			new_stage.dialogue = dict["dialogue"]
-			new_stage.choices = dict["choices"]
-			if dict.has("speaker_responses"):
-				new_stage.speaker_responses = dict["speaker_responses"]
-			new_stage.solar_system = dict["solar_system"]
-			new_stage.planet = dict["planet"]
-			if dict.has("required_inventory"):
-				new_stage.required_inventory = dict["required_inventory"]
-			if dict.has("required_money"):
-				new_stage.required_money = dict["required_money"]
-			if dict.has("yes_accepted_quest_info"):
-				new_stage.yes_accepted_quest_info = dict["yes_accepted_quest_info"]
-			if dict.has("is_complete"):
-				new_stage.is_complete = dict["is_complete"]
-			if dict.has("dependent_stages"):
-				new_stage.dependent_stages = dict["dependent_stages"]
+			new_stage.speaker_name = d["speaker_name"]
+			new_stage.dialogue = d["dialogue"]
+			new_stage.choices = d["choices"]
+			if d.has("speaker_responses"):
+				new_stage.speaker_responses = d["speaker_responses"]
+			new_stage.solar_system = d["solar_system"]
+			new_stage.planet = d["planet"]
+			if d.has("required_inventory"):
+				new_stage.required_inventory = d["required_inventory"]
+			if d.has("required_money"):
+				new_stage.required_money = d["required_money"]
+			if d.has("yes_accepted_quest_info"):
+				new_stage.yes_accepted_quest_info = d["yes_accepted_quest_info"]
+			if d.has("is_complete"):
+				new_stage.is_complete = d["is_complete"]
+			if d.has("dependent_stages"):
+				new_stage.dependent_stages = d["dependent_stages"]
 			elif key == "end": # the last stage in a quest will close out all ids in the quest
 				print("Dependents:" + str(dict_stages.keys()))
 				new_stage.dependent_stages = dict_stages.keys()
 				
 			# results of yes and no
-			if dict.has("yes_money_change"):
-				new_stage.yes_money_change = dict["yes_money_change"]
-			if dict.has("yes_cost_items"):
-				new_stage.yes_cost_items = dict["yes_cost_items"]
-			if dict.has("yes_reward_items"):
-				new_stage.yes_reward_items = dict["yes_reward_items"]
-			if dict.has("no_cost_items"):
-				new_stage.no_cost_items = dict["no_cost_items"]
-			if dict.has("no_reward_items"):
-				new_stage.no_reward_items = dict["no_reward_items"]
-			if dict.has("no_money_change"):
-				new_stage.no_money_change = dict["no_money_change"]
+			if d.has("yes_money_change"):
+				new_stage.yes_money_change = d["yes_money_change"]
+			if d.has("yes_cost_items"):
+				new_stage.yes_cost_items = d["yes_cost_items"]
+			if d.has("yes_reward_items"):
+				new_stage.yes_reward_items = d["yes_reward_items"]
+			if d.has("no_cost_items"):
+				new_stage.no_cost_items = d["no_cost_items"]
+			if d.has("no_reward_items"):
+				new_stage.no_reward_items = d["no_reward_items"]
+			if d.has("no_money_change"):
+				new_stage.no_money_change = d["no_money_change"]
 			
 			new_stage.id = all_stages.size()
 			stage_ids_of_this_quest.append(new_stage.id)

@@ -31,16 +31,15 @@ __meta__ = {
 [node name="Label" type="Label" parent="CanvasLayer" groups=[
 "font",
 ]]
-visible = false
-margin_left = 438.0
-margin_top = 271.0
-margin_right = 631.0
-margin_bottom = 354.0
+margin_left = 451.454
+margin_top = 222.228
+margin_right = 644.454
+margin_bottom = 305.228
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
 WASD or arrow keys = pan
-I, O or mouse scroll = zoom
+I, O = zoom in, zoom out
 mouse to click buttons"
 autowrap = true
 __meta__ = {

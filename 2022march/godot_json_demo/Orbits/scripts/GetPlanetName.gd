@@ -9,7 +9,7 @@ var planets = [\
 				["Brackish", "Silt"],\
 				["Prime", "Single", "Escape", "Streak", "Event"]\
 				]
-var systems = ["Corin", "Wharf", "Silo", "Ringo", "Millet", "Brines","Super Massive Black Hole"]
+var systems = ["Corin", "Wharf", "Silo", "Ringo", "Millet", "Brines", "Super Massive Black Hole"]
 
 
 func _ready():

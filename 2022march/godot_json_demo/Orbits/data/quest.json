@@ -19,8 +19,8 @@
 					"yes_accepted_quest_info": "Bass: Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, Sun Cakes from Trin"
 				},
 				"Papua Fruit Shells from Garish": {
-					"solar_system": 1,
-					"planet": 3,
+					"solar_system": 3,
+					"planet": 1,
 					"speaker_name": "Enormous Lounging Red Squirrel",
 					"dialogue": "Oi boddy. Yeah, you, boddy, you take these fruit shells away and I won' gnaw yer ship, mmm? I jus' ate em and I don' wanna clean up...",
 					"choices": [
@@ -35,7 +35,7 @@
 					"yes_reward_items": ["papua fruit shells"]
 				},
 				"Giant Mongoose Liver from Dyna": {
-					"solar_system": 3,
+					"solar_system": 2,
 					"planet": 1,
 					"speaker_name": "Sniffly Person in Mongoose Costume",
 					"dialogue": "Fresh giant mongoose liver! Limited stock! Liver and let liver! Buy now! -sniffle- Liver your best life!",
