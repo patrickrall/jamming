@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 # A Stage is one phase of a quest. It contains a single, brief conversation wiht
 # one NPC speaker located in the specified solar_system and planet. This conversation
 # can only happen while the player is on that planet.
@@ -23,9 +23,9 @@ export var quest_name: String = "default" # the title of this set of stages ex. 
 export var stage_name: String = "default" # the name of this conversation
 export var speaker_name: String = "NPC"   # the name of the speaker in this stage ex. "Chef"
 export var dialogue: String = "Will you do something for me?" # the request ex. "Please bring me chili, a mousepad and sparklers"
-export var choices = ["Yes", "No"] 		 # OPT: the options displayed to the player to indicate accepting[0] or rejecting[1] the request
+export var choices = ["Yes", "No", "Maybe later"] 	# OPT: the options displayed to the player to indicate accepting[0] or rejecting[1] the request
 export var speaker_responses = ["Great!", "Ugh..."] # OPT: the npc speaker's response to the player accepting[0] or rejecting[1] the request
-export var solar_system = 0 #			 which solar system the request is made in
+export var solar_system = 0 			# which solar system the request is made in
 export var planet = 0					# which planet the request is made in
 export var required_inventory = [] 		# OPT: what the player must have in inventory to see this request
 export var required_money = 0			# OPT: the minimum amoutn of money the player must have to see this request

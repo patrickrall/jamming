@@ -10,6 +10,7 @@ onready var ui_speaker_name = $VBoxContainer/SpeakerName
 onready var ui_dialogue = $VBoxContainer/Dialogue
 onready var ui_yes_button = $ChoicesParent/YesButton
 onready var ui_no_button = $ChoicesParent/NoButton
+onready var ui_ignore_button = $ChoicesParent/IgnoreButton
 onready var ui_choices_parent = $ChoicesParent
 
 var this_stage : Stage = null
@@ -19,14 +20,19 @@ func init(stage : Stage) -> void:
 	this_stage = stage
 	if stage == null:
 		return
+	# initialization is set here since some calls occur before onready runs
 	ui_speaker_name = $VBoxContainer/SpeakerName
 	ui_dialogue = $VBoxContainer/Dialogue
 	ui_yes_button = $ChoicesParent/YesButton
 	ui_no_button = $ChoicesParent/NoButton
+	ui_ignore_button = $ChoicesParent/IgnoreButton
 	ui_choices_parent = $ChoicesParent
 	update_speaker_name(stage.speaker_name)
 	update_dialogue(stage.dialogue)
-	update_choices(stage.choices[0], stage.choices[1])
+	if stage.choices.size() > 2:
+		update_choices(stage.choices[0], stage.choices[1], stage.choices[2])
+	else:
+		update_choices(stage.choices[0], stage.choices[1])
 
 # UI
 func update_speaker_name(name : String)->void:
@@ -36,9 +42,10 @@ func update_speaker_name(name : String)->void:
 func update_dialogue(line : String)->void:
 	ui_dialogue.text = line
 	
-func update_choices(yes_choice: String, no_choice: String) -> void:
+func update_choices(yes_choice: String, no_choice: String, ignore_choice: String = "I'll get back to you later") -> void:
 	ui_yes_button.text = yes_choice
 	ui_no_button.text = no_choice
+	ui_ignore_button.text = ignore_choice
 	if yes_choice != "" and no_choice != "":
 		show_choices(true)
 

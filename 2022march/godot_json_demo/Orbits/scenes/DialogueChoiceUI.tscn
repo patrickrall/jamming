@@ -39,8 +39,8 @@ tracks/0/keys = {
 margin_left = 4.0
 margin_top = 5.0
 margin_right = 234.0
-margin_bottom = 205.0
-rect_min_size = Vector2( 230, 200 )
+margin_bottom = 245.0
+rect_min_size = Vector2( 230, 240 )
 theme = ExtResource( 4 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -59,10 +59,10 @@ __meta__ = {
 }
 
 [node name="ChoicesParent" type="VBoxContainer" parent="."]
-margin_left = 4.75507
-margin_top = 107.062
-margin_right = 217.755
-margin_bottom = 175.062
+margin_left = 5.50425
+margin_top = 163.248
+margin_right = 218.504
+margin_bottom = 231.248
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -70,7 +70,7 @@ __meta__ = {
 [node name="YesButton" type="Button" parent="ChoicesParent" groups=[
 "font",
 ]]
-margin_right = 213.0
+margin_right = 212.0
 margin_bottom = 20.0
 size_flags_vertical = 3
 theme = ExtResource( 4 )
@@ -80,7 +80,7 @@ text = "Yes"
 "font",
 ]]
 margin_top = 24.0
-margin_right = 213.0
+margin_right = 212.0
 margin_bottom = 44.0
 size_flags_vertical = 3
 theme = ExtResource( 4 )
@@ -90,17 +90,17 @@ text = "No"
 "font",
 ]]
 margin_top = 48.0
-margin_right = 213.0
+margin_right = 212.0
 margin_bottom = 68.0
 size_flags_vertical = 3
 theme = ExtResource( 4 )
-text = "I'll get back to you later"
+text = "Maybe later"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 8.0
 margin_top = 7.0
 margin_right = 218.0
-margin_bottom = 99.0
+margin_bottom = 157.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

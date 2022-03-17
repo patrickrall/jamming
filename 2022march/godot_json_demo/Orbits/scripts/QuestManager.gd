@@ -1,7 +1,7 @@
 extends Node
 
 
-# Declare member variables here. Examples:
+# Declare member variables here. 
 onready var json_label = $CanvasLayer/Label
 onready var ship_log = $CanvasLayer/OngoingQuests/ScrollContainer/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
@@ -10,13 +10,18 @@ onready var ui_inventory = $CanvasLayer/Inventory
 onready var planet_request_toggle = $CanvasLayer/TogglePlanetRequests
 onready var ship_log_toggle = $CanvasLayer/ToggleShipLog
 
+onready var DEBUG_label = $CanvasLayer/DEBUG_label
+onready var system_spinbox = $CanvasLayer/DEBUG_button/SystemSpinBox
+onready var planet_spinbox = $CanvasLayer/DEBUG_button/PlanetSpinBox
+
+
 var dict = {}
 var inventory = []
 var player_money : int = 1000
 var all_stages = [] # MASTER plot point tracker
 var accepted_requests = [] 
 var current_stage : Stage = null
-
+var all_quests_path = "res://data//quest.json"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -77,7 +82,7 @@ func on_yes_chosen(stage: Stage) -> void:
 		inventory.append(reward)
 	for cost in stage.yes_cost_items:
 		if inventory.has(cost):
-			inventory.remove(cost)
+			inventory.erase(cost)
 	player_money += stage.yes_money_change
 	mark_complete(stage.id)
 	update_ship_log()
@@ -95,9 +100,9 @@ func on_no_chosen(stage: Stage) -> void:
 		inventory.append(reward)
 	for cost in stage.no_cost_items:
 		if inventory.has(cost):
-			inventory.remove(cost)
+			inventory.erase(cost)
 	player_money += stage.no_money_change
-	mark_complete(stage.id)
+	#mark_complete(stage.id) # controls whether the player sees this ask again
 	update_ship_log()
 	update_inventory()
 	update_planet_request_toggle()
@@ -212,30 +217,34 @@ func get_relevant_stages_for_planet(
 func update_ship_log() -> void:
 	ship_log_toggle.text = str(accepted_requests.size())
 	print("ship log update for " + str(accepted_requests))
-	ship_log.text = "SHIP LOG:\n"
+	ship_log.text = "Quests:\n"
 	for stage_idx in accepted_requests:
 		var stage : Stage =  all_stages[stage_idx]
-		ship_log.text += stage.quest_name + ": " + stage.yes_accepted_quest_info
+		ship_log.text += stage.yes_accepted_quest_info + "\n"
 
 
 #JSON
 func read_json2():
 	var file = File.new()
-	file.open("res://data//quest.json", file.READ)
+	file.open(all_quests_path, file.READ)
 	var text = file.get_as_text()
 	#dict.parse_json(text)
 	var result_json = JSON.parse(text)
 	file.close()
 	# print something from the dictionnary for testing.
+	DEBUG_label.text = text
 	return result_json.result
 
 
 func _on_DEBUG_button_pressed() -> void:
-	inventory.append("croissants")
-	update_inventory()
+	system_spinbox.value = clamp(system_spinbox.value, 1, 7) # 1-7 are valid solar systems
+	planet_spinbox.value = clamp(planet_spinbox.value, 1, 5) # 1-7 are valid solar systems
+	arrive_at_planet(system_spinbox.value, planet_spinbox.value)
+#	inventory.append("croissants")
+#	update_inventory()
 
 func update_inventory():
-	ui_inventory.text = str(player_money) + " gold " + str(inventory)
+	ui_inventory.text = str(player_money) + "g\n" + str(inventory)
 
 
 func _on_DEBUG_button3_pressed() -> void:

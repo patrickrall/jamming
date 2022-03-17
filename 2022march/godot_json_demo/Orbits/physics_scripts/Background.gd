@@ -3,12 +3,16 @@ extends Area2D
 
 onready var origin_node = get_node("Corin/Willow")
 
+onready var cam = $CameraEffects/KinematicBody2D/Camera2D
+onready var kinebody = $CameraEffects/KinematicBody2D
+onready var shape = $CameraEffects/KinematicBody2D/CollisionShape2D
+
 func _draw():
 	
 	# sloppy way of getting viewport.
-	var kinebody = get_node("KinematicBody2D")
-	var cam = get_node("KinematicBody2D/Camera2D")
-	var shape = get_node("KinematicBody2D/CollisionShape2D")
+	#var kinebody = get_node("CameraEffects/KinematicBody2D")
+	#var cam = get_node("KinematicBody2D/Camera2D")
+	#var shape = get_node("CameraEffects/KinematicBody2D/CollisionShape2D")
 	var viewport = Rect2(kinebody.position.x, kinebody.position.y,
 						 shape.shape.extents.x * cam.zoom.x * 2,
 						 shape.shape.extents.y * cam.zoom.y * 2)

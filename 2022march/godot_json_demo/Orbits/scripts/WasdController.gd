@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 # Controls a camera wiht WASD to move 2d and I and O to zoom in and out
 onready var cam = $Camera2D
+onready var parallax_bkdg = $"../ParallaxBackground"
 
 var speed = 200
 var zoom_speed = 2
@@ -30,20 +31,13 @@ export var pos_duration := 0.4
 
 # We store a reference to the scene's tween node.
 onready var tween: Tween = $Camera2D/Tween
-
-
-##func _unhandled_input(_event: InputEvent) -> void:
-#func _process(delta: float) -> void:
-#	if Input.is_action_pressed("right")  or Input.is_action_pressed("left") \
-#		or Input.is_action_pressed("down") or Input.is_action_pressed("up"):
-#		move(delta)
-#	if Input.is_action_pressed("zoom_out") or Input.is_action_pressed("zoom_in"):
-#		zoom(delta)
+onready var tweenCollide: Tween = $CollisionShape2D/TweenColl
+onready var collide = $CollisionShape2D
+# How fast the starry sky moves as the camera moves
+const PARALLAX_RATE = 0.2 
 
 func _unhandled_input(event):
 	if event.is_action_pressed("zoom_in"):
-		# Inside a given class, we need to either write `self._zoom_level = ...` or explicitly
-		# call the setter function to use it.
 		_set_zoom_level(_zoom_level - zoom_factor)
 	if event.is_action_pressed("zoom_out"):
 		_set_zoom_level(_zoom_level + zoom_factor)
@@ -52,13 +46,6 @@ func _unhandled_input(event):
 		_set_pos(int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left")), \
 			int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up")))
 
-#func move(delta):
-#	move_direction.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
-#	move_direction.y = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
-#	var motion = move_direction.normalized() * speed
-#	#cam.position += motion * delta
-#	move_and_slide(motion)
-	
 	
 func _set_pos(deltaX: float, deltaY : float) -> void:
 	# print(tween.is_active())
@@ -77,6 +64,8 @@ func _set_pos(deltaX: float, deltaY : float) -> void:
 		tween.EASE_OUT
 	)
 	tween.start()
+	
+	parallax_bkdg.offset += PARALLAX_RATE * Vector2(-deltaX, -deltaY)
 
 func _set_zoom_level(value: float) -> void:
 	# We limit the value between `min_zoom` and `max_zoom`
@@ -94,6 +83,18 @@ func _set_zoom_level(value: float) -> void:
 		tween.EASE_OUT
 	)
 	tween.start()
+		
+	tweenCollide.interpolate_property(
+		collide,
+		"scale",
+		collide.scale,
+		Vector2(_zoom_level, _zoom_level),
+		zoom_duration,
+		tweenCollide.TRANS_SINE,
+		# Easing out means we start fast and slow down as we reach the target value.
+		tweenCollide.EASE_OUT
+	)
+	tweenCollide.start()
 	
 
 
