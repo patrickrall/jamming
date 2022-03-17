@@ -17,84 +17,61 @@
 [ext_resource path="res://art/suns_planets/Sol-1.png" type="Texture" id=15]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 312.971, 171.493 )
+extents = Vector2( 320, 180 )
 
-[node name="physics_universe" type="Node2D" groups=[
-"Background",
-]]
+[node name="Area2D" type="Area2D" groups=["Background"]]
 script = ExtResource( 4 )
 
-[node name="Ship" type="Sprite" parent="." groups=[
-"Traced",
-]]
-position = Vector2( 367.675, 131.785 )
+[node name="Ship" type="Sprite" parent="." groups=["Traced"]]
+position = Vector2( 548, 118 )
 texture = ExtResource( 5 )
 script = ExtResource( 6 )
+initial_v = Vector2( -0.091, 0 )
 
-[node name="Corin" type="Sprite" parent="." groups=[
-"Planets",
-"Traced",
-]]
+[node name="Corin" type="Sprite" parent="." groups=["Planets", "Traced"]]
 position = Vector2( -169.926, 427.446 )
 texture = ExtResource( 15 )
 script = ExtResource( 3 )
 
 [node name="Cork" parent="Corin" instance=ExtResource( 1 )]
-position = Vector2( 281.524, -285.088 )
+position = Vector2( 318.926, -290.446 )
 texture = ExtResource( 10 )
+mass = 10
 
-[node name="Willow" type="Sprite" parent="Corin" groups=[
-"Planets",
-"Traced",
-]]
+[node name="Willow" type="Sprite" parent="Corin" groups=["Planets", "Traced"]]
 position = Vector2( 696.447, -244.819 )
+scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 11 )
 script = ExtResource( 3 )
+mass = 10
 
-[node name="Lux" type="Sprite" parent="Corin" groups=[
-"Planets",
-"Traced",
-]]
-position = Vector2( 1103.44, -59.8217 )
+[node name="Lux" type="Sprite" parent="Corin" groups=["Planets", "Traced"]]
+position = Vector2( 1012.93, -310.446 )
 texture = ExtResource( 12 )
 script = ExtResource( 3 )
+mass = 10
 
-[node name="Wharf" type="Sprite" parent="." groups=[
-"Planets",
-"Traced",
-]]
+[node name="Wharf" type="Sprite" parent="." groups=["Planets", "Traced"]]
 position = Vector2( 10740.5, 322.059 )
 texture = ExtResource( 7 )
 script = ExtResource( 3 )
 
-[node name="Dyna" type="Sprite" parent="Wharf" groups=[
-"Planets",
-"Traced",
-]]
+[node name="Dyna" type="Sprite" parent="Wharf" groups=["Planets", "Traced"]]
 position = Vector2( 342.755, 52.9816 )
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
 
-[node name="Wane" type="Sprite" parent="Wharf" groups=[
-"Planets",
-"Traced",
-]]
+[node name="Wane" type="Sprite" parent="Wharf" groups=["Planets", "Traced"]]
 position = Vector2( 1555.85, -415.096 )
 texture = ExtResource( 14 )
 script = ExtResource( 3 )
 
-[node name="Minnow" type="Sprite" parent="Wharf/Wane" groups=[
-"Planets",
-"Traced",
-]]
+[node name="Minnow" type="Sprite" parent="Wharf/Wane" groups=["Planets", "Traced"]]
 position = Vector2( 186.223, 395.765 )
 texture = ExtResource( 13 )
 script = ExtResource( 3 )
 
-[node name="Bass" type="Sprite" parent="Wharf/Wane" groups=[
-"Planets",
-"Traced",
-]]
+[node name="Bass" type="Sprite" parent="Wharf/Wane" groups=["Planets", "Traced"]]
 position = Vector2( -143.99, -190.523 )
 texture = ExtResource( 9 )
 script = ExtResource( 3 )
@@ -104,11 +81,10 @@ script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 visible = false
-position = Vector2( 316.143, 178.299 )
 shape = SubResource( 5 )
 
 [node name="Camera2D" type="Camera2D" parent="KinematicBody2D"]
-position = Vector2( 322.136, 179.797 )
+position = Vector2( 320, 180 )
 current = true
 
 [node name="Tween" type="Tween" parent="KinematicBody2D/Camera2D"]

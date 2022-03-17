@@ -32,11 +32,11 @@ func compute_pos_data(_t):
 	return [Vector2(0,0), null]
 
 func set_time(t):
-	assert(t > t_offset) # can't rewind time
+	assert(t >= t_offset) # can't rewind time
 	if (t - t_offset == 0): return # nothing to do
 	
-	# remove items from the front of 'positions' until positions[0] is now
-	while t - t_offset > 1:
+	# remove items from the front of 'positions'
+	while t - t_offset > 10:
 		t_offset += 1
 		positions.pop_front()
 		data.pop_front()

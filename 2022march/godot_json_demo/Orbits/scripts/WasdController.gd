@@ -61,7 +61,7 @@ func _unhandled_input(event):
 	
 	
 func _set_pos(deltaX: float, deltaY : float) -> void:
-	print(tween.is_active())
+	# print(tween.is_active())
 	# We limit the value between `min_zoom` and `max_zoom`
 	#_zoom_level = clamp(value, min_zoom, max_zoom)
 	# Then, we ask the tween node to animate the camera's `zoom` property from its current value
@@ -70,7 +70,7 @@ func _set_pos(deltaX: float, deltaY : float) -> void:
 		self,
 		"position",
 		position,
-		position + pos_factor * Vector2(deltaX, deltaY),
+		position + pos_factor * Vector2(deltaX, deltaY) * _zoom_level, # move slower if zoomed in
 		pos_duration,
 		tween.TRANS_LINEAR,
 		# Easing out means we start fast and slow down as we reach the target value.
@@ -94,6 +94,9 @@ func _set_zoom_level(value: float) -> void:
 		tween.EASE_OUT
 	)
 	tween.start()
+	
+
+
 #
 #func zoom(delta):
 #	zoom_direction = int(Input.is_action_pressed("zoom_out")) - int(Input.is_action_pressed("zoom_in"))

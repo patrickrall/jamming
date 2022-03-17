@@ -16,6 +16,10 @@ func touch():
 	focal_parameter = position.length() * (1 + eccentricity)
 	theta_0 = position.angle()
 	
+	if Engine.editor_hint:
+		positions = []
+		data = []
+	
 	if get_tree() != null:
 		var bgs = get_tree().get_nodes_in_group("Background")
 		if len(bgs) >= 0: bgs[0].update()	
@@ -54,7 +58,7 @@ func compute_pos_data(t):
 	
 	var old_r = focal_parameter / (1 + eccentricity * cos(s*prv_theta))
 	
-	var new_theta = prv_theta + 3e2/(old_r*old_r)
+	var new_theta = prv_theta + 15e2/(old_r*old_r)
 	
 	var r = focal_parameter / (1 + eccentricity * cos(s*new_theta))
 	
