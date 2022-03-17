@@ -65,6 +65,39 @@
 					],
 					"yes_reward_items": ["sun cakes"]
 				},
+				"Brackish Soup": {
+					"solar_system": 6,
+					"planet": 1,
+					"speaker_name": "6-Legged Scaled Bug Enthusiast",
+					"dialogue": "Ah, welcome, stranger! Would you like some soup? It's swamp-fresh!",
+					"choices": [
+						"Thank... you...",
+						"(Avoid eye contact)"
+					],
+					"speaker_responses": [
+						"Enjoy your taste of Brackish hospitality!",
+						"Ah, you're focused on searching for 6-legged scaled bugs too! I won't disturb you, then."
+					],
+					"yes_reward_items": ["brackish soup"]
+				},
+				"Rival Chef": {
+					"required_inventory": [
+						"brackish soup"
+					],
+					"solar_system": 2,
+					"planet": 4,
+					"speaker_name": "Salty Restaurant Reviewer On Top of Restaurant Sign",
+					"dialogue": "Nothing will make me happy today. So I will sit up here to annoy LeStarr.",
+					"choices": [
+						"(Offer brackish soup)",
+						"(Avoid eye contact)"
+					],
+					"speaker_responses": [
+						"Oh! Oh! How perfectly savory! Are you from LeStarr's restaurant? I hate the head chef, but you-- you-- have promise! Mm! I will give LeStarr one more chance.",
+						"... I miss Brackish water..."
+					],
+					"yes_cost_items": ["brackish soup"] 
+				},
 				"end":{
 					"required_inventory": [
 						"papua fruit shells", "giant mongoose liver", "sun cakes"

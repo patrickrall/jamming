@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/QuestManager.gd" type="Script" id=1]
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://art/Square.png" type="Texture" id=4]
 [ext_resource path="res://fonts/base_theme.tres" type="Theme" id=5]
 [ext_resource path="res://art/planet.png" type="Texture" id=6]
+[ext_resource path="res://scripts/GetPlanetName.gd" type="Script" id=7]
 [ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=8]
 [ext_resource path="res://art/ship.png" type="Texture" id=9]
 
@@ -102,6 +103,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PlanetName" type="Label" parent="CanvasLayer/DEBUG_button"]
+margin_left = 0.22229
+margin_top = -23.545
+margin_right = 131.222
+margin_bottom = -6.54501
+script = ExtResource( 7 )
+
 [node name="Label" type="Label" parent="CanvasLayer/DEBUG_button"]
 margin_left = -144.486
 margin_top = -25.1984
@@ -115,8 +123,11 @@ margin_top = -6.92957
 margin_right = -73.4109
 margin_bottom = 20.0704
 min_value = 1.0
-max_value = 5.0
+max_value = 7.0
 value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlanetSpinBox" type="SpinBox" parent="CanvasLayer/DEBUG_button"]
 margin_left = -69.9257
@@ -211,6 +222,9 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
+[connection signal="value_changed" from="CanvasLayer/DEBUG_button/SystemSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_SystemSpinBox_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/DEBUG_button/PlanetSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_PlanetSpinBox_value_changed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button2" to="." method="_on_DEBUG_button2_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
 [connection signal="pressed" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/OngoingQuests" method="_on_ToggleShipLog_pressed"]
