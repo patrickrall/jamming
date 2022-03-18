@@ -1,14 +1,15 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/SunPlanet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://art/suns_planets/Dyna.png" type="Texture" id=2]
-[ext_resource path="res://physics_scripts/Planet.gd" type="Script" id=3]
+[ext_resource path="res://art/suns_planets/Wane.png" type="Texture" id=3]
 [ext_resource path="res://physics_scripts/Background.gd" type="Script" id=4]
 [ext_resource path="res://art/ship.png" type="Texture" id=5]
 [ext_resource path="res://physics_scripts/Ship.gd" type="Script" id=6]
 [ext_resource path="res://art/sun.png" type="Texture" id=7]
 [ext_resource path="res://scripts/WasdController.gd" type="Script" id=8]
 [ext_resource path="res://art/suns_planets/Bass.png" type="Texture" id=9]
+[ext_resource path="res://art/suns_planets/Garish.png" type="Texture" id=10]
 [ext_resource path="res://art/suns_planets/willow.png" type="Texture" id=11]
 [ext_resource path="res://art/suns_planets/Lux.png" type="Texture" id=12]
 [ext_resource path="res://art/suns_planets/minnow.png" type="Texture" id=13]
@@ -31,38 +32,41 @@ texture = ExtResource( 5 )
 script = ExtResource( 6 )
 initial_v = Vector2( -0.091, 0 )
 
-[node name="Corin" type="Sprite" parent="." groups=[
-"Planets",
-"Traced",
-]]
+[node name="Corin" parent="." instance=ExtResource( 1 )]
 position = Vector2( -169.926, 427.446 )
+scale = Vector2( 3, 3 )
 texture = ExtResource( 15 )
-script = ExtResource( 3 )
+mass = 200
 
 [node name="Cork" parent="Corin" instance=ExtResource( 1 )]
 position = Vector2( 309.45, -138.748 )
+scale = Vector2( 0.05, 0.05 )
 
 [node name="Willow" parent="Corin" instance=ExtResource( 1 )]
 position = Vector2( 696.447, -244.819 )
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 11 )
 
 [node name="Lux" parent="Corin" instance=ExtResource( 1 )]
 position = Vector2( 1014.36, -311.607 )
+scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 12 )
 
 [node name="Wharf" parent="." instance=ExtResource( 1 )]
 position = Vector2( -663.043, -6725.59 )
-texture = ExtResource( 7 )
-mass = 100
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
+mass = 200
 
 [node name="Dyna" parent="Wharf" instance=ExtResource( 1 )]
 position = Vector2( 342.755, 52.9814 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
 [node name="Wane" parent="Wharf" instance=ExtResource( 1 )]
 position = Vector2( 1555.85, -415.096 )
-texture = ExtResource( 2 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
 
 [node name="Minnow2" parent="Wharf/Wane" instance=ExtResource( 1 )]
 position = Vector2( -1213.09, 468.078 )
@@ -74,25 +78,30 @@ texture = ExtResource( 9 )
 
 [node name="Silo" parent="." instance=ExtResource( 1 )]
 position = Vector2( 5493.6, -5783.33 )
-texture = ExtResource( 7 )
-mass = 100
+scale = Vector2( 3, 3 )
+texture = ExtResource( 15 )
 
 [node name="Garish" parent="Silo" instance=ExtResource( 1 )]
 position = Vector2( 342.755, 52.9814 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 10 )
 
 [node name="Ringo" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8320.39, -5831.79 )
-texture = ExtResource( 7 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 15 )
 mass = 100
 
 [node name="Trin" parent="Ringo" instance=ExtResource( 1 )]
 position = Vector2( 342.755, 52.9814 )
+scale = Vector2( 0.5, 0.5 )
 
 [node name="Lang" parent="Ringo" instance=ExtResource( 1 )]
 position = Vector2( 856.492, 110.063 )
 
 [node name="Millet" parent="." instance=ExtResource( 1 )]
 position = Vector2( 10311.6, -2979.47 )
+texture = ExtResource( 15 )
 mass = 100
 
 [node name="Stilt" parent="Millet" instance=ExtResource( 1 )]
@@ -106,6 +115,7 @@ position = Vector2( 1160.93, 376.446 )
 
 [node name="Brines" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8266.57, 1137.56 )
+texture = ExtResource( 15 )
 mass = 100
 
 [node name="Brackish" parent="Brines" instance=ExtResource( 1 )]
@@ -116,23 +126,29 @@ position = Vector2( 856.492, 110.064 )
 
 [node name="SMBH" parent="." instance=ExtResource( 1 )]
 position = Vector2( 3734.8, -2901.59 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 7 )
 mass = 1000
 
 [node name="Prime" parent="SMBH" instance=ExtResource( 1 )]
 position = Vector2( 342.755, 52.9817 )
+scale = Vector2( 0.2, 0.2 )
 
 [node name="Single" parent="SMBH" instance=ExtResource( 1 )]
 position = Vector2( 856.492, 110.064 )
+scale = Vector2( 0.2, 0.2 )
 
 [node name="Escape" parent="SMBH" instance=ExtResource( 1 )]
-position = Vector2( 1338.38, 725.698 )
+position = Vector2( 1166.94, 351.071 )
+scale = Vector2( 0.2, 0.2 )
 
 [node name="Streak" parent="SMBH" instance=ExtResource( 1 )]
-position = Vector2( 1852.11, 782.78 )
+position = Vector2( 1312.39, 547.845 )
+scale = Vector2( 0.2, 0.2 )
 
 [node name="Event" parent="SMBH" instance=ExtResource( 1 )]
-position = Vector2( 2551.74, 459.876 )
+position = Vector2( 1675.5, 504.323 )
+scale = Vector2( 0.2, 0.2 )
 
 [node name="CameraEffects" type="Node" parent="."]
 
@@ -156,6 +172,6 @@ current = true
 
 [node name="Timer" type="Timer" parent="CameraEffects/KinematicBody2D"]
 
-[node name="ParallaxBackground" parent="CameraEffects" instance=ExtResource( 16 )]
+[node name="ParallaxBackground" parent="." instance=ExtResource( 16 )]
 
 [connection signal="timeout" from="CameraEffects/KinematicBody2D/Timer" to="CameraEffects/KinematicBody2D" method="_on_Timer_timeout"]

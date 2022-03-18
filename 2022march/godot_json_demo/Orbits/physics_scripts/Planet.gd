@@ -23,7 +23,8 @@ func touch():
 	
 	if get_tree() != null:
 		var bgs = get_tree().get_nodes_in_group("Background")
-		if len(bgs) >= 0: bgs[0].update()	
+		if len(bgs) > 0: 
+			bgs[0].update()	
 
 func _set_clockwise(flag):
 	clockwise = flag

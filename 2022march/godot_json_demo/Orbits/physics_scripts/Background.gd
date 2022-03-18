@@ -20,7 +20,7 @@ func _draw():
 	var traced = get_tree().get_nodes_in_group("Traced")
 	var traced_in_viewport = []
 	for tr in traced:
-		if viewport.has_point(tr.get_pos(global_t)):
+		if tr.is_within_camera_bounds:
 			traced_in_viewport.append(tr)
 	
 	if len(traced_in_viewport) == 0: return

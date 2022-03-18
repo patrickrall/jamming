@@ -12,9 +12,9 @@ var zoom = 2
 var zoom_direction = 0
 
 # Lower cap for the `_zoom_level`.
-export var min_zoom := 0.1
+export var min_zoom := 0.02
 # Upper cap for the `_zoom_level`.
-export var max_zoom := 10.0
+export var max_zoom := 30.0
 # Controls how much we increase or decrease the `_zoom_level` on every turn of the scroll wheel.
 export var zoom_factor := 0.3
 # Duration of the zoom's tween animation.
@@ -39,10 +39,10 @@ const PARALLAX_RATE = 0.2
 func _ready():
 	$Timer.start()
 
-func _unhandled_input(event):
-	if event.is_action_pressed("zoom_in"):
+func _physics_process(event):
+	if Input.is_action_pressed("zoom_in"):
 		_set_zoom_level(_zoom_level - zoom_factor)
-	if event.is_action_pressed("zoom_out"):
+	if Input.is_action_pressed("zoom_out"):
 		_set_zoom_level(_zoom_level + zoom_factor)
 	if Input.is_action_pressed("right")  or Input.is_action_pressed("left") \
 		or Input.is_action_pressed("down") or Input.is_action_pressed("up"):
@@ -67,7 +67,8 @@ func _set_pos(deltaX: float, deltaY : float) -> void:
 	)
 	tween.start()
 	
-	parallax_bkdg.offset += PARALLAX_RATE * Vector2(-deltaX, -deltaY)
+	if parallax_bkdg:
+		parallax_bkdg.offset += PARALLAX_RATE * Vector2(-deltaX, -deltaY)
 
 func _set_zoom_level(value: float) -> void:
 	# We limit the value between `min_zoom` and `max_zoom`
