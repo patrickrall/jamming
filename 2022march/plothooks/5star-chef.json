@@ -1,3 +1,126 @@
-{"plot summary":
-	"On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin."}
-{}
+{
+	"root": [
+		{
+			"plot summary": "On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin.",		
+			"quest_name": "Creative Chef",
+			"stages":{
+				"0": {
+					"solar_system": 2,
+					"planet": 4,
+					"speaker_name": "Chef Maurice LeStarr",
+					"dialogue": "I want Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin.",
+					"choices": [
+						"Um... ok",
+						"Never speak to me or my sous again"
+					],
+					"speaker_responses": [
+						"Thank you!",
+						"How rude! Never speak to me or my sous again."
+					],
+					"yes_accepted_quest_info": "Bass: Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, Sun Cakes from Trin"
+				},
+				"Papua Fruit Shells from Garish": {
+					"solar_system": 3,
+					"planet": 1,
+					"speaker_name": "Enormous Lounging Red Squirrel",
+					"dialogue": "Oi boddy. Yeah, you, boddy, you take these fruit shells away and I won' gnaw yer ship, mmm? I jus' ate em and I don' wanna clean up...",
+					"choices": [
+						"(Pick up the gnawed papua fruit shells)",
+						"No"
+					],
+					"speaker_responses": [
+						"Good boddy.",
+						"-crunch crunch- Mmmmm... hundred-dollo munch..."
+					],
+					"no_money_change": -100,
+					"yes_reward_items": ["papua fruit shells"]
+				},
+				"Giant Mongoose Liver from Dyna": {
+					"solar_system": 2,
+					"planet": 1,
+					"speaker_name": "Sniffly Person in Mongoose Costume",
+					"dialogue": "Fresh giant mongoose liver! Limited stock! Liver and let liver! Buy now! -sniffle- Liver your best life!",
+					"choices": [
+						"(Buy liver for 50)",
+						"No"
+					],
+					"speaker_responses": [
+						"-sniffle- Have a good day...",
+						"Get busy livering or get busy dying... -sniffle-"
+					],
+					"yes_money_change": -50,
+					"yes_reward_items": ["giant mongoose liver"]
+				},
+				"Sun Cakes from Trin": {
+					"solar_system": 4,
+					"planet": 1,
+					"speaker_name": "Panicking Tiny Thing In a Purple Bathrobe",
+					"dialogue": "TAKE THESE AWAY FROM ME! THEY BROUGHT ME NOTHING BUT RUIN!!",
+					"choices": [
+						"(Take the beribboned box of sun cakes)",
+						"No"
+					],
+					"speaker_responses": [
+						"MANY BLESSINGS UPON YOU!! YOU'LL NEED IT!",
+						"ARGGGGHHH! WILL THIS TORMENT NEVER END??!"
+					],
+					"yes_reward_items": ["sun cakes"]
+				},
+				"Brackish Soup": {
+					"solar_system": 6,
+					"planet": 1,
+					"speaker_name": "6-Legged Scaled Bug Enthusiast",
+					"dialogue": "Ah, welcome, stranger! Would you like some soup? It's swamp-fresh!",
+					"choices": [
+						"Thank... you...",
+						"(Avoid eye contact)"
+					],
+					"speaker_responses": [
+						"Enjoy your taste of Brackish hospitality!",
+						"Ah, you're focused on searching for 6-legged scaled bugs too! I won't disturb you, then."
+					],
+					"yes_reward_items": ["brackish soup"]
+				},
+				"Rival Chef": {
+					"required_inventory": [
+						"brackish soup"
+					],
+					"solar_system": 2,
+					"planet": 4,
+					"speaker_name": "Salty Restaurant Reviewer On Top of Restaurant Sign",
+					"dialogue": "Nothing will make me happy today. So I will sit up here to annoy LeStarr.",
+					"choices": [
+						"(Offer brackish soup)",
+						"(Avoid eye contact)"
+					],
+					"speaker_responses": [
+						"Oh! Oh! How perfectly savory! Are you from LeStarr's restaurant? I hate the head chef, but you-- you-- have promise! Mm! I will give LeStarr one more chance.",
+						"... I miss Brackish water..."
+					],
+					"yes_cost_items": ["brackish soup"] 
+				},
+				"end":{
+					"required_inventory": [
+						"papua fruit shells", "giant mongoose liver", "sun cakes"
+					],
+					"solar_system": 2,
+					"planet": 4,
+					"speaker_name": "Chef Maurice LeStarr",
+					"dialogue": "You have my ingredients! Ah, how fortunate I am!",
+					"choices": [
+						"Here you go",
+						"I won't give these up"
+					],
+					"speaker_responses": [
+						"The 4th time is the charm!",
+						"Are you... a rival chef?? Coffee and biscuits, how unlucky I am!"
+					],
+					"yes_cost_items": ["papua fruit shells", "giant mongoose liver", "sun cakes"],
+					"yes_money_change": 1000
+				}
+			}
+		}
+	]
+
+}
+

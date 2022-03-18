@@ -17,3 +17,7 @@ func _on_ToggleShipLog_pressed() -> void:
 
 func _on_TogglePlanetRequests_pressed() -> void:
 	toggle_auto()
+
+
+func _on_TogglePlanetRequests_toggled(button_pressed : bool):
+	toggle_show(button_pressed)

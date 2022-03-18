@@ -36,6 +36,9 @@ onready var collide = $CollisionShape2D
 # How fast the starry sky moves as the camera moves
 const PARALLAX_RATE = 0.2 
 
+func _ready():
+	$Timer.start()
+
 func _unhandled_input(event):
 	if event.is_action_pressed("zoom_in"):
 		_set_zoom_level(_zoom_level - zoom_factor)
@@ -48,7 +51,6 @@ func _unhandled_input(event):
 
 	
 func _set_pos(deltaX: float, deltaY : float) -> void:
-	# print(tween.is_active())
 	# We limit the value between `min_zoom` and `max_zoom`
 	#_zoom_level = clamp(value, min_zoom, max_zoom)
 	# Then, we ask the tween node to animate the camera's `zoom` property from its current value
@@ -96,12 +98,3 @@ func _set_zoom_level(value: float) -> void:
 	)
 	tweenCollide.start()
 	
-
-
-#
-#func zoom(delta):
-#	zoom_direction = int(Input.is_action_pressed("zoom_out")) - int(Input.is_action_pressed("zoom_in"))
-#	var motion = zoom_direction * zoom_speed  * delta
-#	cam.zoom.x += motion
-#	cam.zoom.y += motion
-#	$CollisionShape2D.scale = Vector2(cam.zoom.x, cam.zoom.y)

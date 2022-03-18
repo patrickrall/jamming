@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/Bread.png-7f42cd483e8b3838e097e60b5c6d36b9.image"
+
+[deps]
+
+source_file="res://art/button_icons/Bread.png"
+dest_files=[ "res://.import/Bread.png-7f42cd483e8b3838e097e60b5c6d36b9.image" ]
+
+[params]
+

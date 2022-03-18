@@ -109,7 +109,7 @@ __meta__ = {
 "font",
 ]]
 margin_right = 210.0
-margin_bottom = 17.0
+margin_bottom = 19.0
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 3 )
 text = "Strange Lady"
@@ -121,9 +121,9 @@ __meta__ = {
 [node name="Dialogue" type="Label" parent="VBoxContainer" groups=[
 "font",
 ]]
-margin_top = 21.0
+margin_top = 23.0
 margin_right = 210.0
-margin_bottom = 58.0
+margin_bottom = 64.0
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 3 )
 text = "So... hungry... you should give me stuff. Lots of stuff."

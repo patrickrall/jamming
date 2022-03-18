@@ -16,7 +16,7 @@
 						"Thank you!",
 						"How rude! Never speak to me or my sous again."
 					],
-					"yes_accepted_quest_info": "Bass: Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, Sun Cakes from Trin"
+					"yes_accepted_quest_info": "To Bass: Papua Fruit Shells(Garish), Giant Mongoose Liver(Dyna), Sun Cakes(Trin)"
 				},
 				"Papua Fruit Shells from Garish": {
 					"solar_system": 3,
@@ -153,7 +153,7 @@
 						"OK, I'll get some",
 						"No croissants for you"
 					],
-					"yes_accepted_quest_info": "Bring croissants to System 1 Planet 1"
+					"yes_accepted_quest_info": "Cork: croissants"
 				},
 				"1": {
 					"solar_system": 1,

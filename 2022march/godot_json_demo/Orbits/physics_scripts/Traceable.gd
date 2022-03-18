@@ -6,6 +6,10 @@ var positions  # a cache of positions of this object
 var data       # a cache of other time-dependent data
 var t_offset = 0   # the time stored in position 0 of 'positions'
 
+# Sarah: This notes whether the planet is visible to the camera, and is
+# updated by the child Area2D monitoring the grandchild GollisionShape2D
+var is_within_camera_bounds : bool = false 
+
 func _ready():
 	positions = []
 	data = []

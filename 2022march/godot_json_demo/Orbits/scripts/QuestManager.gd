@@ -6,6 +6,7 @@ onready var json_label = $CanvasLayer/Label
 onready var ship_log = $CanvasLayer/OngoingQuests/ScrollContainer/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
+onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
 onready var ui_inventory = $CanvasLayer/Inventory
 onready var planet_request_toggle = $CanvasLayer/TogglePlanetRequests
 onready var ship_log_toggle = $CanvasLayer/ToggleShipLog
@@ -27,8 +28,7 @@ var all_quests_path = "res://data//quest.json"
 func _ready() -> void:
 	var dict = read_json2()
 	parse_jsondict_to_structs(dict) # updates all_stages
-	print(str(all_stages))
-	print("\n END ALL STAGES\n ")
+#	print(str(all_stages))
 	arrive_at_planet(0,1)
 
 
@@ -48,13 +48,19 @@ func arrive_at_planet(solar_system: int, planet: int):
 		ui.connect("append_to_ship_log", self, "on_append_to_ship_log")
 		ui.connect("yes_chosen", self, "on_yes_chosen")
 		ui.connect("no_chosen", self, "on_no_chosen")
-		
+	
+	if relevant_stages.size() == 0:
+		show_no_relevant_asks_ui()
 	
 	update_planet_request_toggle()
 	
 	# other ui updates
 	update_ship_log()	
 	update_inventory()
+
+func show_no_relevant_asks_ui():
+	var label = no_relevant_asks_ui.instance();
+	self.get_child(0).add_child(label)
 
 func update_planet_request_toggle()-> void:
 	# update the number on the toggle button for showing/hiding planet requests
@@ -192,7 +198,7 @@ func parse_jsondict_to_structs(json_result) -> void:
 func get_relevant_stages_for_planet(
 		solar_system : int, planet : int, 
 		inventory : Array) -> Array:
-	# search the list of stages for the ones relevant to this planet
+	# search the list of stages for the ones located on this planet
 	if all_stages == null or all_stages == []:
 		return []
 	var relevant_stages = []
@@ -253,3 +259,18 @@ func _on_DEBUG_button3_pressed() -> void:
 
 func _on_DEBUG_button2_pressed() -> void:
 	arrive_at_planet(1,1)
+
+
+func _on_TogglePlanetLabel_toggled(button_pressed : bool):
+	# show or hide the text describing the name of each planet and sun
+	var planetLabels = get_tree().get_nodes_in_group("SunPlanetLabel")
+	for label in planetLabels:
+		#print(label.name + ", grandchild of " + label.get_parent().get_parent().name)
+		label.get_parent().toggle_show_label(button_pressed)
+
+
+func _on_TogglePlanetRequests_toggled(button_pressed):
+	# show a message about the lack of quests if relevant
+	# showing and hiding is taken care of elsewhere
+	if dialogue_choice_ui_parent.get_child_count() == 0:
+		show_no_relevant_asks_ui()

@@ -8,6 +8,7 @@ export var clockwise = true setget _set_clockwise
 export(float, 0,1,0.01) var eccentricity = 0 setget _set_eccentricity
 export var mass = 100 setget _set_mass
 
+
 func touch():
 
 	# https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion
@@ -65,4 +66,3 @@ func compute_pos_data(t):
 	var pos = parent_pos + r * Vector2(cos(s*new_theta+theta_0), sin(s*new_theta+theta_0))
 		
 	return [pos, new_theta]
-

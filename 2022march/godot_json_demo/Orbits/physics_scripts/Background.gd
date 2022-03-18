@@ -2,13 +2,17 @@ tool
 extends Area2D
 
 onready var origin_node = get_node("Corin/Willow")
+# Sarah: updated to make reference variables more consistent
+onready var kinebody = $CameraEffects/KinematicBody2D
+onready var cam = $CameraEffects/KinematicBody2D/Camera2D
+onready var shape = $CameraEffects/KinematicBody2D/CollisionShape2D
 
 func _draw():
 	
 	# sloppy way of getting viewport.
-	var kinebody = $CameraEffects/KinematicBody2D
-	var cam = $CameraEffects/KinematicBody2D/Camera2D
-	var shape = $CameraEffects/KinematicBody2D/CollisionShape2D
+	kinebody = $CameraEffects/KinematicBody2D
+	cam = $CameraEffects/KinematicBody2D/Camera2D
+	shape = $CameraEffects/KinematicBody2D/CollisionShape2D
 	var viewport = Rect2(kinebody.position.x, kinebody.position.y,
 						 shape.shape.extents.x * cam.zoom.x * 2,
 						 shape.shape.extents.y * cam.zoom.y * 2)
@@ -77,7 +81,7 @@ func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton \
 	and event.button_index == BUTTON_LEFT \
 	and event.is_pressed():
-		var pos = event.position + get_node("KinematicBody2D").position/2
+		var pos = event.position + kinebody.position/2
 		
 		var traced = get_tree().get_nodes_in_group("Planets")
 		for tr in traced:
