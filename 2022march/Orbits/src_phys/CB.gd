@@ -14,7 +14,7 @@ export(float, 0.01,0.9,0.01) var eccentricity = 0
 func set_eccentricity(neweccentricity):
 	eccentricity = neweccentricity
 	update_physics()
-export(float, 0,1000,10) var mass = 100 setget set_mass
+export(float, 0,2000,10) var mass = 100 setget set_mass
 func set_mass(newmass):
 	mass = newmass
 	update_physics()
@@ -60,6 +60,7 @@ var physics_root = null
 
 var radius_indicator = null
 var dock_radius_indicator = null
+var label = null
 
 # this gets called at the begining, but also whenever we drag the planet around in the editor
 func cb_init():
@@ -76,8 +77,17 @@ func cb_init():
 		dock_radius_indicator.shape = CircleShape2D.new()
 		dock_radius_indicator.shape.radius = dock_radius
 		self.add_child(dock_radius_indicator)
-		
 	
+	if label == null:
+		label = Label.new()
+		label.valign = Label.VALIGN_CENTER
+		label.align = Label.ALIGN_CENTER
+		label.text = name
+		label.rect_position = Vector2(-100,-radius-30)
+		label.rect_size = Vector2(200,20)
+		label.rect_pivot_offset = Vector2(100,20)
+		label.rect_scale = Vector2(1.5,1.5)
+		self.add_child(label)
 	
 	if get_parent().has_method("theta"):
 		# I'm the child of a sun or a planet or something, so I'm actually an ellipse

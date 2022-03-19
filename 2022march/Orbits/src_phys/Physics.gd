@@ -6,11 +6,32 @@ onready var origin_cb = $CBs/Sun/Planet
 var global_t  # global clock. An integer starting at 0.
 var t_accum   # a floating point variable that accumulates time
 var paused = true
+var inited = false
 
 # zoom factor is 2**zoom_level
 var zoom_level = 0
 
+func update_physics():
+	if !inited: return
+	$Ship.clear()
+	update()
+
+export(float, 10,200,2) var vfield_sep = 10 setget set_vfield_sep
+func set_vfield_sep(newval):
+	vfield_sep = newval
+	update_physics()
+export(float, -1000,1000,10) var vfield_start = 0 setget set_vfield_start
+func set_vfield_start(newval):
+	vfield_start = newval
+	update_physics()
+export(float, 0,5000,10) var vfield_end = 1000 setget set_vfield_end
+func set_vfield_end(newval):
+	vfield_end = newval
+	update_physics()
+
+
 func _ready():
+	inited = true
 	global_t = 0
 	t_accum = 0
 	position = Vector2(0,0)
@@ -35,6 +56,7 @@ func _ready():
 func recur_init(parent):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
+		if (node is Label): continue
 		node.physics_root = self
 		node.cb_init()
 		node.is_origin_cb = (node == origin_cb)
@@ -43,6 +65,28 @@ func recur_init(parent):
 
 #####################################################################
 
+signal collided_with_cb(cb_node)
+var collision_signal_time = null
+
+signal collision_reset()
+
+func reset_after_collision():
+	print("reset after collision")
+	emit_signal("collision_reset")
+
+	global_t = collision_signal_time - $Ship.rewind_thresh
+	if global_t < 0: global_t = 0
+	$Ship.rewind_to(global_t)
+	collision_signal_time = null
+	update()
+
+signal orbited_cb(cb_node)
+signal leave_cb_orbit(cb_node)
+
+
+var ship_currently_orbiting = null
+
+######################################################
 
 
 # Time is discrete in this simulation. How many seconds per tick?
@@ -50,8 +94,32 @@ const t_step = 0.05
 func _physics_process(delta):
 	if Engine.editor_hint: return
 	
+	if $Ship.get_collided(global_t) != null:
+		if collision_signal_time == null:
+			collision_signal_time = global_t
+			emit_signal("collided_with_cb", $Ship.get_collided(global_t))
+			print("collided with ",$Ship.get_collided(global_t))
+		paused = true
+		
+	var orbiting = $Ship.get_orbiting(global_t)
+	if orbiting == null:
+		if ship_currently_orbiting != null:
+			print("leave orbit of ", ship_currently_orbiting)
+			emit_signal("leave_cb_orbit", ship_currently_orbiting)
+			ship_currently_orbiting = null
+	else:
+		if ship_currently_orbiting != null && ship_currently_orbiting != orbiting[0]:
+			print("leave orbit of ", ship_currently_orbiting)
+			emit_signal("leave_cb_orbit", ship_currently_orbiting)
+			ship_currently_orbiting = null
+		
+		if orbiting[1] > 50 && ship_currently_orbiting != orbiting[0]:
+			ship_currently_orbiting = orbiting[0]
+			print("enter orbit of ", ship_currently_orbiting)
+			emit_signal("orbited_cb", ship_currently_orbiting)
+	
 	# Respond to arrow keys for panning the view	
-	var panned = pan_process(delta)
+	var panned = process_inputs(delta)
 	
 	# Don't need to bother updating if we are paused
 	if paused:
@@ -59,7 +127,10 @@ func _physics_process(delta):
 		return
 	
 	# Accumulate time into t_accum
-	t_accum += delta
+	if Input.is_action_pressed("accel_sim"):
+		t_accum += delta*5
+	else:
+		t_accum += delta
 	var prv_time = global_t
 	
 	# shave off t_step's from t_accum, and put them into the global clock
@@ -73,6 +144,7 @@ func _physics_process(delta):
 		return
 		
 	update()
+	$Ship.update_cache(global_t)
 
 
 # trailstep: how many ticks are represented by each line segment?
@@ -81,8 +153,15 @@ func _physics_process(delta):
 # I don't mind the editor being a bit slow in exchange for longer trails.
 const trailstep_play = 2
 const tmax_play = 100
-const trailstep_edit = 20
-const tmax_edit = 200
+export(int, 1,10,1) var trailstep_edit = 20  setget set_trailstep_edit
+func set_trailstep_edit(newval):
+	trailstep_edit = newval
+	update_physics()
+export(int, 100,1000,1) var tmax_edit = 200 setget set_tmax_edit
+func set_tmax_edit(newval):
+	tmax_edit = newval
+	update_physics()
+
 func tmax():
 	if Engine.editor_hint: return tmax_edit
 	return tmax_play
@@ -109,6 +188,7 @@ func _draw():
 		recur_set_pos($CBs)
 		for node in $CBs.get_children():
 			if (node is CollisionShape2D): continue
+			if (node is Label): continue
 			node.position += d
 		$Ship.position = $CBs.position + (d + $Ship.get_pos(global_t))*pow(2,zoom_level)
 	
@@ -137,6 +217,29 @@ func _draw():
 	draw_line(($Ship.get_pos(t0)+shifts[0])*pow(2, zoom_level)+$CBs.position,
 			  ($Ship.get_pos(t0)+shifts[0]+$Ship.get_boost(t0))*pow(2, zoom_level)+$CBs.position,
 			  c, 5)
+			
+	# draw vector field
+	var vector_sep = 20
+	var view_rect = get_viewport().get_visible_rect().size
+	var p = Vector2(0,0)
+	if Engine.editor_hint:
+		vector_sep = vfield_sep
+		view_rect = Vector2(vfield_end,vfield_end)
+		p = Vector2(vfield_start,vfield_start)
+	
+	d = origin_abs_pos - recur_pos(origin_cb, t0)
+	
+	while p.x < view_rect.x:
+		p.y = 0
+		while p.y < view_rect.y:
+			var a = $Ship.recur_a($CBs, -d+(p-$CBs.position)/pow(2, zoom_level), t0) * 40
+			if a.length() > vector_sep: a = a.normalized()*vector_sep*0.8
+			if a.length() > 1:
+				draw_line(p, p+a, Color("#ffffff"), 1.1)
+			p.y += vector_sep
+		p.x += vector_sep
+
+
 
 # recursively determine the position of a cb.
 # This is really similar to calling global_position, but we get to control the time.
@@ -149,6 +252,7 @@ func recur_pos(node,t):
 func recur_set_pos(parent):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
+		if (node is Label): continue
 		node.position = node.pos(global_t)
 		recur_set_pos(node)
 
@@ -157,6 +261,7 @@ const c = Color("#ffefe2") # color for trail drawing
 func recur_draw_trail(parent,t0,shifts):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
+		if (node is Label): continue
 		
 		# trails of child cbs need to be adjusted by their parent cbs
 		# We'll pass these shifts along to the children.
@@ -186,16 +291,37 @@ func set_origin_cb(node):
 func recur_set_origin_cb(parent):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
+		if (node is Label): continue
 		node.is_origin_cb = (node == origin_cb)
 		recur_set_origin_cb(node)
 
 #####################################################################
 
-
+var dragging = null
 func _input_event(viewport, event, shape_idx):
 	if Engine.editor_hint: return
+	if !(event is InputEventMouseButton || event is InputEventMouseMotion): return
+	
+	if (event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_RIGHT):
+		dragging = event.position
+	
+	if (event is InputEventMouseButton && dragging != null && !event.is_pressed()):
+		dragging= null
+
+	if (event is InputEventMouseMotion):
+		if dragging == null: return
+		$CBs.position += event.position - dragging
+		dragging = event.position
+		update()
+
+	
 	if !(event is InputEventMouseButton): return
 	if !event.is_pressed(): return
+
+	# right click to set the burn vector
+	# if event.button_index == BUTTON_RIGHT:
+	# 	$Ship.set_boost(global_t, (event.position - $Ship.global_position)/pow(2, zoom_level))
+	#	update()
 
 	# click on cb to set it as the origin	
 	if event.button_index == BUTTON_LEFT:
@@ -204,61 +330,108 @@ func _input_event(viewport, event, shape_idx):
 			set_origin_cb(clicked_cb)
 			update()
 	
-	# right click to set the burn vector
-	if event.button_index == BUTTON_RIGHT:
-		$Ship.set_boost(global_t, (event.position - $Ship.global_position)/pow(2, zoom_level))
-		update()
-		
+	
 	# scroll to zoom
 	if event.button_index == BUTTON_WHEEL_UP:
-		# event.position = $CBs.position + v*pow(2, zoom_level)
-		var v1 = (event.position - $CBs.position)/pow(2, zoom_level)
-		var v2 = (event.position - $Ship.position)/pow(2, zoom_level)
-		zoom_level += 0.05
-		$CBs.position = event.position - v1*pow(2, zoom_level)
-		$Ship.position = event.position - v2*pow(2, zoom_level)
-		$CBs.scale.x = pow(2, zoom_level)
-		$CBs.scale.y = pow(2, zoom_level)
-		$Ship.scale.x = pow(2, zoom_level)
-		$Ship.scale.y = pow(2, zoom_level)
-		update()
+		change_zoom(0.05, event.position)
 		
 	if event.button_index == BUTTON_WHEEL_DOWN:
-		var v1 = (event.position - $CBs.position)/pow(2, zoom_level)
-		var v2 = (event.position - $Ship.position)/pow(2, zoom_level)
-		zoom_level -= 0.05
-		$CBs.position = event.position - v1*pow(2, zoom_level)
-		$Ship.position = event.position - v2*pow(2, zoom_level)
-		$CBs.scale.x = pow(2, zoom_level)
-		$CBs.scale.y = pow(2, zoom_level)
-		$Ship.scale.x = pow(2, zoom_level)
-		$Ship.scale.y = pow(2, zoom_level)
-		update()
+		change_zoom(-0.05, event.position)
 		
+
+func change_zoom(dzoom, pos):
+	# event.position = $CBs.position + v*pow(2, zoom_level)
+	var v1 = (pos - $CBs.position)/pow(2, zoom_level)
+	var v2 = (pos - $Ship.position)/pow(2, zoom_level)
+	zoom_level += dzoom
+	$CBs.position = pos - v1*pow(2, zoom_level)
+	$Ship.position = pos - v2*pow(2, zoom_level)
+	$CBs.scale.x = pow(2, zoom_level)
+	$CBs.scale.y = pow(2, zoom_level)
+	$Ship.scale.x = pow(2, zoom_level)
+	$Ship.scale.y = pow(2, zoom_level)
+	recur_set_label_size($CBs)
+	update()
+
 
 # find a CB that's close to 
 func recur_find_cb(parent,pos):
 	for node in parent.get_children():
+		if (node is CollisionShape2D): continue
+		if (node is Label): continue
 		if (node.global_position - pos).length() < node.radius: return node
 		var recur = recur_find_cb(node,pos)
 		if recur != null: return recur
 	return null
 
+func recur_set_label_size(parent):
+	for node in parent.get_children():
+		if (node is CollisionShape2D): continue
+		if (node is Label): continue
+		
+		recur_set_label_size(node)
 
-##################### zooming and pausing
+##################### single hit event
 
 func _unhandled_input(event):	
 	if event.is_action_pressed("pause"):
 		paused = !paused
 		update()
 
-##################### panning
+##################### inputs that are held down
 
-func pan_process(delta):
+func process_inputs(delta):
+	###### panning
 	var dx = int(Input.is_action_pressed("ui_right"))\
 			 - int(Input.is_action_pressed("ui_left"))
 	var dy = int(Input.is_action_pressed("ui_down"))\
 			 - int(Input.is_action_pressed("ui_up"))
 	
 	$CBs.position -= 400*delta*Vector2(dx,dy)
-	return (dx != 0 or dy != 0)
+	var update_needed = (dx != 0 or dy != 0)
+	
+	###### zooming
+	
+	var dzoom = int(Input.is_action_pressed("zoom_in"))\
+				- int(Input.is_action_pressed("zoom_out"))
+	if dzoom != 0:
+		update_needed = true
+		var view_rect = get_viewport().get_visible_rect().size
+		change_zoom(delta*dzoom, view_rect/2)
+		
+	
+	###### boosting
+	
+	var dburn = int(Input.is_action_pressed("incr_burn"))\
+				 - int(Input.is_action_pressed("decr_burn"))
+	var burndelta = pow(2,-zoom_level) * 10 * delta
+	if dburn != 0:
+		update_needed = true
+		var boost = $Ship.get_boost(global_t)
+		
+		if dburn > 0:
+			if boost.length() == 0:
+				var v = -$Ship.get_v(global_t)
+				if v.length() == 0: v = Vector2(1,0)
+				boost = v.normalized()*burndelta
+			else:
+				boost = (boost.length() + burndelta) * boost.normalized()
+		elif dburn < 0:
+			if boost.length() < burndelta:
+				boost = Vector2(0,0)
+			else:
+				boost = (boost.length() - burndelta) * boost.normalized()
+			
+		$Ship.set_boost(global_t, boost)
+			
+	
+	var dangle = int(Input.is_action_pressed("cw_burn"))\
+				- int(Input.is_action_pressed("ccw_burn"))
+				
+	if dangle != 0:
+		update_needed = true
+		var boost = $Ship.get_boost(global_t)
+		boost = boost.rotated( delta*dangle  )
+		$Ship.set_boost(global_t, boost)
+	
+	return update_needed
