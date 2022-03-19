@@ -431,8 +431,8 @@
 		{	"quest_name": "Hot Roy Summer",
 			"stages": {
 				"0": {
-					"solar_system": 0,
-					"planet": 0,
+					"solar_system": 3,
+					"planet": 1,
 					"speaker_name": "Roy, Apparently",
 					"dialogue": "Yo Dawg, I'm Roy, ya boy, from the Hoy. People told me this place was tram's bazam but it's solidly mix-and-swirl level. Can you bring me to a real vacay destinay?",
 					"choices": [
@@ -702,6 +702,31 @@
 					"yes_money_change": 400,
 					"no_cost_items": ["Metal Payload"],
 					"no_money_change": 700
+				}
+			}
+		},
+		{
+			"quest_name": "",
+			"stages": {
+				"end": {
+					"solar_system": 0,
+					"planet": 0,
+					"speaker_name": "",
+					"dialogue": "",
+					"choices": [
+						"",
+						""
+					],
+					"speaker_responses": [
+						"",
+						""
+					],
+					"yes_reward_items" : [""],
+					"yes_cost_items": [""],
+					"yes_money_change": 0,
+					"no_reward_items" : [""],
+					"no_cost_items": [""],
+					"no_money_change" : 0
 				}
 			}
 		}
