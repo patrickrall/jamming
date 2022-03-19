@@ -665,5 +665,45 @@
 				}
 			}
 		},
+		{
+			"quest_name": "Mine, Craft",
+			"stages": {
+				"0": {
+					"solar_system": 1,
+					"planet": 2,
+					"speaker_name": "Slapjack Joe and The Dirty Daniels",
+					"dialogue": "Howdy there fella. Ya' good at keepin' secrets, yeah? Ya' don't fancy makin' an extra buck, do ya'?",
+					"choices": [
+						"I'm not against it. Do you need me to deliver something for you?",
+						"I'm bad at secrets and I hate money."
+					],
+					"speaker_responses": [
+						"Yeah see, we got this load o' iron and copper. Bosses want 2k for it, we know we can get 5k. 10% cut when yer done.",
+						"Ah so you're one-a those types. Well holler at us if ya' ever decide to comprimise on yer ethics."
+					],
+					"yes_reward_items": ["Metal Payload"],
+					"yes_accepted_quest_info": "[Mine, Craft]: Take metals to Minnow"
+				},
+				"end": {
+					"required_inventory": ["Metal Payload"],
+					"solar_system": 2,
+					"planet": 3,
+					"speaker_name": "Portman Fred and The Factory Friends",
+					"dialogue": "I hear Slapjack Joe sent you. The guy's a con artist, but you lucked out this time. The payload's only worth about 4k.",
+					"choices": [
+						"I'm disappointed but not surprised. Here you go.",
+						"You're lying to pay me less, aren't you?"
+					],
+					"speaker_responses": [
+						"Here's your 10%, as per the deal. It's been a pleasure doing business. Let's keep this under wraps, yeah?",
+						"You're smarter than I thought kid. Look, they're all idiots on Willow. This thing's far more valuable than they realize. Why don't I give you a bit extra to keep this secret, yeah?"
+					],
+					"yes_cost_items": ["Metal Payload"],
+					"yes_money_change": 400,
+					"no_cost_items": ["Metal Payload"],
+					"no_money_change": 700
+				}
+			}
+		}
 	]
 }
