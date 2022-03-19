@@ -159,6 +159,7 @@
 						"yes_cost_items": ["Hastily Wrapped Present", "Small Hay Bale"],
 						"no_money_change": 900,
 						"no_cost_items":["Hastily Wrapped Present"],
+						"no_reward_items" : ["%Migrant Credit"],
 						"yes_end": 0,
 						"no_end": 1,
 					},
@@ -178,10 +179,18 @@
 						],
 						"yes_cost_items": ["Hay Bale"],
 						"no_cost_items": ["Hay Bale"],
+						"yes_reward_items" : ["%Migrant Credit"],
+						"no_reward_items" : ["%Migrant Credit"],
 						"yes_money_change": 300,
 						"no_money_change": 200
 					},
-					"Epilogue 1" : {
+				}
+		},
+		{
+				"quest_name": "Cereal Misgivings: Epilogue",
+				"stages":{
+					"end" : {
+						"required_inventory" : ["%Migrant Credit"],
 						"solar_system": 5,
 						"planet": 3,
 						"speaker_name" : "Pungeant Odor With a Face",
@@ -189,7 +198,8 @@
 						"choices": ["Yeah sure uh huh", "seems likely"],
 						"speaker_responses" : ["heh heh *runs off*", "*offers squishy handshake"],
 					},
-					"Epilogue 2" : {
+					"end" : {
+						"required_inventory" : ["%Migrant Credit"],
 						"solar_system": 5,
 						"planet": 1,
 						"speaker_name" : "Not A Big Enough Loincloth",
@@ -203,7 +213,8 @@
 							"Oh nice yeah if you do ask for Randy and tell him that I will pay him next cycle and not to do that thing again"
 						],
 					},
-					"Epilogue 3" : {
+					"end" : {
+						"required_inventory" : ["%Migrant Credit"],
 						"solar_system": 5,
 						"planet": 2,
 						"speaker_name" : "Dirt Mount Shaped Like a Rancher",
