@@ -1,7 +1,6 @@
 {
 	"root": [
-		{
-			"quest_name": "Creative Chef",
+		{	"quest_name": "Creative Chef",
 			"stages": {
 				"0": {
 					"solar_system": 2,
@@ -136,8 +135,66 @@
 			},
 			"plot summary": "On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin."
 		},
-		{
-			"quest_name": "Cereal Misgivings",
+		{	"quest_name": "Lassie?",
+			"stages": {
+				"0": {
+					"solar_system": 1,
+					"planet": 3,
+					"speaker_name": "The Authorities TM",
+					"dialogue": "Sir, we need to requisition your ship. Or else, we need you to fly it to Escape ASAP to pick up a confidential asset.",
+					"choices": [
+						"Umm yeah ok, I don't know if I have money for fuel",
+						"If you take my ship can I tag along?"
+					],
+					"speaker_responses": [
+						"Here's money for fuel. Ringo-speed, brave citizen.",
+						"No. Your only route to maintain ownership of this vessel is to take the requisition. Here's money for fuel."
+					],
+					"yes_reward_items" : ["Official Requisition Order 3026GY"],
+					"yes_money_change": 800,
+					"no_reward_items" : ["Official Requisition Order 3026GY"],
+					"no_money_change" : 800,
+				},
+				"The Well": {
+					"required_inventory": ["Official Requisition Order 3026GY"],
+					"solar_system": 7,
+					"planet": 3,
+					"speaker_name": "Disembodied Voice",
+					"dialogue": "I detect ORO3026GY, the payload is now deposited on your ship. Deliver this to Garish post-haste.",
+					"choices": [
+						"Thanks... Guess I'll be going then.",
+						"What happens if I can't make it out of the gravity well?"
+					],
+					"speaker_responses": [
+						"*low humming noises*",
+						"GIUUUUHHHH ZIZIMMMMENNN LAAAALLL. Deliver this to Garish post-haste."
+					],
+					"yes_reward_items": ["Unknown Valuable"],
+					"yes_cost_items": ["Official Requisition Order 3026GY"],
+					"no_reward_items": ["Unknown Valuable"],
+					"no_cost_items": ["Official Requisition Order 3026GY"]
+				},
+				"end": {
+					"solar_system": 3,
+					"planet": 1,
+					"speaker_name": "Empty Control Room",
+					"dialogue": "*You step on a slip of paper on the floor.*",
+					"choices": [
+						"*Pick it up and look at it*",
+						"*Shrug and return to the ship*"
+					],
+					"speaker_responses": [
+						"It reads: 'Payload received. Compensation provided. Gratitude expressed.;",
+						"*Your fuel gauge looks higher than before."
+					],
+					"yes_cost_items": ["Unknown Valuable"],
+					"yes_money_change": 300,
+					"no_cost_items": ["Unknown Valuable"],
+					"no_money_change" : 300,
+				}
+			}
+		},
+		{	"quest_name": "Cereal Misgivings",
 			"stages": {
 				"0": {
 					"solar_system": 5,
@@ -223,8 +280,7 @@
 				}
 			}
 		},
-		{
-			"quest_name": "Cereal Misgivings: Epilogue",
+		{	"quest_name": "Cereal Misgivings: Epilogue",
 			"stages": {
 				"0": {
 					"required_inventory": [
@@ -279,8 +335,7 @@
 				}
 			}
 		},
-		{
-			"quest_name": "Blob Shopper",
+		{	"quest_name": "Blob Shopper",
 			"stages": {
 				"end": {
 					"solar_system": 1,
@@ -298,8 +353,7 @@
 				}
 			}
 		},
-		{
-			"quest_name": "Case in Croissant",
+		{	"quest_name": "Case in Croissant",
 			"stages": {
 				"0": {
 					"solar_system": 1,

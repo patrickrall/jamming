@@ -14,7 +14,31 @@ Star systems - Planets
 7) Super Massive Black Hole
 	1) Prime		2) Single		3) Escape		4) Streak		5) Event
 
-
+{
+			"quest_name": "",
+			"stages": {
+				"end": {
+					"solar_system": 0,
+					"planet": 0,
+					"speaker_name": "",
+					"dialogue": "",
+					"choices": [
+						"",
+						""
+					],
+					"speaker_responses": [
+						"",
+						""
+					],
+					"yes_reward_items" : [""],
+					"yes_cost_items": [""],
+					"yes_money_change": 0,
+					"no_reward_items" : [""],
+					"no_cost_items": [""],
+					"no_money_change" : 0,
+				}
+			}
+		},
 
 
 
@@ -111,26 +135,3 @@ Star systems - Planets
 	d) Streak - fairly eccentric orbit, no station, 2nd from smbh
 
 	e) Event - fast tight orbit, no station, closest to smbh (degrading?)
-
-
-
-					"end": {
-						"solar_system": 0,
-						"planet": 0,
-						"speaker_name": "",
-						"dialogue": "",
-						"choices": [
-							"",
-							""
-						],
-						"speaker_responses": [
-							"",
-							""
-						]
-						"yes_reward_items" : [""],
-						"yes_cost_items": [""],
-						"yes_money_change": 0,
-						"no_reward_items" : [""],
-						"no_cost_items": [""],
-						"no_money_change" : 0,
-					}
