@@ -3,7 +3,7 @@ extends Node
 
 # Declare member variables here. 
 onready var json_label = $CanvasLayer/Label
-onready var ship_log = $CanvasLayer/OngoingQuests/ScrollContainer/ShipLog
+onready var ship_log = $CanvasLayer/ToggleShipLog/OngoingQuests/ScrollContainer/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
 onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
@@ -14,7 +14,7 @@ onready var ship_log_toggle = $CanvasLayer/ToggleShipLog
 onready var DEBUG_label = $CanvasLayer/DEBUG_label
 onready var system_spinbox = $CanvasLayer/DEBUG_button/SystemSpinBox
 onready var planet_spinbox = $CanvasLayer/DEBUG_button/PlanetSpinBox
-
+onready var backup_json : RichTextLabel = $Json_storage
 
 #var dict = {}
 var inventory = []
@@ -27,10 +27,12 @@ var all_quests_path = "res://data//quest.json"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var dict = read_json2()
+	# default read is to a local file 
+	if !dict: # the export workaround requires pasting the json text into the 
+		# text field of the backup_json object
+		dict = JSON.parse(backup_json.text).result
 	parse_jsondict_to_structs(dict) # updates all_stages
-#	print(str(all_stages))
 	arrive_at_planet(0,1)
-
 
 
 func arrive_at_planet(solar_system: int, planet: int):
@@ -45,7 +47,7 @@ func arrive_at_planet(solar_system: int, planet: int):
 		var ui = dialogue_choice_ui_prefab.instance()
 		ui.init(relevant_stages[a])
 		dialogue_choice_ui_parent.add_child(ui)
-		ui.connect("append_to_ship_log", self, "on_append_to_ship_log")
+		ui.connect("append_to_accepted_quest_info", self, "on_append_to_ship_log")
 		ui.connect("yes_chosen", self, "on_yes_chosen")
 		ui.connect("no_chosen", self, "on_no_chosen")
 	
@@ -57,6 +59,9 @@ func arrive_at_planet(solar_system: int, planet: int):
 	# other ui updates
 	update_ship_log()	
 	update_inventory()
+	
+	var camcontrol = get_tree().get_nodes_in_group("CameraControl")
+	camcontrol[0].move_to_planet(solar_system, planet)
 
 func show_no_relevant_asks_ui():
 	var label = no_relevant_asks_ui.instance();
@@ -83,6 +88,7 @@ func on_append_to_ship_log(stage_idx: int) -> void:
 func on_yes_chosen(stage: Stage) -> void:
 	# the player fulfilled the quest ask
 	if !(stage.id in accepted_requests) and all_stages[stage.id].yes_accepted_quest_info != "":
+		all_stages[stage.id].yes_chosen = true # record choice made
 		accepted_requests.append(stage.id)
 	for reward in stage.yes_reward_items: # give reward
 		inventory.append(reward)
@@ -91,7 +97,7 @@ func on_yes_chosen(stage: Stage) -> void:
 			inventory.erase(cost)
 	player_money += stage.yes_money_change # change money
 	# plot updates
-	if stage.no_end: # mark complete all subquests and their dependnets
+	if stage.yes_end: # mark complete all subquests and their dependnets
 		for st in all_stages:
 			if stage.quest_name == st.quest_name:
 				mark_complete(st.id)
@@ -104,6 +110,9 @@ func on_yes_chosen(stage: Stage) -> void:
 
 func on_no_chosen(stage: Stage) -> void:
 	# the player refused the quest ask
+	if !(stage.id in accepted_requests) and all_stages[stage.id].no_accepted_quest_info != "":
+		all_stages[stage.id].yes_chosen = false # record choice made
+		accepted_requests.append(stage.id)
 	for reward in stage.no_reward_items:
 		inventory.append(reward)
 	for cost in stage.no_cost_items:
@@ -177,8 +186,6 @@ func parse_jsondict_to_structs(json_result) -> void:
 				new_stage.required_inventory = d["required_inventory"]
 			if d.has("required_money"):
 				new_stage.required_money = d["required_money"]
-			if d.has("yes_accepted_quest_info"):
-				new_stage.yes_accepted_quest_info = d["yes_accepted_quest_info"]
 			if d.has("is_complete"):
 				new_stage.is_complete = d["is_complete"]
 			if d.has("dependent_stages"):
@@ -188,6 +195,8 @@ func parse_jsondict_to_structs(json_result) -> void:
 				new_stage.dependent_stages = dict_stages.keys()
 				
 			# results of yes and no
+			if d.has("yes_accepted_quest_info"):
+				new_stage.yes_accepted_quest_info = d["yes_accepted_quest_info"]
 			if d.has("yes_money_change"):
 				new_stage.yes_money_change = d["yes_money_change"]
 			if d.has("yes_cost_items"):
@@ -198,6 +207,9 @@ func parse_jsondict_to_structs(json_result) -> void:
 				new_stage.yes_is_complete = d["yes_is_complete"]
 			if d.has("yes_end"):
 				new_stage.yes_end = d["yes_end"]
+			
+			if d.has("no_accepted_quest_info"):
+				new_stage.no_accepted_quest_info = d["no_accepted_quest_info"]
 			if d.has("no_cost_items"):
 				new_stage.no_cost_items = d["no_cost_items"]
 			if d.has("no_reward_items"):
@@ -246,7 +258,7 @@ func update_ship_log() -> void:
 	ship_log.text = "Quests:\n"
 	for stage_idx in accepted_requests:
 		var stage : Stage =  all_stages[stage_idx]
-		ship_log.text += stage.yes_accepted_quest_info + "\n"
+		ship_log.text += stage.yes_accepted_quest_info if stage.yes_chosen  else stage.no_accepted_quest_info + "\n"
 
 
 #JSON
@@ -266,11 +278,14 @@ func _on_DEBUG_button_pressed() -> void:
 	system_spinbox.value = clamp(system_spinbox.value, 1, 7) # 1-7 are valid solar systems
 	planet_spinbox.value = clamp(planet_spinbox.value, 1, 5) # 1-7 are valid solar systems
 	arrive_at_planet(system_spinbox.value, planet_spinbox.value)
-#	inventory.append("croissants")
-#	update_inventory()
 
 func update_inventory():
-	ui_inventory.text = str(player_money) + "g\n" + str(inventory)
+	# show the list of items in the inventory, but hide the hidden plot point items
+	# which have % as a prefix
+	ui_inventory.text = str(player_money) + "g\n"
+	for item in inventory:
+		if !item.begins_with("%"):
+			 ui_inventory.text += str(item) + "\n"
 
 
 func _on_DEBUG_button3_pressed() -> void:

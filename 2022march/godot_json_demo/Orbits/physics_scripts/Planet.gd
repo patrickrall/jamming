@@ -60,6 +60,8 @@ func compute_pos_data(t):
 	
 	var old_r = focal_parameter / (1 + eccentricity * cos(s*prv_theta))
 	
+	if old_r == 0:
+		return
 	var new_theta = prv_theta + 15e2/(old_r*old_r)
 	
 	var r = focal_parameter / (1 + eccentricity * cos(s*new_theta))

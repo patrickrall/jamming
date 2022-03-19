@@ -38,9 +38,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Star Truck"
+config/name="Orbits"
 run/main_scene="res://scenes/Main.tscn"
-config/icon="res://art/button_icons/Bread.png"
 
 [autoload]
 

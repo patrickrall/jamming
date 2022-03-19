@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/SunPlanet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://art/suns_planets/Dyna.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://art/suns_planets/willow.png" type="Texture" id=11]
 [ext_resource path="res://art/suns_planets/Lux.png" type="Texture" id=12]
 [ext_resource path="res://art/suns_planets/minnow.png" type="Texture" id=13]
+[ext_resource path="res://scripts/GetPlanetName.gd" type="Script" id=14]
 [ext_resource path="res://art/suns_planets/Sol-1.png" type="Texture" id=15]
 [ext_resource path="res://scenes/ParallaxBackground.tscn" type="PackedScene" id=16]
 
@@ -152,10 +153,21 @@ scale = Vector2( 0.2, 0.2 )
 
 [node name="CameraEffects" type="Node" parent="."]
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="CameraEffects"]
+[node name="KinematicBody2D" type="KinematicBody2D" parent="CameraEffects" groups=[
+"CameraControl",
+]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="CameraEffects/KinematicBody2D"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraEffects/KinematicBody2D"]
 visible = false
