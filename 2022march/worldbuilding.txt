@@ -77,8 +77,8 @@ Star systems - Planets
 
 5) Millet - yellow dwarf
 
-	b) Stilt: Smallest Millet Planet - Textile Heaven
-	a) Yard: Middle Millet Planet - Amber Waves of Grain
+	a) Stilt: Smallest Millet Planet - Textile Heaven
+	b) Yard: Middle Millet Planet - Amber Waves of Grain
 	c) Crash: Biggest Millet Planet - To Beef or Not To Beef
 		The Millet planets all follow the same orbit, but out of sync, so millions of migrant workers travel between each of them in turn, reaping and planting when the season is right.
 		This means that Millet is a huge agriculture powerhouse, able to churn out tons of food for cheap.
@@ -111,3 +111,26 @@ Star systems - Planets
 	d) Streak - fairly eccentric orbit, no station, 2nd from smbh
 
 	e) Event - fast tight orbit, no station, closest to smbh (degrading?)
+
+
+
+					"end": {
+						"solar_system": 0,
+						"planet": 0,
+						"speaker_name": "",
+						"dialogue": "",
+						"choices": [
+							"",
+							""
+						],
+						"speaker_responses": [
+							"",
+							""
+						]
+						"yes_reward_items" : [""],
+						"yes_cost_items": [""],
+						"yes_money_change": 0,
+						"no_reward_items" : [""],
+						"no_cost_items": [""],
+						"no_money_change" : 0,
+					}

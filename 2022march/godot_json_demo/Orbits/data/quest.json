@@ -121,7 +121,104 @@
 			"plot summary":
 			"On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin."
 		},
-		
+		{
+				"quest_name": "Cereal Misgivings",
+				"stages":{
+					"0": {
+						"solar_system": 5,
+						"planet": 2,
+						"speaker_name": "Dirt Mound Shaped like a Rancher",
+						"dialogue": "Hey! Straight back! You don't happen to be headed off-system, are ya? I gotta get this gift to my kid on Bass",
+						"choices": [
+							"Umm... yeah I can head there soon.",
+							"Straight back? Is that... an insult?"
+						],
+						"speaker_responses":
+						[
+							"That's a huge help, I'll pay in advance with this haybale and with money when you come back, reaping just finished so I'll be on Crash come next week.",
+							"You smell like you're from Corenne, aren't ya? I knew your kind weren't as nice as they seemed. Imagine farming the same land all year round, it's unhinged."
+						],
+						"yes_accepted_quest_info":"Cereal Misgivings: A Gift for a Kid (Bass) and Supply Chain Participation ()",
+						"yes_reward_items":["Hastily Wrapped Present", "Small Hay Bale"]
+					},
+					"Cereal Delivery (Bass)" : {
+						"required_inventory" : ["Hastily Wrapped Present", "Small Hay Bale"],
+						"solar_system": 2,
+						"planet": 4,
+						"speaker_name": "Gorgeous Woman and Intelligent Teenager",
+						"dialogue":"There you are! I've been waiting for half an hour. What did that oaf bring this year?",
+						"choices": [
+							"Sorry for the delay, your child's gift is right here *smooths out wrapping*",
+							"You married... but your child looks nothing like... *cough* Here you go!"
+						],
+						"speaker_responses": [
+							"Thanks, and here's a tip for your troubles. Janice, open it at home, I didn't see any trash cans coming in here.",
+							"*rolls eyes* Always with the comments. Here's some cash, and I can take whatever crop he stuck you with as well. I appreciate the discretion."
+						],
+						"yes_money_change": 500,
+						"yes_cost_items": ["Hastily Wrapped Present", "Small Hay Bale"],
+						"no_money_change": 900,
+						"no_cost_items":["Hastily Wrapped Present"],
+						"yes_end": 0,
+						"no_end": 1,
+					},
+					"end" : {
+						"required_inventory": ["Hay Bale"],
+						"solar_system": 2,
+						"planet": 1,
+						"speaker_name": "Chewing Tabacco Incarnate",
+						"dialogue": "*spit* Ayo dere boy'i why'na gotcha dat mess 'a hay der ya tryna getchya rent a da litter en da masta sana?",
+						"choices": [
+							"Uhhh... yes?",
+							"I have no idea what you're saying. Can you please not spit so close to my feet?"
+						],
+						"speaker_responses": [
+							"AAAAHHHHHAAHAHAHAHA Dassa raiht manna da speak a ya eldas boy'i lessa make sum masta dala en da sana dis fine daya",
+							"Yaaarrrr donna know wassa gotta talk like a camma wit cha sana? I gatcha wit da dala dontcha warray none mi boy'i"
+						],
+						"yes_cost_items": ["Hay Bale"],
+						"no_cost_items": ["Hay Bale"],
+						"yes_money_change": 300,
+						"no_money_change": 200
+					},
+					"Epilogue 1" : {
+						"solar_system": 5,
+						"planet": 3,
+						"speaker_name" : "Pungeant Odor With a Face",
+						"dialogue": "Ayy thanks for delivering that, listen, I gotta get you back next harvest, had a bad run at the casino... I'll have money if you visit me on Stilt later on, ok?",
+						"choices": ["Yeah sure uh huh", "seems likely"],
+						"speaker_responses" : ["heh heh *runs off*", "*offers squishy handshake"],
+					},
+					"Epilogue 2" : {
+						"solar_system": 5,
+						"planet": 1,
+						"speaker_name" : "Not A Big Enough Loincloth",
+						"dialogue" : "Hey, buddy, friend, pal, guy, I uh... Amigo... Senpai...",
+						"choices" : [
+							"*sigh* I'll come check on you on Yard",
+							"I'm gonna report you to the IMFP"
+						],
+						"speaker_responses" : [
+							"Yes 100% definitely you can count on me it's a sure thing",
+							"Oh nice yeah if you do ask for Randy and tell him that I will pay him next cycle and not to do that thing again"
+						],
+					},
+					"Epilogue 3" : {
+						"solar_system": 5,
+						"planet": 2,
+						"speaker_name" : "Dirt Mount Shaped Like a Rancher",
+						"dialogue" : "Ayy if it ain't the straight back in the flesh, I got hay for days if you want some more!",
+						"choices" : [
+							"Honestly, I'd rather eat giant mongoose liver.",
+							"Why don't I visit you next cycle and see how you're doing."
+						],
+						"speaker_responses" : [
+							"Classic Corkboard, always looking down on us hard working food fighters. get outta my sight.",
+							"Ya know, you really give the Willow-Whimps a good name, keep it up"
+						],
+					}
+				}
+		},
 		{
 				"quest_name": "Blob Shopper",
 				"stages": {
