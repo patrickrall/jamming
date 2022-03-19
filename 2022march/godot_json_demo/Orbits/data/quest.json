@@ -689,7 +689,7 @@
 					"solar_system": 2,
 					"planet": 3,
 					"speaker_name": "Portman Fred and The Factory Friends",
-					"dialogue": "I hear Slapjack Joe sent you. The guy's a con artist, but you lucked out this time. The payload's only worth about 4k.",
+					"dialogue": "I hear Slapjack Joe sent you. The guy's a con artist, but you lucked out this time. The payload's worth about 4k, better than usual.",
 					"choices": [
 						"I'm disappointed but not surprised. Here you go.",
 						"You're lying to pay me less, aren't you?"
