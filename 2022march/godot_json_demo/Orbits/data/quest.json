@@ -731,19 +731,22 @@
 					"solar_system": 4,
 					"planet": 1,
 					"speaker_name": "Emperor Sol",
-					"dialogue": "",
+					"dialogue": "Welcome to Trin, welcome! Thank you for the blessing of holy fish. Here's a fee for your effort. Now that you're here, our Summer solstice celebration is coming up. Dreadfully, our holy robes are now unfashion- unholy! Would you mind delivering unto us new robes from the lands of Stilt? You will be rewarded handsomely for your service!",
 					"choices": [
-						"",
-						""
+						"Sure, I don't mind another errand.",
+						"Thanks, but I have other deliveries to do."
 					],
 					"speaker_responses": [
-						"",
-						""
+						"Thank you! Our star and lord, Ringo, will look favorably upon you on your journey!",
+						"Nonsense! No delivery is as important as this in the eyes of our lord Ringo!"
 					],
 
 					"yes_reward_items" : ["Expired clothes coupon"],
 					"yes_cost_items": ["Blessed fish"],
 					"yes_money_change": 100,
+					"no_reward_items" : ["Expired clothes coupon"],
+					"no_cost_items": ["Blessed fish"],
+					"no_money_change": 100,
 					
 					"yes_accepted_quest_info": "[Too Much Sun]: Get ceremonial robes from Stilt"
 				},
@@ -751,57 +754,57 @@
 					"solar_system": 5,
 					"planet": 1,
 					"speaker_name": "Overworked Seamstress",
-					"dialogue": "",
+					"dialogue": "Just tell me what you need and get on with it.",
 					"choices": [
-						"",
-						""
+						"I need new ceremonial robes for Emeperor Sol on Trin. But... the coupon he gave me is expired.",
+						"A 'hello' would be nice."
 					],
 					"speaker_responses": [
-						"",
-						""
+						"Oh, that cheapskate loser. Well I'm swamped with orders right now but I'll tell you what. If you deliver this dress to my daughter, she can make you the robes with these supplies. Now get out.",
+						"Get out of here."
 					],
 
-					"yes_reward_items" : ["Beautiful dress"],
+					"yes_reward_items" : ["Beautiful dress", "Fabrics"],
 					"yes_cost_items": ["Expired clothes coupon"],
 					
-					"yes_accepted_quest_info": "[Too Much Sun]: Deliver dress to Seamstress' daughter on Yard"
+					"yes_accepted_quest_info": "[Too Much Sun]: Deliver dress and fabrics to Seamstress' daughter on Yard"
 				},
 				"3": {
 					"solar_system": 5,
 					"planet": 2,
-					"speaker_name": "Jessica Dressica",
-					"dialogue": "",
+					"speaker_name": "Jesse Dresse",
+					"dialogue": "I heard that my mom sent you. You need new robes for the Trin weirdos, right?",
 					"choices": [
-						"",
-						""
+						"That's right. I have a new dress for you as well.",
+						"Yeah, but now I'm having second doubts about helping them."
 					],
 					"speaker_responses": [
-						"",
-						""
+						"Ugh, I asked her to stop making me dresses. She's still calling me her daughter too, isn't she? Whatever, here are the robes you need.",
+						"Can't blame you! Well if you change your mind, I'm your guy."
 					],
 
 					"yes_reward_items" : ["Ceremonial robes"],
-					"yes_cost_items": ["Beautiful dress"],
+					"yes_cost_items": ["Beautiful dress", "Fabrics"],
 					
 					"yes_accepted_quest_info": "[Too Much Sun]: Deliver ceremonial robes to Trin"
 				},
 				"end": {
 					"solar_system": 4,
 					"planet": 1,
-					"speaker_name": "",
-					"dialogue": "",
+					"speaker_name": "Emperor Sol",
+					"dialogue": "Good, good, you're back! And these robes, my, are they snazz- holy! As promised, your generous payment of 200 bits.",
 					"choices": [
-						"",
-						""
+						"You said that I was going to be paid handsomely. 200 bits isn't handsome.",
+						"Hold on, this barely covers the cost of fuel for this whole trip! You even gave me an expired coupon for the robes, I had to run an extra errand for the seamstress just to cover the difference!"
 					],
 					"speaker_responses": [
-						"",
-						""
+						"Ah, but you're also being rewarded in spiritual fulfilment and favor from our lord!",
+						"Well! It seems no one wants to make insterstellar deliveries these days! Your ENTITLEMENT and GREED will be your RUIN. BEGONE from our holy lands, WICKED ONE."
 					],
 					"yes_cost_items": ["Ceremonial robes"],
 					"yes_money_change": 200,
 					"no_cost_items": ["Ceremonial robes"],
-					"no_money_change" : 800
+					"no_money_change" : 300
 				}
 			}
 		}
