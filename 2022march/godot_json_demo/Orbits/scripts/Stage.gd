@@ -29,16 +29,18 @@ export var solar_system = 0 			# which solar system the request is made in
 export var planet = 0					# which planet the request is made in
 export var required_inventory = [] 		# OPT: what the player must have in inventory to see this request
 export var required_money = 0			# OPT: the minimum amoutn of money the player must have to see this request
-export var yes_accepted_quest_info = "" # OPT: the text displayed to remind the player what to get and who to give it to ex. "Bring chili, mousepad and sparklers to Solar System 2, Planet 3"
 export var is_complete = false			# (always false at start) has the player said yes/no to this request yet?
+export var yes_chosen = true			# (always true at start) if the stage is complete, was 'yes' chosen (true) or 'no' chosen (false0
 export var dependent_stages = [] # OPT: key of stages of this quest that are completed when this stage is complete
 
+export var yes_accepted_quest_info = "" # OPT: the text displayed to remind the player what to get and who to give it to ex. "Bring chili, mousepad and sparklers to Solar System 2, Planet 3"
 export var yes_money_change = 0	 # OPT: money (can be negative) that player receives if they say yes
 export var yes_cost_items = []   # OPT: items that player gives away if they say yes
 export var yes_reward_items = [] # OPT: items that player receives if they say yes
 export var yes_is_complete = true# OPT: does this conversation go away when player chooses yes
 export var yes_end = false		 # OPT: does this entire quest and all subquests end when player chooses yes
 
+export var no_accepted_quest_info = "" # OPT: the text displayed to remind the player what to get and who to give it to ex. "Bring chili, mousepad and sparklers to Solar System 2, Planet 3"
 export var no_money_change = 0   # OPT: money (can be negative) that player receives if they say no
 export var no_cost_items = []	 # OPT: items that player gives away if they say no
 export var no_reward_items = []  # OPT: items that player receives if they say no

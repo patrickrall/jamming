@@ -1,5 +1,8 @@
 extends Label
 
+onready var systembox = $"../SystemSpinBox"
+onready var planetbox = $"../PlanetSpinBox"
+
 var planets = [\
 				["Cork", "Willow", "Lux"],\
  				["Dyna", "Wane", "Minnow","Bass"],\
@@ -42,7 +45,8 @@ func _on_DEBUG_button_pressed():
 	update_textbox()
 
 func update_textbox() -> void:
-	self.text = get_planet($"../SystemSpinBox".value, $"../PlanetSpinBox".value)
+	if systembox and planetbox:
+		self.text = get_planet(systembox.value, planetbox.value)
 
 func _on_SystemSpinBox_value_changed(_value):
 	update_textbox()

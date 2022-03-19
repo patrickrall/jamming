@@ -21,8 +21,9 @@ func compute_up_to(t):
 	# compute positions and data up to the requested time
 	while len(positions) <= (t - t_offset):
 		var out = compute_pos_data(t)
-		positions.append(out[0])
-		data.append(out[1])
+		if out and out.size() > 1:
+			positions.append(out[0])
+			data.append(out[1])
 
 func get_pos(t):
 	compute_up_to(t)

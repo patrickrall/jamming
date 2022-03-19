@@ -70,8 +70,6 @@ __meta__ = {
 [node name="SpeakerName" type="Label" parent="VBoxContainer" groups=[
 "font",
 ]]
-margin_left = 5.0
-margin_top = 5.0
 margin_right = 260.0
 margin_bottom = 19.0
 theme = ExtResource( 4 )
@@ -85,9 +83,8 @@ __meta__ = {
 [node name="Dialogue" type="Label" parent="VBoxContainer" groups=[
 "font",
 ]]
-margin_left = 5.0
 margin_top = 23.0
-margin_right = 255.0
+margin_right = 260.0
 margin_bottom = 152.0
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 3 )

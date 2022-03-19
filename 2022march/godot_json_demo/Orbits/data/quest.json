@@ -1,6 +1,7 @@
 {
 	"root": [
-		{	"quest_name": "Creative Chef",
+		{
+			"quest_name": "Creative Chef",
 			"stages": {
 				"0": {
 					"solar_system": 2,
@@ -130,12 +131,14 @@
 						"giant mongoose liver",
 						"sun cakes"
 					],
-					"yes_money_change": 1000
+					"yes_money_change": 1000,
+					"no_is_complete": false
 				}
 			},
 			"plot summary": "On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin."
 		},
-		{	"quest_name": "Lassie?",
+		{
+			"quest_name": "Lassie?",
 			"stages": {
 				"0": {
 					"solar_system": 1,
@@ -150,14 +153,21 @@
 						"Here's money for fuel. Ringo-speed, brave citizen.",
 						"No. Your only route to maintain ownership of this vessel is to accept the requisition. Here's money for fuel."
 					],
-					"yes_reward_items" : ["Official Requisition Order 3026GY"],
+					"yes_reward_items": [
+						"Official Requisition Order 3026GY"
+					],
 					"yes_money_change": 800,
-					"no_reward_items" : ["Official Requisition Order 3026GY"],
-					"no_money_change" : 800,
-					"yes_accepted_quest_info": "Lassie?: To Garish: Secret Package (Escape)"
+					"no_reward_items": [
+						"Official Requisition Order 3026GY"
+					],
+					"no_money_change": 800,
+					"yes_accepted_quest_info": "Lassie?: To Garish: Secret Package (Escape)",
+					"no_accepted_quest_info": "Lassie?: To Garish: Secret Package (Escape)"
 				},
 				"The Well": {
-					"required_inventory": ["Official Requisition Order 3026GY"],
+					"required_inventory": [
+						"Official Requisition Order 3026GY"
+					],
 					"solar_system": 7,
 					"planet": 3,
 					"speaker_name": "Disembodied Voice",
@@ -170,12 +180,23 @@
 						"*low humming noises*",
 						"GIUUUUHHHH ZIZIMMMMENNN LAAAALLL. Deliver this to Garish post-haste."
 					],
-					"yes_reward_items": ["Unknown Valuable"],
-					"yes_cost_items": ["Official Requisition Order 3026GY"],
-					"no_reward_items": ["Unknown Valuable"],
-					"no_cost_items": ["Official Requisition Order 3026GY"]
+					"yes_reward_items": [
+						"Unknown Valuable"
+					],
+					"yes_cost_items": [
+						"Official Requisition Order 3026GY"
+					],
+					"no_reward_items": [
+						"Unknown Valuable"
+					],
+					"no_cost_items": [
+						"Official Requisition Order 3026GY"
+					]
 				},
 				"end": {
+					"required_inventory": [
+						"Unknown Valuable"
+					],
 					"solar_system": 3,
 					"planet": 1,
 					"speaker_name": "Empty Control Room",
@@ -188,14 +209,19 @@
 						"It reads: 'Payload received. Compensation provided. Gratitude expressed.",
 						"*Your fuel gauge looks higher than before."
 					],
-					"yes_cost_items": ["Unknown Valuable"],
+					"yes_cost_items": [
+						"Unknown Valuable"
+					],
 					"yes_money_change": 300,
-					"no_cost_items": ["Unknown Valuable"],
-					"no_money_change" : 300,
+					"no_cost_items": [
+						"Unknown Valuable"
+					],
+					"no_money_change": 300
 				}
 			}
 		},
-		{	"quest_name": "Cereal Misgivings",
+		{
+			"quest_name": "Cereal Misgivings",
 			"stages": {
 				"0": {
 					"solar_system": 5,
@@ -218,7 +244,7 @@
 				},
 				"Cereal Delivery (Bass)": {
 					"required_inventory": [
-						"Hastily Wrapped Present",
+						"Hastily Wrapped Present"
 					],
 					"solar_system": 2,
 					"planet": 4,
@@ -274,7 +300,8 @@
 				}
 			}
 		},
-		{	"quest_name": "Cereal Misgivings: Epilogue",
+		{
+			"quest_name": "Cereal Misgivings: Epilogue",
 			"stages": {
 				"0": {
 					"required_inventory": [
@@ -329,7 +356,8 @@
 				}
 			}
 		},
-		{	"quest_name": "Blob Shopper",
+		{
+			"quest_name": "Blob Shopper",
 			"stages": {
 				"end": {
 					"solar_system": 1,
@@ -347,7 +375,8 @@
 				}
 			}
 		},
-		{	"quest_name": "Case in Croissant",
+		{
+			"quest_name": "Case in Croissant",
 			"stages": {
 				"0": {
 					"solar_system": 1,
@@ -358,7 +387,8 @@
 						"OK, I'll get some",
 						"No croissants for you"
 					],
-					"yes_accepted_quest_info": "Cork: croissants"
+					"yes_accepted_quest_info": "Cork: croissants",
+					"no_accepted_quest_info": "greed for croissants"
 				},
 				"1": {
 					"solar_system": 1,

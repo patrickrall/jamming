@@ -2,7 +2,7 @@ extends PanelContainer
 
 signal yes_chosen(stage)
 signal no_chosen(stage)
-signal append_to_yes_accepted_quest_info(stage)
+signal append_to_accepted_quest_info(stage)
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
@@ -12,7 +12,7 @@ onready var ui_yes_button = $VBoxContainer/ChoicesParent/YesButton
 onready var ui_no_button = $VBoxContainer/ChoicesParent/NoButton
 onready var ui_yes_button_long = $VBoxContainer/ChoicesParent/YesButton/RichTextLabel
 onready var ui_no_button_long = $VBoxContainer/ChoicesParent/NoButton/RichTextLabel2
-onready var ui_ignore_button_long = $VBoxContainer/ChoicesParent/NoButton/RichTextLabel3
+onready var ui_ignore_button_long = $VBoxContainer/ChoicesParent/IgnoreButton/RichTextLabel3
 onready var ui_ignore_button = $VBoxContainer/ChoicesParent/IgnoreButton
 onready var ui_choices_parent = $VBoxContainer/ChoicesParent
 
@@ -88,7 +88,7 @@ func _on_YesButton_pressed() -> void:
 	show_choices(false)
 	print("yes")
 	emit_signal("yes_chosen", this_stage)
-	emit_signal("append_to_yes_accepted_quest_info", this_stage.id)
+	emit_signal("append_to_accepted_quest_info", this_stage.id)
 	fade_to_disabled()
 
 

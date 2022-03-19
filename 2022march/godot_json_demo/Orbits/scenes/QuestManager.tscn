@@ -9,7 +9,7 @@
 [ext_resource path="res://scripts/GetPlanetName.gd" type="Script" id=7]
 [ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=8]
 [ext_resource path="res://art/ship.png" type="Texture" id=9]
-[ext_resource path="res://scenes/DialogueChoiceUI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scripts/SelfDestruct.gd" type="Script" id=10]
 
 [node name="QuestManager" type="Node"]
 script = ExtResource( 1 )
@@ -24,8 +24,8 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -193.0
-margin_top = -142.94
-margin_bottom = -57.9402
+margin_top = -89.1227
+margin_bottom = -4.12274
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
@@ -33,40 +33,7 @@ WASD or arrow keys = pan
 I, O = zoom in, zoom out
 mouse to click buttons"
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="OngoingQuests" type="TextureRect" parent="CanvasLayer"]
-visible = false
-self_modulate = Color( 0.282353, 0.231373, 0.384314, 0.498039 )
-margin_left = 239.0
-margin_top = 32.3082
-margin_right = 431.0
-margin_bottom = 103.308
-texture = ExtResource( 4 )
-stretch_mode = 1
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/OngoingQuests"]
-margin_left = 8.0
-margin_top = 9.0
-margin_right = 185.0
-margin_bottom = 68.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ShipLog" type="Label" parent="CanvasLayer/OngoingQuests/ScrollContainer"]
-margin_right = 177.0
-margin_bottom = 19.0
-size_flags_horizontal = 3
-theme = ExtResource( 5 )
-text = "Ship Log Requests:"
-autowrap = true
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -85,21 +52,13 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScrollContainer"]
-margin_right = 260.0
-margin_bottom = 284.0
-
-[node name="DialogueChoiceUI" parent="CanvasLayer/ScrollContainer/VBoxContainer" instance=ExtResource( 10 )]
-anchor_right = 0.0
-margin_right = 260.0
-margin_bottom = 284.0
 
 [node name="DEBUG_button" type="Button" parent="CanvasLayer"]
-anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -151.0
+margin_left = 154.0
 margin_top = -20.0
+margin_right = 252.0
 theme = ExtResource( 5 )
 text = "Go to planet"
 __meta__ = {
@@ -211,6 +170,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="OngoingQuests" type="TextureRect" parent="CanvasLayer/ToggleShipLog"]
+visible = false
+self_modulate = Color( 0.282353, 0.231373, 0.384314, 0.498039 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -27.0467
+margin_top = 31.954
+margin_right = 164.953
+margin_bottom = 102.954
+texture = ExtResource( 4 )
+stretch_mode = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ToggleShipLog/OngoingQuests"]
+margin_left = 8.0
+margin_top = 9.0
+margin_right = 185.0
+margin_bottom = 68.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShipLog" type="Label" parent="CanvasLayer/ToggleShipLog/OngoingQuests/ScrollContainer"]
+margin_right = 177.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+theme = ExtResource( 5 )
+text = "Ship Log Requests:"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
 "font",
 ]]
@@ -246,13 +241,458 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Json_storage" type="RichTextLabel" parent="."]
+margin_left = -56.3399
+margin_right = -6.33992
+margin_bottom = 50.0
+text = "{
+	\"root\": [
+		{
+			\"quest_name\": \"Creative Chef\",
+			\"stages\": {
+				\"0\": {
+					\"solar_system\": 2,
+					\"planet\": 4,
+					\"speaker_name\": \"Chef Maurice LeStarr\",
+					\"dialogue\": \"I want Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin.\",
+					\"choices\": [
+						\"Um... ok\",
+						\"Never speak to me or my sous again\"
+					],
+					\"speaker_responses\": [
+						\"Thank you!\",
+						\"How rude! Never speak to me or my sous again.\"
+					],
+					\"yes_accepted_quest_info\": \"To Bass: Papua Fruit Shells(Garish), Giant Mongoose Liver(Dyna), Sun Cakes(Trin)\"
+				},
+				\"Papua Fruit Shells from Garish\": {
+					\"solar_system\": 3,
+					\"planet\": 1,
+					\"speaker_name\": \"Enormous Lounging Red Squirrel\",
+					\"dialogue\": \"Oi boddy. Yeah, you, boddy, you take these fruit shells away and I won' gnaw yer ship, mmm? I jus' ate em and I don' wanna clean up...\",
+					\"choices\": [
+						\"(Pick up the gnawed papua fruit shells)\",
+						\"No\"
+					],
+					\"speaker_responses\": [
+						\"Good boddy.\",
+						\"-crunch crunch- Mmmmm... hundred-dollo munch...\"
+					],
+					\"no_money_change\": -100,
+					\"yes_reward_items\": [
+						\"papua fruit shells\"
+					]
+				},
+				\"Giant Mongoose Liver from Dyna\": {
+					\"solar_system\": 2,
+					\"planet\": 1,
+					\"speaker_name\": \"Sniffly Person in Mongoose Costume\",
+					\"dialogue\": \"Fresh giant mongoose liver! Limited stock! Liver and let liver! Buy now! -sniffle- Liver your best life!\",
+					\"choices\": [
+						\"(Buy liver for 50)\",
+						\"No\"
+					],
+					\"speaker_responses\": [
+						\"-sniffle- Have a good day...\",
+						\"Get busy livering or get busy dying... -sniffle-\"
+					],
+					\"yes_money_change\": -50,
+					\"yes_reward_items\": [
+						\"giant mongoose liver\"
+					]
+				},
+				\"Sun Cakes from Trin\": {
+					\"solar_system\": 4,
+					\"planet\": 1,
+					\"speaker_name\": \"Panicking Tiny Thing In a Purple Bathrobe\",
+					\"dialogue\": \"TAKE THESE AWAY FROM ME! THEY BROUGHT ME NOTHING BUT RUIN!!\",
+					\"choices\": [
+						\"(Take the beribboned box of sun cakes)\",
+						\"No\"
+					],
+					\"speaker_responses\": [
+						\"MANY BLESSINGS UPON YOU!! YOU'LL NEED IT!\",
+						\"ARGGGGHHH! WILL THIS TORMENT NEVER END??!\"
+					],
+					\"yes_reward_items\": [
+						\"sun cakes\"
+					]
+				},
+				\"Brackish Soup\": {
+					\"solar_system\": 6,
+					\"planet\": 1,
+					\"speaker_name\": \"6-Legged Scaled Bug Enthusiast\",
+					\"dialogue\": \"Ah, welcome, stranger! Would you like some soup? It's swamp-fresh!\",
+					\"choices\": [
+						\"Thank... you...\",
+						\"(Avoid eye contact)\"
+					],
+					\"speaker_responses\": [
+						\"Enjoy your taste of Brackish hospitality!\",
+						\"Ah, you're focused on searching for 6-legged scaled bugs too! I won't disturb you, then.\"
+					],
+					\"yes_reward_items\": [
+						\"brackish soup\"
+					]
+				},
+				\"Rival Chef\": {
+					\"required_inventory\": [
+						\"brackish soup\"
+					],
+					\"solar_system\": 2,
+					\"planet\": 4,
+					\"speaker_name\": \"Salty Restaurant Reviewer On Top of Restaurant Sign\",
+					\"dialogue\": \"Nothing will make me happy today. So I will sit up here to annoy LeStarr.\",
+					\"choices\": [
+						\"(Offer brackish soup)\",
+						\"(Avoid eye contact)\"
+					],
+					\"speaker_responses\": [
+						\"Oh! Oh! How perfectly savory! Are you from LeStarr's restaurant? I hate the head chef, but you-- you-- have promise! Mm! I will give LeStarr one more chance.\",
+						\"... I miss Brackish water...\"
+					],
+					\"yes_cost_items\": [
+						\"brackish soup\"
+					]
+				},
+				\"end\": {
+					\"required_inventory\": [
+						\"papua fruit shells\",
+						\"giant mongoose liver\",
+						\"sun cakes\"
+					],
+					\"solar_system\": 2,
+					\"planet\": 4,
+					\"speaker_name\": \"Chef Maurice LeStarr\",
+					\"dialogue\": \"You have my ingredients! Ah, how fortunate I am!\",
+					\"choices\": [
+						\"Here you go\",
+						\"I won't give these up\"
+					],
+					\"speaker_responses\": [
+						\"The 4th time is the charm!\",
+						\"Are you... a rival chef?? Coffee and biscuits, how unlucky I am!\"
+					],
+					\"yes_cost_items\": [
+						\"papua fruit shells\",
+						\"giant mongoose liver\",
+						\"sun cakes\"
+					],
+					\"yes_money_change\": 1000,
+					\"no_is_complete\": false
+				}
+			},
+			\"plot summary\": \"On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin.\"
+		},
+		{
+			\"quest_name\": \"Lassie?\",
+			\"stages\": {
+				\"0\": {
+					\"solar_system\": 1,
+					\"planet\": 3,
+					\"speaker_name\": \"The Authorities TM\",
+					\"dialogue\": \"Sir, we need to requisition your ship. Or else, we need you to fly it to Escape ASAP to pick up a confidential asset.\",
+					\"choices\": [
+						\"Umm yeah ok, I don't know if I have money for fuel\",
+						\"If you take my ship can I tag along?\"
+					],
+					\"speaker_responses\": [
+						\"Here's money for fuel. Ringo-speed, brave citizen.\",
+						\"No. Your only route to maintain ownership of this vessel is to accept the requisition. Here's money for fuel.\"
+					],
+					\"yes_reward_items\": [
+						\"Official Requisition Order 3026GY\"
+					],
+					\"yes_money_change\": 800,
+					\"no_reward_items\": [
+						\"Official Requisition Order 3026GY\"
+					],
+					\"no_money_change\": 800,
+					\"yes_accepted_quest_info\": \"Lassie?: To Garish: Secret Package (Escape)\",
+					\"no_accepted_quest_info\": \"Lassie?: To Garish: Secret Package (Escape)\"
+				},
+				\"The Well\": {
+					\"required_inventory\": [
+						\"Official Requisition Order 3026GY\"
+					],
+					\"solar_system\": 7,
+					\"planet\": 3,
+					\"speaker_name\": \"Disembodied Voice\",
+					\"dialogue\": \"I detect ORO3026GY, the payload is now deposited on your ship. Deliver this to Garish post-haste.\",
+					\"choices\": [
+						\"Thanks... Guess I'll be going then.\",
+						\"What happens if I can't make it out of the gravity well?\"
+					],
+					\"speaker_responses\": [
+						\"*low humming noises*\",
+						\"GIUUUUHHHH ZIZIMMMMENNN LAAAALLL. Deliver this to Garish post-haste.\"
+					],
+					\"yes_reward_items\": [
+						\"Unknown Valuable\"
+					],
+					\"yes_cost_items\": [
+						\"Official Requisition Order 3026GY\"
+					],
+					\"no_reward_items\": [
+						\"Unknown Valuable\"
+					],
+					\"no_cost_items\": [
+						\"Official Requisition Order 3026GY\"
+					]
+				},
+				\"end\": {
+					\"required_inventory\": [
+						\"Unknown Valuable\"
+					],
+					\"solar_system\": 3,
+					\"planet\": 1,
+					\"speaker_name\": \"Empty Control Room\",
+					\"dialogue\": \"*You step on a slip of paper on the floor.*\",
+					\"choices\": [
+						\"*Pick it up and look at it*\",
+						\"*Shrug and return to the ship*\"
+					],
+					\"speaker_responses\": [
+						\"It reads: 'Payload received. Compensation provided. Gratitude expressed.\",
+						\"*Your fuel gauge looks higher than before.\"
+					],
+					\"yes_cost_items\": [
+						\"Unknown Valuable\"
+					],
+					\"yes_money_change\": 300,
+					\"no_cost_items\": [
+						\"Unknown Valuable\"
+					],
+					\"no_money_change\": 300
+				}
+			}
+		},
+		{
+			\"quest_name\": \"Cereal Misgivings\",
+			\"stages\": {
+				\"0\": {
+					\"solar_system\": 5,
+					\"planet\": 2,
+					\"speaker_name\": \"Dirt Mound Shaped like a Rancher\",
+					\"dialogue\": \"Hey! Straight back! You don't happen to be headed off-system, are ya? I gotta get this gift to my kid on Bass\",
+					\"choices\": [
+						\"Umm... yeah I can head there soon.\",
+						\"Straight back? Is that... an insult?\"
+					],
+					\"speaker_responses\": [
+						\"That's a huge help, I'll pay in advance with this haybale and with money when you come back, reaping just finished so I'll be on Crash come next week.\",
+						\"You smell like you're from Corenne, aren't ya? I knew your kind weren't as nice as they seemed. Imagine farming the same land all year round, it's unhinged.\"
+					],
+					\"yes_accepted_quest_info\": \"Cereal Misgivings: To Bass: Present. To Dyna: Hay\",
+					\"yes_reward_items\": [
+						\"Hastily Wrapped Present\",
+						\"Small Hay Bale\"
+					]
+				},
+				\"Cereal Delivery (Bass)\": {
+					\"required_inventory\": [
+						\"Hastily Wrapped Present\"
+					],
+					\"solar_system\": 2,
+					\"planet\": 4,
+					\"speaker_name\": \"Gorgeous Woman and Intelligent Teenager\",
+					\"dialogue\": \"There you are! I've been waiting for half an hour. What did that oaf bring this year?\",
+					\"choices\": [
+						\"Sorry for the delay, your child's gift is right here *smooths out wrapping*\",
+						\"You married... but your child looks nothing like... *cough* Here you go!\"
+					],
+					\"speaker_responses\": [
+						\"Thanks, and here's a tip for your troubles. Janice, open it at home, I didn't see any trash cans coming in here.\",
+						\"*rolls eyes* Always with the comments. Here's some cash, and I can take whatever crop he stuck you with as well. I appreciate the discretion.\"
+					],
+					\"yes_money_change\": 500,
+					\"yes_cost_items\": [
+						\"Hastily Wrapped Present\",
+						\"Small Hay Bale\"
+					],
+					\"no_money_change\": 900,
+					\"no_cost_items\": [
+						\"Hastily Wrapped Present\"
+					],
+					\"no_reward_items\": [
+						\"%Migrant Credit\"
+					],
+					\"yes_end\": false,
+					\"no_end\": true
+				},
+				\"end\": {
+					\"required_inventory\": [
+						\"Small Hay Bale\"
+					],
+					\"solar_system\": 2,
+					\"planet\": 1,
+					\"speaker_name\": \"Chewing Tabacco Incarnate\",
+					\"dialogue\": \"*spit* Ayo dere boy'i why'na gotcha dat mess 'a hay der ya tryna getchya rent a da litter en da masta sana?\",
+					\"choices\": [
+						\"Uhhh... yes?\",
+						\"I have no idea what you're saying. Can you please not spit so close to my feet?\"
+					],
+					\"speaker_responses\": [
+						\"AAAAHHHHHAAHAHAHAHA Dassa raiht manna da speak a ya eldas boy'i lessa make sum masta dala en da sana dis fine daya\",
+						\"Yaaarrrr donna know wassa gotta talk like a camma wit cha sana? I gatcha wit da dala dontcha warray none mi boy'i\"
+					],
+					\"yes_cost_items\": [
+						\"Small Hay Bale\"
+					],
+					\"no_cost_items\": [
+						\"Small Hay Bale\"
+					],
+					\"yes_money_change\": 300,
+					\"no_money_change\": 200
+				}
+			}
+		},
+		{
+			\"quest_name\": \"Cereal Misgivings: Epilogue\",
+			\"stages\": {
+				\"0\": {
+					\"required_inventory\": [
+						\"%Migrant Credit\"
+					],
+					\"solar_system\": 5,
+					\"planet\": 3,
+					\"speaker_name\": \"Pungeant Odor With a Face\",
+					\"dialogue\": \"Ayy thanks for delivering that, listen, I gotta get you back next harvest, had a bad run at the casino... I'll have money if you visit me on Stilt later on, ok?\",
+					\"choices\": [
+						\"Yeah sure uh huh\",
+						\"seems likely\"
+					],
+					\"speaker_responses\": [
+						\"heh heh *runs off*\",
+						\"*offers squishy handshake\"
+					]
+				},
+				\"1\": {
+					\"required_inventory\": [
+						\"%Migrant Credit\"
+					],
+					\"solar_system\": 5,
+					\"planet\": 1,
+					\"speaker_name\": \"Not A Big Enough Loincloth\",
+					\"dialogue\": \"Hey, buddy, friend, pal, guy, I uh... Amigo... Senpai...\",
+					\"choices\": [
+						\"*sigh* I'll come check on you on Yard\",
+						\"I'm gonna report you to the IMFP\"
+					],
+					\"speaker_responses\": [
+						\"Yes 100% definitely you can count on me it's a sure thing\",
+						\"Oh nice yeah if you do ask for Randy and tell him that I will pay him next cycle and not to do that thing again\"
+					]
+				},
+				\"2\": {
+					\"required_inventory\": [
+						\"%Migrant Credit\"
+					],
+					\"solar_system\": 5,
+					\"planet\": 2,
+					\"speaker_name\": \"Dirt Mount Shaped Like a Rancher\",
+					\"dialogue\": \"Ayy if it ain't the straight back in the flesh, I got hay for days if you want some more!\",
+					\"choices\": [
+						\"Honestly, I'd rather eat giant mongoose liver.\",
+						\"Why don't I visit you next cycle and see how you're doing.\"
+					],
+					\"speaker_responses\": [
+						\"Classic Corkboard, always looking down on us hard working food fighters. get outta my sight.\",
+						\"Ya know, you really give the Willow-Whimps a good name, keep it up\"
+					]
+				}
+			}
+		},
+		{
+			\"quest_name\": \"Blob Shopper\",
+			\"stages\": {
+				\"end\": {
+					\"solar_system\": 1,
+					\"planet\": 1,
+					\"speaker_name\": \"Sentient Beach Ball Alien\",
+					\"dialogue\": \"Would you tell me where the nearest blob shop is?\",
+					\"choices\": [
+						\"Right over there.\",
+						\"Sorry, I don't know.\"
+					],
+					\"speaker_responses\": [
+						\"Thank you!\",
+						\"Oh... Let me know if you find out...\"
+					]
+				}
+			}
+		},
+		{
+			\"quest_name\": \"Case in Croissant\",
+			\"stages\": {
+				\"0\": {
+					\"solar_system\": 1,
+					\"planet\": 1,
+					\"speaker_name\": \"Strange Woman Laying in a Pond\",
+					\"dialogue\": \"Help, I am so hungry and I cannot get up! I need... croissants...\",
+					\"choices\": [
+						\"OK, I'll get some\",
+						\"No croissants for you\"
+					],
+					\"yes_accepted_quest_info\": \"Cork: croissants\",
+					\"no_accepted_quest_info\": \"greed for croissants\"
+				},
+				\"1\": {
+					\"solar_system\": 1,
+					\"planet\": 3,
+					\"speaker_name\": \"Hunched-Over Croissant Seller\",
+					\"dialogue\": \"Hehe. You look like someone down on their luck... Want to buy a load of croissants? It's very safe.\",
+					\"choices\": [
+						\"(Buy croissants for 100g)\",
+						\"No\"
+					],
+					\"speaker_responses\": [
+						\"Pleasure doing business with you, hehe.\",
+						\"Hehe... don't be surprised if you regret this...\"
+					],
+					\"yes_money_change\": -100,
+					\"yes_reward_items\": [
+						\"croissants\"
+					]
+				},
+				\"end\": {
+					\"required_inventory\": [
+						\"croissants\"
+					],
+					\"solar_system\": 1,
+					\"planet\": 1,
+					\"speaker_name\": \"Strange Woman Laying in a Pond\",
+					\"dialogue\": \"I smell croissants! Please, please give them to me...\",
+					\"choices\": [
+						\"Ok\",
+						\"No croissants for you\"
+					],
+					\"speaker_responses\": [
+						\"Wow, thank you! Here, take this sword, I think I missed my chance to give it to the right person anyway...\",
+						\"Ugh... \"
+					],
+					\"yes_cost_items\": [
+						\"croissants\"
+					],
+					\"yes_reward_items\": [
+						\"rusty sword\"
+					]
+				}
+			}
+		}
+	]
+}"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="value_changed" from="CanvasLayer/DEBUG_button/SystemSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_SystemSpinBox_value_changed"]
 [connection signal="value_changed" from="CanvasLayer/DEBUG_button/PlanetSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_PlanetSpinBox_value_changed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button2" to="." method="_on_DEBUG_button2_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
-[connection signal="pressed" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/OngoingQuests" method="_on_ToggleShipLog_pressed"]
+[connection signal="pressed" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/ToggleShipLog/OngoingQuests" method="_on_ToggleShipLog_pressed"]
 [connection signal="pressed" from="CanvasLayer/TogglePlanetRequests" to="CanvasLayer/ScrollContainer" method="_on_TogglePlanetRequests_pressed"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetRequests" to="CanvasLayer/ScrollContainer" method="_on_TogglePlanetRequests_toggled"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetRequests" to="." method="_on_TogglePlanetRequests_toggled"]
