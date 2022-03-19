@@ -1,10 +1,13 @@
 extends Node
 
+signal arrive_sfx
+signal stage_sfx(accepted_new_b, reward_item_b, 
+	more_money_b, less_money_b, quest_end_b)
 
 # Declare member variables here. 
 onready var json_label = $CanvasLayer/Label
-onready var ship_log = $CanvasLayer/ToggleShipLog/OngoingQuests/ScrollContainer/ShipLog
-onready var dialogue_choice_ui_parent = $CanvasLayer/ScrollContainer/VBoxContainer
+onready var ship_log = $CanvasLayer/ToggleShipLog/ScrollContainer/ShipLog
+onready var dialogue_choice_ui_parent = $CanvasLayer/TogglePlanetRequests/ScrollContainer/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
 onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
 onready var ui_inventory = $CanvasLayer/Inventory
@@ -38,6 +41,7 @@ func _ready() -> void:
 func arrive_at_planet(solar_system: int, planet: int):
 	# react to the player arriving at the planet specified by the arguments
 	# by updating the ui with requests from that planet
+	emit_signal("arrive_sfx")
 	var relevant_stages = get_relevant_stages_for_planet(solar_system, planet, inventory)
 	for child in dialogue_choice_ui_parent.get_children():
 		child.queue_free()
@@ -87,6 +91,7 @@ func on_append_to_ship_log(stage_idx: int) -> void:
 	
 
 func on_yes_chosen(stage: Stage) -> void:
+	stage_sfx(stage, true)
 	# the player fulfilled the quest ask
 	if !(stage.id in accepted_requests) and all_stages[stage.id].yes_accepted_quest_info != "":
 		all_stages[stage.id].yes_chosen = true # record choice made
@@ -111,6 +116,7 @@ func on_yes_chosen(stage: Stage) -> void:
 
 func on_no_chosen(stage: Stage) -> void:
 	# the player refused the quest ask
+	stage_sfx(stage, false)
 	if !(stage.id in accepted_requests) and all_stages[stage.id].no_accepted_quest_info != "":
 		all_stages[stage.id].yes_chosen = false # record choice made
 		accepted_requests.append(stage.id)
@@ -131,6 +137,27 @@ func on_no_chosen(stage: Stage) -> void:
 	update_ship_log()
 	update_inventory()
 	update_planet_request_toggle()
+
+func stage_sfx(stage : Stage, yes_not_no_chosen : bool):
+	var accepted_new_b = false
+	var reward_item_b = false
+	var more_money_b = false
+	var less_money_b = false
+	var quest_end_b = false
+	
+	if yes_not_no_chosen: # yes chosen
+		accepted_new_b = !(stage.id in accepted_requests) and all_stages[stage.id].yes_accepted_quest_info != ""
+		reward_item_b = stage.yes_reward_items.size() > 0
+		more_money_b = stage.yes_money_change > 0
+		less_money_b = stage.yes_money_change < 0
+		quest_end_b = stage.yes_end
+	else: # no chosen
+		accepted_new_b = !(stage.id in accepted_requests) and all_stages[stage.id].no_accepted_quest_info != ""
+		reward_item_b = stage.no_reward_items.size() > 0
+		more_money_b = stage.no_money_change > 0
+		less_money_b = stage.no_money_change < 0
+		quest_end_b = stage.no_end
+	emit_signal("stage_sfx", accepted_new_b, reward_item_b, more_money_b, less_money_b, quest_end_b)
 
 func mark_complete(stage_idx: int)-> void:
 	# player said something at this stage which means this stage and this 
@@ -259,8 +286,9 @@ func update_ship_log() -> void:
 	ship_log.text = "Quests:\n"
 	for stage_idx in accepted_requests:
 		var stage : Stage =  all_stages[stage_idx]
-		ship_log.text += stage.yes_accepted_quest_info if stage.yes_chosen  else stage.no_accepted_quest_info + "\n"
-
+		ship_log.text += stage.yes_accepted_quest_info if stage.yes_chosen  else stage.no_accepted_quest_info
+		ship_log.text += "\n"
+	ship_log.text = ship_log.text.replace("\n\n", "\n")
 
 #JSON
 func read_json2():
@@ -287,7 +315,7 @@ func update_inventory():
 	for item in inventory:
 		if !item.begins_with("%"):
 			 ui_inventory.text += str(item) + "\n"
-
+	ui_inventory.text = ui_inventory.text.replace("\n\n", "\n")
 
 func _on_DEBUG_button3_pressed() -> void:
 	arrive_at_planet(1,3)

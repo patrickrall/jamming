@@ -16,15 +16,15 @@ var queue_idx = 0
 const SEC_DELAY_BETW_SFX = 0.5
 
 func _ready():
-	#_on_QuestManager_stage_sfx(true, true, true, true, true)
-	$coin.stream = coin
-	$less_coin.stream = less_coin
-	$quest_end.stream = quest_end
-	$item.stream = item
-	$refuel.stream = item
-	$low_fuel.stream = low_fuel
-	$arrive.stream = arrive
-	$accepted_new.stream = accepted_new
+	_on_QuestManager_stage_sfx(true, true, true, true, true)
+#	$coin.stream = coin
+#	$less_coin.stream = less_coin
+#	$quest_end.stream = quest_end
+#	$item.stream = item
+#	$refuel.stream = item
+#	$low_fuel.stream = low_fuel
+#	$arrive.stream = arrive
+#	$accepted_new.stream = accepted_new
 
 
 func play_quest_end_2() -> void:
@@ -79,6 +79,9 @@ func _on_QuestManager_accepted_new_sfx():
 
 func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool, 
 	more_money_b: bool, less_money_b: bool, quest_end_b: bool):
+#	playing = false
+#	stream_paused = true
+	
 	sound_queue = []
 	queue_idx = 0
 	if quest_end_b:
@@ -101,7 +104,7 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		self.add_child(t1)
 		t1.start()
 		yield(t1, "timeout")
-	if more_money_b:
+	elif more_money_b:
 		print("coin append")
 		sound_queue.append(coin)
 		play_more_coin_2()
@@ -111,7 +114,7 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		self.add_child(t2)
 		t2.start()
 		yield(t2, "timeout")
-	if less_money_b:
+	elif less_money_b:
 		print("less_coin append")
 		sound_queue.append(less_coin)
 		play_less_coin_2()
@@ -131,63 +134,6 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		self.add_child(t4)
 		t4.start()
 		yield(t4, "timeout")
+	#playing = true
+#	stream_paused = false
 	
-#	print("sound_queue size=" + str(sound_queue.size()))
-#	if queue_idx >= sound_queue.size():
-#		return
-#	stream = sound_queue[queue_idx]
-#	play()
-	
-
-#
-#func _on_AudioStreamPlayer2D_finished():
-#	print("finished play idx=" + str(queue_idx))
-#	queue_idx += 1
-#	if queue_idx >= sound_queue.size():
-#		return
-#	var t = Timer.new()
-#	t.set_wait_time(1)
-#	t.set_one_shot(true)
-#	self.add_child(t)
-#	t.start()
-#	yield(t, "timeout")
-#	stream = sound_queue[queue_idx]
-#	playing = true
-#	#play()
-#	#play()
-	#play()
-	
-#func play_quest_end() -> void:
-#	stream = quest_end
-#	play()
-#
-#func play_item_reward() -> void:
-#	stream = item
-#	play()
-#
-#func play_more_coin() -> void:
-#	stream = coin
-#	play()
-#
-#
-#func play_less_coin() -> void:
-#	stream = less_coin
-#	play()
-#
-#func play_low_fuel() -> void:
-#	stream = low_fuel
-#	play()
-#
-#func play_refuel() -> void:
-#	stream = refuel
-#	play()
-#
-#func play_arrive_on_planet() -> void:
-#	stream = arrive
-#	play()
-#
-#func play_accepted_new() -> void:
-#	stream = accepted_new
-#	play()
-#
-#

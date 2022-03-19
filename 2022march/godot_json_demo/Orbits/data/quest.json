@@ -156,8 +156,10 @@
 						"Official Requisition Order 3026GY"
 					],
 					"yes_money_change": 800,
-					"no_reward_items" : ["Official Requisition Order 3026GY"],
-					"no_money_change" : 800,
+					"no_reward_items": [
+						"Official Requisition Order 3026GY"
+					],
+					"no_money_change": 800,
 					"yes_accepted_quest_info": "[Lassie]: To Garish: Secret Package (Escape)"
 				},
 				"The Well": {
@@ -428,7 +430,8 @@
 				}
 			}
 		},
-		{	"quest_name": "Hot Roy Summer",
+		{
+			"quest_name": "Hot Roy Summer",
 			"stages": {
 				"0": {
 					"solar_system": 3,
@@ -443,15 +446,21 @@
 						"Siiiicccckkkk love the lingo lando, let's jam and pop to Silt, that's where the party's preaching.",
 						"Umm... sorry, I'm used to a different crowd. Can you bring me home to Minnow?"
 					],
-					"yes_reward_items" : ["Cool Boy Roy"],
+					"yes_reward_items": [
+						"Cool Boy Roy"
+					],
 					"yes_money_change": 200,
-					"no_reward_items" : ["Roy Summers"],
-					"no_money_change" : 200,
+					"no_reward_items": [
+						"Roy Summers"
+					],
+					"no_money_change": 200,
 					"yes_accepted_quest_info": "[Hot Roy Summer] To Silt: Cool Boy Roy",
-					"no_accepted_quest_info": "[Hot Roy Summer] To Minnow: Roy Summers",
+					"no_accepted_quest_info": "[Hot Roy Summer] To Minnow: Roy Summers"
 				},
 				"end": {
-					"required_inventory": ["Cool Boy Roy"],
+					"required_inventory": [
+						"Cool Boy Roy"
+					],
 					"solar_system": 6,
 					"planet": 2,
 					"speaker_name": "Savage Sean S...Morely",
@@ -464,13 +473,19 @@
 						"WOOOOO SPRING BREAAAK!!!! FYRE FEEST!!! ULTRAAA!!!",
 						"Homie don't play you a real one peace out brotha come by anytime"
 					],
-					"yes_reward_items" : ["%Spring Break Cred"],
-					"yes_cost_items": ["Cool Boy Roy"],
+					"yes_reward_items": [
+						"%Spring Break Cred"
+					],
+					"yes_cost_items": [
+						"Cool Boy Roy"
+					],
 					"yes_money_change": 200,
-					"no_money_change" : 400,
+					"no_money_change": 400
 				},
 				"end": {
-					"required_inventory": ["Roy Summers"],
+					"required_inventory": [
+						"Roy Summers"
+					],
 					"solar_system": 2,
 					"planet": 3,
 					"speaker_name": "Ms. Summers",
@@ -483,16 +498,21 @@
 						"You should've seen him in his teenage years. Thanks for helping him come to his senses.",
 						"I... That's not all that reassuring. Anyway, go get in your bunny suit, Roy, the glue machines aren't going to calibrate themselves."
 					],
-					"yes_cost_items": ["Roy Summers"],
+					"yes_cost_items": [
+						"Roy Summers"
+					],
 					"yes_money_change": 500,
-					"no_money_change" : 500,
+					"no_money_change": 500
 				}
 			}
 		},
-		{	"quest_name": "Hot Roy Summer Epilogue",
+		{
+			"quest_name": "Hot Roy Summer Epilogue",
 			"stages": {
 				"end": {
-					"required_inventory": ["%Spring Break Cred"],
+					"required_inventory": [
+						"%Spring Break Cred"
+					],
 					"solar_system": 6,
 					"planet": 2,
 					"speaker_name": "Cool Boy Roy",
@@ -504,11 +524,12 @@
 					"speaker_responses": [
 						"Yeah... haha... Baller... Yeah. That's what it is. I can keep this going. Just enjoy it. Thanks.",
 						"Honestly... It's too much. I kinda want to go home. But it's too late, mom'll stick me in the cleanroom for months. Thanks anyway."
-					],
+					]
 				}
 			}
 		},
-		{	"quest_name": "Deadliest Catch",
+		{
+			"quest_name": "Deadliest Catch",
 			"stages": {
 				"0": {
 					"solar_system": 1,
@@ -523,12 +544,16 @@
 						"That would be really helpful! I know a guy on Lang that has been waiting for one of these for years.",
 						"I don't appreciate your tone. I'll find another delivery service elsewhere. Good day."
 					],
-					"yes_reward_items" : ["Spotted Limo Fish"],
+					"yes_reward_items": [
+						"Spotted Limo Fish"
+					],
 					"yes_money_change": 800,
 					"yes_accepted_quest_info": "[Deadliest Catch] To Lang: Spotted Limo Fish"
 				},
 				"Tsukiji": {
-					"required_inventory": ["Spotted Limo Fish"],
+					"required_inventory": [
+						"Spotted Limo Fish"
+					],
 					"solar_system": 4,
 					"planet": 2,
 					"speaker_name": "Sketchy Fish Guy",
@@ -541,20 +566,24 @@
 						"Yeah... but I need you to get approvals for the import, signed in triplicate. The IMES reps live on Brackish, Crash, and Willow.",
 						"Wait wait... It's okay, I'll buy it. Just... Don't tell Black-Beard that I didn't prepare the import paperwork."
 					],
-					"yes_reward_items" : [
+					"yes_reward_items": [
 						"%Fishy Business",
 						"%IMES Signature Needed",
 						"%IMES Signature Needed"
 					],
 					"yes_money_change": 300,
-					"dependent_stages":"0",
+					"dependent_stages": "0",
 					"yes_accepted_quest_info": "[Deadliest Catch] To Lang: IMES Signatures (Crash) (Brackish) (Willow)",
 					"no_money_change": 600,
-					"no_cost_items": ["Spotted Limo Fish"],
-					"no_is_complete" : 1,
+					"no_cost_items": [
+						"Spotted Limo Fish"
+					],
+					"no_is_complete": 1
 				},
 				"Tsukiji - Land": {
-					"required_inventory": ["%Fishy Business"],
+					"required_inventory": [
+						"%Fishy Business"
+					],
 					"solar_system": 5,
 					"planet": 3,
 					"speaker_name": "Rep JJJ Smith",
@@ -567,12 +596,18 @@
 						"Don't worry, I was briefed. Lang barely exports meat anyway, so my approval here is easy.",
 						"Maybe if you come back later and ask nicely I'll sign your permit."
 					],
-					"yes_reward_items" : ["IMES-Land Signature"],
-					"yes_cost_items": ["%IMES Signature Needed"],
-					"yes_money_change": -100,
+					"yes_reward_items": [
+						"IMES-Land Signature"
+					],
+					"yes_cost_items": [
+						"%IMES Signature Needed"
+					],
+					"yes_money_change": -100
 				},
 				"Tsukiji - Sea": {
-					"required_inventory": ["%Fishy Business"],
+					"required_inventory": [
+						"%Fishy Business"
+					],
 					"solar_system": 6,
 					"planet": 1,
 					"speaker_name": "Petunia Jemima",
@@ -585,12 +620,19 @@
 						"Of course honey, we love big ol' fish around here, and that one will love it in Lang's large lakes.",
 						"Listen honey, you can't go around asking women their age. Learn some manners."
 					],
-					"yes_reward_items" : ["IMES-Sea Signature"],
-					"yes_cost_items": ["%IMES Signature Needed"],
-					"yes_money_change": -100,
+					"yes_reward_items": [
+						"IMES-Sea Signature"
+					],
+					"yes_cost_items": [
+						"%IMES Signature Needed"
+					],
+					"yes_money_change": -100
 				},
 				"Tsukiji - Air - Interlude": {
-					"required_inventory": ["%Fishy Business", "%IMES Signature Needed"],
+					"required_inventory": [
+						"%Fishy Business",
+						"%IMES Signature Needed"
+					],
 					"solar_system": 1,
 					"planet": 2,
 					"speaker_name": "Candice Simon",
@@ -602,7 +644,7 @@
 					"speaker_responses": [
 						"Sorry, I can't sign it until you've got the other two signatures first. Bad luck.",
 						"You need to check your attitude. But you also need the other signatures first. I'm not sure which one you need more at this moment. I'll have to think about it."
-					],
+					]
 				},
 				"Tsukiji - Air": {
 					"required_inventory": [
@@ -622,16 +664,24 @@
 						"Did Jemima do the proper post-precipitation procedure? Did JJJ confirm the latest VAT fee different from Trin? Ugh, this organization is a joke. I'll just sign it.",
 						"You think you're so funny, don't you kid. Are you from Lux? Figures. Whatever, here's your signature. Get off my planet."
 					],
-					"yes_reward_items" : ["IMES-Air Signature"],
+					"yes_reward_items": [
+						"IMES-Air Signature"
+					],
 					"yes_money_change": -100,
-					"yes_cost_items": ["%Fishy Business"],
-					"no_reward_items" : ["IMES-Air Signature"],
+					"yes_cost_items": [
+						"%Fishy Business"
+					],
+					"no_reward_items": [
+						"IMES-Air Signature"
+					],
 					"no_money_change": -100,
-					"no_cost_items": ["%Fishy Business"],
+					"no_cost_items": [
+						"%Fishy Business"
+					]
 				},
 				"end": {
 					"required_inventory": [
-						"IMES-Sea Signature", 
+						"IMES-Sea Signature",
 						"IMES-Air Signature",
 						"IMES-Land Signature"
 					],
@@ -647,21 +697,24 @@
 						"If only those jerks on Trin were this kind. Have a safe trip off-system.",
 						"What? You must be mistaken. It's clearly not a war, just some troop reallocation exercises."
 					],
-					"yes_reward_items" : ["%Fish are Friends"],
+					"yes_reward_items": [
+						"%Fish are Friends"
+					],
 					"yes_cost_items": [
-						"IMES-Sea Signature", 
+						"IMES-Sea Signature",
 						"IMES-Air Signature",
 						"IMES-Land Signature",
 						"%Fishy Business",
 						"Spotted Limo Fish"
 					],
 					"no_cost_items": [
-						"IMES-Sea Signature", 
+						"IMES-Sea Signature",
 						"IMES-Air Signature",
 						"IMES-Land Signature",
 						"%Fishy Business",
-						"Spotted Limo Fish"],
-					"no_money_change" : 300,
+						"Spotted Limo Fish"
+					],
+					"no_money_change": 300
 				}
 			}
 		},
@@ -681,11 +734,15 @@
 						"Yeah see, we got this load o' iron and copper. Bosses want 2k for it, we know we can get 5k. 10% cut when yer done.",
 						"Ah so you're one-a those types. Well holler at us if ya' ever decide to comprimise on yer ethics."
 					],
-					"yes_reward_items": ["Metal Payload"],
+					"yes_reward_items": [
+						"Metal Payload"
+					],
 					"yes_accepted_quest_info": "[Mine, Craft]: Take metals to Minnow"
 				},
 				"end": {
-					"required_inventory": ["Metal Payload"],
+					"required_inventory": [
+						"Metal Payload"
+					],
 					"solar_system": 2,
 					"planet": 3,
 					"speaker_name": "Portman Fred and The Factory Friends",
@@ -698,9 +755,13 @@
 						"Here's your 10%, as per the deal. It's been a pleasure doing business. Let's keep this under wraps, yeah?",
 						"You're smarter than I thought, kid. Look, they're all idiots on Willow. This thing's far more valuable than they realize. Why don't I give you a bit extra to keep this secret, yeah?"
 					],
-					"yes_cost_items": ["Metal Payload"],
+					"yes_cost_items": [
+						"Metal Payload"
+					],
 					"yes_money_change": 400,
-					"no_cost_items": ["Metal Payload"],
+					"no_cost_items": [
+						"Metal Payload"
+					],
 					"no_money_change": 700
 				}
 			}
@@ -721,10 +782,10 @@
 						"Yeah haha... wait until you talk with 'em. Here's 100 bits for the trip.",
 						"Never been to Trin, eh?"
 					],
-
-					"yes_reward_items" : ["Blessed fish"],
+					"yes_reward_items": [
+						"Blessed fish"
+					],
 					"yes_money_change": 100,
-					
 					"yes_accepted_quest_info": "[Too Much Sun]: Take fish to Trin"
 				},
 				"1": {
@@ -740,14 +801,20 @@
 						"Thank you! Our star and lord, Ringo, will look favorably upon you on your journey!",
 						"Nonsense! No delivery is as important as this in the eyes of our lord Ringo!"
 					],
-
-					"yes_reward_items" : ["Expired clothes coupon"],
-					"yes_cost_items": ["Blessed fish"],
+					"yes_reward_items": [
+						"Expired clothes coupon"
+					],
+					"yes_cost_items": [
+						"Blessed fish"
+					],
 					"yes_money_change": 100,
-					"no_reward_items" : ["Expired clothes coupon"],
-					"no_cost_items": ["Blessed fish"],
+					"no_reward_items": [
+						"Expired clothes coupon"
+					],
+					"no_cost_items": [
+						"Blessed fish"
+					],
 					"no_money_change": 100,
-					
 					"yes_accepted_quest_info": "[Too Much Sun]: Get ceremonial robes from Stilt"
 				},
 				"2": {
@@ -763,10 +830,13 @@
 						"Oh, that cheapskate loser. Well I'm swamped with orders right now but I'll tell you what. If you deliver this dress to my daughter, she can make you the robes with these supplies. Now get out.",
 						"Get out of here."
 					],
-
-					"yes_reward_items" : ["Beautiful dress", "Fabrics"],
-					"yes_cost_items": ["Expired clothes coupon"],
-					
+					"yes_reward_items": [
+						"Beautiful dress",
+						"Fabrics"
+					],
+					"yes_cost_items": [
+						"Expired clothes coupon"
+					],
 					"yes_accepted_quest_info": "[Too Much Sun]: Deliver dress and fabrics to Seamstress' daughter on Yard"
 				},
 				"3": {
@@ -782,10 +852,13 @@
 						"Ugh, I asked her to stop making me dresses. She's still calling me her daughter too, isn't she? Whatever, here are the robes you need.",
 						"Can't blame you! Well if you change your mind, I'm your guy."
 					],
-
-					"yes_reward_items" : ["Ceremonial robes"],
-					"yes_cost_items": ["Beautiful dress", "Fabrics"],
-					
+					"yes_reward_items": [
+						"Ceremonial robes"
+					],
+					"yes_cost_items": [
+						"Beautiful dress",
+						"Fabrics"
+					],
 					"yes_accepted_quest_info": "[Too Much Sun]: Deliver ceremonial robes to Trin"
 				},
 				"end": {
@@ -801,10 +874,14 @@
 						"Ah, but you're also being rewarded in spiritual fulfilment and favor from our lord!",
 						"Well! It seems no one wants to make insterstellar deliveries these days! Your ENTITLEMENT and GREED will be your RUIN. BEGONE from our holy lands, WICKED ONE."
 					],
-					"yes_cost_items": ["Ceremonial robes"],
+					"yes_cost_items": [
+						"Ceremonial robes"
+					],
 					"yes_money_change": 200,
-					"no_cost_items": ["Ceremonial robes"],
-					"no_money_change" : 300
+					"no_cost_items": [
+						"Ceremonial robes"
+					],
+					"no_money_change": 300
 				}
 			}
 		}
