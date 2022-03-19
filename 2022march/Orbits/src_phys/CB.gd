@@ -2,34 +2,39 @@ tool
 extends Sprite
 # CB is short for Celestial Body
 
-export var clockwise = true
-export(float, 0.01,0.9,0.01) var eccentricity = 0
-func set_eccentricity(neweccentricity):
-	eccentricity = neweccentricity
+# in the editor, tell the physics_root to redraw
+func update_physics():
 	if inited:
 		physics_root.get_node("Ship").clear()
 		physics_root.update()
 
+export var clockwise = true
+
+export(float, 0.01,0.9,0.01) var eccentricity = 0
+func set_eccentricity(neweccentricity):
+	eccentricity = neweccentricity
+	update_physics()
 export(float, 0,1000,10) var mass = 100 setget set_mass
 func set_mass(newmass):
 	mass = newmass
-	if inited:
-		physics_root.get_node("Ship").clear()
-		physics_root.update()
-	
+	update_physics()
+
+# radius indicator
 export(float, 0,300,1) var radius = 100 setget set_radius
 func set_radius(newrad):
 	radius = newrad
 	if inited:
 		radius_indicator.shape.radius = radius
-		
 export(float, 0,300,1) var dock_radius = 120 setget set_dock_radius
 func set_dock_radius(newrad):
 	dock_radius = newrad
 	if inited:
 		dock_radius_indicator.shape.radius = dock_radius
-		
 
+
+# is_origin checkbox in editor
+# this is a bit complicated because we need to update all the other
+# checkboxes on the other planets
 export var is_origin_cb = false setget set_is_origin
 func set_is_origin(flag):
 	if !inited: return
@@ -43,13 +48,12 @@ func set_is_origin(flag):
 	if !actually_cb and flag:
 		physics_root.set_origin_cb(self)
 
-
+# orbital parameters
 var focal_parameter = 0
 var theta_0 = 0
 var linear_eccentricity = 0
 var T = 1
 var initial_pos = Vector2(0,0)
-
 
 var inited = false
 var physics_root = null
@@ -57,9 +61,11 @@ var physics_root = null
 var radius_indicator = null
 var dock_radius_indicator = null
 
+# this gets called at the begining, but also whenever we drag the planet around in the editor
 func cb_init():
 	inited = true
 	
+	# set the radius indicators for the edtior
 	if Engine.editor_hint and radius_indicator == null:
 		radius_indicator = CollisionShape2D.new()
 		radius_indicator.shape = CircleShape2D.new()
@@ -72,7 +78,9 @@ func cb_init():
 		self.add_child(dock_radius_indicator)
 		
 	
+	
 	if get_parent().has_method("theta"):
+		# I'm the child of a sun or a planet or something, so I'm actually an ellipse
 		focal_parameter = position.length() * (1 + eccentricity)
 		theta_0 = position.angle()
 		linear_eccentricity = eccentricity*focal_parameter / ( 1 - pow(eccentricity,2))
@@ -80,15 +88,19 @@ func cb_init():
 		var G = 10
 		var a = focal_parameter / (1 + pow(eccentricity,2))
 		T = sqrt( 4* pow(PI,2) * pow(a,3) / (G * mass) )
+		
 	else:
+		# I'm a sun, I'm just static
 		initial_pos = global_position
 
+# when dragged around update physucs
 func _notification(_what):
 	if !inited: return
+	if !Engine.editor_hint: return
 	cb_init()
-	physics_root.get_node("Ship").clear()
-	physics_root.update()
-	
+	update_physics()
+
+# turns off some error messages when closing a scene tab
 func _exit_tree():
 	inited = false
 

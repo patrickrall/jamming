@@ -12,7 +12,7 @@
 script = ExtResource( 7 )
 
 [node name="Ship" type="Sprite" parent="."]
-position = Vector2( 997, 715 )
+position = Vector2( 1026, 720 )
 texture = ExtResource( 5 )
 script = ExtResource( 3 )
 vx = 2.07
@@ -36,7 +36,6 @@ eccentricity = 0.08
 mass = 160.0
 radius = 41
 dock_radius = 88
-is_origin_cb = true
 
 [node name="Moon" type="Sprite" parent="CBs/Sun/Planet"]
 position = Vector2( -280, -212 )
@@ -44,136 +43,5 @@ texture = ExtResource( 4 )
 script = ExtResource( 6 )
 eccentricity = 0.05
 mass = 30.0
-radius = 16
-dock_radius = 55
-
-[node name="Sun2" type="Sprite" parent="CBs"]
-position = Vector2( 2188, 2612 )
-texture = ExtResource( 2 )
-script = ExtResource( 6 )
-mass = 580.0
-radius = 47
-dock_radius = 0
-
-[node name="Planet" type="Sprite" parent="CBs/Sun2"]
-position = Vector2( 145, -761 )
-texture = ExtResource( 1 )
-script = ExtResource( 6 )
-eccentricity = 0.53
-mass = 160.0
-radius = 41
-dock_radius = 88
-
-[node name="Moon" type="Sprite" parent="CBs/Sun2/Planet"]
-position = Vector2( -264, -177 )
-texture = ExtResource( 4 )
-script = ExtResource( 6 )
-eccentricity = 0.05
-mass = 50.0
-radius = 16
-dock_radius = 55
-
-[node name="Sun3" type="Sprite" parent="CBs"]
-position = Vector2( 4223, 318 )
-texture = ExtResource( 2 )
-script = ExtResource( 6 )
-mass = 580.0
-radius = 47
-dock_radius = 0
-
-[node name="Planet" type="Sprite" parent="CBs/Sun3"]
-position = Vector2( 234, 524 )
-texture = ExtResource( 1 )
-script = ExtResource( 6 )
-eccentricity = 0.53
-mass = 160.0
-radius = 41
-dock_radius = 88
-
-[node name="Moon" type="Sprite" parent="CBs/Sun3/Planet"]
-position = Vector2( -264, -177 )
-texture = ExtResource( 4 )
-script = ExtResource( 6 )
-eccentricity = 0.05
-mass = 50.0
-radius = 16
-dock_radius = 55
-
-[node name="Sun4" type="Sprite" parent="CBs"]
-position = Vector2( 1608, -2750 )
-texture = ExtResource( 2 )
-script = ExtResource( 6 )
-mass = 580.0
-radius = 47
-dock_radius = 0
-
-[node name="Planet" type="Sprite" parent="CBs/Sun4"]
-position = Vector2( 296, 1119 )
-texture = ExtResource( 1 )
-script = ExtResource( 6 )
-eccentricity = 0.53
-mass = 160.0
-radius = 41
-dock_radius = 88
-
-[node name="Moon" type="Sprite" parent="CBs/Sun4/Planet"]
-position = Vector2( -264, -177 )
-texture = ExtResource( 4 )
-script = ExtResource( 6 )
-eccentricity = 0.05
-mass = 50.0
-radius = 16
-dock_radius = 55
-
-[node name="Moon2" type="Sprite" parent="CBs/Sun4/Planet"]
-position = Vector2( -488, 37 )
-texture = ExtResource( 4 )
-script = ExtResource( 6 )
-eccentricity = 0.05
-mass = 50.0
-radius = 16
-dock_radius = 55
-
-[node name="Sun5" type="Sprite" parent="CBs"]
-position = Vector2( -2811, 3692 )
-texture = ExtResource( 2 )
-script = ExtResource( 6 )
-mass = 580.0
-radius = 47
-dock_radius = 0
-
-[node name="Planet" type="Sprite" parent="CBs/Sun5"]
-position = Vector2( 556, -45 )
-texture = ExtResource( 1 )
-script = ExtResource( 6 )
-eccentricity = 0.04
-mass = 160.0
-radius = 41
-dock_radius = 88
-
-[node name="Moon" type="Sprite" parent="CBs/Sun5/Planet"]
-position = Vector2( -264, -177 )
-texture = ExtResource( 4 )
-script = ExtResource( 6 )
-eccentricity = 0.05
-mass = 50.0
-radius = 16
-dock_radius = 55
-
-[node name="Planet2" type="Sprite" parent="CBs/Sun5"]
-position = Vector2( 1194, -318 )
-texture = ExtResource( 1 )
-script = ExtResource( 6 )
-eccentricity = 0.06
-mass = 160.0
-radius = 41
-dock_radius = 88
-
-[node name="Moon" type="Sprite" parent="CBs/Sun5/Planet2"]
-position = Vector2( -264, -177 )
-texture = ExtResource( 4 )
-script = ExtResource( 6 )
-eccentricity = 0.05
-mass = 50.0
 radius = 16
 dock_radius = 55
