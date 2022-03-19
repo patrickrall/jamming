@@ -61,7 +61,8 @@ func arrive_at_planet(solar_system: int, planet: int):
 	update_inventory()
 	
 	var camcontrol = get_tree().get_nodes_in_group("CameraControl")
-	camcontrol[0].move_to_planet(solar_system, planet)
+	if camcontrol.size() > 0:
+		camcontrol[0].move_to_planet(solar_system, planet)
 
 func show_no_relevant_asks_ui():
 	var label = no_relevant_asks_ui.instance();
