@@ -148,12 +148,13 @@
 					],
 					"speaker_responses": [
 						"Here's money for fuel. Ringo-speed, brave citizen.",
-						"No. Your only route to maintain ownership of this vessel is to take the requisition. Here's money for fuel."
+						"No. Your only route to maintain ownership of this vessel is to accept the requisition. Here's money for fuel."
 					],
 					"yes_reward_items" : ["Official Requisition Order 3026GY"],
 					"yes_money_change": 800,
 					"no_reward_items" : ["Official Requisition Order 3026GY"],
 					"no_money_change" : 800,
+					"yes_accepted_quest_info": "Lassie?: To Garish: Secret Package (Escape)"
 				},
 				"The Well": {
 					"required_inventory": ["Official Requisition Order 3026GY"],
@@ -184,7 +185,7 @@
 						"*Shrug and return to the ship*"
 					],
 					"speaker_responses": [
-						"It reads: 'Payload received. Compensation provided. Gratitude expressed.;",
+						"It reads: 'Payload received. Compensation provided. Gratitude expressed.",
 						"*Your fuel gauge looks higher than before."
 					],
 					"yes_cost_items": ["Unknown Valuable"],
@@ -209,7 +210,7 @@
 						"That's a huge help, I'll pay in advance with this haybale and with money when you come back, reaping just finished so I'll be on Crash come next week.",
 						"You smell like you're from Corenne, aren't ya? I knew your kind weren't as nice as they seemed. Imagine farming the same land all year round, it's unhinged."
 					],
-					"yes_accepted_quest_info": "Cereal Misgivings: A Gift for a Kid (Bass) and Supply Chain Participation ()",
+					"yes_accepted_quest_info": "Cereal Misgivings: To Bass: Present. To Dyna: Hay",
 					"yes_reward_items": [
 						"Hastily Wrapped Present",
 						"Small Hay Bale"
@@ -218,7 +219,6 @@
 				"Cereal Delivery (Bass)": {
 					"required_inventory": [
 						"Hastily Wrapped Present",
-						"Small Hay Bale"
 					],
 					"solar_system": 2,
 					"planet": 4,
@@ -249,7 +249,7 @@
 				},
 				"end": {
 					"required_inventory": [
-						"Hay Bale"
+						"Small Hay Bale"
 					],
 					"solar_system": 2,
 					"planet": 1,
@@ -264,16 +264,10 @@
 						"Yaaarrrr donna know wassa gotta talk like a camma wit cha sana? I gatcha wit da dala dontcha warray none mi boy'i"
 					],
 					"yes_cost_items": [
-						"Hay Bale"
+						"Small Hay Bale"
 					],
 					"no_cost_items": [
-						"Hay Bale"
-					],
-					"yes_reward_items": [
-						"%Migrant Credit"
-					],
-					"no_reward_items": [
-						"%Migrant Credit"
+						"Small Hay Bale"
 					],
 					"yes_money_change": 300,
 					"no_money_change": 200
