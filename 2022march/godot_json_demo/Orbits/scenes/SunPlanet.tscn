@@ -6,7 +6,7 @@
 [ext_resource path="res://fonts/ui_font_planet_label.tres" type="DynamicFont" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 33.7898
+radius = 95.4741
 
 [node name="SunPlanet" type="Sprite" groups=[
 "Planets",
@@ -24,18 +24,18 @@ script = ExtResource( 2 )
 [node name="Label" type="Label" parent="PlanetArea" groups=[
 "SunPlanetLabel",
 ]]
-margin_left = -100.0
-margin_top = -100.0
-margin_right = 100.0
-margin_bottom = -50.0
+margin_left = 20.0
+margin_right = 220.0
+margin_bottom = 50.0
 custom_fonts/font = ExtResource( 4 )
-text = "Planet"
+text = "SunPlanet"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlanetArea"]
+visible = false
 shape = SubResource( 1 )
 
 [connection signal="body_shape_entered" from="PlanetArea" to="PlanetArea" method="_on_PlanetArea_body_shape_entered"]

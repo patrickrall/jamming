@@ -36,9 +36,14 @@ export var dependent_stages = [] # OPT: key of stages of this quest that are com
 export var yes_money_change = 0	 # OPT: money (can be negative) that player receives if they say yes
 export var yes_cost_items = []   # OPT: items that player gives away if they say yes
 export var yes_reward_items = [] # OPT: items that player receives if they say yes
+export var yes_is_complete = true# OPT: does this conversation go away when player chooses yes
+export var yes_end = false		 # OPT: does this entire quest and all subquests end when player chooses yes
+
 export var no_money_change = 0   # OPT: money (can be negative) that player receives if they say no
-export var no_cost_items = []	 # OPT: items that player gives away if they say yes
-export var no_reward_items = []  # OPT: items that player receives if they say yes
+export var no_cost_items = []	 # OPT: items that player gives away if they say no
+export var no_reward_items = []  # OPT: items that player receives if they say no
+export var no_is_complete = true # OPT: does this conversation go away when player chooses no
+export var no_end = false		 # OPT: does this entire quest and all subquests end when player chooses no
 
 func _to_string() -> String:
-	return speaker_name + ", " + dialogue + "-->" + yes_accepted_quest_info
+	return speaker_name + ", " + dialogue + ": " + yes_accepted_quest_info

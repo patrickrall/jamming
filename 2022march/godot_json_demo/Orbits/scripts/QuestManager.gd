@@ -84,13 +84,19 @@ func on_yes_chosen(stage: Stage) -> void:
 	# the player fulfilled the quest ask
 	if !(stage.id in accepted_requests) and all_stages[stage.id].yes_accepted_quest_info != "":
 		accepted_requests.append(stage.id)
-	for reward in stage.yes_reward_items:
+	for reward in stage.yes_reward_items: # give reward
 		inventory.append(reward)
-	for cost in stage.yes_cost_items:
+	for cost in stage.yes_cost_items: # take away costs
 		if inventory.has(cost):
 			inventory.erase(cost)
-	player_money += stage.yes_money_change
-	mark_complete(stage.id)
+	player_money += stage.yes_money_change # change money
+	# plot updates
+	if stage.no_end: # mark complete all subquests and their dependnets
+		for st in all_stages:
+			if stage.quest_name == st.quest_name:
+				mark_complete(st.id)
+	if stage.yes_is_complete:
+		mark_complete(stage.id) # never show this ask again
 	update_ship_log()
 	update_inventory()
 	update_planet_request_toggle()
@@ -98,34 +104,40 @@ func on_yes_chosen(stage: Stage) -> void:
 
 func on_no_chosen(stage: Stage) -> void:
 	# the player refused the quest ask
-	if (stage.id in accepted_requests):
-		accepted_requests.remove(stage.id)
-	if (stage.dependent_stages in accepted_requests):
-		accepted_requests.remove(stage.dependent_stages)
 	for reward in stage.no_reward_items:
 		inventory.append(reward)
 	for cost in stage.no_cost_items:
 		if inventory.has(cost):
 			inventory.erase(cost)
 	player_money += stage.no_money_change
-	#mark_complete(stage.id) # controls whether the player sees this ask again
+	# plot updates
+	if stage.no_end: # mark complete all subquests in this quest complete
+		for st in all_stages:
+			if stage.quest_name == st.quest_name:
+				mark_complete(st.id)
+	if stage.no_is_complete: # can this conversation recurr if the player says no?
+		mark_complete(stage.id) # controls whether the player sees this ask again
+
 	update_ship_log()
 	update_inventory()
 	update_planet_request_toggle()
 
 func mark_complete(stage_idx: int)-> void:
-	# player said yes or no to this stage, which means this stage and this 
+	# player said something at this stage which means this stage and this 
 	# dialogue is done and will never be shown again
-	if stage_idx > -1 and all_stages.size() > stage_idx:
-		all_stages[stage_idx].is_complete = true
-	else:
-		print("Warning: unable to find stage to mark complete")
+	if stage_idx <  0 or all_stages.size() <= stage_idx:
+		print("Warning: unable to find stage " + str(stage_idx) + " to mark complete in list of "+ str(all_stages.size()))
 		return
+	all_stages[stage_idx].is_complete = true
 #	print("dependents:" + str(all_stages[stage_idx].dependent_stages))
 #	print("accepted:" + str(accepted_requests))
 	for dependent in all_stages[stage_idx].dependent_stages:
 		var idx = get_stage_idx(all_stages[stage_idx].quest_name, dependent)
 		accepted_requests.erase(idx)
+#		if (stage.id in accepted_requests):
+#			accepted_requests.remove(stage.id)
+#		if (stage.dependent_stages in accepted_requests):
+#			accepted_requests.remove(stage.dependent_stages)
 
 
 func get_stage_idx(quest_name: String, stage_name : String)-> int:
@@ -182,12 +194,20 @@ func parse_jsondict_to_structs(json_result) -> void:
 				new_stage.yes_cost_items = d["yes_cost_items"]
 			if d.has("yes_reward_items"):
 				new_stage.yes_reward_items = d["yes_reward_items"]
+			if d.has("yes_is_complete"):
+				new_stage.yes_is_complete = d["yes_is_complete"]
+			if d.has("yes_end"):
+				new_stage.yes_end = d["yes_end"]
 			if d.has("no_cost_items"):
 				new_stage.no_cost_items = d["no_cost_items"]
 			if d.has("no_reward_items"):
 				new_stage.no_reward_items = d["no_reward_items"]
 			if d.has("no_money_change"):
 				new_stage.no_money_change = d["no_money_change"]
+			if d.has("no_end"):
+				new_stage.no_end = d["no_end"]
+			if d.has("no_is_complete"):
+				new_stage.no_is_complete = d["no_is_complete"]
 			
 			new_stage.id = all_stages.size()
 			stage_ids_of_this_quest.append(new_stage.id)
@@ -197,7 +217,7 @@ func parse_jsondict_to_structs(json_result) -> void:
 
 func get_relevant_stages_for_planet(
 		solar_system : int, planet : int, 
-		inventory : Array) -> Array:
+		inventory_list : Array) -> Array:
 	# search the list of stages for the ones located on this planet
 	if all_stages == null or all_stages == []:
 		return []
@@ -209,7 +229,7 @@ func get_relevant_stages_for_planet(
 		if stage.solar_system == solar_system and stage.planet == planet:
 			if stage.required_inventory.size() > 0:
 				for item in stage.required_inventory:
-					if !(item in inventory): # missing a requirement
+					if !(item in inventory_list): # is player missing a requirement
 						is_relevant = false
 				if stage.required_money > 0:
 					if player_money < stage.required_money:
@@ -269,7 +289,7 @@ func _on_TogglePlanetLabel_toggled(button_pressed : bool):
 		label.get_parent().toggle_show_label(button_pressed)
 
 
-func _on_TogglePlanetRequests_toggled(button_pressed):
+func _on_TogglePlanetRequests_toggled(_button_pressed):
 	# show a message about the lack of quests if relevant
 	# showing and hiding is taken care of elsewhere
 	if dialogue_choice_ui_parent.get_child_count() == 0:

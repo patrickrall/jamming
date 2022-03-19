@@ -35,12 +35,12 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="DialogueChoiceUI" type="Panel"]
-margin_left = 4.0
-margin_top = 5.0
-margin_right = 234.0
-margin_bottom = 245.0
-rect_min_size = Vector2( 230, 240 )
+[node name="DialogueChoiceUI" type="PanelContainer"]
+anchor_right = 0.406
+margin_right = 0.159973
+margin_bottom = 300.0
+rect_min_size = Vector2( 230, 250 )
+size_flags_horizontal = 0
 theme = ExtResource( 4 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -58,49 +58,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChoicesParent" type="VBoxContainer" parent="."]
-margin_left = 5.50425
-margin_top = 163.248
-margin_right = 218.504
-margin_bottom = 231.248
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="YesButton" type="Button" parent="ChoicesParent" groups=[
-"font",
-]]
-margin_right = 212.0
-margin_bottom = 20.0
-size_flags_vertical = 3
-theme = ExtResource( 4 )
-text = "Yes"
-
-[node name="NoButton" type="Button" parent="ChoicesParent" groups=[
-"font",
-]]
-margin_top = 24.0
-margin_right = 212.0
-margin_bottom = 44.0
-size_flags_vertical = 3
-theme = ExtResource( 4 )
-text = "No"
-
-[node name="IgnoreButton" type="Button" parent="ChoicesParent" groups=[
-"font",
-]]
-margin_top = 48.0
-margin_right = 212.0
-margin_bottom = 68.0
-size_flags_vertical = 3
-theme = ExtResource( 4 )
-text = "Maybe later"
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 8.0
-margin_top = 7.0
-margin_right = 218.0
-margin_bottom = 157.0
+margin_right = 260.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 260, 0 )
+size_flags_horizontal = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -108,7 +70,9 @@ __meta__ = {
 [node name="SpeakerName" type="Label" parent="VBoxContainer" groups=[
 "font",
 ]]
-margin_right = 210.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 260.0
 margin_bottom = 19.0
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 3 )
@@ -121,13 +85,90 @@ __meta__ = {
 [node name="Dialogue" type="Label" parent="VBoxContainer" groups=[
 "font",
 ]]
+margin_left = 5.0
 margin_top = 23.0
-margin_right = 210.0
-margin_bottom = 64.0
+margin_right = 255.0
+margin_bottom = 152.0
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 3 )
-text = "So... hungry... you should give me stuff. Lots of stuff."
+text = "So
+So... hungry... you should give me stuff. LotsSo... hungry... you should give me stuff. LotsSo... hungry... you should give me stuff. Lots... hungry... you should give me stuff. Lots"
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChoicesParent" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 156.0
+margin_right = 260.0
+margin_bottom = 284.0
+rect_min_size = Vector2( 240, 0 )
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YesButton" type="Button" parent="VBoxContainer/ChoicesParent" groups=[
+"font",
+]]
+margin_right = 260.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 260, 40 )
+size_flags_horizontal = 0
+theme = ExtResource( 4 )
+text = "Yes"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ChoicesParent/YesButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 4
+size_flags_vertical = 7
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NoButton" type="Button" parent="VBoxContainer/ChoicesParent" groups=[
+"font",
+]]
+margin_top = 44.0
+margin_right = 260.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 260, 40 )
+size_flags_horizontal = 0
+theme = ExtResource( 4 )
+text = "No"
+clip_text = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer/ChoicesParent/NoButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 4
+size_flags_vertical = 7
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IgnoreButton" type="Button" parent="VBoxContainer/ChoicesParent" groups=[
+"font",
+]]
+margin_top = 88.0
+margin_right = 260.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 260, 40 )
+size_flags_horizontal = 0
+theme = ExtResource( 4 )
+text = "Maybe later"
+clip_text = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="VBoxContainer/ChoicesParent/IgnoreButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -136,6 +177,6 @@ __meta__ = {
 anims/fade_normal_to_disabled = SubResource( 1 )
 anims/idle_normal = SubResource( 2 )
 
-[connection signal="pressed" from="ChoicesParent/YesButton" to="." method="_on_YesButton_pressed"]
-[connection signal="pressed" from="ChoicesParent/NoButton" to="." method="_on_NoButton_pressed"]
-[connection signal="pressed" from="ChoicesParent/IgnoreButton" to="." method="_on_IgnoreButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChoicesParent/YesButton" to="." method="_on_YesButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChoicesParent/NoButton" to="." method="_on_NoButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChoicesParent/IgnoreButton" to="." method="_on_IgnoreButton_pressed"]

@@ -44,9 +44,9 @@ func _on_DEBUG_button_pressed():
 func update_textbox() -> void:
 	self.text = get_planet($"../SystemSpinBox".value, $"../PlanetSpinBox".value)
 
-func _on_SystemSpinBox_value_changed(value):
+func _on_SystemSpinBox_value_changed(_value):
 	update_textbox()
 
 
-func _on_PlanetSpinBox_value_changed(value):
+func _on_PlanetSpinBox_value_changed(_value):
 	update_textbox()

@@ -16,11 +16,11 @@ func _ready():
 	#var circle : CircleShape2D = $CollisionShape2D.shape
 	#circle.radius = parentSprite.texture.get_width()/2
 
-func _on_PlanetArea_body_shape_entered(body_id, body, body_shape, local_shape):
+func _on_PlanetArea_body_shape_entered(_body_id, _body, _body_shape, _local_shape):
 	print(parent.name + " entered view")
 	parent.is_within_camera_bounds = true
 
-func _on_PlanetArea_body_shape_exited(body_id, body, body_shape, local_shape):
+func _on_PlanetArea_body_shape_exited(_body_id, _body, _body_shape, _local_shape):
 	print(parent.name + " exited view")
 	parent.is_within_camera_bounds = false
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/QuestManager.gd" type="Script" id=1]
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scripts/GetPlanetName.gd" type="Script" id=7]
 [ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=8]
 [ext_resource path="res://art/ship.png" type="Texture" id=9]
+[ext_resource path="res://scenes/DialogueChoiceUI.tscn" type="PackedScene" id=10]
 
 [node name="QuestManager" type="Node"]
 script = ExtResource( 1 )
@@ -73,14 +74,24 @@ __meta__ = {
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
 anchor_top = 0.09
 anchor_bottom = 1.0
-margin_top = -0.400002
-margin_right = 241.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 275.0
+margin_bottom = -68.0
+size_flags_horizontal = 0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScrollContainer"]
+margin_right = 260.0
+margin_bottom = 284.0
+
+[node name="DialogueChoiceUI" parent="CanvasLayer/ScrollContainer/VBoxContainer" instance=ExtResource( 10 )]
+anchor_right = 0.0
+margin_right = 260.0
+margin_bottom = 284.0
 
 [node name="DEBUG_button" type="Button" parent="CanvasLayer"]
 anchor_left = 1.0
