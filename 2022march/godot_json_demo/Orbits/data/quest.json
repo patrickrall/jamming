@@ -6,16 +6,16 @@
 					"solar_system": 2,
 					"planet": 4,
 					"speaker_name": "Chef Maurice LeStarr",
-					"dialogue": "I want Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin.",
+					"dialogue": "I'll never get a good review for my opening night without the a dish that will make Salty Lou shriek with joy. Can you help me?",
 					"choices": [
 						"Um... ok",
 						"Never speak to me or my sous again"
 					],
 					"speaker_responses": [
-						"Thank you!",
+						"Thank you! I need Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin.",
 						"How rude! Never speak to me or my sous again."
 					],
-					"yes_accepted_quest_info": "To Bass: Papua Fruit Shells(Garish), Giant Mongoose Liver(Dyna), Sun Cakes(Trin)"
+					"yes_accepted_quest_info": "[Sous La Vie] To Bass: Papua Fruit Shells(Garish), Giant Mongoose Liver(Dyna), Sun Cakes(Trin)"
 				},
 				"Papua Fruit Shells from Garish": {
 					"solar_system": 3,
@@ -130,7 +130,7 @@
 						"giant mongoose liver",
 						"sun cakes"
 					],
-					"yes_money_change": 1000
+					"yes_money_change": 2000
 				}
 			},
 			"plot summary": "On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin."
@@ -154,7 +154,7 @@
 					"yes_money_change": 800,
 					"no_reward_items" : ["Official Requisition Order 3026GY"],
 					"no_money_change" : 800,
-					"yes_accepted_quest_info": "Lassie?: To Garish: Secret Package (Escape)"
+					"yes_accepted_quest_info": "[Lassie]: To Garish: Secret Package (Escape)"
 				},
 				"The Well": {
 					"required_inventory": ["Official Requisition Order 3026GY"],
@@ -210,7 +210,7 @@
 						"That's a huge help, I'll pay in advance with this haybale and with money when you come back, reaping just finished so I'll be on Crash come next week.",
 						"You smell like you're from Corenne, aren't ya? I knew your kind weren't as nice as they seemed. Imagine farming the same land all year round, it's unhinged."
 					],
-					"yes_accepted_quest_info": "Cereal Misgivings: To Bass: Present. To Dyna: Hay",
+					"yes_accepted_quest_info": "[Cereal Misgivings] To Bass: Present. To Dyna: Hay",
 					"yes_reward_items": [
 						"Hastily Wrapped Present",
 						"Small Hay Bale"
@@ -358,7 +358,7 @@
 						"OK, I'll get some",
 						"No croissants for you"
 					],
-					"yes_accepted_quest_info": "Cork: croissants"
+					"yes_accepted_quest_info": "[Case in Croissant] Cork: croissants"
 				},
 				"1": {
 					"solar_system": 1,
@@ -402,6 +402,243 @@
 					]
 				}
 			}
-		}
+		},
+		{	"quest_name": "Hot Roy Summer",
+			"stages": {
+				"0": {
+					"solar_system": 0,
+					"planet": 0,
+					"speaker_name": "Roy, Apparently",
+					"dialogue": "Yo Dawg, I'm Roy, ya boy, from the Hoy. People told me this place was tram's bazam but it's solidly mix-and-swirl level. Can you bring me to a real vacay destinay?",
+					"choices": [
+						"Yeah bruh let's absolutely blow this space popsicle stand",
+						"You said a lot just now. Do you want a ride?"
+					],
+					"speaker_responses": [
+						"Siiiicccckkkk love the lingo lando, let's jam and pop to Silt, that's where the party's preaching.",
+						"Umm... sorry, I'm used to a different crowd. Can you bring me home to Minnow?"
+					],
+					"yes_reward_items" : ["Cool Boy Roy"],
+					"yes_money_change": 200,
+					"no_reward_items" : ["Roy Summers"],
+					"no_money_change" : 200,
+					"yes_accepted_quest_info": "[Hot Roy Summer] To Silt: Cool Boy Roy",
+					"no_accepted_quest_info": "[Hot Roy Summer] To Minnow: Roy Summers",
+				},
+				"end": {
+					"required_inventory": ["Cool Boy Roy"],
+					"solar_system": 6,
+					"planet": 2,
+					"speaker_name": "Savage Sean S...Morely",
+					"dialogue": "BRUUUUHHHH ROY it's been a minute! It's cha boy Savage Sean SMorely! Welcome back buddy, let's get you a rad cocktail.",
+					"choices": [
+						"Chyeeaaahhhhh boooiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+						"Have a good time, Roy."
+					],
+					"speaker_responses": [
+						"WOOOOO SPRING BREAAAK!!!! FYRE FEEST!!! ULTRAAA!!!",
+						"Homie don't play you a real one peace out brotha come by anytime"
+					],
+					"yes_reward_items" : ["%Spring Break Cred"],
+					"yes_cost_items": ["Cool Boy Roy"],
+					"yes_money_change": 200,
+					"no_money_change" : 400,
+				},
+				"end": {
+					"required_inventory": ["Roy Summers"],
+					"solar_system": 2,
+					"planet": 3,
+					"speaker_name": "Ms. Summers",
+					"dialogue": "Roy thank Ringo you're home, I was so worried that you'd get eaten by a giant squirrel or something.",
+					"choices": [
+						"I'm glad that you're happy to have him home. You've raised a fine kid here.",
+						"Don't worry, the enourmous red squirrels there are surprisingly lazy, and they prefer eating metal anyway."
+					],
+					"speaker_responses": [
+						"You should've seen him in his teenage years. Thanks for helping him come to his senses.",
+						"I... That's not all that reassuring. Anyway, go get in your bunny suit, Roy, the glue machines aren't going to calibrate themselves."
+					],
+					"yes_cost_items": ["Roy Summers"],
+					"yes_money_change": 500,
+					"no_money_change" : 500,
+				}
+			}
+		},
+		{	"quest_name": "Hot Roy Summer Epilogue",
+			"stages": {
+				"end": {
+					"required_inventory": ["%Spring Break Cred"],
+					"solar_system": 6,
+					"planet": 2,
+					"speaker_name": "Cool Boy Roy",
+					"dialogue": "Hey man, thanks again for helping me out. I've been going hard since you left, it's been wild.",
+					"choices": [
+						"That's baller dude enjoy your vacay bro.",
+						"Seems like you chilled out, hope it's treating you well."
+					],
+					"speaker_responses": [
+						"Yeah... haha... Baller... Yeah. That's what it is. I can keep this going. Just enjoy it. Thanks.",
+						"Honestly... It's too much. I kinda want to go home. But it's too late, mom'll stick me in the cleanroom for months. Thanks anyway."
+					],
+				}
+			}
+		},
+		{	"quest_name": "Deadliest Catch",
+			"stages": {
+				"0": {
+					"solar_system": 1,
+					"planet": 1,
+					"speaker_name": "Black-Beard the Pirate",
+					"dialogue": "Arrgh *cough* *sputter* Phew! I just caught a 6 foot spotted limo fish, still had some salty air in my throat.",
+					"choices": [
+						"What are you planning to do with it? I could deliver it for you.",
+						"I like your beard! Are you a pirate?"
+					],
+					"speaker_responses": [
+						"That would be really helpful! I know a guy on Lang that has been waiting for one of these for years.",
+						"I don't appreciate your tone. I'll find another delivery service elsewhere. Good day."
+					],
+					"yes_reward_items" : ["Spotted Limo Fish"],
+					"yes_money_change": 800,
+					"yes_accepted_quest_info": "[Deadliest Catch] To Lang: Spotted Limo Fish"
+				},
+				"Tsukiji": {
+					"required_inventory": ["Spotted Limo Fish"],
+					"solar_system": 4,
+					"planet": 2,
+					"speaker_name": "Sketchy Fish Guy",
+					"dialogue": "Don't bring it out! We have rules here, to protect us. That fish could take down the whole planet!",
+					"choices": [
+						"Um. Sorry. But... do you still want to buy it?",
+						"Okay, I'm sure I can find a buyer on Trin."
+					],
+					"speaker_responses": [
+						"Yeah... but I need you to get approvals for the import, signed in triplicate. The IMES reps live on Brackish, Crash, and Willow.",
+						"Wait wait... It's okay, I'll buy it. Just... Don't tell Black-Beard that I didn't prepare the import paperwork."
+					],
+					"yes_reward_items" : [
+						"%Fishy Business",
+						"%IMES Signature Needed",
+						"%IMES Signature Needed"
+					],
+					"yes_money_change": 300,
+					"dependent_stages":"0",
+					"yes_accepted_quest_info": "[Deadliest Catch] To Lang: IMES Signatures (Crash) (Brackish) (Willow)",
+					"no_money_change": 600,
+					"no_cost_items": ["Spotted Limo Fish"],
+					"no_is_complete" : 1,
+				},
+				"Tsukiji - Land": {
+					"required_inventory": ["%Fishy Business"],
+					"solar_system": 5,
+					"planet": 3,
+					"speaker_name": "Rep JJJ Smith",
+					"dialogue": "Welcome to Crash, I hear you have a fish import permit to get signed?",
+					"choices": [
+						"Yeah, for a big splotchy liner fish. Or something.",
+						"Does that other guy over there have your name too?"
+					],
+					"speaker_responses": [
+						"Don't worry, I was briefed. Lang barely exports meat anyway, so my approval here is easy.",
+						"Maybe if you come back later and ask nicely I'll sign your permit."
+					],
+					"yes_reward_items" : ["IMES-Land Signature"],
+					"yes_cost_items": ["%IMES Signature Needed"],
+					"yes_money_change": -100,
+				},
+				"Tsukiji - Sea": {
+					"required_inventory": ["%Fishy Business"],
+					"solar_system": 6,
+					"planet": 1,
+					"speaker_name": "Petunia Jemima",
+					"dialogue": "Well hi there sweetheart! Aren't you the cutest little thing. What can I do ya for?",
+					"choices": [
+						"Pleasure to meet you, ma'am. I'm here on behalf of a customer of Black-Beard in Lang...",
+						"Do you have a nephew, by any chance?"
+					],
+					"speaker_responses": [
+						"Of course honey, we love big ol' fish around here, and that one will love it in Lang's large lakes.",
+						"Listen honey, you can't go around asking women their age. Learn some manners."
+					],
+					"yes_reward_items" : ["IMES-Sea Signature"],
+					"yes_cost_items": ["%IMES Signature Needed"],
+					"yes_money_change": -100,
+				},
+				"Tsukiji - Air - Interlude": {
+					"required_inventory": ["%Fishy Business", "%IMES Signature Needed"],
+					"solar_system": 1,
+					"planet": 2,
+					"speaker_name": "Candice Simon",
+					"dialogue": "Welcome to IMES-Air HQ. State your business.",
+					"choices": [
+						"Oh- uhh- I need a signature for an organism import permit. Spotted Limo Fish to Lang.",
+						"... Oh, sorry, I was waiting for you to say Simon Says."
+					],
+					"speaker_responses": [
+						"Sorry, I can't sign it until you've got the other two signatures first. Bad luck.",
+						"You need to check your attitude. But you also need the other signatures first. I'm not sure which one you need more at this moment. I'll have to think about it."
+					],
+				},
+				"Tsukiji - Air": {
+					"required_inventory": [
+						"%Fishy Business",
+						"IMES-Sea Signature",
+						"IMES-Land Signature"
+					],
+					"solar_system": 1,
+					"planet": 2,
+					"speaker_name": "Candice Simon",
+					"dialogue": "Welcome to IMES-Air HQ. State your business.",
+					"choices": [
+						"Oh- uhh- I need a signature for an organism import permit. Spotted Limo Fish to Lang.",
+						"... Oh, sorry, I was waiting for you to say Simon Says."
+					],
+					"speaker_responses": [
+						"Did Jemima do the proper post-precipitation procedure? Did JJJ confirm the latest VAT fee different from Trin? Ugh, this organization is a joke. I'll just sign it.",
+						"You think you're so funny, don't you kid. Are you from Lux? Figures. Whatever, here's your signature. Get off my planet."
+					],
+					"yes_reward_items" : ["IMES-Air Signature"],
+					"yes_money_change": -100,
+					"yes_cost_items": ["%Fishy Business"],
+					"no_reward_items" : ["IMES-Air Signature"],
+					"no_money_change": -100,
+					"no_cost_items": ["%Fishy Business"],
+				},
+				"end": {
+					"required_inventory": [
+						"IMES-Sea Signature", 
+						"IMES-Air Signature",
+						"IMES-Land Signature"
+					],
+					"solar_system": 4,
+					"planet": 2,
+					"speaker_name": "Shady Fish Guy",
+					"dialogue": "You got all those signatures?? Wow... Jemima never lets me go that easily. Well, thanks, guess I owe both you and BB now, huh.",
+					"choices": [
+						"No thanks, the permit and Black-Beard's delivery fee was enough",
+						"Yeah, and fuel has gotten so expensive these days..."
+					],
+					"speaker_responses": [
+						"If only those jerks on Trin were this kind. Have a safe trip off-system.",
+						"What? You must be mistaken. It's clearly not a war, just some troop reallocation exercises."
+					],
+					"yes_reward_items" : ["%Fish are Friends"],
+					"yes_cost_items": [
+						"IMES-Sea Signature", 
+						"IMES-Air Signature",
+						"IMES-Land Signature",
+						"%Fishy Business",
+						"Spotted Limo Fish"
+					],
+					"no_cost_items": [
+						"IMES-Sea Signature", 
+						"IMES-Air Signature",
+						"IMES-Land Signature",
+						"%Fishy Business",
+						"Spotted Limo Fish"],
+					"no_money_change" : 300,
+				}
+			}
+		},
 	]
 }
