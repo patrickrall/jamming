@@ -672,7 +672,7 @@
 					"solar_system": 1,
 					"planet": 2,
 					"speaker_name": "Slapjack Joe and The Dirty Daniels",
-					"dialogue": "Howdy there fella. Ya' good at keepin' secrets, yeah? Ya' don't fancy makin' an extra buck, do ya'?",
+					"dialogue": "Howdy there stranger. Ya' good at keepin' secrets, yeah? Ya' don't fancy makin' an extra buck, do ya'?",
 					"choices": [
 						"I'm not against it. Do you need me to deliver something for you?",
 						"I'm bad at secrets and I hate money."
@@ -696,7 +696,7 @@
 					],
 					"speaker_responses": [
 						"Here's your 10%, as per the deal. It's been a pleasure doing business. Let's keep this under wraps, yeah?",
-						"You're smarter than I thought kid. Look, they're all idiots on Willow. This thing's far more valuable than they realize. Why don't I give you a bit extra to keep this secret, yeah?"
+						"You're smarter than I thought, kid. Look, they're all idiots on Willow. This thing's far more valuable than they realize. Why don't I give you a bit extra to keep this secret, yeah?"
 					],
 					"yes_cost_items": ["Metal Payload"],
 					"yes_money_change": 400,
@@ -706,11 +706,88 @@
 			}
 		},
 		{
-			"quest_name": "",
+			"quest_name": "Too Much Sun",
 			"stages": {
+				"0": {
+					"solar_system": 1,
+					"planet": 1,
+					"speaker_name": "Baron von Fish",
+					"dialogue": "I got a doozy of a job for ya'. You're gonna be taking these blessed fish up to Trin, what do ya' say?",
+					"choices": [
+						"Sure thing, that doesn't sound too bad.",
+						"Blessed fish? That's ridiculous, who needs blessed fish?"
+					],
+					"speaker_responses": [
+						"Yeah haha... wait until you talk with 'em.",
+						"Never been to Trin, eh?"
+					],
+
+					"yes_reward_items" : ["Blessed fish"],
+					"yes_money_change": 100,
+					
+					"yes_accepted_quest_info": "[Too Much Sun]: Take fish to Trin"
+				},
+				"1": {
+					"solar_system": 4,
+					"planet": 1,
+					"speaker_name": "Emperor Sol",
+					"dialogue": "",
+					"choices": [
+						"",
+						""
+					],
+					"speaker_responses": [
+						"",
+						""
+					],
+
+					"yes_reward_items" : ["Expired clothes coupon"],
+					"yes_cost_items": ["Blessed fish"],
+					"yes_money_change": 100,
+					
+					"yes_accepted_quest_info": "[Too Much Sun]: Get ceremonial robes from Stilt"
+				},
+				"2": {
+					"solar_system": 5,
+					"planet": 1,
+					"speaker_name": "Overworked Seamstress",
+					"dialogue": "",
+					"choices": [
+						"",
+						""
+					],
+					"speaker_responses": [
+						"",
+						""
+					],
+
+					"yes_reward_items" : ["Beautiful dress"],
+					"yes_cost_items": ["Expired clothes coupon"],
+					
+					"yes_accepted_quest_info": "[Too Much Sun]: Deliver dress to Seamstress' daughter on Yard"
+				},
+				"3": {
+					"solar_system": 5,
+					"planet": 2,
+					"speaker_name": "Jessica Dressica",
+					"dialogue": "",
+					"choices": [
+						"",
+						""
+					],
+					"speaker_responses": [
+						"",
+						""
+					],
+
+					"yes_reward_items" : ["Ceremonial robes"],
+					"yes_cost_items": ["Beautiful dress"],
+					
+					"yes_accepted_quest_info": "[Too Much Sun]: Deliver ceremonial robes to Trin"
+				},
 				"end": {
-					"solar_system": 0,
-					"planet": 0,
+					"solar_system": 4,
+					"planet": 1,
 					"speaker_name": "",
 					"dialogue": "",
 					"choices": [
@@ -721,12 +798,10 @@
 						"",
 						""
 					],
-					"yes_reward_items" : [""],
-					"yes_cost_items": [""],
-					"yes_money_change": 0,
-					"no_reward_items" : [""],
-					"no_cost_items": [""],
-					"no_money_change" : 0
+					"yes_cost_items": ["Ceremonial robes"],
+					"yes_money_change": 200,
+					"no_cost_items": ["Ceremonial robes"],
+					"no_money_change" : 800
 				}
 			}
 		}
