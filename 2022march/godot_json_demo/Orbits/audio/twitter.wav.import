@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/twitter.wav-e0e641ebf77ee4dda9c1e263e645cd73.sample"
+
+[deps]
+
+source_file="res://audio/twitter.wav"
+dest_files=[ "res://.import/twitter.wav-e0e641ebf77ee4dda9c1e263e645cd73.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

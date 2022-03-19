@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/soft_low_bup_bup_bup.wav-e91d2919c9fa2061c1d8a9622617caff.sample"
+
+[deps]
+
+source_file="res://audio/soft_low_bup_bup_bup.wav"
+dest_files=[ "res://.import/soft_low_bup_bup_bup.wav-e91d2919c9fa2061c1d8a9622617caff.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
