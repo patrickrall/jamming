@@ -139,7 +139,7 @@
 			"quest_name": "Lassie?",
 			"stages": {
 				"0": {
-					"required_inventory": "%Motherly Love",
+					"required_inventory": ["%Motherly Love"],
 					"solar_system": 1,
 					"planet": 3,
 					"speaker_name": "The Authorities TM",
