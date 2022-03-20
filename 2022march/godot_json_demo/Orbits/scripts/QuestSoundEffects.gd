@@ -136,3 +136,18 @@ func _on_SoundEffectVolSlider2_value_changed(value):
 	$low_fuel.volume_db = value
 	$arrive.volume_db = value
 	$accepted_new.volume_db = value
+
+
+func _on_BkgdMusicMuteCheck_toggled(button_pressed):
+	self.stream_paused = button_pressed
+
+
+func _on_SfxMuteCheck_toggled(button_pressed):
+	$coin.stream_paused = button_pressed
+	$less_coin.stream_paused = button_pressed
+	$quest_end.stream_paused = button_pressed
+	$item.stream_paused = button_pressed
+	$refuel.stream_paused = button_pressed
+	$low_fuel.stream_paused = button_pressed
+	$arrive.stream_paused = button_pressed
+	$accepted_new.stream_paused = button_pressed

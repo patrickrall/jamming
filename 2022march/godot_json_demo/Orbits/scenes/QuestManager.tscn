@@ -66,7 +66,9 @@ script = ExtResource( 1 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="CanvasLayer" groups=["font"]]
+[node name="Instructions" type="Label" parent="CanvasLayer" groups=[
+"font",
+]]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -89,26 +91,33 @@ script = ExtResource( 10 )
 [node name="PlanetAsksScroll" type="ScrollContainer" parent="CanvasLayer"]
 show_behind_parent = true
 anchor_bottom = 1.0
-margin_top = 48.0
-margin_right = 280.0
+margin_left = 7.93701
+margin_top = 38.4756
+margin_right = 287.937
+margin_bottom = -9.52441
 rect_min_size = Vector2( 280, 0 )
 size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlanetAsksScroll"]
 
-[node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=["font"]]
+[node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
 margin_right = 34.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
 focus_mode = 0
 theme = ExtResource( 5 )
-custom_fonts/font = ExtResource( 8 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 pressed = true
 text = "00"
@@ -128,7 +137,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inventory" type="Label" parent="CanvasLayer" groups=["font"]]
+[node name="Inventory" type="Label" parent="CanvasLayer" groups=[
+"font",
+]]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -141,6 +152,9 @@ size_flags_vertical = 1
 theme = ExtResource( 5 )
 text = "Inventory: "
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ShipLogScroll" type="ScrollContainer" parent="CanvasLayer"]
 show_behind_parent = true
@@ -149,10 +163,13 @@ anchor_top = 0.124
 anchor_right = 1.0
 anchor_bottom = 1.025
 margin_left = -220.0
-margin_top = -86.28
-margin_right = -43.0
-margin_bottom = -76.64
+margin_top = -46.12
+margin_right = -27.0
+margin_bottom = -16.75
 mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ShipLog" type="Label" parent="CanvasLayer/ShipLogScroll"]
 margin_right = 175.0
@@ -167,7 +184,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=["font"]]
+[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -40.0
@@ -178,19 +197,21 @@ focus_mode = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource( 5 )
-custom_fonts/font = ExtResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 7 )
 custom_styles/focus = SubResource( 8 )
 custom_styles/disabled = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
+custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 pressed = true
 text = "00"
 icon = ExtResource( 15 )
 align = 2
 
-[node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=["font"]]
+[node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0
@@ -210,12 +231,14 @@ __meta__ = {
 }
 
 [node name="DEBUG_button" type="Button" parent="CanvasLayer"]
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -98.0
+margin_left = -359.033
 margin_top = -20.0
+margin_right = -261.033
 theme = ExtResource( 5 )
 text = "Go to planet"
 __meta__ = {
@@ -559,8 +582,7 @@ text = "{
 					\"no_reward_items\": [
 						\"%Migrant Credit\"
 					],
-					\"yes_end\": false,
-					\"no_end\": true
+					\"no_end\": 1
 				},
 				\"end\": {
 					\"required_inventory\": [
@@ -748,7 +770,7 @@ text = "{
 					\"yes_accepted_quest_info\": \"[Hot Roy Summer] To Silt: Cool Boy Roy\",
 					\"no_accepted_quest_info\": \"[Hot Roy Summer] To Minnow: Roy Summers\"
 				},
-				\"end\": {
+				\"bad-end\": {
 					\"required_inventory\": [
 						\"Cool Boy Roy\"
 					],
@@ -771,7 +793,9 @@ text = "{
 						\"Cool Boy Roy\"
 					],
 					\"yes_money_change\": 200,
-					\"no_money_change\": 400
+					\"no_money_change\": 400,
+					\"yes_end\": 1,
+					\"no_end\": 1
 				},
 				\"end\": {
 					\"required_inventory\": [
@@ -793,6 +817,9 @@ text = "{
 						\"Roy Summers\"
 					],
 					\"yes_money_change\": 500,
+					\"no_cost_items\": [
+						\"Roy Summers\"
+					],
 					\"no_money_change\": 500
 				}
 			}
@@ -869,7 +896,7 @@ text = "{
 					\"no_cost_items\": [
 						\"Spotted Limo Fish\"
 					],
-					\"no_is_complete\": 1
+					\"no_end\": 1
 				},
 				\"Tsukiji - Land\": {
 					\"required_inventory\": [
@@ -1077,7 +1104,7 @@ text = "{
 						\"Blessed fish\"
 					],
 					\"yes_money_change\": 100,
-					\"yes_accepted_quest_info\": \"[Too Much Sun]: Take fish to Trin\"
+					\"yes_accepted_quest_info\": \"[Too Much Sun]: To Trin: Blessed Fish\"
 				},
 				\"1\": {
 					\"solar_system\": 4,
@@ -1106,7 +1133,7 @@ text = "{
 						\"Blessed fish\"
 					],
 					\"no_money_change\": 100,
-					\"yes_accepted_quest_info\": \"[Too Much Sun]: Get ceremonial robes from Stilt\"
+					\"yes_accepted_quest_info\": \"[Too Much Sun]: To Trin: Ceremonial Robes (Stilt)\"
 				},
 				\"2\": {
 					\"solar_system\": 5,
@@ -1128,7 +1155,7 @@ text = "{
 					\"yes_cost_items\": [
 						\"Expired clothes coupon\"
 					],
-					\"yes_accepted_quest_info\": \"[Too Much Sun]: Deliver dress and fabrics to Seamstress' daughter on Yard\"
+					\"yes_accepted_quest_info\": \"[Too Much Sun]: To Yard: Dress + Fabrics\"
 				},
 				\"3\": {
 					\"solar_system\": 5,
@@ -1150,7 +1177,7 @@ text = "{
 						\"Beautiful dress\",
 						\"Fabrics\"
 					],
-					\"yes_accepted_quest_info\": \"[Too Much Sun]: Deliver ceremonial robes to Trin\"
+					\"yes_accepted_quest_info\": \"[Too Much Sun]: To Trin: Ceremonial Robes (Yard)\"
 				},
 				\"end\": {
 					\"solar_system\": 4,
@@ -1177,8 +1204,7 @@ text = "{
 			}
 		}
 	]
-}
-"
+}"
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/base_theme.tres" type="Theme" id=4]
+
+[node name="CelestialBodyFlavorText" type="PanelContainer"]
+anchor_right = 0.406
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -189.72
+margin_bottom = 255.0
+rect_min_size = Vector2( 260, 250 )
+size_flags_horizontal = 0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 260.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 260, 0 )
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpeakerName" type="Label" parent="VBoxContainer" groups=[
+"font",
+]]
+margin_right = 260.0
+margin_bottom = 19.0
+theme = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
+text = "Strange Lady"
+align = 1
+autowrap = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dialogue" type="Label" parent="VBoxContainer" groups=[
+"font",
+]]
+margin_top = 23.0
+margin_right = 260.0
+margin_bottom = 152.0
+theme = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
+text = "So
+So... hungry... you should give me stuff. LotsSo... hungry... you should give me stuff. LotsSo... hungry... you should give me stuff. Lots... hungry... you should give me stuff. Lots"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

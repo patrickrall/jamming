@@ -9,7 +9,8 @@ onready var json_label = $CanvasLayer/Label
 onready var ship_log = $CanvasLayer/ShipLogScroll/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/PlanetAsksScroll/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
-onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
+#onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
+onready var flavor_text_prefab = preload("res://scenes/CelestialBodyFlavorText.tscn")
 onready var ui_inventory = $CanvasLayer/Inventory
 onready var planet_request_toggle = $CanvasLayer/TogglePlanetRequests
 onready var ship_log_toggle = $CanvasLayer/ToggleShipLog
@@ -55,6 +56,15 @@ func arrive_at_planet(solar_system: int, planet: int):
 	for child in dialogue_choice_ui_parent.get_children():
 		child.queue_free()
 
+	var body_flavor_text = get_flavor_text_for_planet(solar_system, planet)
+	var travel_guide_text = planet_namer.get_planet(solar_system, planet) + " Travel Guide"
+	print("body_flavor_text=" + body_flavor_text)
+	if body_flavor_text != "":
+		var panel = flavor_text_prefab.instance()
+		panel.get_child(0).get_child(0).text = travel_guide_text
+		panel.get_child(0).get_child(1).text = body_flavor_text
+		dialogue_choice_ui_parent.add_child(panel)
+	
 	# instantiate Ui elements representing each request on the planet
 	for a in range(relevant_stages.size()):
 		var ui = dialogue_choice_ui_prefab.instance()
@@ -65,8 +75,8 @@ func arrive_at_planet(solar_system: int, planet: int):
 		ui.connect("no_chosen", self, "on_no_chosen")
 	
 	# other ui updates
-	if relevant_stages.size() == 0:
-		show_no_relevant_asks_ui()
+#	if relevant_stages.size() == 0:
+#		show_no_relevant_asks_ui()
 	update_planet_request_toggle()
 	update_ship_log()	
 	update_inventory()
@@ -75,16 +85,20 @@ func arrive_at_planet(solar_system: int, planet: int):
 	if camcontrol.size() > 0:
 		camcontrol[0].move_to_planet(solar_system, planet)
 
-func show_no_relevant_asks_ui():
-	var label = no_relevant_asks_ui.instance();
-	self.get_child(0).add_child(label)
+#func show_no_relevant_asks_ui():
+#	var label = no_relevant_asks_ui.instance();
+#	self.get_child(0).add_child(label)
 
 func update_planet_request_toggle()-> void:
 	# update the number on the toggle button for showing/hiding planet requests
 	var active_request_count = 0
+	var skipFirst = true
+	var blah = "ooooooooooo"
+	print(blah.find("3"))
 	for child in dialogue_choice_ui_parent.get_children():
-		if !child.is_yes_no_chosen:
-			active_request_count+=1
+		if child.name.find("DialogueChoiceUI") > -1:
+			if !child.is_yes_no_chosen:
+				active_request_count+=1
 	planet_request_toggle.text = str(active_request_count)
 
 func on_append_to_ship_log(stage_idx: int) -> void:
@@ -314,7 +328,7 @@ func _on_DEBUG_button_pressed() -> void:
 func update_inventory():
 	# show the list of items in the inventory, but hide the hidden plot point items
 	# which have % as a prefix
-	ui_inventory.text = str(player_money) + "g\n"
+	ui_inventory.text = str(player_money) + " bits\n"
 	for item in inventory:
 		if !item.begins_with("%"):
 			 ui_inventory.text += str(item) + "\n"
@@ -336,14 +350,18 @@ func _on_TogglePlanetLabel_toggled(button_pressed : bool):
 		label.get_parent().toggle_show_label(button_pressed)
 
 
-func _on_TogglePlanetRequests_toggled(_button_pressed):
-	# show a message about the lack of quests if relevant
-	# showing and hiding is taken care of elsewhere
-	if dialogue_choice_ui_parent.get_child_count() == 0:
-		show_no_relevant_asks_ui()
+#func _on_TogglePlanetRequests_toggled(_button_pressed):
+#	# show a message about the lack of quests if relevant
+#	# showing and hiding is taken care of elsewhere
+#	if dialogue_choice_ui_parent.get_child_count() == 0:
+#		show_no_relevant_asks_ui()
 
+func get_flavor_text_for_planet(solar_system : int, planet : int) -> String:
+	# get the block of text describing this planet
+	return planet_namer.get_flavor_text(solar_system, planet)
 
 func _on_PhysicsUniverse_orbited_cb(cb_node):
+	# react to orbiting a celestial body by showing relevant quests
 	var indices : Vector2 = planet_namer.get_planet_indices(cb_node.name)
 	arrive_at_planet(indices.x, indices.y)
 
