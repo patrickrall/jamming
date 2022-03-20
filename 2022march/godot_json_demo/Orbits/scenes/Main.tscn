@@ -64,7 +64,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "hide_title"
-length = 3.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect:visible")
 tracks/0/interp = 1
@@ -84,7 +84,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2 ),
+"times": PoolRealArray( 1.5, 3.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -96,7 +96,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 1.5 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
@@ -108,7 +108,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 2, 2.3 ),
+"times": PoolRealArray( 0, 3.5, 3.8 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( -2000, 0 ) ]
@@ -403,8 +403,6 @@ __meta__ = {
 [node name="TextureRect" type="TextureRect" parent="GameOverScreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -2000.0
-margin_right = -2000.0
 texture = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -419,10 +417,10 @@ __meta__ = {
 [connection signal="value_changed" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/BkgdMusicVolSlider" to="AudioManager" method="_on_BkgdMusicVolSlider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/SoundEffectVolSlider2" to="AudioManager" method="_on_SoundEffectVolSlider2_value_changed"]
 [connection signal="toggled" from="SettingsMenu/SettingsToggle" to="SettingsMenu/SettingPane" method="_on_SettingsToggle_toggled"]
-[connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="PhysicsUniverse" method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="GameOverScreen/GameOverPane" method="_on_RetryButton_pressed"]
-[connection signal="collided_with_cb" from="PhysicsUniverse" to="GameOverScreen/GameOverPane" method="_on_PhysicsUniverse_collided_with_cb"]
+[connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="PhysicsUniverse" method="_on_RetryButton_pressed"]
 [connection signal="collided_with_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_collided_with_cb"]
+[connection signal="collided_with_cb" from="PhysicsUniverse" to="GameOverScreen/GameOverPane" method="_on_PhysicsUniverse_collided_with_cb"]
 [connection signal="is_paused" from="PhysicsUniverse" to="SettingsMenu/PlayPauseTexture" method="_on_PhysicsUniverse_is_paused"]
 [connection signal="leave_cb_orbit" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_leave_cb_orbit"]
 [connection signal="orbited_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_orbited_cb"]
