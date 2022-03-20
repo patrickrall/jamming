@@ -212,13 +212,10 @@ func _draw():
 			  c, 5)
 	
 	# draw vector field
-	var vector_sep = 250
-	var view_rect = get_viewport().get_visible_rect().size
-	var p = Vector2(0,0)
-	if Engine.editor_hint:
-		vector_sep = vfield_sep
-		view_rect = $VectorField.shape.extents*2
-		p = $VectorField.position - $VectorField.shape.extents
+	if !Engine.editor_hint: return
+	var vector_sep = vfield_sep
+	var	view_rect = $VectorField.shape.extents*2
+	var	p = $VectorField.position - $VectorField.shape.extents
 	
 	d = origin_abs_pos - recur_pos(origin_cb, t0)
 	
@@ -322,7 +319,10 @@ func _input_event(viewport, event, shape_idx):
 		var clicked_cb = recur_find_cb($CBs,event.position)
 		if (clicked_cb != null):
 			set_origin_cb(clicked_cb)
-			update()
+		else:
+			$Ship.set_boost(global_t, (event.position - $Ship.global_position)/pow(2, zoom_level))
+		
+		update()
 	
 	
 	# scroll to zoom
@@ -346,7 +346,6 @@ func change_zoom(dzoom, pos):
 	$Ship.scale.y = pow(2, zoom_level)
 	recur_set_label_size($CBs)
 	update()
-
 
 # find a CB that's close to 
 func recur_find_cb(parent,pos):
@@ -375,6 +374,8 @@ func _unhandled_input(event):
 ##################### inputs that are held down
 
 func process_inputs(delta):
+	return
+	
 	###### panning
 	var dx = int(Input.is_action_pressed("ui_right"))\
 			 - int(Input.is_action_pressed("ui_left"))
