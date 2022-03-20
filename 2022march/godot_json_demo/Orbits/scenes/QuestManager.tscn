@@ -118,17 +118,18 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -246.0
-margin_top = -138.0
+margin_top = -163.198
 margin_right = -10.0
-margin_bottom = -9.0
+margin_bottom = -12.1984
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
+space: toggle pause
+mouse scroll-wheel: zoom in/out
 left-click on planet: make origin
 left-click-drag: pan view
 right-click: set boost
-escape: cancel boost
-space: toggle pause"
+escape: cancel boost"
 autowrap = true
 script = ExtResource( 10 )
 __meta__ = {
@@ -1277,8 +1278,8 @@ __meta__ = {
 [connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/PlanetAsksScroll" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetLabel" to="." method="_on_TogglePlanetLabel_toggled"]
-[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="value_changed" from="CanvasLayer/DEBUG_button/SystemSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_SystemSpinBox_value_changed"]
 [connection signal="value_changed" from="CanvasLayer/DEBUG_button/PlanetSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_PlanetSpinBox_value_changed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
