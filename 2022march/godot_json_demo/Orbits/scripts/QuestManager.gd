@@ -373,3 +373,5 @@ func _on_PhysicsUniverse_leave_cb_orbit(cb_node):
 
 func _on_PhysicsUniverse_collided_with_cb(cb_node):
 	leave_planet()
+	player_money -= 100
+	emit_signal("stage_sfx", false, false, true, false)

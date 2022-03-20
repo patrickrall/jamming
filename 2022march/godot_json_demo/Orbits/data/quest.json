@@ -139,7 +139,9 @@
 			"quest_name": "Lassie?",
 			"stages": {
 				"0": {
-					"required_inventory": ["%Motherly Love"],
+					"required_inventory": [
+						"%Motherly Love"
+					],
 					"solar_system": 1,
 					"planet": 3,
 					"speaker_name": "The Authorities TM",
@@ -302,7 +304,8 @@
 					"no_money_change": 200
 				}
 			}
-		},{
+		},
+		{
 			"quest_name": "Baby Steps",
 			"stages": {
 				"0": {
@@ -318,18 +321,20 @@
 						"Remember to start your thrust at the apex of your orbit! And don't go too fast past The Middle or you won't be able to stop fast enough.",
 						"Please, you know I love you, and the IMFP assures me that their rescue service will help you if you crash."
 					],
-					"yes_reward_items" : [
+					"yes_reward_items": [
 						"%Motherly Love",
 						"Angel Food Cake"
 					],
-					"no_reward_items" : [
+					"no_reward_items": [
 						"%Motherly Love",
 						"Angel Food Cake"
 					],
 					"yes_accepted_quest_info": "[Baby Steps] To Willow: Angel Food Cake"
 				},
 				"end": {
-					"required_inventory": ["Angel Food Cake"],
+					"required_inventory": [
+						"Angel Food Cake"
+					],
 					"solar_system": 1,
 					"planet": 2,
 					"speaker_name": "Mom's Book Club Friend",
@@ -342,12 +347,20 @@
 						"Yes it's next weekend! I'd invite you but I'm sure you've got plenty of other deliveries to finish. Good luck with the new gig!",
 						"Hee hee hee Of course fine sir. Now make sure you go back and visit your mother soon!"
 					],
-					"yes_cost_items": ["Angel Food Cake"],
-					"yes_reward_items": ["%Motherly Disdain"],
+					"yes_cost_items": [
+						"Angel Food Cake"
+					],
+					"yes_reward_items": [
+						"%Motherly Disdain"
+					],
 					"yes_money_change": 200,
-					"no_cost_items": ["Angel Food Cake"],
-					"no_money_change" : 200,
-					"no_reward_items": ["%Motherly Approval"],
+					"no_cost_items": [
+						"Angel Food Cake"
+					],
+					"no_money_change": 200,
+					"no_reward_items": [
+						"%Motherly Approval"
+					]
 				}
 			}
 		},
@@ -371,8 +384,12 @@
 						"Oh, look, someone is standing by your ship, they look really official. You'd better hurry up and see what they want! ",
 						"She had valid points. Anyway, there's always work on Cork if you can't find any here."
 					],
-					"yes_cost_items": ["%Motherly Disdain"],
-					"no_cost_items": ["%Motherly Disdain"],
+					"yes_cost_items": [
+						"%Motherly Disdain"
+					],
+					"no_cost_items": [
+						"%Motherly Disdain"
+					]
 				},
 				"1": {
 					"required_inventory": [
@@ -391,8 +408,12 @@
 						"That's great honey! But I see someone from the IMFP standing by your ship, you'd better go check on them.",
 						"Oh you're such a jokester aren't you. Adorable. Undrelated, but I bet Cork might have some good opportunities if you get there quickly *wink*"
 					],
-					"yes_cost_items": ["%Motherly Approval"],
-					"no_cost_items": ["%Motherly Approval"],
+					"yes_cost_items": [
+						"%Motherly Approval"
+					],
+					"no_cost_items": [
+						"%Motherly Approval"
+					]
 				}
 			}
 		},

@@ -161,10 +161,10 @@ __meta__ = {
 [node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
 "font",
 ]]
-margin_right = 34.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( -741.373, 69.6203 )
+margin_right = 70.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 70, 70 )
+rect_pivot_offset = Vector2( 35, 35 )
 focus_mode = 0
 theme = ExtResource( 5 )
 custom_styles/hover = SubResource( 1 )
@@ -244,10 +244,10 @@ __meta__ = {
 ]]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -40.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( -741.373, 69.6203 )
+margin_left = -70.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 70, 70 )
+rect_pivot_offset = Vector2( 35, 35 )
 focus_mode = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -263,6 +263,9 @@ pressed = true
 text = "00"
 icon = ExtResource( 15 )
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=[
 "font",
@@ -705,6 +708,9 @@ text = "{
 					\"yes_accepted_quest_info\": \"[Baby Steps] To Willow: Angel Food Cake\"
 				},
 				\"end\": {
+					\"required_inventory\": [
+						\"Angel Food Cake\"
+					],
 					\"solar_system\": 1,
 					\"planet\": 2,
 					\"speaker_name\": \"Mom's Book Club Friend\",
@@ -739,6 +745,7 @@ text = "{
 			\"stages\": {
 				\"0\": {
 					\"required_inventory\": [
+						\"%Motherly Love\",
 						\"%Motherly Disdain\"
 					],
 					\"solar_system\": 1,
@@ -762,6 +769,7 @@ text = "{
 				},
 				\"1\": {
 					\"required_inventory\": [
+						\"%Motherly Love\",
 						\"%Motherly Approval\"
 					],
 					\"solar_system\": 1,
@@ -1391,8 +1399,7 @@ text = "{
 			}
 		}
 	]
-}
-"
+}"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1400,11 +1407,11 @@ __meta__ = {
 [connection signal="pressed" from="CanvasLayer/Instructions/Button" to="CanvasLayer/Instructions" method="_on_Button_pressed"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetRequests" to="CanvasLayer" method="_on_TogglePlanetRequests_toggled"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetRequests" to="." method="_on_TogglePlanetRequests_toggled"]
-[connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/PlanetAsksScroll" method="_on_ToggleShipLog_toggled"]
+[connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetLabel" to="." method="_on_TogglePlanetLabel_toggled"]
-[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="value_changed" from="CanvasLayer/DEBUG_button/SystemSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_SystemSpinBox_value_changed"]
 [connection signal="value_changed" from="CanvasLayer/DEBUG_button/PlanetSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_PlanetSpinBox_value_changed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
