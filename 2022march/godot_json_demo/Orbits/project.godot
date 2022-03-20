@@ -35,8 +35,8 @@ StageClass="*res://scripts/Stage.gd"
 
 [display]
 
-window/size/width=1280
-window/size/height=720
+window/size/width=1120
+window/size/height=630
 window/size/resizable=false
 
 [global]

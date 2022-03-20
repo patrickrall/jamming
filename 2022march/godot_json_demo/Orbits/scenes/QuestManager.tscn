@@ -71,17 +71,18 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -238.0
-margin_top = -117.0
-margin_right = -2.0
-margin_bottom = 12.0
+margin_left = -246.0
+margin_top = -138.0
+margin_right = -10.0
+margin_bottom = -9.0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
 left-click on planet: make origin
 left-click-drag: pan view
 right-click: set boost
-escape: cancel boost"
+escape: cancel boost
+space: toggle pause"
 autowrap = true
 script = ExtResource( 10 )
 
@@ -131,9 +132,10 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -363.0
-margin_top = 10.0
-margin_right = -203.0
+margin_left = -401.0
+margin_top = 4.0
+margin_right = -241.0
+margin_bottom = -6.0
 size_flags_horizontal = 0
 size_flags_vertical = 1
 theme = ExtResource( 5 )
@@ -146,10 +148,10 @@ anchor_left = 1.0
 anchor_top = 0.124
 anchor_right = 1.0
 anchor_bottom = 1.025
-margin_left = -181.0
-margin_top = -19.64
-margin_right = -4.0
-margin_bottom = -10.0
+margin_left = -220.0
+margin_top = -86.28
+margin_right = -43.0
+margin_bottom = -76.64
 mouse_filter = 2
 
 [node name="ShipLog" type="Label" parent="CanvasLayer/ShipLogScroll"]
