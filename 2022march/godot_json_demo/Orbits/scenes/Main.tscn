@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scenes/QuestManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PhysicsUniverse.tscn" type="PackedScene" id=2]
@@ -19,6 +19,8 @@
 [ext_resource path="res://fonts/ui_font_menu_large.tres" type="DynamicFont" id=17]
 [ext_resource path="res://scripts/TriggerAnim.gd" type="Script" id=18]
 [ext_resource path="res://art/title_screen_v2.png" type="Texture" id=19]
+[ext_resource path="res://art/button_icons/Pause.png" type="Texture" id=20]
+[ext_resource path="res://scenes/PlayPauseToggle.gd" type="Script" id=21]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade out"
@@ -287,7 +289,41 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PhysicsUniverse" parent="." instance=ExtResource( 2 )]
+[node name="PlayPauseTexture" type="TextureRect" parent="SettingsMenu"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -50.0
+margin_right = 50.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 20 )
+stretch_mode = 1
+script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayPauseIndicator" type="Button" parent="SettingsMenu/PlayPauseTexture"]
+visible = false
+show_behind_parent = true
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -60.0
+margin_right = 60.0
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 30, 30 )
+theme = ExtResource( 4 )
+toggle_mode = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsMenu/PlayPauseTexture"]
+margin_left = 60.8112
+margin_top = 16.9705
+margin_right = 139.811
+margin_bottom = 35.9705
+theme = ExtResource( 13 )
+text = "SPACE BAR"
 
 [node name="GameOverScreen" type="CanvasLayer" parent="."]
 
@@ -365,7 +401,6 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="GameOverScreen"]
-self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -2000.0
@@ -375,6 +410,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PhysicsUniverse" parent="." instance=ExtResource( 2 )]
+
 [connection signal="arrive_sfx" from="QuestManager" to="AudioManager" method="_on_QuestManager_arrive_sfx"]
 [connection signal="stage_sfx" from="QuestManager" to="AudioManager" method="_on_QuestManager_stage_sfx"]
 [connection signal="toggled" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/BkgdMusicMuteCheck" to="AudioManager" method="_on_BkgdMusicMuteCheck_toggled"]
@@ -382,9 +419,10 @@ __meta__ = {
 [connection signal="value_changed" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/BkgdMusicVolSlider" to="AudioManager" method="_on_BkgdMusicVolSlider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/SoundEffectVolSlider2" to="AudioManager" method="_on_SoundEffectVolSlider2_value_changed"]
 [connection signal="toggled" from="SettingsMenu/SettingsToggle" to="SettingsMenu/SettingPane" method="_on_SettingsToggle_toggled"]
-[connection signal="collided_with_cb" from="PhysicsUniverse" to="GameOverScreen/GameOverPane" method="_on_PhysicsUniverse_collided_with_cb"]
-[connection signal="collided_with_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_collided_with_cb"]
-[connection signal="leave_cb_orbit" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_leave_cb_orbit"]
-[connection signal="orbited_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_orbited_cb"]
 [connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="PhysicsUniverse" method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="GameOverScreen/GameOverPane" method="_on_RetryButton_pressed"]
+[connection signal="collided_with_cb" from="PhysicsUniverse" to="GameOverScreen/GameOverPane" method="_on_PhysicsUniverse_collided_with_cb"]
+[connection signal="collided_with_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_collided_with_cb"]
+[connection signal="is_paused" from="PhysicsUniverse" to="SettingsMenu/PlayPauseTexture" method="_on_PhysicsUniverse_is_paused"]
+[connection signal="leave_cb_orbit" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_leave_cb_orbit"]
+[connection signal="orbited_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_orbited_cb"]
