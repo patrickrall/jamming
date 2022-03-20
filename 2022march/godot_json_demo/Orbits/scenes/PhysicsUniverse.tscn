@@ -149,7 +149,6 @@ eccentricity = 0.08
 mass = 200.0
 radius = 31.0
 dock_radius = 170.0
-is_origin_cb = true
 
 [node name="Wharf" type="Sprite" parent="CBs/The Middle"]
 position = Vector2( -3539, -3097 )
@@ -205,7 +204,7 @@ radius = 177.0
 dock_radius = 0.0
 
 [node name="The Sister Planets" type="Sprite" parent="CBs/The Middle/Ringo"]
-position = Vector2( 30, 900 )
+position = Vector2( 70, 986 )
 region_rect = Rect2( -57.5, -35.5, 231, 136.5 )
 script = ExtResource( 6 )
 eccentricity = 0.34
@@ -214,7 +213,7 @@ radius = 2.0
 dock_radius = 0.0
 
 [node name="Trin" type="Sprite" parent="CBs/The Middle/Ringo/The Sister Planets"]
-position = Vector2( 252, 0 )
+position = Vector2( 285, -1 )
 texture = ExtResource( 14 )
 script = ExtResource( 6 )
 eccentricity = 0.01
@@ -223,13 +222,14 @@ radius = 46.0
 dock_radius = 237.0
 
 [node name="Lang" type="Sprite" parent="CBs/The Middle/Ringo/The Sister Planets"]
-position = Vector2( -225, 26 )
+position = Vector2( -246, 14 )
 texture = ExtResource( 13 )
 script = ExtResource( 6 )
 eccentricity = 0.01
 mass = 160.0
 radius = 31.0
 dock_radius = 206.0
+is_origin_cb = true
 
 [node name="Silo" type="Sprite" parent="CBs/The Middle"]
 position = Vector2( 2386, -2053 )

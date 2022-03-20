@@ -298,9 +298,6 @@ rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 20 )
 stretch_mode = 1
 script = ExtResource( 21 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PlayPauseIndicator" type="Button" parent="SettingsMenu/PlayPauseTexture"]
 visible = false
@@ -318,16 +315,13 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="SettingsMenu/PlayPauseTexture"]
-margin_left = 61.0
-margin_top = -7.0
+margin_left = 60.0
+margin_top = 3.0
 margin_right = 878.0
-margin_bottom = 58.0
+margin_bottom = 68.0
 theme = ExtResource( 13 )
 text = "SPACE BAR to pause/unpause
-It's useful to pause with SPACE, then RICHT-CLICK to set your rocket's boost strength and direction, then play with SPACE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+It's useful to pause with SPACE, then RIGHT-CLICK to set your rocket's boost strength and direction, then play with SPACE"
 
 [node name="GameOverScreen" type="CanvasLayer" parent="."]
 
@@ -430,10 +424,10 @@ __meta__ = {
 [connection signal="value_changed" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/BkgdMusicVolSlider" to="AudioManager" method="_on_BkgdMusicVolSlider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer/SoundEffectVolSlider2" to="AudioManager" method="_on_SoundEffectVolSlider2_value_changed"]
 [connection signal="toggled" from="SettingsMenu/SettingsToggle" to="SettingsMenu/SettingPane" method="_on_SettingsToggle_toggled"]
-[connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="PhysicsUniverse" method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="GameOverScreen/GameOverPane" method="_on_RetryButton_pressed"]
-[connection signal="collided_with_cb" from="PhysicsUniverse" to="GameOverScreen/GameOverPane" method="_on_PhysicsUniverse_collided_with_cb"]
+[connection signal="pressed" from="GameOverScreen/GameOverPane/RetryButton" to="PhysicsUniverse" method="_on_RetryButton_pressed"]
 [connection signal="collided_with_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_collided_with_cb"]
+[connection signal="collided_with_cb" from="PhysicsUniverse" to="GameOverScreen/GameOverPane" method="_on_PhysicsUniverse_collided_with_cb"]
 [connection signal="is_paused" from="PhysicsUniverse" to="SettingsMenu/PlayPauseTexture" method="_on_PhysicsUniverse_is_paused"]
 [connection signal="leave_cb_orbit" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_leave_cb_orbit"]
 [connection signal="orbited_cb" from="PhysicsUniverse" to="QuestManager" method="_on_PhysicsUniverse_orbited_cb"]
