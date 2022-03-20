@@ -87,11 +87,11 @@ func cb_init():
 		label = Label.new()
 		label.valign = Label.VALIGN_CENTER
 		label.align = Label.ALIGN_CENTER
-		label.text = name
+		if name != "The Sister Planets": label.text = name
 		label.rect_position = Vector2(-100,-radius-30)
 		label.rect_size = Vector2(200,20)
 		label.rect_pivot_offset = Vector2(100,20)
-		label.rect_scale = Vector2(1.5,1.5)
+		label.rect_scale = Vector2(1.2,1.2)
 		self.add_child(label)
 	
 	if get_parent().has_method("theta"):

@@ -272,7 +272,9 @@ func recur_draw_trail(parent,t0,shifts):
 			newshifts.append(node.pos(t0+i*trailstep())+shifts[i])
 		
 		# the newshifts array also contains our current trail position
+		
 		for i in range(tmax()):
+			if node.name == "The Sister Planets": break
 			var j = tmax()-i-1
 			var this_c = Color(c.r,c.g,c.b, float(i)/tmax())
 			draw_line(newshifts[j]*pow(2, zoom_level)+$CBs.position,
@@ -375,7 +377,7 @@ func recur_set_label_size(parent):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
 		if (node is Label): continue
-		
+		node.label.rect_scale = Vector2(1.2,1.2) / pow(2, zoom_level)
 		recur_set_label_size(node)
 
 ##################### single hit event

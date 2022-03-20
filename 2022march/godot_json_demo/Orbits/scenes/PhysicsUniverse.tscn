@@ -67,7 +67,6 @@ mass = 2000.0
 orbit_speed = 100.0
 radius = 221.0
 dock_radius = 0.0
-is_origin_cb = true
 
 [node name="Prime" type="Sprite" parent="CBs/The Middle"]
 position = Vector2( 1785, 1154 )
@@ -78,8 +77,8 @@ mass = 250.0
 radius = 39.0
 dock_radius = 172.0
 
-[node name="Single" type="Sprite" parent="CBs/The Middle"]
-position = Vector2( 1835, -32 )
+[node name="Single" type="Sprite" parent="CBs/The Middle/Prime"]
+position = Vector2( 338, -262 )
 texture = ExtResource( 10 )
 script = ExtResource( 6 )
 eccentricity = 0.08
@@ -160,11 +159,12 @@ radius = 145.0
 dock_radius = 0.0
 
 [node name="Dyna" type="Sprite" parent="CBs/The Middle/Wharf"]
-position = Vector2( 542, 404 )
+position = Vector2( 347, 216 )
 texture = ExtResource( 1 )
 script = ExtResource( 6 )
-eccentricity = 0.08
+eccentricity = 0.5
 mass = 160.0
+orbit_speed = 0.3
 radius = 45.0
 dock_radius = 212.0
 
@@ -178,7 +178,7 @@ radius = 53.0
 dock_radius = 286.0
 
 [node name="Minnow" type="Sprite" parent="CBs/The Middle/Wharf/Wane"]
-position = Vector2( 469, -315 )
+position = Vector2( 509, -42 )
 texture = ExtResource( 22 )
 script = ExtResource( 6 )
 eccentricity = 0.08
@@ -213,7 +213,7 @@ radius = 2.0
 dock_radius = 0.0
 
 [node name="Trin" type="Sprite" parent="CBs/The Middle/Ringo/The Sister Planets"]
-position = Vector2( 320, -8 )
+position = Vector2( 252, 0 )
 texture = ExtResource( 14 )
 script = ExtResource( 6 )
 eccentricity = 0.01
@@ -222,7 +222,7 @@ radius = 46.0
 dock_radius = 237.0
 
 [node name="Lang" type="Sprite" parent="CBs/The Middle/Ringo/The Sister Planets"]
-position = Vector2( -280, 22 )
+position = Vector2( -225, 26 )
 texture = ExtResource( 13 )
 script = ExtResource( 6 )
 eccentricity = 0.01
@@ -300,8 +300,8 @@ mass = 250.0
 radius = 47.0
 dock_radius = 218.0
 
-[node name="Stil" type="Sprite" parent="CBs/The Middle/Brines"]
-position = Vector2( 376, 469 )
+[node name="Stil" type="Sprite" parent="CBs/The Middle/Brines/Brackish"]
+position = Vector2( 269, 321 )
 texture = ExtResource( 15 )
 script = ExtResource( 6 )
 eccentricity = 0.08
@@ -314,6 +314,6 @@ position = Vector2( 640, 360 )
 shape = SubResource( 2 )
 
 [node name="VectorField" type="CollisionShape2D" parent="."]
-position = Vector2( 9125, -3420 )
+position = Vector2( -804, -5741 )
 shape = SubResource( 1 )
 script = ExtResource( 25 )

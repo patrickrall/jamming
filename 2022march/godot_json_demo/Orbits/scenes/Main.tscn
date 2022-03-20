@@ -15,6 +15,7 @@
 
 [node name="AudioManager" parent="." instance=ExtResource( 3 )]
 volume_db = 0.25
+autoplay = false
 
 [node name="SettingsMenu" type="CanvasLayer" parent="."]
 

@@ -66,26 +66,24 @@ script = ExtResource( 1 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="CanvasLayer" groups=[
-"font",
-]]
+[node name="Label" type="Label" parent="CanvasLayer" groups=["font"]]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -193.0
-margin_top = -129.0
-margin_bottom = -4.0
+margin_left = -238.0
+margin_top = -117.0
+margin_right = -2.0
+margin_bottom = 12.0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
-right-click: pan
-left-click: buttons"
+left-click on planet: make origin
+left-click-drag: pan view
+right-click: set boost
+escape: cancel boost"
 autowrap = true
 script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PlanetAsksScroll" type="ScrollContainer" parent="CanvasLayer"]
 show_behind_parent = true
@@ -94,27 +92,22 @@ margin_top = 48.0
 margin_right = 280.0
 rect_min_size = Vector2( 280, 0 )
 size_flags_horizontal = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlanetAsksScroll"]
 
-[node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
-"font",
-]]
+[node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=["font"]]
 margin_right = 34.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
 focus_mode = 0
 theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 pressed = true
 text = "00"
@@ -134,24 +127,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inventory" type="Label" parent="CanvasLayer" groups=[
-"font",
-]]
+[node name="Inventory" type="Label" parent="CanvasLayer" groups=["font"]]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -363.0
 margin_top = 10.0
 margin_right = -203.0
-mouse_filter = 1
 size_flags_horizontal = 0
 size_flags_vertical = 1
 theme = ExtResource( 5 )
 text = "Inventory: "
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ShipLogScroll" type="ScrollContainer" parent="CanvasLayer"]
 show_behind_parent = true
@@ -163,10 +150,7 @@ margin_left = -181.0
 margin_top = -19.64
 margin_right = -4.0
 margin_bottom = -10.0
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+mouse_filter = 2
 
 [node name="ShipLog" type="Label" parent="CanvasLayer/ShipLogScroll"]
 margin_right = 175.0
@@ -181,9 +165,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=[
-"font",
-]]
+[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=["font"]]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -40.0
@@ -194,24 +176,19 @@ focus_mode = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 7 )
 custom_styles/focus = SubResource( 8 )
 custom_styles/disabled = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
-custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 pressed = true
 text = "00"
 icon = ExtResource( 15 )
 align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=[
-"font",
-]]
+[node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=["font"]]
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0

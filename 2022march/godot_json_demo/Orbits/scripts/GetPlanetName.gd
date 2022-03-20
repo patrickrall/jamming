@@ -31,7 +31,7 @@ func get_planet_indices(planet_name : String) -> Vector2:
 		for body in range(5):
 			if planets[system][body]:
 				if planets[system][body] == planet_name:
-					return Vector2(system, body)
+					return Vector2(system+1, body+1)
 	return Vector2(-1, -1)
 	
 #"Corin"
