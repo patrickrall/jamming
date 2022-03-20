@@ -52,7 +52,7 @@ mouse_filter = 2
 texture = ExtResource( 32 )
 
 [node name="Ship" type="Sprite" parent="."]
-position = Vector2( 323, 289 )
+position = Vector2( 981, 255 )
 texture = ExtResource( 5 )
 script = ExtResource( 3 )
 vx = 2.0
@@ -113,10 +113,10 @@ script = ExtResource( 6 )
 eccentricity = 0.08
 orbit_speed = 1.2
 radius = 15.0
-dock_radius = 0.0
+dock_radius = 100.0
 
 [node name="Corin" type="Sprite" parent="CBs/The Middle"]
-position = Vector2( -2761, 2101 )
+position = Vector2( -2366, 1850 )
 texture = ExtResource( 26 )
 script = ExtResource( 6 )
 mass = 700.0
@@ -124,16 +124,16 @@ radius = 120.0
 dock_radius = 0.0
 
 [node name="Cork" type="Sprite" parent="CBs/The Middle/Corin"]
-position = Vector2( 211, 1618 )
+position = Vector2( -371, -422 )
 texture = ExtResource( 19 )
 script = ExtResource( 6 )
 eccentricity = 0.08
 mass = 190.0
 radius = 47.0
-dock_radius = 213.0
+dock_radius = 180.0
 
 [node name="Willow" type="Sprite" parent="CBs/The Middle/Corin"]
-position = Vector2( 479, 532 )
+position = Vector2( 565, 902 )
 texture = ExtResource( 20 )
 script = ExtResource( 6 )
 eccentricity = 0.08
@@ -142,7 +142,7 @@ radius = 37.0
 dock_radius = 164.0
 
 [node name="Lux" type="Sprite" parent="CBs/The Middle/Corin"]
-position = Vector2( 818, 850 )
+position = Vector2( 1081, 1067 )
 texture = ExtResource( 21 )
 script = ExtResource( 6 )
 eccentricity = 0.08
@@ -178,19 +178,19 @@ radius = 53.0
 dock_radius = 286.0
 
 [node name="Minnow" type="Sprite" parent="CBs/The Middle/Wharf/Wane"]
-position = Vector2( 509, -42 )
+position = Vector2( 397, -287 )
 texture = ExtResource( 22 )
 script = ExtResource( 6 )
-eccentricity = 0.08
+eccentricity = 0.01
 mass = 160.0
-radius = 28.0
+radius = 30.0
 dock_radius = 179.0
 
 [node name="Bass" type="Sprite" parent="CBs/The Middle/Wharf/Wane"]
-position = Vector2( -423, 346 )
+position = Vector2( -373, 320 )
 texture = ExtResource( 23 )
 script = ExtResource( 6 )
-eccentricity = 0.08
+eccentricity = 0.01
 mass = 160.0
 radius = 30.0
 dock_radius = 193.0
@@ -290,18 +290,19 @@ script = ExtResource( 6 )
 mass = 600.0
 radius = 86.0
 dock_radius = 0.0
+is_origin_cb = true
 
 [node name="Brackish" type="Sprite" parent="CBs/The Middle/Brines"]
-position = Vector2( 654, 799 )
+position = Vector2( 798, 714 )
 texture = ExtResource( 18 )
 script = ExtResource( 6 )
-eccentricity = 0.1
+eccentricity = 0.2
 mass = 250.0
 radius = 47.0
 dock_radius = 218.0
 
 [node name="Stil" type="Sprite" parent="CBs/The Middle/Brines/Brackish"]
-position = Vector2( 269, 321 )
+position = Vector2( -353, -329 )
 texture = ExtResource( 15 )
 script = ExtResource( 6 )
 eccentricity = 0.08
@@ -314,6 +315,6 @@ position = Vector2( 572, 331 )
 shape = SubResource( 2 )
 
 [node name="VectorField" type="CollisionShape2D" parent="."]
-position = Vector2( -804, -5741 )
+position = Vector2( 5453, 671 )
 shape = SubResource( 1 )
 script = ExtResource( 25 )
