@@ -21,6 +21,7 @@ onready var planet_spinbox = $CanvasLayer/DEBUG_button/PlanetSpinBox
 onready var backup_json : RichTextLabel = $Json_storage
 
 onready var planet_namer = $CanvasLayer/DEBUG_button/PlanetName
+onready var anim : AnimationPlayer = $CanvasLayer/AnimationPlayer
 
 #var dict = {}
 var inventory = []
@@ -42,16 +43,18 @@ func _ready() -> void:
 
 func leave_planet()-> void:
 	# clear all planet-specific asks
+	anim.play("hidePlanetAsks")
 	for child in dialogue_choice_ui_parent.get_children():
 		child.queue_free()
-	update_planet_request_toggle()
 	update_ship_log()	
 	update_inventory()
+	update_planet_request_toggle_to(0)
 
 func arrive_at_planet(solar_system: int, planet: int):
 	# react to the player arriving at the planet specified by the arguments
 	# by updating the ui with requests from that planet
 	emit_signal("arrive_sfx")
+	anim.play("showPlanetAsks")
 	var relevant_stages = get_relevant_stages_for_planet(solar_system, planet, inventory)
 	for child in dialogue_choice_ui_parent.get_children():
 		child.queue_free()
@@ -89,12 +92,12 @@ func arrive_at_planet(solar_system: int, planet: int):
 #	var label = no_relevant_asks_ui.instance();
 #	self.get_child(0).add_child(label)
 
+func update_planet_request_toggle_to(number : int) -> void:
+	planet_request_toggle.text = str(number)
+
 func update_planet_request_toggle()-> void:
 	# update the number on the toggle button for showing/hiding planet requests
 	var active_request_count = 0
-	var skipFirst = true
-	var blah = "ooooooooooo"
-	print(blah.find("3"))
 	for child in dialogue_choice_ui_parent.get_children():
 		if child.name.find("DialogueChoiceUI") > -1:
 			if !child.is_yes_no_chosen:
@@ -366,4 +369,7 @@ func _on_PhysicsUniverse_orbited_cb(cb_node):
 	arrive_at_planet(indices.x, indices.y)
 
 func _on_PhysicsUniverse_leave_cb_orbit(cb_node):
+	leave_planet()
+
+func _on_PhysicsUniverse_collided_with_cb(cb_node):
 	leave_planet()

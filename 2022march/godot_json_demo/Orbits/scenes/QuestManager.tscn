@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://scripts/QuestManager.gd" type="Script" id=1]
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=2]
@@ -60,6 +60,50 @@ region_rect = Rect2( 0, 0, 32, 32 )
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 32, 32 )
 
+[sub_resource type="Animation" id=11]
+resource_name = "hidePlanetAsks"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlanetAsksScroll:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 7.93701, 38.4756 ), Vector2( -291.924, 38.4756 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlanetAsksScroll:rect_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 280, 582 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "showPlanetAsks"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlanetAsksScroll:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -291.924, 38.476 ), Vector2( 7.93701, 38.4756 ) ]
+}
+
 [node name="QuestManager" type="Node"]
 script = ExtResource( 1 )
 
@@ -87,6 +131,10 @@ escape: cancel boost
 space: toggle pause"
 autowrap = true
 script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+time_until_selfdestruct = 600
 
 [node name="PlanetAsksScroll" type="ScrollContainer" parent="CanvasLayer"]
 show_behind_parent = true
@@ -305,6 +353,10 @@ text = "Debug: Go to planet (1,1)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+anims/hidePlanetAsks = SubResource( 11 )
+anims/showPlanetAsks = SubResource( 12 )
 
 [node name="Json_storage" type="RichTextLabel" parent="."]
 visible = false
