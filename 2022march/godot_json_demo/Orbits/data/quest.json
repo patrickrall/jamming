@@ -134,7 +134,6 @@
 					"yes_money_change": 2000
 				}
 			},
-			"plot summary": "On Bass: Chef Maurice LeStarr is offering huge rewards for someone who can bring him esoteric ingredients for his newest restaurant grand opening in 6 months. His last 3 restaurant openings were reviewed horribly saying that they weren't inventive or unique enough, because the reviewer hates him. The reviewer can be persuaded to relax by offering a dish made on Brackish. LeStarr will pay you if you bring him: 1) Papua Fruit Shells from Garish, Giant Mongoose Liver from Dyna, and Sun Cakes from Trin."
 		},
 		{
 			"quest_name": "Lassie?",
@@ -358,7 +357,7 @@
 			"stages": {
 				"end": {
 					"solar_system": 1,
-					"planet": 1,
+					"planet": 3,
 					"speaker_name": "Sentient Beach Ball Alien",
 					"dialogue": "Would you tell me where the nearest blob shop is?",
 					"choices": [
@@ -793,6 +792,9 @@
 					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Blessed Fish"
 				},
 				"1": {
+					"required_inventory": [
+						"Blessed Fish"
+					],
 					"solar_system": 4,
 					"planet": 1,
 					"speaker_name": "Emperor Sol",
@@ -822,6 +824,9 @@
 					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Stilt)"
 				},
 				"2": {
+					"required_inventory": [
+						"Expired clothes coupon"
+					],
 					"solar_system": 5,
 					"planet": 1,
 					"speaker_name": "Overworked Seamstress",
@@ -844,6 +849,10 @@
 					"yes_accepted_quest_info": "[Too Much Sun]: To Yard: Dress + Fabrics"
 				},
 				"3": {
+					"required_inventory": [
+						"Beautiful dress",
+						"Fabrics"
+					],
 					"solar_system": 5,
 					"planet": 2,
 					"speaker_name": "Jesse Dresse",
@@ -866,6 +875,9 @@
 					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Yard)"
 				},
 				"end": {
+					"required_inventory": [
+						"Ceremonial robes"
+					],
 					"solar_system": 4,
 					"planet": 1,
 					"speaker_name": "Emperor Sol",
