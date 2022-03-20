@@ -46,16 +46,15 @@ Star systems - Planets
 	
 	a) Cork: Ocean Planet
 		Cork is mostly ocean, but its proximity to the Corin keeps the algae fed and the fish thriving.
-		Floating metal fishing villages ship huge, fresh fish across the system with cryogenics.
+		Floating metal fishing villages deliver huge, fresh fish across the system with cryogenics.
 
 	b) Willow: Mining Planet
 		Willow is mostly covered in iron-rich soil, and its mineral exports put it on the map.
-		wild west mining towns and oil barons
+		The beaurocracy is important for worker safety, but it can make visiting a pain.
 		
 	c) Lux: Farming Planet - Home Planet
-		Lux has a ton of land and nice soil, with very consistent seasons.
-		The vegetables here are to die for, and the benign governments provide a lot of subsidies for the farming and cooking locals to be able to export off-world. think super gentrified cottage-core.
-
+		Lux has a ton of land and nice soil, with very consistent seasons. The vegetables here are to die for, 
+		and the benign governments provide a lot of subsidies for the farming and cooking locals to be able to export off-world.
 
 2) Wharf - blue dwarf
 
@@ -63,17 +62,15 @@ Star systems - Planets
 		Dyna's orbit keeps it very close to their very hot sun during summer, but its rotation matches its revolution, so only one side of the planet gets scorched. 
 		On the other side, which gets 8 months of mild winter followed by 4 months of darkness, people hunt big game animals that migrate, living in mobile tribes with extreme temperature protection.
 
-	b) Wane: Ocean Planet - uninhabited except for robotic water pumps that feed Minnow and Bass
+	b) Wane: Ocean Planet - Uninhabited except for robotic water pumps that feed Minnow and Bass.
 
 	c) Minnow: Moon of Wane and dirty Cyberpunk City
-		Exports: packaging/labor, 
 		Minnow's calm weather, shallow bedrock, and smooth surface made it very enticing for factory
 		establishment. Many impoverished move here to make a living monitoring robotic equipment.
 		The cities are aesthetically drab, with exposed pipes and simple concrete construction.
 
 
 	d) Bass: Moon of Wane and High-Class Arts District
-		Exports: Art, wine, Cuisine
 		Bass has excellent weather, soft soil, and rolling hills, that make picturesque (terraformed)
 		scenery for the wealthy of the system to enjoy. Transit between Bass and Minnow is common - 
 		Minnow citizens visit for vacation, while Bass citizens own and operate the factories on Minnow.
@@ -85,29 +82,41 @@ Star systems - Planets
 	a) Garish: Rainforest Planet
 		Silo's bright sun makes agriculture hard on Garish, but it has caused the megafauna to flourish.
 		Ecclectic explorers search for biological mysteries here, and native sapience has been rumored.
-		With the planet mostly visited by tourists and scientists, the space station here is well stocked.
+		With the planet mostly visited by tourists and scientists, the stations here are well stocked.
 
 
 4) Ringo - red giant
 
 	a) Trin, the older sister binary planet
-		The residents of Trin have begun to worship their star, Ringo, with fervor and joy.
-		Their position gives them well balanced seasons and powerful tides, and they celebrate the occasional brief eclipse from their smaller sister planet when they happen.
-		Trin has a long culture with deep history, and exports a lot of music, art, and traditions.
+		The residents of Trin worship their star, Ringo, with fervor and joy. Their position gives them well balanced seasons and powerful tides, 
+		and they celebrate the occasional brief eclipse caused by their smaller sister planet. Trin has a long culture with deep history, and shares a lot of music, art, and traditions across the galaxy.
 
 	b) Lang, the younger sister binary planet
-		Lang citizens resent Trin, their larger sister planet, because its weight creates devastating seasonal floods and stints of week-long darkness. The timing of the floods and eclipses does not align with the solar seasons, causing inconsistent planting and harvesting, so Lang is mostly an industrialized and military power. They don't have enough income for a major interstellar force of their own, but they make weapons for other groups often, and they are very suspicious of foreigners.
+		Lang citizens resent Trin, their larger sister planet, because its weight creates devastating seasonal floods and stints of week-long darkness.
+		The timing of the floods and eclipses does not align with the solar seasons, causing inconsistent planting and harvesting, so Lang is mostly an industrialized and military power. 
+		They don't have enough income for a major interstellar force of their own, but they make weapons for other groups often, and they are very suspicious of foreigners.
 
 
 5) Millet - yellow dwarf
 
 	a) Stilt: Smallest Millet Planet - Textile Heaven
+		The Millet planets all follow the same orbit, but out of sync, so millions of migrant workers travel between each of them in turn, reaping and planting when the season is right.
+		This means that Millet is a huge agriculture powerhouse, able to churn out tons of food for cheap.
+		The people who stay on-planet during the off seasons can be very off-putting.
+		Meanwhile the underfed migrant workers are friendly, but they have no roots or education, often going generations without breaking the pattern.
+		Stilt's river-laced surface waters its cotton plants and powers its looms.
 	b) Yard: Middle Millet Planet - Amber Waves of Grain
+		The Millet planets all follow the same orbit, but out of sync, so millions of migrant workers travel between each of them in turn, reaping and planting when the season is right.
+		This means that the Millet system is a huge agriculture powerhouse, able to churn out tons of food for cheap.
+		The people who stay on-planet during the off seasons can be very off-putting.
+		Meanwhile the underfed migrant workers are friendly, but they have no roots or education, often going generations without breaking the pattern.
+		Yard's soft soil is perfect for planting acres of wheat, corn, and other perennials.
 	c) Crash: Biggest Millet Planet - To Beef or Not To Beef
 		The Millet planets all follow the same orbit, but out of sync, so millions of migrant workers travel between each of them in turn, reaping and planting when the season is right.
 		This means that Millet is a huge agriculture powerhouse, able to churn out tons of food for cheap.
 		The people who stay on-planet during the off seasons can be very off-putting.
 		Meanwhile the underfed migrant workers are friendly, but they have no roots or education, often going generations without breaking the pattern.
+		Crash is covered in rolling grasslands, ideal for raising cattle.
 
 
 6) Brines - red dwarf
@@ -125,13 +134,16 @@ Star systems - Planets
 7) SuperMassive Black Hole
 
 	a) Prime - moderate speed, low eccentricity, furthest from smbh
-		Main space station for SMBH, mostly navigation, refuel, and science
+		Main space station for IMFP, mostly for navigation, refuel, and science experiments that benefit from proximity to a black hole.
 
 	b) Single - slow orbit, no station, 4th from smbh
+		Moon of Streak, dangerous to orbit, unpleasant to land on.
 
 	c) Escape - fast orbit, 3rd from smbh
-		Secondary space station, only set up for refuel for emergencies
+		Secondary space station for IMFP, mostly for emergencies if spacecraft get too close to The Middle.
 
 	d) Streak - fairly eccentric orbit, no station, 2nd from smbh
+		Parts of its orbit get too close to The Middle for much establishment. Don't stay here too long.
 
 	e) Event - fast tight orbit, no station, closest to smbh (degrading?)
+		This planet will be absorbed by The Middle in the coming century, it's already displaying signs of spaghettification.

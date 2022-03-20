@@ -503,6 +503,9 @@
 						"Roy Summers"
 					],
 					"yes_money_change": 500,
+					"no_cost_items": [
+						"Roy Summers"
+					],
 					"no_money_change": 500
 				}
 			}
