@@ -127,16 +127,17 @@ func _physics_process(delta):
 		return
 	
 	# Accumulate time into t_accum
-	if Input.is_action_pressed("accel_sim"):
-		t_accum += delta*4
-	else:
-		t_accum += delta
+
+	t_accum += delta	
 	var prv_time = global_t
 	
 	# shave off t_step's from t_accum, and put them into the global clock
 	while t_accum > t_step:
 		t_accum -= t_step
-		global_t += 1
+		if Input.is_action_pressed("accel_sim"):
+			global_t += 4
+		else:
+			global_t += 1
 	
 	# not enough time passed to actually tick the clock, don't bother updating
 	if prv_time == global_t:
@@ -205,6 +206,8 @@ func _draw():
 	for i in range(tmax()+1):
 		d = origin_abs_pos - recur_pos(origin_cb, t0+i*trailstep())
 		shifts.append(d)
+
+	return # disable trails
 	
 	# draw the trail for the CBs	
 	recur_draw_trail($CBs,t0,shifts)

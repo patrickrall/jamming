@@ -149,6 +149,7 @@ eccentricity = 0.08
 mass = 200.0
 radius = 31.0
 dock_radius = 170.0
+is_origin_cb = true
 
 [node name="Wharf" type="Sprite" parent="CBs/The Middle"]
 position = Vector2( -3539, -3097 )
@@ -229,7 +230,6 @@ eccentricity = 0.01
 mass = 160.0
 radius = 31.0
 dock_radius = 206.0
-is_origin_cb = true
 
 [node name="Silo" type="Sprite" parent="CBs/The Middle"]
 position = Vector2( 2386, -2053 )
