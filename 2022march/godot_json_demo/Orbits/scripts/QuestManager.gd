@@ -9,7 +9,7 @@ onready var json_label = $CanvasLayer/Label
 onready var ship_log = $CanvasLayer/ShipLogScroll/ShipLog
 onready var dialogue_choice_ui_parent = $CanvasLayer/PlanetAsksScroll/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
-#onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
+onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
 onready var flavor_text_prefab = preload("res://scenes/CelestialBodyFlavorText.tscn")
 onready var ui_inventory = $CanvasLayer/Inventory
 onready var planet_request_toggle = $CanvasLayer/TogglePlanetRequests
@@ -78,8 +78,8 @@ func arrive_at_planet(solar_system: int, planet: int):
 		ui.connect("no_chosen", self, "on_no_chosen")
 	
 	# other ui updates
-#	if relevant_stages.size() == 0:
-#		show_no_relevant_asks_ui()
+	if relevant_stages.size() == 0:
+		show_no_relevant_asks_ui()
 	update_planet_request_toggle()
 	update_ship_log()	
 	update_inventory()
@@ -88,9 +88,9 @@ func arrive_at_planet(solar_system: int, planet: int):
 	if camcontrol.size() > 0:
 		camcontrol[0].move_to_planet(solar_system, planet)
 
-#func show_no_relevant_asks_ui():
-#	var label = no_relevant_asks_ui.instance();
-#	self.get_child(0).add_child(label)
+func show_no_relevant_asks_ui():
+	var label = no_relevant_asks_ui.instance();
+	self.get_child(0).add_child(label)
 
 func update_planet_request_toggle_to(number : int) -> void:
 	planet_request_toggle.text = str(number)
@@ -353,11 +353,11 @@ func _on_TogglePlanetLabel_toggled(button_pressed : bool):
 		label.get_parent().toggle_show_label(button_pressed)
 
 
-#func _on_TogglePlanetRequests_toggled(_button_pressed):
-#	# show a message about the lack of quests if relevant
-#	# showing and hiding is taken care of elsewhere
-#	if dialogue_choice_ui_parent.get_child_count() == 0:
-#		show_no_relevant_asks_ui()
+func _on_TogglePlanetRequests_toggled(_button_pressed):
+	# show a message about the lack of quests if relevant
+	# showing and hiding is taken care of elsewhere
+	if dialogue_choice_ui_parent.get_child_count() < 2:
+		show_no_relevant_asks_ui()
 
 func get_flavor_text_for_planet(solar_system : int, planet : int) -> String:
 	# get the block of text describing this planet
