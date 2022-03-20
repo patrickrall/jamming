@@ -45,16 +45,13 @@ Star systems - Planets
 1) Corin (aka Corenne) - yellow dwarf - Home System
 	
 	a) Cork: Ocean Planet
-		Cork is mostly ocean, but its proximity to the Corin keeps the algae fed and the fish thriving.
-		Floating metal fishing villages deliver huge, fresh fish across the system with cryogenics.
+		Cork is mostly ocean, but its proximity to the Corin keeps the algae fed and the fish thriving. Floating metal fishing villages deliver huge, fresh fish across the system with cryogenics.
 
 	b) Willow: Mining Planet
-		Willow is mostly covered in iron-rich soil, and its mineral exports put it on the map.
-		The beaurocracy is important for worker safety, but it can make visiting a pain.
+		Willow is mostly covered in iron-rich soil, and its mineral exports put it on the map. The beaurocracy is important for worker safety, but it can make visiting a pain.
 		
 	c) Lux: Farming Planet - Home Planet
-		Lux has a ton of land and nice soil, with very consistent seasons. The vegetables here are to die for, 
-		and the benign governments provide a lot of subsidies for the farming and cooking locals to be able to export off-world.
+		Lux has a ton of land and nice soil, with very consistent seasons. The vegetables here are to die for, and the benign governments provide a lot of subsidies for the farming and cooking locals to be able to export off-world.
 
 2) Wharf - blue dwarf
 
@@ -62,18 +59,15 @@ Star systems - Planets
 		Dyna's orbit keeps it very close to their very hot sun during summer, but its rotation matches its revolution, so only one side of the planet gets scorched. 
 		On the other side, which gets 8 months of mild winter followed by 4 months of darkness, people hunt big game animals that migrate, living in mobile tribes with extreme temperature protection.
 
-	b) Wane: Ocean Planet - Uninhabited except for robotic water pumps that feed Minnow and Bass.
+	b) Wane: Ocean Planet - 
+		Uninhabited except for robotic water pumps that feed Minnow and Bass.
 
 	c) Minnow: Moon of Wane and dirty Cyberpunk City
-		Minnow's calm weather, shallow bedrock, and smooth surface made it very enticing for factory
-		establishment. Many impoverished move here to make a living monitoring robotic equipment.
-		The cities are aesthetically drab, with exposed pipes and simple concrete construction.
+		Minnow's calm weather, shallow bedrock, and smooth surface made it very enticing for factory establishment. Many impoverished move here to make a living monitoring robotic equipment. The cities are aesthetically drab, with exposed pipes and simple concrete construction.
 
 
 	d) Bass: Moon of Wane and High-Class Arts District
-		Bass has excellent weather, soft soil, and rolling hills, that make picturesque (terraformed)
-		scenery for the wealthy of the system to enjoy. Transit between Bass and Minnow is common - 
-		Minnow citizens visit for vacation, while Bass citizens own and operate the factories on Minnow.
+		Bass has excellent weather, soft soil, and rolling hills, that make picturesque (terraformed) scenery for the wealthy of the system to enjoy. Transit between Bass and Minnow is common - Minnow citizens visit for vacation, while Bass citizens own and operate the factories on Minnow.
 
 
 
