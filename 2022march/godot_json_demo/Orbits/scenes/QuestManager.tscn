@@ -114,13 +114,11 @@ space: toggle pause
 mouse scroll-wheel: zoom in/out
 left-click on planet: make origin
 left-click-drag: pan view
-right-click: set boost direction (where your rockets fire, away from your destination)
-escape: cancel boost"
+right-click: set boost direction (the ship accelerates away from the displayed line)
+escape: cancel boost
+hold shift: fast forward time"
 autowrap = true
 script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Button" type="Button" parent="CanvasLayer/Instructions"]
 margin_left = 268.363

@@ -165,7 +165,7 @@ func set_tmax_edit(newval):
 
 func tmax():
 	if Engine.editor_hint: return tmax_edit
-	return tmax_play*pow(2,zoom_level/2)
+	return int(tmax_play*pow(2,zoom_level/2))
 func trailstep():
 	if Engine.editor_hint: return trailstep_edit
 	# adjust the trailstep based on zoom level ingame
