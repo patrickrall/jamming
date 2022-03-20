@@ -418,6 +418,51 @@
 			}
 		},
 		{
+			"quest_name": "Nepotism",
+			"stages": {
+				"0": {
+					"required_inventory": [
+						"%Motherly Love"
+					],
+					"solar_system": 2,
+					"planet": 3,
+					"speaker_name": "Uncle Joe",
+					"dialogue": "Hey bud, good to see ya! Glad you came by, I have this new-fangled dough-roller, not on the market yet, think Barb would test it for us?",
+					"choices": [
+						"Hey uncle Joe, sure I'll bring it back to Lux for you.",
+						"Don't worry, I'll visit mom soon, you dont have to come up with some reason to make me go back."
+					],
+					"speaker_responses": [
+						"Look at you, taking the initiative! That deserves a tip if I have anything to say about it.",
+						"Hahaha you always were a perceptive one, eh? That's fine, but would you go over to Bass and check on my friend "
+					],
+					"yes_reward_items" : ["Dough Nut TM"],
+					"yes_money_change": 500,
+					"yes_accepted_quest_info": "[Nepotism]: To Lux: Dough Nut TM",
+				},
+				"end": {
+					"required_inventory": [
+						"%Motherly Love",
+						"Dough Nut TM"
+					],
+					"solar_system": 2,
+					"planet": 3,
+					"speaker_name": "Barbara",
+					"dialogue": "Nice work son.",
+					"choices": [
+						"Thanks...",
+						"Shrug"
+					],
+					"speaker_responses": [
+						"*kiss*",
+						"*eye roll*"
+					],
+					"yes_cost_items" : ["Dough Nut TM"],
+					"yes_money_change": 100,
+				}
+			}
+		},
+		{
 			"quest_name": "Cereal Misgivings: Epilogue",
 			"stages": {
 				"0": {
@@ -942,7 +987,8 @@
 						"Blessed fish"
 					],
 					"no_money_change": 100,
-					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Stilt)"
+					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Stilt)",
+					"no_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Stilt)",
 				},
 				"2": {
 					"required_inventory": [
