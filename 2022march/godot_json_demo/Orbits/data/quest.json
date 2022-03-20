@@ -329,6 +329,7 @@
 					"yes_accepted_quest_info": "[Baby Steps] To Willow: Angel Food Cake"
 				},
 				"end": {
+					"required_inventory": ["Angel Food Cake"],
 					"solar_system": 1,
 					"planet": 2,
 					"speaker_name": "Mom's Book Club Friend",
@@ -354,7 +355,10 @@
 			"quest_name": "Baby Steps Epilogue",
 			"stages": {
 				"0": {
-					"required_inventory": ["%Motherly Disdain"],
+					"required_inventory": [
+						"%Motherly Love",
+						"%Motherly Disdain"
+					],
 					"solar_system": 1,
 					"planet": 3,
 					"speaker_name": "Barbara",
@@ -371,7 +375,10 @@
 					"no_cost_items": ["%Motherly Disdain"],
 				},
 				"1": {
-					"required_inventory": ["%Motherly Approval"],
+					"required_inventory": [
+						"%Motherly Love",
+						"%Motherly Approval"
+					],
 					"solar_system": 1,
 					"planet": 3,
 					"speaker_name": "Barbara",
