@@ -128,7 +128,6 @@ func _on_BkgdMusicVolSlider_value_changed(value):
 
 
 func _on_SoundEffectVolSlider2_value_changed(value):
-	self.volume_db = value
 	$coin.volume_db = value
 	$less_coin.volume_db = value
 	$quest_end.volume_db = value

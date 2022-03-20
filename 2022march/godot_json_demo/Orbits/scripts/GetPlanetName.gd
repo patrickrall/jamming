@@ -25,6 +25,15 @@ func get_planet(solar_system: int, planet: int) -> String:
 			return planets[solar_system-1][planet-1]
 	return "-no planet here-"
 
+func get_planet_indices(planet_name : String) -> Vector2:
+	# offset of -1 because planets and systems have 1-indexing
+	for system in range(planets.size()):
+		for body in range(5):
+			if planets[system][body]:
+				if planets[system][body] == planet_name:
+					return Vector2(system, body)
+	return Vector2(-1, -1)
+	
 #"Corin"
 #	"Cork", "Willow", "Lux"
 #"Wharf"

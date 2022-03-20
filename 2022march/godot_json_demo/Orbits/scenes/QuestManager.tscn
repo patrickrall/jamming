@@ -87,6 +87,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PlanetAsksScroll" type="ScrollContainer" parent="CanvasLayer"]
+show_behind_parent = true
+anchor_bottom = 1.0
+margin_top = 48.0
+margin_right = 280.0
+rect_min_size = Vector2( 280, 0 )
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlanetAsksScroll"]
+
 [node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
 "font",
 ]]
@@ -110,21 +123,6 @@ align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/TogglePlanetRequests"]
-show_behind_parent = true
-anchor_top = 0.09
-anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 27.3
-margin_right = 275.0
-margin_bottom = 325.0
-size_flags_horizontal = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/TogglePlanetRequests/ScrollContainer"]
 
 [node name="DEBUG_label" type="Label" parent="CanvasLayer"]
 visible = false
@@ -155,6 +153,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ShipLogScroll" type="ScrollContainer" parent="CanvasLayer"]
+show_behind_parent = true
+anchor_left = 1.0
+anchor_top = 0.124
+anchor_right = 1.0
+anchor_bottom = 1.025
+margin_left = -181.0
+margin_top = -19.64
+margin_right = -4.0
+margin_bottom = -10.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShipLog" type="Label" parent="CanvasLayer/ShipLogScroll"]
+margin_right = 175.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 175, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+text = "Ship Log Requests:"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=[
 "font",
 ]]
@@ -179,32 +205,6 @@ pressed = true
 text = "00"
 icon = ExtResource( 15 )
 align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ToggleShipLog"]
-show_behind_parent = true
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -180.98
-margin_top = 31.0
-margin_right = -3.9797
-margin_bottom = 359.0
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ShipLog" type="Label" parent="CanvasLayer/ToggleShipLog/ScrollContainer"]
-margin_right = 175.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 175, 0 )
-size_flags_horizontal = 0
-size_flags_vertical = 1
-theme = ExtResource( 5 )
-text = "Ship Log Requests:"
-autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -249,6 +249,9 @@ margin_top = -24.175
 margin_right = 124.607
 margin_bottom = -5.17497
 script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="CanvasLayer/DEBUG_button"]
 margin_left = -149.526
@@ -1203,7 +1206,7 @@ __meta__ = {
 
 [connection signal="toggled" from="CanvasLayer/TogglePlanetRequests" to="CanvasLayer" method="_on_TogglePlanetRequests_toggled"]
 [connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer" method="_on_ToggleShipLog_toggled"]
-[connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/TogglePlanetRequests/ScrollContainer" method="_on_ToggleShipLog_toggled"]
+[connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/PlanetAsksScroll" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetLabel" to="." method="_on_TogglePlanetLabel_toggled"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
