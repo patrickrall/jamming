@@ -4,10 +4,10 @@
 [ext_resource path="res://scripts/SelfDestruct.gd" type="Script" id=2]
 
 [node name="NoRelevantAsksUI" type="Label"]
-margin_left = 7.14331
-margin_top = 28.5732
-margin_right = 155.143
-margin_bottom = 47.5732
+margin_left = 34.1292
+margin_top = 35.7165
+margin_right = 182.129
+margin_bottom = 54.7165
 custom_fonts/font = ExtResource( 1 )
 text = "No asks on this planet"
 script = ExtResource( 2 )

@@ -1,4 +1,4 @@
-extends Node
+extends AudioStreamPlayer
 
 
 onready var coin : AudioStreamSample = preload("res://audio/coin.wav")
@@ -10,13 +10,11 @@ onready var low_fuel = preload("res://audio/ascending_robot.wav")
 onready var arrive = preload("res://audio/low_doo-doo-doo-doo.wav")
 onready var accepted_new = preload("res://audio/high_notif_boop.wav")
 
-var sound_queue = []
-var queue_idx = 0
-
 const SEC_DELAY_BETW_SFX = 0.5
 
-func _ready():
-	_on_QuestManager_stage_sfx(true, true, true, true, true)
+#func _ready():
+#	pass
+#	_on_QuestManager_stage_sfx(true, true, true, true, true)
 #	$coin.stream = coin
 #	$less_coin.stream = less_coin
 #	$quest_end.stream = quest_end
@@ -79,14 +77,9 @@ func _on_QuestManager_accepted_new_sfx():
 
 func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool, 
 	more_money_b: bool, less_money_b: bool, quest_end_b: bool):
-#	playing = false
-#	stream_paused = true
-	
-	sound_queue = []
-	queue_idx = 0
+	# Play all sound effects relevant to a set of conditions being met
+	#	stream_paused = true
 	if quest_end_b:
-		print("quest_end append")
-		sound_queue.append(quest_end)
 		play_quest_end_2()
 		var t = Timer.new()
 		t.set_wait_time(SEC_DELAY_BETW_SFX)
@@ -95,8 +88,6 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		t.start()
 		yield(t, "timeout")
 	if reward_item_b:
-		print("item append")
-		sound_queue.append(item)
 		play_item_2()
 		var t1 = Timer.new()
 		t1.set_wait_time(SEC_DELAY_BETW_SFX)
@@ -105,8 +96,6 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		t1.start()
 		yield(t1, "timeout")
 	elif more_money_b:
-		print("coin append")
-		sound_queue.append(coin)
 		play_more_coin_2()
 		var t2 = Timer.new()
 		t2.set_wait_time(SEC_DELAY_BETW_SFX)
@@ -115,8 +104,6 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		t2.start()
 		yield(t2, "timeout")
 	elif less_money_b:
-		print("less_coin append")
-		sound_queue.append(less_coin)
 		play_less_coin_2()
 		var t3 = Timer.new()
 		t3.set_wait_time(SEC_DELAY_BETW_SFX)
@@ -125,8 +112,6 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		t3.start()
 		yield(t3, "timeout")
 	if accepted_new_b:
-		print("accepted_new append")
-		sound_queue.append(accepted_new)
 		play_accepted_new_2()
 		var t4= Timer.new()
 		t4.set_wait_time(SEC_DELAY_BETW_SFX)
@@ -134,6 +119,5 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		self.add_child(t4)
 		t4.start()
 		yield(t4, "timeout")
-	#playing = true
 #	stream_paused = false
 	

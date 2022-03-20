@@ -281,7 +281,7 @@ func get_relevant_stages_for_planet(
 	
 ## UI
 func update_ship_log() -> void:
-	ship_log_toggle.text = str(accepted_requests.size())
+	ship_log_toggle.text = str(accepted_requests.size()) + " "
 	print("ship log update for " + str(accepted_requests))
 	ship_log.text = "Quests:\n"
 	for stage_idx in accepted_requests:

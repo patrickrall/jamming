@@ -1,14 +1,64 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/QuestManager.gd" type="Script" id=1]
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=2]
 [ext_resource path="res://art/button_icons/LabelToggle.png" type="Texture" id=3]
+[ext_resource path="res://art/button_icons/PlanetAsksToggle.png" type="Texture" id=4]
 [ext_resource path="res://fonts/base_theme.tres" type="Theme" id=5]
-[ext_resource path="res://art/button_icons/LabelShipLog.png" type="Texture" id=6]
+[ext_resource path="res://art/button_icons/toggle_normal.png" type="Texture" id=6]
 [ext_resource path="res://scripts/GetPlanetName.gd" type="Script" id=7]
 [ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=8]
-[ext_resource path="res://art/ship.png" type="Texture" id=9]
+[ext_resource path="res://art/button_icons/toggle_disabled.png" type="Texture" id=9]
 [ext_resource path="res://scripts/SelfDestruct.gd" type="Script" id=10]
+[ext_resource path="res://art/button_icons/toggle_focus.png" type="Texture" id=11]
+[ext_resource path="res://art/button_icons/toggle_pressed.png" type="Texture" id=12]
+[ext_resource path="res://art/button_icons/toggle_hover2.png" type="Texture" id=13]
+[ext_resource path="res://art/button_icons/toggle_disabled2.png" type="Texture" id=14]
+[ext_resource path="res://art/button_icons/ShipLogToggle.png" type="Texture" id=15]
+[ext_resource path="res://art/button_icons/toggle_pressed2.png" type="Texture" id=16]
+[ext_resource path="res://art/button_icons/toggle_focus2.png" type="Texture" id=17]
+[ext_resource path="res://art/button_icons/toggle_normal2.png" type="Texture" id=18]
+[ext_resource path="res://art/button_icons/toggle_hover.png" type="Texture" id=19]
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 19 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 32, 32 )
 
 [node name="QuestManager" type="Node"]
 script = ExtResource( 1 )
@@ -24,14 +74,13 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -193.0
-margin_top = -89.1227
-margin_bottom = -4.12274
+margin_top = -129.0
+margin_bottom = -4.0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 8 )
 text = "Controls: 
-WASD or arrow keys = pan
-I, O = zoom in, zoom out
-mouse to click buttons"
+right-click: pan
+left-click: buttons"
 autowrap = true
 script = ExtResource( 10 )
 __meta__ = {
@@ -41,21 +90,29 @@ __meta__ = {
 [node name="TogglePlanetRequests" type="Button" parent="CanvasLayer" groups=[
 "font",
 ]]
-margin_right = 55.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 55, 30 )
+margin_right = 34.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( -741.373, 69.6203 )
+focus_mode = 0
 theme = ExtResource( 5 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
 custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 pressed = true
 text = "00"
-icon = ExtResource( 6 )
+icon = ExtResource( 4 )
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/TogglePlanetRequests"]
+show_behind_parent = true
 anchor_top = 0.09
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -68,6 +125,110 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/TogglePlanetRequests/ScrollContainer"]
+
+[node name="DEBUG_label" type="Label" parent="CanvasLayer"]
+visible = false
+margin_left = 178.0
+margin_top = 115.0
+margin_right = 363.0
+margin_bottom = 305.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="Label" parent="CanvasLayer" groups=[
+"font",
+]]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -363.0
+margin_top = 10.0
+margin_right = -203.0
+mouse_filter = 1
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+text = "Inventory: "
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0397
+margin_right = -0.0396729
+margin_bottom = -320.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( -741.373, 69.6203 )
+focus_mode = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 5 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = ExtResource( 8 )
+toggle_mode = true
+pressed = true
+text = "00"
+icon = ExtResource( 15 )
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ToggleShipLog"]
+show_behind_parent = true
+margin_left = -140.98
+margin_top = 31.0
+margin_right = 36.0203
+margin_bottom = 359.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShipLog" type="Label" parent="CanvasLayer/ToggleShipLog/ScrollContainer"]
+margin_right = 175.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 175, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme = ExtResource( 5 )
+text = "Ship Log Requests:"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=[
+"font",
+]]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -55.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 55, 30 )
+rect_pivot_offset = Vector2( -741.373, 69.6203 )
+focus_mode = 0
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
+toggle_mode = true
+pressed = true
+icon = ExtResource( 3 )
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DEBUG_button" type="Button" parent="CanvasLayer"]
 anchor_left = 1.0
@@ -117,23 +278,11 @@ min_value = 1.0
 max_value = 5.0
 value = 1.0
 
-[node name="DEBUG_button2" type="Button" parent="CanvasLayer"]
-visible = false
-margin_left = 176.0
-margin_top = 311.0
-margin_right = 348.0
-margin_bottom = 331.0
-theme = ExtResource( 5 )
-text = "Debug: Go to planet (1,1)"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="DEBUG_button3" type="Button" parent="CanvasLayer"]
 visible = false
 margin_left = 174.0
 margin_top = 334.0
-margin_right = 348.0
+margin_right = 352.0
 margin_bottom = 354.0
 theme = ExtResource( 5 )
 text = "Debug: Go to planet (1,3)"
@@ -141,91 +290,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DEBUG_label" type="Label" parent="CanvasLayer"]
+[node name="DEBUG_button2" type="Button" parent="CanvasLayer"]
 visible = false
-margin_left = 178.0
-margin_top = 115.0
-margin_right = 363.0
-margin_bottom = 305.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Inventory" type="Label" parent="CanvasLayer" groups=[
-"font",
-]]
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -170.0
-margin_top = 10.0
+margin_left = 176.0
+margin_top = 311.0
+margin_right = 354.0
+margin_bottom = 331.0
 theme = ExtResource( 5 )
-text = "Inventory: "
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ToggleShipLog" type="Button" parent="CanvasLayer" groups=[
-"font",
-]]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -27.5
-margin_right = 27.5
-margin_bottom = 30.0
-rect_min_size = Vector2( 55, 30 )
-rect_pivot_offset = Vector2( -741.373, 69.6203 )
-theme = ExtResource( 5 )
-custom_fonts/font = ExtResource( 8 )
-toggle_mode = true
-pressed = true
-text = "00"
-icon = ExtResource( 9 )
-align = 0
-expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ToggleShipLog"]
-margin_left = 8.0
-margin_top = 41.0
-margin_right = 185.0
-margin_bottom = 357.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ShipLog" type="Label" parent="CanvasLayer/ToggleShipLog/ScrollContainer"]
-margin_right = 175.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 175, 0 )
-size_flags_horizontal = 0
-size_flags_vertical = 1
-theme = ExtResource( 5 )
-text = "Ship Log Requests:"
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TogglePlanetLabel" type="Button" parent="CanvasLayer" groups=[
-"font",
-]]
-visible = false
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -55.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 55, 30 )
-rect_pivot_offset = Vector2( -741.373, 69.6203 )
-theme = ExtResource( 5 )
-custom_fonts/font = ExtResource( 8 )
-toggle_mode = true
-pressed = true
-icon = ExtResource( 3 )
-align = 0
+text = "Debug: Go to planet (1,1)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1129,12 +1201,12 @@ __meta__ = {
 }
 
 [connection signal="toggled" from="CanvasLayer/TogglePlanetRequests" to="CanvasLayer" method="_on_TogglePlanetRequests_toggled"]
-[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
-[connection signal="value_changed" from="CanvasLayer/DEBUG_button/SystemSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_SystemSpinBox_value_changed"]
-[connection signal="value_changed" from="CanvasLayer/DEBUG_button/PlanetSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_PlanetSpinBox_value_changed"]
-[connection signal="pressed" from="CanvasLayer/DEBUG_button2" to="." method="_on_DEBUG_button2_pressed"]
-[connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
 [connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer/TogglePlanetRequests/ScrollContainer" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/ToggleShipLog" to="CanvasLayer" method="_on_ToggleShipLog_toggled"]
 [connection signal="toggled" from="CanvasLayer/TogglePlanetLabel" to="." method="_on_TogglePlanetLabel_toggled"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="." method="_on_DEBUG_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_DEBUG_button_pressed"]
+[connection signal="value_changed" from="CanvasLayer/DEBUG_button/SystemSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_SystemSpinBox_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/DEBUG_button/PlanetSpinBox" to="CanvasLayer/DEBUG_button/PlanetName" method="_on_PlanetSpinBox_value_changed"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button3" to="." method="_on_DEBUG_button3_pressed"]
+[connection signal="pressed" from="CanvasLayer/DEBUG_button2" to="." method="_on_DEBUG_button2_pressed"]
