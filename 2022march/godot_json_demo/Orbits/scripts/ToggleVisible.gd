@@ -1,7 +1,7 @@
 extends Node
 
-onready var ship_log_container = $"ToggleShipLog/ScrollContainer"
-onready var planet_request_container = $"TogglePlanetRequests/ScrollContainer"
+onready var ship_log_container = $"ShipLogScroll"
+onready var planet_request_container = $"PlanetAsksScroll"
 	
 #func toggle_show(is_on: bool) -> void:
 #	self.visible = is_on

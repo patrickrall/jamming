@@ -6,8 +6,8 @@ signal stage_sfx(accepted_new_b, reward_item_b,
 
 # Declare member variables here. 
 onready var json_label = $CanvasLayer/Label
-onready var ship_log = $CanvasLayer/ToggleShipLog/ScrollContainer/ShipLog
-onready var dialogue_choice_ui_parent = $CanvasLayer/TogglePlanetRequests/ScrollContainer/VBoxContainer
+onready var ship_log = $CanvasLayer/ShipLogScroll/ShipLog
+onready var dialogue_choice_ui_parent = $CanvasLayer/PlanetAsksScroll/VBoxContainer
 onready var dialogue_choice_ui_prefab = preload("res://scenes/DialogueChoiceUI.tscn")
 onready var no_relevant_asks_ui = preload("res://scenes/NoRelevantAsksUI.tscn")
 onready var ui_inventory = $CanvasLayer/Inventory
@@ -18,6 +18,8 @@ onready var DEBUG_label = $CanvasLayer/DEBUG_label
 onready var system_spinbox = $CanvasLayer/DEBUG_button/SystemSpinBox
 onready var planet_spinbox = $CanvasLayer/DEBUG_button/PlanetSpinBox
 onready var backup_json : RichTextLabel = $Json_storage
+
+onready var planet_namer = $CanvasLayer/DEBUG_button/PlanetName
 
 #var dict = {}
 var inventory = []
@@ -35,8 +37,15 @@ func _ready() -> void:
 		# text field of the backup_json object
 		dict = JSON.parse(backup_json.text).result
 	parse_jsondict_to_structs(dict) # updates all_stages
-	arrive_at_planet(0,1)
+	leave_planet()
 
+func leave_planet()-> void:
+	# clear all planet-specific asks
+	for child in dialogue_choice_ui_parent.get_children():
+		child.queue_free()
+	update_planet_request_toggle()
+	update_ship_log()	
+	update_inventory()
 
 func arrive_at_planet(solar_system: int, planet: int):
 	# react to the player arriving at the planet specified by the arguments
@@ -55,12 +64,10 @@ func arrive_at_planet(solar_system: int, planet: int):
 		ui.connect("yes_chosen", self, "on_yes_chosen")
 		ui.connect("no_chosen", self, "on_no_chosen")
 	
+	# other ui updates
 	if relevant_stages.size() == 0:
 		show_no_relevant_asks_ui()
-	
 	update_planet_request_toggle()
-	
-	# other ui updates
 	update_ship_log()	
 	update_inventory()
 	
@@ -171,10 +178,6 @@ func mark_complete(stage_idx: int)-> void:
 	for dependent in all_stages[stage_idx].dependent_stages:
 		var idx = get_stage_idx(all_stages[stage_idx].quest_name, dependent)
 		accepted_requests.erase(idx)
-#		if (stage.id in accepted_requests):
-#			accepted_requests.remove(stage.id)
-#		if (stage.dependent_stages in accepted_requests):
-#			accepted_requests.remove(stage.dependent_stages)
 
 
 func get_stage_idx(quest_name: String, stage_name : String)-> int:
@@ -338,3 +341,11 @@ func _on_TogglePlanetRequests_toggled(_button_pressed):
 	# showing and hiding is taken care of elsewhere
 	if dialogue_choice_ui_parent.get_child_count() == 0:
 		show_no_relevant_asks_ui()
+
+
+func _on_PhysicsUniverse_orbited_cb(cb_node):
+	var indices : Vector2 = planet_namer.get_planet_indices(cb_node.name)
+	arrive_at_planet(indices.x, indices.y)
+
+func _on_PhysicsUniverse_leave_cb_orbit(cb_node):
+	leave_planet()
