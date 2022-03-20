@@ -25,3 +25,7 @@ func _on_TogglePlanetRequests_toggled(button_pressed : bool):
 
 func _on_ToggleShipLog_toggled(button_pressed):
 	ship_log_container.visible = button_pressed
+
+
+func _on_SettingsToggle_toggled(button_pressed):
+	self.visible = button_pressed

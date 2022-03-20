@@ -1,0 +1,36 @@
+[gd_resource type="Theme" load_steps=12 format=2]
+
+[ext_resource path="res://fonts/ui_font_small.tres" type="DynamicFont" id=1]
+[ext_resource path="res://art/button_icons/toggle_disabled2.png" type="Texture" id=2]
+[ext_resource path="res://art/button_icons/toggle_normal2.png" type="Texture" id=3]
+[ext_resource path="res://art/button_icons/toggle_hover2.png" type="Texture" id=4]
+[ext_resource path="res://art/button_icons/toggle_pressed2.png" type="Texture" id=5]
+[ext_resource path="res://art/button_icons/toggle_focus2.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )

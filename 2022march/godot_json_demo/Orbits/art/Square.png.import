@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Square.png-5945c10f363a36cc28df30d8264c6407.stex"
+path="res://.import/Square.png-fa0c9c0a68b20065836fee903e04340e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/old/Square.png"
-dest_files=[ "res://.import/Square.png-5945c10f363a36cc28df30d8264c6407.stex" ]
+source_file="res://art/Square.png"
+dest_files=[ "res://.import/Square.png-fa0c9c0a68b20065836fee903e04340e.stex" ]
 
 [params]
 
@@ -28,7 +28,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

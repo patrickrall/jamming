@@ -121,3 +121,19 @@ func _on_QuestManager_stage_sfx(accepted_new_b: bool, reward_item_b: bool,
 		yield(t4, "timeout")
 #	stream_paused = false
 	
+
+
+func _on_BkgdMusicVolSlider_value_changed(value):
+	self.volume_db = value
+
+
+func _on_SoundEffectVolSlider2_value_changed(value):
+	self.volume_db = value
+	$coin.volume_db = value
+	$less_coin.volume_db = value
+	$quest_end.volume_db = value
+	$item.volume_db = value
+	$refuel.volume_db = value
+	$low_fuel.volume_db = value
+	$arrive.volume_db = value
+	$accepted_new.volume_db = value
