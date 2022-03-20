@@ -165,7 +165,7 @@ func set_tmax_edit(newval):
 
 func tmax():
 	if Engine.editor_hint: return tmax_edit
-	return tmax_play
+	return tmax_play*pow(2,zoom_level/2)
 func trailstep():
 	if Engine.editor_hint: return trailstep_edit
 	# adjust the trailstep based on zoom level ingame
@@ -207,7 +207,7 @@ func _draw():
 		d = origin_abs_pos - recur_pos(origin_cb, t0+i*trailstep())
 		shifts.append(d)
 
-	return # disable trails
+	#return # disable trails
 	
 	# draw the trail for the CBs	
 	recur_draw_trail($CBs,t0,shifts)
