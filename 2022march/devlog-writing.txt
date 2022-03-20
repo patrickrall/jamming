@@ -1,0 +1,10 @@
+Orbits Devlog 3/12-3/20/2022
+Writing Development:
+Designing an interesting civilization is easy, but designing a star system that
+is interesting visually and for gameplay, and the resulting geology and culture
+was a fun challenge that took flexibility and creativity. The characters that
+sprang from the lore, and the quest lines that had to drive the player all
+across the galaxy, was time consuming, but a robust quest-display and tracking 
+architecture made parallelization very convenient. The quests could be more
+detailed, and the flow could be better streamlined, but what we finished creates
+an atmosphere of chaos and endless options that matches the calm Orbits vibe.

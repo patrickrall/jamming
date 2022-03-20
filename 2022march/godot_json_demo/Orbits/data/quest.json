@@ -139,6 +139,7 @@
 			"quest_name": "Lassie?",
 			"stages": {
 				"0": {
+					"required_inventory": "%Motherly Love",
 					"solar_system": 1,
 					"planet": 3,
 					"speaker_name": "The Authorities TM",
@@ -299,6 +300,92 @@
 					],
 					"yes_money_change": 300,
 					"no_money_change": 200
+				}
+			}
+		},{
+			"quest_name": "Baby Steps",
+			"stages": {
+				"0": {
+					"solar_system": 1,
+					"planet": 3,
+					"speaker_name": "Barbara",
+					"dialogue": "Honey, you'll do great! I promise. I'm really excited for you and proud of you finding something you really want to do. Willow isn't too far away.",
+					"choices": [
+						"Mom, stop hugging me, people are watching. But thanks. I'll be back on Lux soon to visit.",
+						"Come on, I know that Uncle Bob pulled strings because you want me out of the basement. I get it."
+					],
+					"speaker_responses": [
+						"Remember to start your thrust at the apex of your orbit! And don't go too fast past The Middle or you won't be able to stop fast enough.",
+						"Please, you know I love you, and the IMFP assures me that their rescue service will help you if you crash."
+					],
+					"yes_reward_items" : [
+						"%Motherly Love",
+						"Angel Food Cake"
+					],
+					"no_reward_items" : [
+						"%Motherly Love",
+						"Angel Food Cake"
+					],
+					"yes_accepted_quest_info": "[Baby Steps] To Willow: Angel Food Cake"
+				},
+				"end": {
+					"solar_system": 1,
+					"planet": 2,
+					"speaker_name": "Mom's Book Club Friend",
+					"dialogue": "Oh my you're so big now! Oh, sorry, I mean, hello sir delivery person who I don't know, do you have my order?",
+					"choices": [
+						"Hi Brenda, it's fine, here's your cake. Is Jodie's birthday coming up soon?",
+						"*eye roll* Yes, here's your delivery of *checks paper* Angel Food Cake. Fresh from the oven."
+					],
+					"speaker_responses": [
+						"Yes it's next weekend! I'd invite you but I'm sure you've got plenty of other deliveries to finish. Good luck with the new gig!",
+						"Hee hee hee Of course fine sir. Now make sure you go back and visit your mother soon!"
+					],
+					"yes_cost_items": ["Angel Food Cake"],
+					"yes_reward_items": ["%Motherly Disdain"],
+					"yes_money_change": 200,
+					"no_cost_items": ["Angel Food Cake"],
+					"no_money_change" : 200,
+					"no_reward_items": ["%Motherly Approval"],
+				}
+			}
+		},
+		{
+			"quest_name": "Baby Steps Epilogue",
+			"stages": {
+				"0": {
+					"required_inventory": ["%Motherly Disdain"],
+					"solar_system": 1,
+					"planet": 3,
+					"speaker_name": "Barbara",
+					"dialogue": "Oh sweetie, can't you play along for a few minutes? You need a better attitude to do this job.",
+					"choices": [
+						"Mom, I'll be fine, you're worrying too much.",
+						"Ok, ok, I'll be nicer to anyone who didn't insult The Starless Sea in book club."
+					],
+					"speaker_responses": [
+						"Oh, look, someone is standing by your ship, they look really official. You'd better hurry up and see what they want! ",
+						"She had valid points. Anyway, there's always work on Cork if you can't find any here."
+					],
+					"yes_cost_items": ["%Motherly Disdain"],
+					"no_cost_items": ["%Motherly Disdain"],
+				},
+				"1": {
+					"required_inventory": ["%Motherly Approval"],
+					"solar_system": 1,
+					"planet": 3,
+					"speaker_name": "Barbara",
+					"dialogue": "Oh sweetie, you did so well! Did you get any other requests while you were at Willow?",
+					"choices": [
+						"Yeah, somebody wants me to bring some scrap metal over to Minnow.",
+						"Mom, your friends can't afford to keep me employed for that long, just tell me what else you have planned."
+					],
+					"speaker_responses": [
+						"That's great honey! But I see someone from the IMFP standing by your ship, you'd better go check on them.",
+						"Oh you're such a jokester aren't you. Adorable. Undrelated, but I bet Cork might have some good opportunities if you get there quickly *wink*"
+					],
+					"yes_cost_items": ["%Motherly Approval"],
+					"no_cost_items": ["%Motherly Approval"],
 				}
 			}
 		},
