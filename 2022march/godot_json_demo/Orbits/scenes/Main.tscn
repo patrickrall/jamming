@@ -55,5 +55,12 @@ volume_db = 4.0
 stream = ExtResource( 7 )
 volume_db = 4.0
 
+[node name="Settings" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="arrive_sfx" from="QuestManager" to="AudioManager" method="_on_QuestManager_arrive_sfx"]
 [connection signal="stage_sfx" from="QuestManager" to="AudioManager" method="_on_QuestManager_stage_sfx"]
