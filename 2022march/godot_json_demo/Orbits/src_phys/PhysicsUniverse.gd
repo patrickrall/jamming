@@ -457,3 +457,7 @@ func process_inputs(delta):
 		$Ship.set_boost(global_t, boost)
 	
 	return update_needed
+
+
+func _on_RetryButton_pressed():
+	reset_after_collision()

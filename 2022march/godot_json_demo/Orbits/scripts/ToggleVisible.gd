@@ -2,7 +2,8 @@ extends Node
 
 onready var ship_log_container = $"ShipLogScroll"
 onready var planet_request_container = $"PlanetAsksScroll"
-	
+onready var game_over_screen = $"../../GameOverScreen/GameOverPane"
+onready var settings_screen = $"."
 #func toggle_show(is_on: bool) -> void:
 #	self.visible = is_on
 #
@@ -28,4 +29,13 @@ func _on_ToggleShipLog_toggled(button_pressed):
 
 
 func _on_SettingsToggle_toggled(button_pressed):
-	self.visible = button_pressed
+	settings_screen.visible = button_pressed
+
+
+
+func _on_RetryButton_pressed():
+	game_over_screen.visible = false
+
+
+func _on_PhysicsUniverse_collided_with_cb(cb_node):
+	game_over_screen.visible = true

@@ -793,7 +793,7 @@
 				},
 				"1": {
 					"required_inventory": [
-						"Blessed Fish"
+						"Blessed fish"
 					],
 					"solar_system": 4,
 					"planet": 1,
