@@ -257,12 +257,12 @@
 					],
 					"yes_money_change": 500,
 					"yes_cost_items": [
-						"Hastily Wrapped Present",
-						"Small Hay Bale"
+						"Hastily Wrapped Present"
 					],
 					"no_money_change": 900,
 					"no_cost_items": [
-						"Hastily Wrapped Present"
+						"Hastily Wrapped Present",
+						"Small Hay Bale"
 					],
 					"no_reward_items": [
 						"%Migrant Credit"
@@ -288,8 +288,14 @@
 					"yes_cost_items": [
 						"Small Hay Bale"
 					],
+					"yes_reward_items": [
+						"%Migrant Credit"
+					],
 					"no_cost_items": [
 						"Small Hay Bale"
+					],
+					"no_reward_items": [
+						"%Migrant Credit"
 					],
 					"yes_money_change": 300,
 					"no_money_change": 200
