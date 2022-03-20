@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SkyBkgd.png-6349c0e57f3677f7175d467082eb553a.stex"
+path="res://.import/Millet.png-afebe102d174c112a83c8431ce27bd80.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/SkyBkgd.png"
-dest_files=[ "res://.import/SkyBkgd.png-6349c0e57f3677f7175d467082eb553a.stex" ]
+source_file="res://art/suns_planets/Millet.png"
+dest_files=[ "res://.import/Millet.png-afebe102d174c112a83c8431ce27bd80.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

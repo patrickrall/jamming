@@ -1,0 +1,284 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://art/suns_planets/Dyna.png" type="Texture" id=1]
+[ext_resource path="res://art/old/sun.png" type="Texture" id=2]
+[ext_resource path="res://src_phys/Ship.gd" type="Script" id=3]
+[ext_resource path="res://art/suns_planets/Event.png" type="Texture" id=4]
+[ext_resource path="res://art/spaceship_scaled.png" type="Texture" id=5]
+[ext_resource path="res://src_phys/CB.gd" type="Script" id=6]
+[ext_resource path="res://src_phys/PhysicsUniverse.gd" type="Script" id=7]
+[ext_resource path="res://art/suns_planets/Streak.png" type="Texture" id=8]
+[ext_resource path="res://art/suns_planets/Escape.png" type="Texture" id=9]
+[ext_resource path="res://art/suns_planets/Single.png" type="Texture" id=10]
+[ext_resource path="res://art/suns_planets/Prime.png" type="Texture" id=11]
+[ext_resource path="res://art/suns_planets/Garish.png" type="Texture" id=12]
+[ext_resource path="res://art/suns_planets/Lang.png" type="Texture" id=13]
+[ext_resource path="res://art/suns_planets/Trin.png" type="Texture" id=14]
+[ext_resource path="res://art/suns_planets/Stilt.png" type="Texture" id=15]
+[ext_resource path="res://art/suns_planets/Yard.png" type="Texture" id=16]
+[ext_resource path="res://art/suns_planets/Crash.png" type="Texture" id=17]
+[ext_resource path="res://art/suns_planets/Brackish.png" type="Texture" id=18]
+[ext_resource path="res://art/suns_planets/Cork.png" type="Texture" id=19]
+[ext_resource path="res://art/suns_planets/willow.png" type="Texture" id=20]
+[ext_resource path="res://art/suns_planets/Lux.png" type="Texture" id=21]
+[ext_resource path="res://art/suns_planets/minnow.png" type="Texture" id=22]
+[ext_resource path="res://art/suns_planets/Bass.png" type="Texture" id=23]
+[ext_resource path="res://art/suns_planets/Wane.png" type="Texture" id=24]
+[ext_resource path="res://src_phys/VectorField.gd" type="Script" id=25]
+[ext_resource path="res://art/suns_planets/Corin.png" type="Texture" id=26]
+[ext_resource path="res://art/suns_planets/Wharf.png" type="Texture" id=27]
+[ext_resource path="res://art/suns_planets/Ringo.png" type="Texture" id=28]
+[ext_resource path="res://art/suns_planets/Millet.png" type="Texture" id=29]
+[ext_resource path="res://art/suns_planets/Brines.png" type="Texture" id=30]
+[ext_resource path="res://art/suns_planets/Silo.png" type="Texture" id=31]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 730.312, 479.25 )
+
+[node name="PhysicsUniverse" type="Area2D"]
+script = ExtResource( 7 )
+vfield_sep = 40.0
+trailstep_edit = 30
+tmax_edit = 30
+
+[node name="VectorField" type="CollisionShape2D" parent="."]
+position = Vector2( 391, 466 )
+shape = SubResource( 1 )
+script = ExtResource( 25 )
+
+[node name="Ship" type="Sprite" parent="."]
+position = Vector2( 260, 728 )
+texture = ExtResource( 5 )
+script = ExtResource( 3 )
+vx = 2.66
+
+[node name="CBs" type="Node2D" parent="."]
+
+[node name="The Middle" type="Sprite" parent="CBs"]
+position = Vector2( 190, 127 )
+texture = ExtResource( 2 )
+script = ExtResource( 6 )
+mass = 2000.0
+orbit_speed = 100.0
+is_origin_cb = true
+
+[node name="Prime" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 1785, 1154 )
+texture = ExtResource( 11 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 250.0
+radius = 29.0
+
+[node name="Single" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 1835, -32 )
+texture = ExtResource( 10 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+orbit_speed = 0.6
+radius = 30.0
+
+[node name="Escape" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( -537, -943 )
+texture = ExtResource( 9 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 200.0
+orbit_speed = 1.8
+radius = 32.0
+
+[node name="Steak" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 63, 525 )
+texture = ExtResource( 8 )
+script = ExtResource( 6 )
+eccentricity = 0.2
+mass = 300.0
+radius = 31.0
+
+[node name="Event" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 253, 209 )
+texture = ExtResource( 4 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 90.0
+orbit_speed = 1.2
+radius = 30.0
+
+[node name="Corin" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( -2761, 2101 )
+texture = ExtResource( 26 )
+script = ExtResource( 6 )
+mass = 580.0
+radius = 120.0
+dock_radius = 0.0
+
+[node name="Cork" type="Sprite" parent="CBs/The Middle/Corin"]
+position = Vector2( 911, 393 )
+texture = ExtResource( 19 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 29.0
+
+[node name="Willow" type="Sprite" parent="CBs/The Middle/Corin"]
+position = Vector2( 1043, 757 )
+texture = ExtResource( 20 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 31.0
+
+[node name="Lux" type="Sprite" parent="CBs/The Middle/Corin"]
+position = Vector2( 639, 777 )
+texture = ExtResource( 21 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 31.0
+
+[node name="Wharf" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( -3539, -3097 )
+texture = ExtResource( 27 )
+script = ExtResource( 6 )
+mass = 580.0
+radius = 145.0
+dock_radius = 0.0
+
+[node name="Dyna" type="Sprite" parent="CBs/The Middle/Wharf"]
+position = Vector2( 1239, 626 )
+texture = ExtResource( 1 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 29.0
+
+[node name="Wane" type="Sprite" parent="CBs/The Middle/Wharf"]
+position = Vector2( 602, 850 )
+texture = ExtResource( 24 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 32.0
+
+[node name="Minnow" type="Sprite" parent="CBs/The Middle/Wharf/Wane"]
+position = Vector2( 199, 433 )
+texture = ExtResource( 22 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 30.0
+
+[node name="Bass" type="Sprite" parent="CBs/The Middle/Wharf/Wane"]
+position = Vector2( -272, 311 )
+texture = ExtResource( 23 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 30.0
+
+[node name="Ringo" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 4458, -2813 )
+texture = ExtResource( 28 )
+script = ExtResource( 6 )
+mass = 580.0
+radius = 177.0
+dock_radius = 0.0
+
+[node name="The Sister Planets" type="Sprite" parent="CBs/The Middle/Ringo"]
+position = Vector2( 30, 600 )
+region_rect = Rect2( -57.5, -35.5, 231, 136.5 )
+script = ExtResource( 6 )
+eccentricity = 0.34
+mass = 160.0
+radius = 0.0
+dock_radius = 0.0
+
+[node name="Trin" type="Sprite" parent="CBs/The Middle/Ringo/The Sister Planets"]
+position = Vector2( 320, -8 )
+texture = ExtResource( 14 )
+script = ExtResource( 6 )
+eccentricity = 0.01
+mass = 160.0
+radius = 30.0
+
+[node name="Lang" type="Sprite" parent="CBs/The Middle/Ringo/The Sister Planets"]
+position = Vector2( -280, 22 )
+texture = ExtResource( 13 )
+script = ExtResource( 6 )
+eccentricity = 0.01
+mass = 160.0
+radius = 31.0
+
+[node name="Silo" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 2386, -2053 )
+texture = ExtResource( 31 )
+script = ExtResource( 6 )
+mass = 580.0
+radius = 98.0
+dock_radius = 0.0
+
+[node name="Garish" type="Sprite" parent="CBs/The Middle/Silo"]
+position = Vector2( 536, 123 )
+texture = ExtResource( 12 )
+script = ExtResource( 6 )
+clockwise = false
+eccentricity = 0.08
+mass = 160.0
+radius = 31.0
+
+[node name="Millet" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 5980, 989 )
+texture = ExtResource( 29 )
+script = ExtResource( 6 )
+mass = 580.0
+radius = 74.0
+dock_radius = 0.0
+
+[node name="Stilt" type="Sprite" parent="CBs/The Middle/Millet"]
+position = Vector2( 1012, 153 )
+texture = ExtResource( 15 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 30.0
+
+[node name="Yard" type="Sprite" parent="CBs/The Middle/Millet"]
+position = Vector2( 934, 684 )
+texture = ExtResource( 16 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 30.0
+
+[node name="Crash" type="Sprite" parent="CBs/The Middle/Millet"]
+position = Vector2( 332, 748 )
+texture = ExtResource( 17 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 31.0
+
+[node name="Brines" type="Sprite" parent="CBs/The Middle"]
+position = Vector2( 2854, 3127 )
+texture = ExtResource( 30 )
+script = ExtResource( 6 )
+mass = 580.0
+radius = 86.0
+dock_radius = 0.0
+
+[node name="Brackish" type="Sprite" parent="CBs/The Middle/Brines"]
+position = Vector2( 858, 417 )
+texture = ExtResource( 18 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 29.0
+
+[node name="Stil" type="Sprite" parent="CBs/The Middle/Brines"]
+position = Vector2( 422, 445 )
+texture = ExtResource( 15 )
+script = ExtResource( 6 )
+eccentricity = 0.08
+mass = 160.0
+radius = 30.0

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Circle.png-b899a14031d4169f76e5d23cfcbacaca.stex"
+path="res://.import/sun.png-5e16e5b8509a7eccba26d8aa10d74520.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Circle.png"
-dest_files=[ "res://.import/Circle.png-b899a14031d4169f76e5d23cfcbacaca.stex" ]
+source_file="res://art/old/sun.png"
+dest_files=[ "res://.import/sun.png-5e16e5b8509a7eccba26d8aa10d74520.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/StarrySky.png-349430805fc1686ac79cd7e5d863af13.stex"
+path="res://.import/Silo.png-76adfb69a7246f09444be3d81c30d3cb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/StarrySky.png"
-dest_files=[ "res://.import/StarrySky.png-349430805fc1686ac79cd7e5d863af13.stex" ]
+source_file="res://art/suns_planets/Silo.png"
+dest_files=[ "res://.import/Silo.png-76adfb69a7246f09444be3d81c30d3cb.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

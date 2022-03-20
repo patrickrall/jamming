@@ -18,6 +18,11 @@ export(float, 0,2000,10) var mass = 100 setget set_mass
 func set_mass(newmass):
 	mass = newmass
 	update_physics()
+export(float, 0.1,2,0.1) var orbit_speed = 1 setget set_orbit_speed
+func set_orbit_speed(newspeed):
+	orbit_speed = newspeed
+	update_physics()
+
 
 # radius indicator
 export(float, 0,300,1) var radius = 100 setget set_radius
@@ -98,6 +103,8 @@ func cb_init():
 		var G = 10
 		var a = focal_parameter / (1 + pow(eccentricity,2))
 		T = sqrt( 4* pow(PI,2) * pow(a,3) / (G * mass) )
+		if T == 0: T = 1
+		T /= orbit_speed
 		
 	else:
 		# I'm a sun, I'm just static

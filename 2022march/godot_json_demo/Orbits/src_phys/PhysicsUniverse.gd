@@ -1,7 +1,7 @@
 tool
 extends Area2D
 
-onready var origin_cb = $CBs/Sun/Planet
+onready var origin_cb = $"CBs/The Middle"
 
 var global_t  # global clock. An integer starting at 0.
 var t_accum   # a floating point variable that accumulates time
@@ -20,15 +20,6 @@ export(float, 10,200,2) var vfield_sep = 10 setget set_vfield_sep
 func set_vfield_sep(newval):
 	vfield_sep = newval
 	update_physics()
-export(float, -1000,1000,10) var vfield_start = 0 setget set_vfield_start
-func set_vfield_start(newval):
-	vfield_start = newval
-	update_physics()
-export(float, 0,5000,10) var vfield_end = 1000 setget set_vfield_end
-func set_vfield_end(newval):
-	vfield_end = newval
-	update_physics()
-
 
 func _ready():
 	inited = true
@@ -48,9 +39,11 @@ func _ready():
 	
 	# tell all the children who I am, the physics_root,
 	# and set the inited flag so they actually do stuff
-	recur_init($CBs)
 	$Ship.physics_root = self
 	$Ship.inited = true
+	recur_init($CBs)
+	$VectorField.physics_root = self
+
 
 # recursively set init on the CBs
 func recur_init(parent):
@@ -151,9 +144,9 @@ func _physics_process(delta):
 # making this bigger makes the trails more jagged, but you can do longer trails for cheap.
 # tmax: how many trailsteps in the trail?
 # I don't mind the editor being a bit slow in exchange for longer trails.
-const trailstep_play = 2
+const trailstep_play = 1
 const tmax_play = 100
-export(int, 1,10,1) var trailstep_edit = 20  setget set_trailstep_edit
+export(int, 1,100,1) var trailstep_edit = 20  setget set_trailstep_edit
 func set_trailstep_edit(newval):
 	trailstep_edit = newval
 	update_physics()
@@ -217,21 +210,21 @@ func _draw():
 	draw_line(($Ship.get_pos(t0)+shifts[0])*pow(2, zoom_level)+$CBs.position,
 			  ($Ship.get_pos(t0)+shifts[0]+$Ship.get_boost(t0))*pow(2, zoom_level)+$CBs.position,
 			  c, 5)
-			
+	
 	# draw vector field
-	var vector_sep = 20
+	var vector_sep = 250
 	var view_rect = get_viewport().get_visible_rect().size
 	var p = Vector2(0,0)
 	if Engine.editor_hint:
 		vector_sep = vfield_sep
-		view_rect = Vector2(vfield_end,vfield_end)
-		p = Vector2(vfield_start,vfield_start)
+		view_rect = $VectorField.shape.extents*2
+		p = $VectorField.position - $VectorField.shape.extents
 	
 	d = origin_abs_pos - recur_pos(origin_cb, t0)
 	
-	while p.x < view_rect.x:
-		p.y = vfield_start
-		while p.y < view_rect.y:
+	while p.x < $VectorField.position.x + $VectorField.shape.extents.x:
+		p.y = $VectorField.position.y - $VectorField.shape.extents.y
+		while p.y < $VectorField.position.y + $VectorField.shape.extents.y:
 			var a = $Ship.recur_a($CBs, -d+(p-$CBs.position)/pow(2, zoom_level), t0) * 40
 			if a.length() > vector_sep: a = a.normalized()*vector_sep*0.8
 			if a.length() > 1:
@@ -262,6 +255,7 @@ func recur_draw_trail(parent,t0,shifts):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
 		if (node is Label): continue
+		if (!Engine.editor_hint && node.pos(t0).length() > 1000/pow(2, zoom_level)): continue
 		
 		# trails of child cbs need to be adjusted by their parent cbs
 		# We'll pass these shifts along to the children.

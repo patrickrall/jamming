@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planet.png-95b25cb883b0ba5f715facd198756b28.stex"
+path="res://.import/StarrySky.png-a864388f01b095cf4f0d7f083e9d4aa6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/planet.png"
-dest_files=[ "res://.import/planet.png-95b25cb883b0ba5f715facd198756b28.stex" ]
+source_file="res://art/old/StarrySky.png"
+dest_files=[ "res://.import/StarrySky.png-a864388f01b095cf4f0d7f083e9d4aa6.stex" ]
 
 [params]
 
