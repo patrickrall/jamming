@@ -268,8 +268,7 @@
 					"no_reward_items": [
 						"%Migrant Credit"
 					],
-					"yes_end": false,
-					"no_end": true
+					"no_end": 1
 				},
 				"end": {
 					"required_inventory": [
@@ -457,7 +456,7 @@
 					"yes_accepted_quest_info": "[Hot Roy Summer] To Silt: Cool Boy Roy",
 					"no_accepted_quest_info": "[Hot Roy Summer] To Minnow: Roy Summers"
 				},
-				"end": {
+				"bad-end": {
 					"required_inventory": [
 						"Cool Boy Roy"
 					],
@@ -480,7 +479,9 @@
 						"Cool Boy Roy"
 					],
 					"yes_money_change": 200,
-					"no_money_change": 400
+					"no_money_change": 400,
+					"yes_end": 1,
+					"no_end": 1
 				},
 				"end": {
 					"required_inventory": [
@@ -578,7 +579,7 @@
 					"no_cost_items": [
 						"Spotted Limo Fish"
 					],
-					"no_is_complete": 1
+					"no_end": 1
 				},
 				"Tsukiji - Land": {
 					"required_inventory": [
@@ -786,7 +787,7 @@
 						"Blessed fish"
 					],
 					"yes_money_change": 100,
-					"yes_accepted_quest_info": "[Too Much Sun]: Take fish to Trin"
+					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Blessed Fish"
 				},
 				"1": {
 					"solar_system": 4,
@@ -815,7 +816,7 @@
 						"Blessed fish"
 					],
 					"no_money_change": 100,
-					"yes_accepted_quest_info": "[Too Much Sun]: Get ceremonial robes from Stilt"
+					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Stilt)"
 				},
 				"2": {
 					"solar_system": 5,
@@ -837,7 +838,7 @@
 					"yes_cost_items": [
 						"Expired clothes coupon"
 					],
-					"yes_accepted_quest_info": "[Too Much Sun]: Deliver dress and fabrics to Seamstress' daughter on Yard"
+					"yes_accepted_quest_info": "[Too Much Sun]: To Yard: Dress + Fabrics"
 				},
 				"3": {
 					"solar_system": 5,
@@ -859,7 +860,7 @@
 						"Beautiful dress",
 						"Fabrics"
 					],
-					"yes_accepted_quest_info": "[Too Much Sun]: Deliver ceremonial robes to Trin"
+					"yes_accepted_quest_info": "[Too Much Sun]: To Trin: Ceremonial Robes (Yard)",
 				},
 				"end": {
 					"solar_system": 4,
