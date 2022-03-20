@@ -24,9 +24,8 @@
 
 [node name="AudioManager" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
-volume_db = 0.1
+volume_db = -20.0
 autoplay = true
-stream_paused = true
 script = ExtResource( 3 )
 
 [node name="coin" type="AudioStreamPlayer" parent="AudioManager"]
@@ -84,68 +83,93 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="SettingsMenu/SettingPane"]
-anchor_right = 1.0
-anchor_bottom = 0.89
-margin_left = 15.0
-margin_top = 15.0
-margin_right = -18.0
-margin_bottom = -10.4
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+margin_bottom = 0.309998
 theme = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/SettingPane/ScrollContainer"]
-margin_right = 400.0
-margin_bottom = 128.0
+margin_right = 672.0
+margin_bottom = 248.0
+size_flags_horizontal = 3
+
+[node name="Spacer4" type="Label" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
+margin_right = 672.0
+margin_bottom = 19.0
 
 [node name="BkgdMusicMuteCheck" type="CheckBox" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
-margin_right = 189.0
-margin_bottom = 19.0
-size_flags_horizontal = 0
-pressed = true
+margin_top = 23.0
+margin_right = 672.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 17 )
 text = "Mute background music"
 
+[node name="Spacer3" type="Label" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
+margin_top = 53.0
+margin_right = 672.0
+margin_bottom = 72.0
+
 [node name="SfxMuteCheck" type="CheckBox" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
-margin_top = 23.0
-margin_right = 151.0
-margin_bottom = 42.0
-size_flags_horizontal = 0
+margin_top = 76.0
+margin_right = 672.0
+margin_bottom = 102.0
+custom_fonts/font = ExtResource( 17 )
 text = "Mute sound effects"
 
+[node name="Spacer2" type="Label" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
+margin_top = 106.0
+margin_right = 672.0
+margin_bottom = 125.0
+
 [node name="Label" type="Label" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
-margin_top = 46.0
-margin_right = 400.0
-margin_bottom = 65.0
+margin_top = 129.0
+margin_right = 672.0
+margin_bottom = 155.0
+theme = ExtResource( 13 )
+custom_fonts/font = ExtResource( 17 )
 text = "Background Music Volume:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BkgdMusicVolSlider" type="HSlider" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
-margin_top = 69.0
-margin_right = 400.0
-margin_bottom = 85.0
+margin_top = 159.0
+margin_right = 672.0
+margin_bottom = 175.0
 rect_min_size = Vector2( 400, 0 )
+rect_scale = Vector2( 1, 2 )
 min_value = -30.0
 max_value = 3.0
 step = 0.1
-value = 0.2
+value = -20.0
+
+[node name="Spacer" type="Label" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
+margin_top = 179.0
+margin_right = 672.0
+margin_bottom = 198.0
 
 [node name="Label2" type="Label" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
-margin_top = 89.0
-margin_right = 400.0
-margin_bottom = 108.0
+margin_top = 202.0
+margin_right = 672.0
+margin_bottom = 228.0
+theme = ExtResource( 13 )
+custom_fonts/font = ExtResource( 17 )
 text = "Sound Effect Volume:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SoundEffectVolSlider2" type="HSlider" parent="SettingsMenu/SettingPane/ScrollContainer/VBoxContainer"]
-margin_top = 112.0
-margin_right = 400.0
-margin_bottom = 128.0
+margin_top = 232.0
+margin_right = 672.0
+margin_bottom = 248.0
 rect_min_size = Vector2( 400, 0 )
+rect_scale = Vector2( 1, 2 )
 min_value = -30.0
 max_value = 3.0
 
@@ -186,14 +210,20 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="GameOverScreen/GameOverPane"]
-anchor_left = 0.2
-anchor_top = 0.2
-anchor_right = 0.8
-anchor_bottom = 0.8
+anchor_right = 1.0
+anchor_bottom = 0.767
+margin_left = 100.0
+margin_top = 100.0
+margin_right = -112.0
+margin_bottom = -16.21
+rect_min_size = Vector2( 500, 300 )
+size_flags_horizontal = 3
 theme = ExtResource( 13 )
 custom_fonts/normal_font = ExtResource( 17 )
-text = "To: Trucker #%^%52-66899
-From: Corporate
+text = "From: Corporate Boss
+To: Trucker #%^%52-66899
+CC: Sarah Asano (Software Chief Engineer), Patrick Rall (Physics Lead Mechanic), Chris Couste (Worldbuilder Lead), Levi Walker (Art VP), Stella Wang (Music VP)
+
 
 Wow. 
 You just flung yourself into a planet, huh?
@@ -201,7 +231,25 @@ How did you think that would go?
 This is coming out of your paycheck.
 
 Love,
-your boss"
+your boss
+
+P.S. I've cc'd the design and build leads -- send them your black box recording.
+
+
+----------------------------------
+
+From: Financial Boss
+To: Corporate Boss
+
+
+Hey boss,
+
+It happened again. 
+What's wrong with our salespeople? Why can't they just not hit giant celestial bodies and spacestations? 
+What is going on out there? Is this active sabotage by our competitors?
+Recommend we tag up about increasing suveillence.
+
+----------------------------------"
 __meta__ = {
 "_edit_use_anchors_": false
 }
