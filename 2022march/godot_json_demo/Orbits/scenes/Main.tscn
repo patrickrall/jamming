@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/QuestManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PhysicsUniverse.tscn" type="PackedScene" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://art/button_icons/SettingsIcon.png" type="Texture" id=15]
 [ext_resource path="res://scripts/ToggleVisible.gd" type="Script" id=16]
 [ext_resource path="res://fonts/ui_font_menu_large.tres" type="DynamicFont" id=17]
+[ext_resource path="res://scripts/selfdestruct.gd" type="Script" id=18]
+[ext_resource path="res://art/title_screen_v2.png" type="Texture" id=19]
 
 [node name="Main" type="Node"]
 
@@ -222,7 +224,7 @@ theme = ExtResource( 13 )
 custom_fonts/normal_font = ExtResource( 17 )
 text = "From: Corporate Boss
 To: Trucker #%^%52-66899
-CC: Sarah Asano (Software Chief Engineer), Patrick Rall (Physics Lead Mechanic), Chris Couste (Worldbuilder Lead), Levi Walker (Art VP), Stella Wang (Music VP)
+CC: Sarah Asano (Software Chief Engineer), Patrick Rall (Physics Lead Mechanic), Chris Cousté (Worldbuilder Lead), Levi Walker (Art VP), Stella Wang (Music VP)
 
 
 Wow. 
@@ -264,6 +266,16 @@ text = "Reply: \"Yes, boss, I'll try not to do it again.\""
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TextureRect" type="TextureRect" parent="GameOverScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 19 )
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+time_until_selfdestruct = 1
 
 [connection signal="arrive_sfx" from="QuestManager" to="AudioManager" method="_on_QuestManager_arrive_sfx"]
 [connection signal="stage_sfx" from="QuestManager" to="AudioManager" method="_on_QuestManager_stage_sfx"]

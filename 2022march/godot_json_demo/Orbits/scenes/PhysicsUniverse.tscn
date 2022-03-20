@@ -33,10 +33,10 @@
 [ext_resource path="res://art/suns_planets/Silo.png" type="Texture" id=31]
 [ext_resource path="res://art/StarrySky.png" type="Texture" id=32]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 640, 360 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 730.312, 479.25 )
 
 [node name="PhysicsUniverse" type="Area2D"]
@@ -149,6 +149,7 @@ eccentricity = 0.08
 mass = 200.0
 radius = 31.0
 dock_radius = 170.0
+is_origin_cb = true
 
 [node name="Wharf" type="Sprite" parent="CBs/The Middle"]
 position = Vector2( -3539, -3097 )
@@ -290,7 +291,6 @@ script = ExtResource( 6 )
 mass = 600.0
 radius = 86.0
 dock_radius = 0.0
-is_origin_cb = true
 
 [node name="Brackish" type="Sprite" parent="CBs/The Middle/Brines"]
 position = Vector2( 798, 714 )
@@ -312,9 +312,9 @@ dock_radius = 179.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 572, 331 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="VectorField" type="CollisionShape2D" parent="."]
 position = Vector2( 5453, 671 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 script = ExtResource( 25 )
