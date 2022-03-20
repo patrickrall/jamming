@@ -8,3 +8,10 @@ across the galaxy, was time consuming, but a robust quest-display and tracking
 architecture made parallelization very convenient. The quests could be more
 detailed, and the flow could be better streamlined, but what we finished creates
 an atmosphere of chaos and endless options that matches the calm Orbits vibe.
+
+
+Hi, Levi here! Throughout most of the development process I was in charge of the art and aesthetic direction of the game. This jam was my first attempt at drawing things like planets, spaceships, and black holes, etc. and I can safely say that I'm really proud of what I could achieve! 
+
+What's interesting about this game jam was how organically we all fell into our own roles. I'm a programmer by trade so I definitely wasn't expecting to do a lot of art going into the jam. In the first two days I did some concept art to help us figure out what sort of game we wanted. Once our idea become solidified and Chris began worldbuilding, I felt inspired to draft some planet assets for us to test with. Once I got the workflow down, I went ahead and made art for everything else.
+
+Overall, I'm glad that I could step outside of my comfort zone a little and push my art skills to the limit. I'm really impressed by what the rest of the team put together, and I can safely say that this is the kind of game that could pull me in and keep me engaged for hours.
