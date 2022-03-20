@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Streak.png-090b3656667aca61b5415b558a5656f9.stex"
+path="res://.import/StarrySky.png-349430805fc1686ac79cd7e5d863af13.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/suns_planets/Streak.png"
-dest_files=[ "res://.import/Streak.png-090b3656667aca61b5415b558a5656f9.stex" ]
+source_file="res://art/StarrySky.png"
+dest_files=[ "res://.import/StarrySky.png-349430805fc1686ac79cd7e5d863af13.stex" ]
 
 [params]
 

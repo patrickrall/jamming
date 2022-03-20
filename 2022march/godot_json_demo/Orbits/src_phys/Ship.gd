@@ -46,8 +46,8 @@ func _notification(_what):
 	update_physics()
 
 # compute physics for one time step
-const boost_dist = 3
-const boost_scale = 0.03
+const boost_dist = 10
+const boost_scale = 0.01
 func compute_next():
 	var t = t_offset + len(stored_pos)
 	var old_pos = stored_pos[len(stored_pos)-1]

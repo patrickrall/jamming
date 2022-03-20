@@ -1,7 +1,7 @@
 tool
 extends Area2D
 
-onready var origin_cb = $"CBs/The Middle"
+onready var origin_cb = $"CBs/The Middle/Corin/Lux"
 
 var global_t  # global clock. An integer starting at 0.
 var t_accum   # a floating point variable that accumulates time
@@ -34,7 +34,7 @@ func _ready():
 	var collision_shape = CollisionShape2D.new()
 	collision_shape.position = rect_shape.extents
 	collision_shape.shape = rect_shape
-	collision_shape.visible = false
+	collision_shape.visible = true
 	self.add_child(collision_shape)
 	
 	# tell all the children who I am, the physics_root,
@@ -79,6 +79,13 @@ signal leave_cb_orbit(cb_node)
 
 var ship_currently_orbiting = null
 
+func move_camera_to_ship():
+	var view_rect = get_viewport().get_visible_rect().size
+	# $CBs.position + $Ship.get_pos(global_t) * pow(2, zoom_level) = view_rect/2
+	$CBs.position = view_rect / 2 - $Ship.get_pos(global_t) * pow(2, zoom_level)
+	update()
+
+
 ######################################################
 
 
@@ -106,7 +113,7 @@ func _physics_process(delta):
 			emit_signal("leave_cb_orbit", ship_currently_orbiting)
 			ship_currently_orbiting = null
 		
-		if orbiting[1] > 50 && ship_currently_orbiting != orbiting[0]:
+		if orbiting[1] > 150 && ship_currently_orbiting != orbiting[0]:
 			ship_currently_orbiting = orbiting[0]
 			print("enter orbit of ", ship_currently_orbiting)
 			emit_signal("orbited_cb", ship_currently_orbiting)
@@ -121,7 +128,7 @@ func _physics_process(delta):
 	
 	# Accumulate time into t_accum
 	if Input.is_action_pressed("accel_sim"):
-		t_accum += delta*5
+		t_accum += delta*4
 	else:
 		t_accum += delta
 	var prv_time = global_t
@@ -144,7 +151,7 @@ func _physics_process(delta):
 # making this bigger makes the trails more jagged, but you can do longer trails for cheap.
 # tmax: how many trailsteps in the trail?
 # I don't mind the editor being a bit slow in exchange for longer trails.
-const trailstep_play = 1
+const trailstep_play = 2
 const tmax_play = 100
 export(int, 1,100,1) var trailstep_edit = 20  setget set_trailstep_edit
 func set_trailstep_edit(newval):
@@ -184,6 +191,8 @@ func _draw():
 			if (node is Label): continue
 			node.position += d
 		$Ship.position = $CBs.position + (d + $Ship.get_pos(global_t))*pow(2,zoom_level)
+		if $Ship.get_boost(global_t).length() != 0:
+			$Ship.rotation = $Ship.get_boost(global_t).angle() - PI/2
 	
 	# In the editor, we don't evolve time and stay at t0 = 0 always
 	# In gameplay, the time is global_t
@@ -202,9 +211,11 @@ func _draw():
 
 	# draw the trail for the ship
 	for i in range(tmax()):
-		draw_line(($Ship.get_pos(t0+i*trailstep())+shifts[i])*pow(2, zoom_level)+$CBs.position,
-				  ($Ship.get_pos(t0+(i+1)*trailstep())+shifts[i+1])*pow(2, zoom_level)+$CBs.position,
-				  c.darkened(float(i)/tmax()), 2)
+		var j = tmax()-i-1
+		var this_c = Color(c.r,c.g,c.b, float(i)/tmax())
+		draw_line(($Ship.get_pos(t0+j*trailstep())+shifts[j])*pow(2, zoom_level)+$CBs.position,
+				  ($Ship.get_pos(t0+(j+1)*trailstep())+shifts[j+1])*pow(2, zoom_level)+$CBs.position,
+				  this_c, 2)
 	
 	# draw the engine boost vector
 	draw_line(($Ship.get_pos(t0)+shifts[0])*pow(2, zoom_level)+$CBs.position,
@@ -252,7 +263,7 @@ func recur_draw_trail(parent,t0,shifts):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
 		if (node is Label): continue
-		if (!Engine.editor_hint && node.pos(t0).length() > 1000/pow(2, zoom_level)): continue
+		if (!Engine.editor_hint && node.pos(t0).length() > 5000/pow(2, zoom_level)): continue
 		
 		# trails of child cbs need to be adjusted by their parent cbs
 		# We'll pass these shifts along to the children.
@@ -262,9 +273,11 @@ func recur_draw_trail(parent,t0,shifts):
 		
 		# the newshifts array also contains our current trail position
 		for i in range(tmax()):
-			draw_line(newshifts[i]*pow(2, zoom_level)+$CBs.position,
-					  newshifts[(i+1)]*pow(2, zoom_level)+$CBs.position,
-					  c.darkened(float(i)/tmax()), 2)
+			var j = tmax()-i-1
+			var this_c = Color(c.r,c.g,c.b, float(i)/tmax())
+			draw_line(newshifts[j]*pow(2, zoom_level)+$CBs.position,
+					  newshifts[(j+1)]*pow(2, zoom_level)+$CBs.position,
+					  this_c, 2)
 		
 		recur_draw_trail(node,t0,newshifts)
 
@@ -292,9 +305,15 @@ var dragging = null
 func _input_event(viewport, event, shape_idx):
 	if Engine.editor_hint: return
 	if !(event is InputEventMouseButton || event is InputEventMouseMotion): return
+
 	
-	if (event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_RIGHT):
-		dragging = event.position
+	if (event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT):
+		var clicked_cb = recur_find_cb($CBs,event.position)
+		if (clicked_cb != null):
+			set_origin_cb(clicked_cb)
+			update()
+		else:
+			dragging = event.position
 	
 	if (event is InputEventMouseButton && dragging != null && !event.is_pressed()):
 		dragging= null
@@ -305,7 +324,7 @@ func _input_event(viewport, event, shape_idx):
 		dragging = event.position
 		update()
 
-	
+
 	if !(event is InputEventMouseButton): return
 	if !event.is_pressed(): return
 
@@ -315,13 +334,8 @@ func _input_event(viewport, event, shape_idx):
 	#	update()
 
 	# click on cb to set it as the origin	
-	if event.button_index == BUTTON_LEFT:
-		var clicked_cb = recur_find_cb($CBs,event.position)
-		if (clicked_cb != null):
-			set_origin_cb(clicked_cb)
-		else:
-			$Ship.set_boost(global_t, (event.position - $Ship.global_position)/pow(2, zoom_level))
-		
+	if event.button_index == BUTTON_RIGHT:
+		$Ship.set_boost(global_t, (event.position - $Ship.global_position)/pow(2, zoom_level))
 		update()
 	
 	
@@ -352,7 +366,7 @@ func recur_find_cb(parent,pos):
 	for node in parent.get_children():
 		if (node is CollisionShape2D): continue
 		if (node is Label): continue
-		if (node.global_position - pos).length() < node.radius: return node
+		if (node.global_position - pos).length()/pow(2, zoom_level) < node.radius: return node
 		var recur = recur_find_cb(node,pos)
 		if recur != null: return recur
 	return null
@@ -366,10 +380,21 @@ func recur_set_label_size(parent):
 
 ##################### single hit event
 
+signal is_paused(paused)
+
 func _unhandled_input(event):	
 	if event.is_action_pressed("pause"):
 		paused = !paused
+		emit_signal("is_paused", paused)
 		update()
+
+	if event.is_action_pressed("ui_cancel"):
+		$Ship.set_boost(global_t, Vector2(0,0))
+		update()
+
+	if event.is_action_pressed("zoom_in"):
+		print("hi")
+		move_camera_to_ship()
 
 ##################### inputs that are held down
 
